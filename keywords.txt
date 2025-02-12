@@ -5,10 +5,9 @@
 ###############################################
 # Datatypes (KEYWORD1)
 ###############################################
-
+SevenSegDisplays KEYWORD1
 SevenSeg74HC595	KEYWORD1
 ClickCounter    KEYWORD1
-
 ###############################################
 # Methods and Functions (KEYWORD2)
 ###############################################
