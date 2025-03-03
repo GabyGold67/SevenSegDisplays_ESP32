@@ -1,45 +1,52 @@
-#ifndef SEVENSEG_74HC595_H
-#define SEVENSEG_74HC595_H
+#ifndef sevenSegDisplays_H
+#define sevenSegDisplays_H
+
 #include <Arduino.h>
+#include <SevenSegDispHw.h>
 
-class SevenSeg74HC595 {
+const int MAX_DIGITS_PER_DISPLAY{8};
+const int MAX_DISPLAYS_QTY{10};
+
+class SevenSegDisplays {
     static uint8_t _displaysCount;
+    static uint16_t _dspSerialNum;
     static uint8_t _dspPtrArrLngth;
-    static SevenSeg74HC595** _instancesLstPtr;
-    static void tmrCbRefresh(TimerHandle_t dspTmrCbArg);
-    static TimerHandle_t _dspRfrshTmrHndl;
+    static SevenSegDisplays** _instancesLstPtr;
 
+    static TimerHandle_t _blinkTmrHndl;
+    static TimerHandle_t _waitTmrHndl;
+
+    static void tmrCbBlink(TimerHandle_t blinkTmrCbArg);
+    static void tmrCbWait(TimerHandle_t waitTmrCbArg);
+    
 private:
-    uint8_t _waitChar  {0xBF};
+    uint8_t _waitChar {0xBF};
     uint8_t _waitCount {0};
     bool _waiting {false};
     unsigned long _waitRate {250};
     unsigned long _waitTimer {0};
-
 protected:
-    uint8_t _sclk;
-    uint8_t _rclk;
-    uint8_t _dio;
-    bool _commAnode {true};
-    const uint8_t _dspDigits{};
-    uint8_t* _digitPosPtr{nullptr};
-    uint8_t* _digitPtr{nullptr};
-    bool* _blinkMaskPtr{nullptr};
-
-    int32_t _dspValMax{};
-    int32_t _dspValMin{};
-
     const unsigned long _minBlinkRate{100};
     const unsigned long _maxBlinkRate{2000};
-    SevenSeg74HC595* _dispInstance;
-    uint8_t _dispInstNbr{0};
-    uint8_t _firstRefreshed{0};
+
+    bool* _blinkMaskPtr{nullptr};
+    uint8_t* _dspAuxBuffPtr{nullptr};
+    bool _dspBuffChng{false};
+    uint8_t* _dspBuffPtr{nullptr};
+    uint8_t _dspDigitsQty{};
+    SevenSegDispHw _dspUndrlHw{};
+    SevenSegDisplays* _dspInstance;
+    uint16_t _dspInstNbr{0};
+    int32_t _dspValMax{};
+    int32_t _dspValMin{};
+    
     bool _blinking{false};
     bool _blinkShowOn{false};
+    unsigned long _blinkTimer{0};
     unsigned long _blinkOffRate{500};
     unsigned long _blinkOnRate{500};
-    unsigned long _blinkTimer{0};
-
+    unsigned long _blinkRatesGCD{500};  //Holds the value for the minimum timer checking the change ON/OFF of the blinking, 
+                                        //saving unneeded timer interruptions, and without the need of the std::gcd function
     String _charSet{"0123456789AabCcdEeFGHhIiJLlnOoPqrStUuY-_=~* ."}; // for using indexOf() method
     uint8_t _charLeds[45] = {   //Values valid for a Common Anode display. For a Common Cathode display values must be logically bit negated
         0xC0, // 0
@@ -94,31 +101,29 @@ protected:
     String _zeroPadding{""};
     String _spacePadding{""};
 
+    unsigned long blinkTmrGCD(unsigned long blnkOnTm, unsigned long blnkOffTm);
+    void restoreDspBuff();
+    void saveDspBuff();
     void setAttrbts();
-    void fastSend(uint8_t content);
-    void send(const uint8_t &content);
     void updBlinkState();
     void updWaitState();
-
 public:
-    SevenSeg74HC595();
-    SevenSeg74HC595(uint8_t sclk, uint8_t rclk, uint8_t dio, bool commAnode = true, const uint8_t dspDigits = 4);
-    ~SevenSeg74HC595();
-    bool begin();
+    SevenSegDisplays();
+    SevenSegDisplays(SevenSegDispHw dspUndrlHw);
+    ~SevenSegDisplays();
     bool blink();
     bool blink(const unsigned long &onRate, const unsigned long &offRate = 0);
     void clear();
     bool doubleGauge(const int &levelLeft, const int &levelRight, char labelLeft = ' ', char labelRight = ' ');
-    void fastRefresh();
-    void fastSend(const uint8_t &segments, const uint8_t &port);
     bool gauge(const int &level, char label = ' ');
     bool gauge(const double &level, char label = ' ');
     uint8_t getDigitsQty();
     uint32_t getDspValMax();
     uint32_t getDspValMin();
-    uint8_t getInstanceNbr();
+    uint16_t getInstanceNbr();
     unsigned long getMaxBlinkRate();
     unsigned long getMinBlinkRate();
+    bool isBlank();
     bool isBlinking();
     bool isWaiting();
     bool noBlink();
@@ -126,50 +131,44 @@ public:
     bool print(String text);
     bool print(const int32_t &value, bool rgtAlgn = false, bool zeroPad = false);
     bool print(const double &value, const unsigned int &decPlaces, bool rgtAlgn = false, bool zeroPad = false);
-    void refresh();
     void resetBlinkMask();
-    void send(const uint8_t &segments, const uint8_t &port);
-    void setBlinkMask(const bool blnkPort[]);
+    void setBlinkMask(const bool* newBlnkMsk);
     bool setBlinkRate(const unsigned long &newOnRate, const unsigned long &newOffRate = 0);
-    bool setDigitsOrder(uint8_t* newOrderPtr);
     bool setWaitChar (const char &newChar);
     bool setWaitRate(const unsigned long &newWaitRate);
-    bool stop();
-    bool wait(const unsigned long &newWaitRate = 0);
+    bool wait();
+    bool wait(const unsigned long &newWaitRate);
     bool write(const uint8_t &segments, const uint8_t &port);
     bool write(const String &character, const uint8_t &port);
-
 };
 
 //============================================================> Class declarations separator
 
 class ClickCounter{
 private:
-    SevenSeg74HC595 _display;
+    SevenSegDisplays _display;
     int _count{0};
     int _beginStartVal{0};
     bool _countRgthAlgn{true};
     bool _countZeroPad{false};
-
 public:
     ClickCounter(uint8_t ccSclk, uint8_t ccRclk, uint8_t ccDio, bool rgthAlgn = true, bool zeroPad = false, bool commAnode = true, const uint8_t dspDigits = 4);
     ~ClickCounter();
     bool blink();
     bool blink(const unsigned long &onRate, const unsigned long &offRate = 0);
     void clear();
-    bool countBegin(int32_t startVal = 0);
+    bool countBegin(int32_t startVal = 0);  //To be analyzed it's current need
     bool countDown(int32_t qty = 1);
     bool countReset();
     bool countRestart(int32_t restartValue = 0);
-    bool countStop();
+    bool countStop();   //To be analyzed it's current need
     bool countToZero(int32_t qty = 1);
     bool countUp(int32_t qty = 1);
     int32_t getCount();
     int32_t getStartVal();
     bool noBlink();
     bool setBlinkRate(const unsigned long &newOnRate, const unsigned long &newOffRate = 0);
-    bool updDisplay();
-
+    bool updDisplay();  //To be analyzed it's current need
 };
 
 #endif

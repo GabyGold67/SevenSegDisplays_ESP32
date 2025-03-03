@@ -1,4 +1,4 @@
-v1.3.0 Update
+v1.3.0 Update - Last backwards compatible release
 _ Changed the relation between ClickCounter and TM74HC595LedTube classes, from Inheritance to Dependency, as the needed methods to achieve the change were progresively added.
 _ getDspValMax() and getDspValMin() methods added, as the v2.0.0 update gave the possibility to instantiate different lenght displays, the minimum and maximum values representable by the display are now instantiation dependant. These methods give the resulting values for the integer range displayable.
 _ Minor debug in counter class limit checking corrected.

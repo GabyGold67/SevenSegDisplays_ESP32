@@ -1,5 +1,5 @@
 /*
-  uler8BtisESP32.ino - Example file to demonstrate SevenSeg74HC595 class use with a single display
+  ruler8BtisESP32.ino - Example file to demonstrate SevenSeg74HC595 class use with a single display
   Created by Gabriel D. Goldman, May, 2023.
   Updated by Gabriel D. Goldman, December, 2023.
   Released into the public domain in accordance with "GPL-3.0-or-later" license terms.
