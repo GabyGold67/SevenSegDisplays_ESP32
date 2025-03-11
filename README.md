@@ -145,7 +145,7 @@ Displays a basic graphical representation of the level of fulfillment or complet
 ### Parameters:  
 **levelLeft:** The integer value to display must be in the range 0 <= level <= 3 for the two leftside 7 segments displays.  
 **levelRight:** The integer value to display must be in the range 0 <= level <= 3 for the two rightside 7 segments displays.  
-**labelLeft:** A char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the leftmost digit of the display. The character must be one of the "displayable" characters, as listed in the **`.print()`** method description.
+**labelLeft:** A char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the leftmost digit of the display. The character must be one of the "displayable" characters, as listed in the **`.print()`** method description.  
 **labelRight:** A char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the position left to the **levelRight** display, just before the levelRight value. The character must be one of the "displayable" characters, as listed in the **`.print()`** method description.
 ### Return value:  
 true: If the values could be represented.  

@@ -112,8 +112,8 @@ bool SevenSegDynamic::begin(){
 /*void SevenSegDisplays::fastRefresh(){
    bool tmpLogic {true};
 
-   updBlinkState();
-   updWaitState();
+   _updBlinkState();
+   _updWaitState();
    if ((_blinking == false) || (_blinkShowOn == true)) {
     //   send(*(_dspBuffPtr + _firstRefreshed), uint8_t(1) << *(_digitPosPtr + _firstRefreshed));
    }
