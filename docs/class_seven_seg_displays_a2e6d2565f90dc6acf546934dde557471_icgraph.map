@@ -1,0 +1,17 @@
+<map id="SevenSegDisplays::noWait" name="SevenSegDisplays::noWait">
+<area shape="rect" id="Node000001" title="Exits the Waiting mode" alt="" coords="668,68,849,95"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#aad6eac4fa55968318f6d0c1e4e80cb8e" title="Class destructor." alt="" coords="468,31,608,73"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="652,70,608,64,609,59,653,65"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string." alt="" coords="455,97,620,124"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="653,98,621,102,621,97,652,93"/>
+<area shape="rect" id="Node000004" href="$class_seven_seg_displays.html#aa74bbf6a2436ea01c170459ef1da5fbe" title="Displays a basic graphical representation of the level of fulfillment or completeness of two segmente..." alt="" coords="229,5,407,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="471,94,454,88,406,62,379,51,381,46,408,58,456,83,473,89"/>
+<area shape="rect" id="Node000005" href="$class_seven_seg_displays.html#aa00c8c2fbca4a0068590ef62de28f198" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ..." alt="" coords="230,72,406,99"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="439,102,406,98,406,93,440,97"/>
+<area shape="rect" id="Node000007" href="$class_seven_seg_displays.html#a57d180fb4339fe2359cc864660a765ac" title="Displays a floating point value." alt="" coords="235,123,400,149"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="440,125,401,129,401,124,440,119"/>
+<area shape="rect" id="Node000008" href="$class_seven_seg_displays.html#a4858a1c2efaf8a7d0e67297948937d7c" title="Displays an integer value as long as the length representation fits the available space of the displa..." alt="" coords="235,173,400,200"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="490,133,408,164,371,175,370,170,406,159,488,128"/>
+<area shape="rect" id="Node000006" href="$class_seven_seg_displays.html#a6fea06785902000457c1105c78d85093" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ..." alt="" coords="5,72,181,99"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="215,88,181,88,181,83,215,83"/>
+</map>

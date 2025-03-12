@@ -324,7 +324,7 @@ Stops the display blinking, if it was doing so, leaving the display turned on.
 **None**  
 ### Return value:  
 true: If the display was set to blink, and the blinking is stopped.   
-false: If the display was not set to blink, no changes will be done.
+false: If the display was not set to blink, no changes will be done.  
 ### Use example:  
 **`myLedDisp.noBlink();`**
 

@@ -97,7 +97,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title"><b>SevenSegDisplays: A Seven Segments Led Multidigits and Multidisplay easy to use library</b> </div></div>
+  <div class="headertitle"><div class="title"><b><a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a>: A Seven Segments Led Multidigits and Multidisplay easy to use library</b> </div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md__c_1_2_users_2_dev_padawan_2_documents_2_my_01_projects_2_training_01_projects_2_libs_dev___e_s_p32_2lib_2_seven_seg_displays___e_s_p32_2_r_e_a_d_m_e"></a></p>
@@ -269,7 +269,8 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <p>Displays a basic graphical representation of the level of fulfillment or completeness of two segmented values or tasks, gives a general fast notion on the matter, as a battery charge level, liquids deposit level, time remaining, tasks completeness and so on. The levels are represented by the horizontal segments (0, 1, 2 or 3 from bottom to top), and a character might be added before each of the graphical representations to give an indication of what the display is showing, passed through the <b>labelLeft</b> and <b>labelRight</b> parameters. As four 7 segments digit ports wiil be used, this method only applies to displays with 4 to 8 LED digits, the display is splitted in two sectors, the left side and the right side, and each one of them must have a valid value (0 &lt;= value &lt;= 3) to enable them to be displayed, and might have (or not) a single displayable character to give a visual hint to what the value is showing. For more information check the <b>gauge()</b> method. </p><h3>Parameters:</h3>
 <p><b>levelLeft:</b> The integer value to display must be in the range 0 &lt;= level &lt;= 3 for the two leftside 7 segments displays. <br  />
  <b>levelRight:</b> The integer value to display must be in the range 0 &lt;= level &lt;= 3 for the two rightside 7 segments displays. <br  />
- <b>labelLeft:</b> A char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the leftmost digit of the display. The character must be one of the "displayable" characters, as listed in the <b><code>.print()</code></b> method description. <b>labelRight:</b> A char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the position left to the <b>levelRight</b> display, just before the levelRight value. The character must be one of the "displayable" characters, as listed in the <b><code>.print()</code></b> method description. </p><h3>Return value:</h3>
+ <b>labelLeft:</b> A char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the leftmost digit of the display. The character must be one of the "displayable" characters, as listed in the <b><code>.print()</code></b> method description. <br  />
+ <b>labelRight:</b> A char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the position left to the <b>levelRight</b> display, just before the levelRight value. The character must be one of the "displayable" characters, as listed in the <b><code>.print()</code></b> method description. </p><h3>Return value:</h3>
 <p>true: If the values could be represented. <br  />
  false: Otherwise, being that the <b>levelLeft</b> and/or <b>levelRight</b> parameter was out of range and/or the <b>labelLeft</b> and/or <b>labelRight</b> parameter was not in the list of displayable characters, and the display will be blanked.</p>
 <h3>Use example:</h3>
@@ -424,7 +425,8 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <p><b>None</b> <br  />
  </p><h3>Return value:</h3>
 <p>true: If the display was set to blink, and the blinking is stopped. <br  />
- false: If the display was not set to blink, no changes will be done. </p><h3>Use example:</h3>
+ false: If the display was not set to blink, no changes will be done. <br  />
+ </p><h3>Use example:</h3>
 <p><b><code>myLedDisp.noBlink();</code></b></p>
 <hr  />
  <h3><b>noWait</b>();</h3>

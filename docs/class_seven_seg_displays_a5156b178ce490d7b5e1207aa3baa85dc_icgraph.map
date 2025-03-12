@@ -1,0 +1,5 @@
+<map id="SevenSegDisplays::setBlinkRate" name="SevenSegDisplays::setBlinkRate">
+<area shape="rect" id="Node000001" title="Changes the time parameters to use for the display blinking of the contents it shows." alt="" coords="221,5,436,32"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#ade8596c25d7c6f2976422ef71a565508" title="Makes the display blink the contents it is showing." alt="" coords="5,5,173,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="205,21,173,21,173,16,205,16"/>
+</map>

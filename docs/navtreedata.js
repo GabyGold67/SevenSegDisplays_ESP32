@@ -26,6 +26,14 @@ var NAVTREE =
 [
   [ "Seven Segments Displays Agnostic Library for ESP32 (Arduino)", "index.html", [
     [ "<strong>SevenSegDisplays: A Seven Segments Led Multidigits and Multidisplay easy to use library</strong>", "index.html", null ],
+    [ "Classes", "annotated.html", [
+      [ "Class List", "annotated.html", "annotated_dup" ],
+      [ "Class Index", "classes.html", null ],
+      [ "Class Members", "functions.html", [
+        [ "All", "functions.html", null ],
+        [ "Functions", "functions_func.html", null ]
+      ] ]
+    ] ],
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ]
     ] ]
@@ -34,7 +42,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"dir_68267d1309a1af8e8297ef4c3efbcdba.html"
+"_seven_seg_displays_8cpp.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

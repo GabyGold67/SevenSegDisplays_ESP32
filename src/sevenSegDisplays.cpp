@@ -1,8 +1,24 @@
+/**
+ * @file SevenSegDisplays.cpp
+ * @brief Code file for the SevenSegDisplays_ESP32 library 
+ * 
+ * @details The library provides a common API and tools to generate and manage contents formatting for seven segments displays.
+ * 
+ * @author Gabriel D. Goldman
+ * 
+ * @version 3.0.0
+ * 
+ * @date First release: 20/12/2023 
+ *       Last update:   12/03/2025 15:30 (GMT+0200)
+ * 
+ * @copyright Copyright (c) 2025  GPL-3.0 license
+ *******************************************************************************
+ */
 #include "sevenSegDisplays.h"
 
 uint8_t SevenSegDisplays::_displaysCount = 0;
-uint16_t SevenSegDisplays::_dspSerialNum = 0;
-uint8_t SevenSegDisplays::_dspPtrArrLngth = MAX_DISPLAYS_QTY;
+uint16_t SevenSegDisplays::_dspLastSerialNum = 0;
+uint8_t SevenSegDisplays::_dspPtrArrLngth = 0;
 SevenSegDisplays** SevenSegDisplays::_instancesLstPtr = nullptr;
 
 TimerHandle_t SevenSegDisplays::_blinkTmrHndl = NULL;
@@ -25,7 +41,7 @@ SevenSegDisplays::SevenSegDisplays(SevenSegDispHw dspUndrlHw)
       _dspBuffPtr  = new uint8_t[_dspDigitsQty];
       _blinkMaskPtr = new bool[_dspDigitsQty];
       _dspUndrlHw.setDspBuffPtr(_dspBuffPtr); //Indicate the hardware where de data to display is located
-      _dspInstNbr = _dspSerialNum++; //This value is always incremented, as it's not related to the active objects but to amount of different displays created
+      _dspInstNbr = _dspLastSerialNum++; //This value is always incremented, as it's not related to the active objects but to amount of different displays created
       ++_displaysCount;  //This keeps the count of instantiated SevenSegDisplays objects
       _dspInstance = this;
       for (uint8_t i{0}; i < _dspPtrArrLngth; i++){
@@ -66,7 +82,7 @@ bool SevenSegDisplays::blink(){
          //Create a valid unique Name for identifying the timer created
          char blnkTmrName[15];
          char dspSerialNumChar[3]{};
-         sprintf(dspSerialNumChar, "%0.2d", (int)_dspSerialNum);
+         sprintf(dspSerialNumChar, "%0.2d", (int)_dspLastSerialNum);
          strcpy(blnkTmrName, "Disp");
          strcat(blnkTmrName, dspSerialNumChar);
          strcat(blnkTmrName, "blnk_tmr");
@@ -280,12 +296,12 @@ uint8_t SevenSegDisplays::getDigitsQty(){
    return _dspDigitsQty;
 }
 
-uint32_t SevenSegDisplays::getDspValMax(){
+int32_t SevenSegDisplays::getDspValMax(){
 
    return _dspValMax;
 }
 
-uint32_t SevenSegDisplays::getDspValMin(){
+int32_t SevenSegDisplays::getDspValMin(){
 
    return _dspValMin;
 }
@@ -738,7 +754,7 @@ bool SevenSegDisplays::wait(){
       //Create a valid unique Name for identifying the timer created
       char waitTmrName[15];
       char dspSerialNumChar[3]{};
-      sprintf(dspSerialNumChar, "%0.2d", (int)_dspSerialNum);
+      sprintf(dspSerialNumChar, "%0.2d", (int)_dspLastSerialNum);
       strcpy(waitTmrName, "Disp");
       strcat(waitTmrName, dspSerialNumChar);
       strcat(waitTmrName, "wait_tmr");

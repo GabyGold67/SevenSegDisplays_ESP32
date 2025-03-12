@@ -1,0 +1,5 @@
+<map id="SevenSegDisplays::gauge" name="SevenSegDisplays::gauge">
+<area shape="rect" id="Node000001" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ..." alt="" coords="229,5,404,32"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#a6fea06785902000457c1105c78d85093" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ..." alt="" coords="5,5,181,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="213,21,181,21,181,16,213,16"/>
+</map>

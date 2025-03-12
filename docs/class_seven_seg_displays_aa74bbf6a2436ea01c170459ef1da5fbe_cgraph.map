@@ -1,0 +1,13 @@
+<map id="SevenSegDisplays::doubleGauge" name="SevenSegDisplays::doubleGauge">
+<area shape="rect" id="Node000001" title="Displays a basic graphical representation of the level of fulfillment or completeness of two segmente..." alt="" coords="5,23,184,65"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#a67a533e8239853768391bfe513fc318e" title="Clears the display, turning off all the segments and dots." alt="" coords="232,5,400,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,31,216,27,217,33,184,36"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string." alt="" coords="233,56,398,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="184,52,218,55,217,61,184,57"/>
+<area shape="rect" id="Node000004" href="$class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing." alt="" coords="456,5,623,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="378,53,462,33,463,39,379,58"/>
+<area shape="rect" id="Node000005" href="$class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="448,56,631,83"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="399,67,432,67,432,72,399,72"/>
+<area shape="rect" id="Node000006" href="$class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Exits the Waiting mode" alt="" coords="450,107,630,133"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="379,81,463,100,462,105,378,86"/>
+</map>

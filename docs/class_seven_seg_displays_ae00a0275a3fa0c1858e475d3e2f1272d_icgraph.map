@@ -1,0 +1,5 @@
+<map id="SevenSegDisplays::wait" name="SevenSegDisplays::wait">
+<area shape="rect" id="Node000001" title="Makes the display enter the &quot;Waiting mode&quot;" alt="" coords="218,5,382,32"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#a25fe31c0ee20fd4dfb96730b05776c28" title="Makes the display enter the &quot;Waiting mode&quot;" alt="" coords="5,5,170,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="202,21,170,21,170,16,202,16"/>
+</map>
