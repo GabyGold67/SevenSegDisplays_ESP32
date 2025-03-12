@@ -345,30 +345,29 @@ public:
      */
     bool noWait();
     /**
-     * @brief Displays the text string.
+     * @brief Displays a text string.
      * 
-     * The text string if it contains all "displayable" characters, which are the ones included in the following list: **0123456789AabCcdEeFGHhIiJLlnOoPqrStUuY-_.** and the **space**. There are other special characters displayable, details in the notes.  
+     * The text string must contains all "displayable" characters, which are the ones included in the following list: **0123456789AabCcdEeFGHhIiJLlnOoPqrStUuY-_.** and the **space**. There are other special characters displayable, details in the notes.  
      * 
      * @param text String, up to **dspDigits** displayable characters long PLUS usable dots, all characters included in the representable characters list. Each valid character might be followed by a "." if needed, without being counted as a character, even spaces and special chars. If two or more consecutive dots are passed, an intermediate space is considered to be included between each pair of them, and that space counts as one of the available characters to display.  
      * 
-     * @retval true If the text could be represented.  
-     * @retval false Otherwise, and the display will be blanked.  
+     * @retval true If the text complies with the requirements to be represented. The text string will be displayed.   
+     * @retval false Otherwise. The display will be blanked.  
      * 
      * @note There are other 3 characters that can be represented in the display, but the conversion from a character to use while programming is "host language setting dependant", so those where assigned to available ASCII non displayable characters of easy access in any keyboard layout in most languages, they can be used as part of the text string to display, and they are:  
-     * **=** Builds a character formed by lighting the lower 2 horizontal segments of the digit display, can be described as a "lower equal" symbol.  
-     * **~** Builds a character formed by lighting the 3 horizontal segments of the digit display, can be described as an "equivalent" symbol.  
-     * **'*'** (asterisk) Builds a character by lighting the upper 4 segments, forming a little square, can be described as the "degrees" symbol or º.  
-
+     * **=** Builds a character formed by lighting the lower 2 horizontal segments (the d and g segments) of the digit display, can be described as a "lower equal" symbol.    
+     * **~** Builds a character formed by lighting the 3 horizontal segments (the a, d and g segments) of the digit display, can be described as an "equivalent" symbol.  
+     * **'*'** (asterisk) Builds a character by lighting the upper 4 segments (the a, b, f and g segments), forming a little square, can be described as the "degrees" symbol or º. 
      */
     bool print(String text);
     /**
      * @brief Displays an integer value as long as the length representation fits the available space of the display.  
      * 
-     * @param value The integer value to display which must be in the range (-1)*(pow(10, (dspDigits - 1)) - 1) <= value <= (pow(10, dspDigits) - 1).  
+     * @param value The integer value to display which must be in the range (-1)*(pow(10, (dspDigits - 1)) - 1) <= value <= (pow(10, dspDigits) - 1), or _dspValMin <= value <= _dspValMax.  
      * @param rgtAlgn Boolean, optional parameter (if not specified the default value, false, will be assumed), indicates if the represented value must be displayed right aligned, with the missing heading characters being completed with spaces or zeros, depending in the **zeroPad** optional parameter. When a negative value is displayed and it's less than (dspDigits - 1) digits long, a right aligned display will keep the '-' sign in the leftmost position, and the free space to the leftmost digit will be filled with spaces or zeros, depending in the **zeroPad** optional parameter.  
      * @param zeroPad Boolean, optional parameter (if not specified the default value, false, will be assumed), indicates if the heading free spaces of the integer right aligned displayed must be filled with zeros (true) or spaces (false). In the case of a negative integer the spaces or zeros will fill the gap between the '-' sign kept in the leftmost position, and the first digit.  
      * @return true If the value could be represented.  
-     * @return false If the value couldn't be represented. The display will be blanked.  
+     * @return false If the value couldn't be represented as it was out of the valid range. The display will be blanked.  
      */
     bool print(const int32_t &value, bool rgtAlgn = false, bool zeroPad = false);
     /**
@@ -376,13 +375,13 @@ public:
      * 
      * The floating point value will be displayed as long as the length representation fits the available space of the display. If the integer part of value is not in the displayable range or if the sum of the spaces needed by the integer part plus the indicated decimal places to display is greater than the available digits space, the **`print()`** will fail, returning a false value and clearing the display.
      * 
-     * @param value The floating point value which must be in the range ((-1)*(pow(10, ((dspDigits - decPlaces) - 1)) - 1)) <= value <= (pow(10, (dspDigits - decPlaces)) - 1).  
+     * @param value The floating point value which must be in the range ((-1)*(pow(10, ((dspDigits - decPlaces) - 1)) - 1)) <= value <= (pow(10, (dspDigits - decPlaces)) - 1), or _dspValMin <= value <= _dspValMax.  
      * @param decPlaces Decimal places to be displayed after the decimal point, ranging 0 <= decPlaces < dspDigits, selecting 0 value will display the number as an integer, with no '.' displayed. In any case the only modification that will be applied if value has a decimal part longer than the decPlaces number of digits is **truncation**, if any other rounding criteria is desired the developer must apply it to **value** before calling this method.  
      * @param rgtAlgn Boolean, optional parameter (if not specified the default value, false, will be assumed), indicates if the represented value must be displayed right aligned, with the missing heading characters being completed with spaces or zeros, depending in the zeroPad optional parameter. When a negative value is displayed and it's less than (dspDigits - 1) digits long, a right aligned display will keep the '-' sign in the leftmost position, and the free space to the leftmost digit will be filled with spaces or zeros, depending in the zeroPad optional parameter.  
      * @param zeroPad Boolean, optional parameter (if not specified the default value, false, will be assumed), indicates if the heading free spaces of the value right aligned displayed must be filled with zeros (true) or spaces (false). In the case of a negative value the spaces or zeros will fill the gap between the '-' sign kept in the leftmost position, and the first digit.  
      * 
      * @retval true The value could be represented.  
-     * @retval false The value couldn't be represented. The display will be blanked.  
+     * @retval false The value couldn't be represented. The display is blanked.  
      */
     bool print(const double &value, const unsigned int &decPlaces, bool rgtAlgn = false, bool zeroPad = false);
     /**
@@ -394,7 +393,7 @@ public:
     /**
      * @brief Sets a new **blinking mask** for the display.  
      * 
-     * The blinking mask indicates which digits will be involved when a **`blink()`** method is invoked. Indicating true for a digit makes it blink when the method is called, indicating false makes it display steady independently of the other digits. The parameter is positional referenced to the display, and for ease of use the index numbers of the array indicate their position relative to the rightmost digit (blnkPort0). The mask might be reset to its original value (all digits set to blink) by using this method with all parameters set to **true** or by using the **`.resetBlinkMask()`** method.  
+     * The blinking mask indicates which digits will be involved when a **`blink()`** method is invoked. Indicating true for a digit makes it blink when the method is called, indicating false makes it display steady independently of the other digits. The parameter is positional referenced to the display, and for ease of use the index numbers of the array indicate their position relative to the rightmost digit (blnkPort0). The mask might be reset to its original value (all digits set to blink) by using this method with all parameters set to **true** or by using the **`resetBlinkMask()`** method.  
      * 
      * @param newBlnkMsk Array of booleans of length **dspDigits**, indexes are positional referenced to the display, indicating each one which digits must blink after a **`blink()`** method is invoked (true) or stay steady (false). The indexes valid range is 0 <= index <= (dspDigits-1), corresponding the [0] position withe the rightmost display port, the [1] position the second from the right and so on.  
      */
@@ -402,12 +401,12 @@ public:
     /**
      * @brief Changes the time parameters to use for the display blinking of the contents it shows.  
      * 
-     * The parameters change will take immediate effect, either if the display is already blinking or not, in the latter case the parameters will be the ones used when a **`blink()`** method is called without parameters. The blinking will be **symmetrical** if only one parameter is passed, **asymmetrical** if two different parameters are passed, meaning that the time the display shows the contents and the time the display is blank will be equal (symmetrical) or not equal (asymmetrical), depending of those two parameters. The blink rate set will be kept after a **`.noBlink()`** or new **`.blink()`** without parameters call is done, until it is modified with a new **`.setBlinkRate()`** call, or it is restarted by a **`.blink()`** with parameters. Note that to restart the blinking with a **`.blink()`** the service must first be stopped, as the method makes no changes if the blinking service was already running.  
+     * The parameters change will take immediate effect, either if the display is already blinking or not, in the latter case the parameters will be the ones used when a **`blink()`** method is called without parameters. The blinking will be **symmetrical** if only one parameter is passed, **asymmetrical** if two different parameters are passed, meaning that the time the display shows the contents and the time the display is blank will be equal (symmetrical) or not equal (asymmetrical), depending of those two parameters. The blink rate set will be kept after a **`noBlink()`** or new **`blink()`** without parameters call is done, until it is modified with a new **`setBlinkRate()`** call, or it is restarted by a **`blink()`** with parameters. Note that to restart the blinking with a **`blink()`** the service must first be stopped, as the method makes no changes if the blinking service was already running.  
      * 
      * @param newOnRate unsigned long integer containing the time (in milliseconds) the display must stay on, the value must be in the range _minBlinkRate <= onRate <= _maxBlinkRate. Those built-in values can be known by the use of the **`getMinBlinkRate()`** and the **`getMaxBlinkRate()`** methods.  
      * @param newOffRate optional unsigned long integer containing the time (in milliseconds) the display must stay off, the value must be in the range _minBlinkRate <= offRate <= _maxBlinkRate. Those built-in values can be known by the use of the **`getMinBlinkRate()`** and the **`getMaxBlinkRate()`** methods. If no offRate value is provided the method will assume it's a symmetric blink call and use a value of offRate equal to the value passed by onRate.  
      * 
-     * @return true the parameter or parameters passed are within the valid range, and the change will take effect immediately.  
+     * @return true The parameter or parameters passed are within the valid range, The change will take effect immediately.  
      * @return false One or more of the parameters passed were out of range. The rate change would not be made for none of the parameters.  
      */
     bool setBlinkRate(const unsigned long &newOnRate, const unsigned long &newOffRate = 0);
@@ -424,7 +423,7 @@ public:
     /**
      * @brief Changes the timing parameter used to show the "progress ongoing bar advancement" speed.  
      * 
-     * The parameter change will take immediate effect, either if the display is already in wait mode or not, in the latter case the parameter will be the one used when a **`wait()`** method is called without parameters. The wait rate set will be kept after a **`.noWait()`** or new **`.wait()`** without parameters call is done, until it is modified with a new **`.setWaitRate()`** call, or it is restarted by a **`.wait()`** with parameters. Note that to restart the waiting with a **`.wait()`** the service must first be stopped, as the method makes no changes if the waiting service was already running.  
+     * The parameter change will take immediate effect, either if the display is already in wait mode or not, in the latter case the parameter will be the one used when a **`wait()`** method is called without parameters. The wait rate set will be kept after a **`noWait()`** or new **`wait()`** without parameters call is done, until it is modified with a new **`setWaitRate()`** call, or it is restarted by a **`wait()`** with parameters. Note that to restart the waiting with a **`wait()`** the service must first be stopped, as the method makes no changes if the waiting service was already running.  
      * 
      * @param newWaitRate unsigned long integer containing the time (in milliseconds) the display must take to advance the next character symbolizing the progress, the value must be in the range _minBlinkRate <= newWaitRate <= _maxBlinkRate. Those values can be known by the use of the **`getMinBlinkRate()`** and the **`getMaxBlinkRate()`** methods.  
      * 
@@ -435,16 +434,16 @@ public:
     /**
      * @brief Makes the display enter the "Waiting mode"  
      * 
-     * While in "Waiting mode" the display shows a simple animated progress bar or "process ongoing bar" until a **`noWait()`** method is invoked. The speed rate for the progress animation starts at a parameter passed rate when the method is invoked, or the last speed set will be used, having a preset value for the first time it's invoked if no parameter is passed. The animation rate can be changed by using the **`.setWaitRate()`** method. The speed rate set will be kept after a **`.noWait()`** or new **`.wait()`** without parameters call is done, until it is modified with a new **`.setWaitRate()`** call, or it is restarted by a **`.wait()`** with a parameter. Note that to restart the waiting with a **`.wait()`** the service must first be stopped, as the method makes no changes if the waiting service was already running.  
+     * While in "Waiting mode" the display shows a simple animated progress bar or "process ongoing bar" until a **`noWait()`** method is invoked. The speed rate for the progress animation starts at a parameter passed rate when the method is invoked, or the last speed set will be used, having a preset value for the first time it's invoked if no parameter is passed. The animation rate can be changed by using the **`setWaitRate()`** method. The speed rate set will be kept after a **`noWait()`** or new **`wait()`** without parameters call is done, until it is modified with a new **`setWaitRate()`** call, or it is restarted by a **`wait()`** with a parameter. Note that to restart the waiting with a **`wait()`** the service must first be stopped, as the method makes no changes if the waiting service was already running.  
      * 
      * @return true The display was not already set to wait (so now the "Waiting state" was started).  
      * @return false The display was already set to wait, and/or the parameter passed was out of range.  
      */
     bool wait();
     /**
-     * @brief Makes the display enter the "Waiting mode"  
+     * @brief Makes the display enter the "Waiting mode" with a specific wait rate 
      * 
-     * While in "Waiting mode" the display shows a simple animated progress bar or "process ongoing bar" until a **`noWait()`** method is invoked. The speed rate for the progress animation starts at a parameter passed rate when the method is invoked, or the last speed set will be used, having a preset value for the first time it's invoked if no parameter is passed. The animation rate can be changed by using the **`.setWaitRate()`** method. The speed rate set will be kept after a **`.noWait()`** or new **`.wait()`** without parameters call is done, until it is modified with a new **`.setWaitRate()`** call, or it is restarted by a **`.wait()`** with a parameter. Note that to restart the waiting with a **`.wait()`** the service must first be stopped, as the method makes no changes if the waiting service was already running.  
+     * The method is similar to the **`wait()`** method, the only difference is that before entering the "Waiting state" a **`setWaitRate()`** is executed, using the provided argument to set the new wait rate.  
      * 
      * @param newWaitRate A new rate for the animated progress bar or "process ongoing bar".  
      * 
@@ -465,7 +464,7 @@ public:
     /**
      * @brief Prints one character to the display, at a designated position (digit or port), without affecting the rest of the characters displayed.
      * 
-     * @param character A single character string that must be displayable, as defined in the **`.print()`** method.  
+     * @param character A single character string that must be displayable, as defined in the **`print()`** method.  
      * @param port unsigned short integer value representing the position or digit where the character will be sent, being the range of valid values 0 <= port <= (dspDigits - 1), the 0 value is the rightmost digit, the 1 value the second from the right and so on.
      * 
      * @retval true **character** is a displayable one char string, and **port** value is in the range 0 <= value <= (dspDigits - 1).  
