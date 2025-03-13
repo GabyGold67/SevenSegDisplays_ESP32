@@ -1,5 +1,5 @@
 <map id="SevenSegDisplays::print" name="SevenSegDisplays::print">
-<area shape="rect" id="Node000001" title="Displays the text string." alt="" coords="455,97,620,124"/>
+<area shape="rect" id="Node000001" title="Displays a text string." alt="" coords="455,97,620,124"/>
 <area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#aa74bbf6a2436ea01c170459ef1da5fbe" title="Displays a basic graphical representation of the level of fulfillment or completeness of two segmente..." alt="" coords="229,5,407,48"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="486,94,406,62,376,51,378,46,408,58,488,89"/>
 <area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#aa00c8c2fbca4a0068590ef62de28f198" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ..." alt="" coords="230,72,406,99"/>

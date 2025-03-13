@@ -9,7 +9,7 @@
  * @version 3.0.0
  * 
  * @date First release: 20/12/2023 
- *       Last update:   12/03/2025 15:30 (GMT+0200)
+ *       Last update:   13/03/2025 09:30 (GMT+0200)
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -18,8 +18,8 @@
 
 uint8_t SevenSegDisplays::_displaysCount = 0;
 uint16_t SevenSegDisplays::_dspLastSerialNum = 0;
-uint8_t SevenSegDisplays::_dspPtrArrLngth = 0;
-SevenSegDisplays** SevenSegDisplays::_instancesLstPtr = nullptr;
+// uint8_t SevenSegDisplays::_dspPtrArrLngth = 0;  //FFDR Will become obsolete as the _ssdInstancesLstPtr pointed list becomes dynamic
+SevenSegDisplays** SevenSegDisplays::_ssdInstancesLstPtr = nullptr;
 
 TimerHandle_t SevenSegDisplays::_blinkTmrHndl = NULL;
 TimerHandle_t SevenSegDisplays::_waitTmrHndl = NULL;
@@ -31,10 +31,10 @@ SevenSegDisplays::SevenSegDisplays()
 SevenSegDisplays::SevenSegDisplays(SevenSegDispHw dspUndrlHw)
 :_dspUndrlHw{dspUndrlHw}
 {
-   if(_instancesLstPtr == nullptr){
-      _instancesLstPtr = new SevenSegDisplays*[_dspPtrArrLngth](); //Initializes with all pointers value of 0, it might refuse to evaluate to nullptr, lookout!!
+   if(_ssdInstancesLstPtr == nullptr){
+      _ssdInstancesLstPtr = new SevenSegDisplays*[_dspPtrArrLngth](); //Initializes with all pointers value of 0, it might refuse to evaluate to nullptr, lookout!!
       for(int i{0}; i < _dspPtrArrLngth; i++)
-         *(_instancesLstPtr + i) = nullptr;
+         *(_ssdInstancesLstPtr + i) = nullptr;
    }
    if(_displaysCount < _dspPtrArrLngth){
       _dspDigitsQty = _dspUndrlHw.getDspDigits(); //Now that we know the display size in digits, we can build the needed arrays for data
@@ -45,8 +45,8 @@ SevenSegDisplays::SevenSegDisplays(SevenSegDispHw dspUndrlHw)
       ++_displaysCount;  //This keeps the count of instantiated SevenSegDisplays objects
       _dspInstance = this;
       for (uint8_t i{0}; i < _dspPtrArrLngth; i++){
-         if(*(_instancesLstPtr + i) == nullptr){
-            *(_instancesLstPtr + i) = _dspInstance;
+         if(*(_ssdInstancesLstPtr + i) == nullptr){
+            *(_ssdInstancesLstPtr + i) = _dspInstance;
             break;
          }
       }
@@ -65,8 +65,8 @@ SevenSegDisplays::~SevenSegDisplays(){
     delete [] _blinkMaskPtr;    //Free the resources of the blink mask buffer
     delete [] _dspBuffPtr;  //Free the resources of the display digits buffer
     for(uint8_t i{0}; i<_dspPtrArrLngth; i++){
-        if(*(_instancesLstPtr+  i) == _dspInstance){
-            *(_instancesLstPtr + i) = nullptr;  //Remove the display from the array of active displays pointers
+        if(*(_ssdInstancesLstPtr+  i) == _dspInstance){
+            *(_ssdInstancesLstPtr + i) = nullptr;  //Remove the display from the array of active displays pointers
             break;
         }
     }     
@@ -391,6 +391,78 @@ bool SevenSegDisplays::noWait(){
    }
 
    return result;
+}
+
+void SevenSegDisplays::_popSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDisplays* ssdToPop){
+	int arrSize{0};
+	int auxPtr{0};
+	bool ssdFnd{false};
+	SevenSegDisplays** tmpArrPtr{nullptr};
+
+	while(*(ssdInstncObjLst + arrSize) != nullptr){
+		if(*(ssdInstncObjLst + arrSize) == ssdToPop){
+			ssdFnd = true;
+		}
+		++arrSize;
+	}
+	if(ssdFnd){
+		if(arrSize > 1){
+			tmpArrPtr = new SevenSegDisplays* [arrSize];
+			arrSize = 0;
+			while(*(ssdInstncObjLst + arrSize) != nullptr){
+				if(*(ssdInstncObjLst + arrSize) == ssdToPop){
+					++arrSize;
+					if(*(ssdInstncObjLst + arrSize) == nullptr)
+						break;
+				}
+				*(tmpArrPtr + auxPtr) = *(ssdInstncObjLst + arrSize);
+				++arrSize;
+				++auxPtr;
+			}
+			*(tmpArrPtr + auxPtr) = nullptr;
+			delete [] ssdInstncObjLst;
+			ssdInstncObjLst = tmpArrPtr;
+		}
+		else{
+			delete [] ssdInstncObjLst;
+			ssdInstncObjLst = nullptr;
+		}
+	}
+
+   return;
+}
+
+void SevenSegDisplays::_pushSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDisplays* ssdToPush){
+	int arrSize{0};
+	bool ssdFnd{false};
+	SevenSegDisplays** tmpArrPtr{nullptr};
+
+	if(ssdInstncObjLst == nullptr){	// There are no "Seven Segment displays instances list", so create it			
+		ssdInstncObjLst = new SevenSegDisplays* [1];
+		*ssdInstncObjLst = nullptr;
+	}
+
+	while(*(ssdInstncObjLst + arrSize) != nullptr){
+		if(*(ssdInstncObjLst + arrSize) == ssdToPush){
+			ssdFnd = true;
+			break;
+		}
+		else{
+			++arrSize;
+		}
+	}
+	if(!ssdFnd){
+		tmpArrPtr = new SevenSegDisplays* [arrSize + 2];
+		for (int i{0}; i < arrSize; ++i){
+			*(tmpArrPtr + i) = *(ssdInstncObjLst + i);
+		}
+		*(tmpArrPtr + (arrSize + 0)) = ssdToPush;
+		*(tmpArrPtr + (arrSize + 1)) = nullptr;
+		delete [] ssdInstncObjLst;
+		ssdInstncObjLst = tmpArrPtr;
+	}
+
+   return;
 }
 
 bool SevenSegDisplays::print(String text){

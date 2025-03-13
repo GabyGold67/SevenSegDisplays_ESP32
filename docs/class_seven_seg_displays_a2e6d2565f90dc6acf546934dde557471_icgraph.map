@@ -2,7 +2,7 @@
 <area shape="rect" id="Node000001" title="Exits the Waiting mode" alt="" coords="668,68,849,95"/>
 <area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#aad6eac4fa55968318f6d0c1e4e80cb8e" title="Class destructor." alt="" coords="468,31,608,73"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="652,70,608,64,609,59,653,65"/>
-<area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string." alt="" coords="455,97,620,124"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string." alt="" coords="455,97,620,124"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="653,98,621,102,621,97,652,93"/>
 <area shape="rect" id="Node000004" href="$class_seven_seg_displays.html#aa74bbf6a2436ea01c170459ef1da5fbe" title="Displays a basic graphical representation of the level of fulfillment or completeness of two segmente..." alt="" coords="229,5,407,48"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="471,94,454,88,406,62,379,51,381,46,408,58,456,83,473,89"/>

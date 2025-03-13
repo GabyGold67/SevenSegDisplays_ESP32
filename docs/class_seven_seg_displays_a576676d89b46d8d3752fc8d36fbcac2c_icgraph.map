@@ -2,7 +2,7 @@
 <area shape="rect" id="Node000001" title="Makes the display blink the contents it is showing." alt="" coords="671,123,839,149"/>
 <area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#ade8596c25d7c6f2976422ef71a565508" title="Makes the display blink the contents it is showing." alt="" coords="456,47,623,73"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="705,119,622,88,587,76,589,71,624,83,707,114"/>
-<area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string." alt="" coords="456,97,622,124"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string." alt="" coords="456,97,622,124"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="656,127,622,123,623,118,656,122"/>
 <area shape="rect" id="Node000009" href="$class_seven_seg_displays.html#ac1b3ec1b047588cf8743bef6bf6bd565" title="Prints one character to the display, at a designated position (digit or port), without affecting the ..." alt="" coords="455,148,623,175"/>
 <area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="656,150,624,154,623,149,656,145"/>

@@ -2,7 +2,7 @@
 <area shape="rect" id="Node000001" title="Displays a floating point value." alt="" coords="5,31,171,57"/>
 <area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#a67a533e8239853768391bfe513fc318e" title="Clears the display, turning off all the segments and dots." alt="" coords="219,5,387,32"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,32,203,28,203,33,171,37"/>
-<area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string." alt="" coords="220,56,386,83"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string." alt="" coords="220,56,386,83"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="171,51,205,55,204,60,170,56"/>
 <area shape="rect" id="Node000004" href="$class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing." alt="" coords="443,5,610,32"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="365,53,449,33,450,39,366,58"/>

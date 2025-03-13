@@ -5,7 +5,7 @@
 <area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#aa00c8c2fbca4a0068590ef62de28f198" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ..." alt="" coords="229,56,404,83"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="181,51,213,55,213,60,181,57"/>
 <area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="377,53,460,33,461,39,378,58"/>
-<area shape="rect" id="Node000004" href="$class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string." alt="" coords="454,56,619,83"/>
+<area shape="rect" id="Node000004" href="$class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string." alt="" coords="454,56,619,83"/>
 <area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="404,67,438,67,438,72,404,72"/>
 <area shape="rect" id="Node000005" href="$class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing." alt="" coords="676,5,844,32"/>
 <area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="598,53,682,33,684,39,599,58"/>

@@ -183,7 +183,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr
 <tr class="memdesc:a2e6d2565f90dc6acf546934dde557471"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exits the <b>Waiting mode</b>  <br /></td></tr>
 <tr class="separator:a2e6d2565f90dc6acf546934dde557471"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9d15e373d8a27061ca32e5112379730" id="r_ad9d15e373d8a27061ca32e5112379730"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad9d15e373d8a27061ca32e5112379730">print</a> (String text)</td></tr>
-<tr class="memdesc:ad9d15e373d8a27061ca32e5112379730"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays the text string.  <br /></td></tr>
+<tr class="memdesc:ad9d15e373d8a27061ca32e5112379730"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays a text string.  <br /></td></tr>
 <tr class="separator:ad9d15e373d8a27061ca32e5112379730"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4858a1c2efaf8a7d0e67297948937d7c" id="r_a4858a1c2efaf8a7d0e67297948937d7c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4858a1c2efaf8a7d0e67297948937d7c">print</a> (const int32_t &amp;value, bool rgtAlgn=false, bool zeroPad=false)</td></tr>
 <tr class="memdesc:a4858a1c2efaf8a7d0e67297948937d7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays an integer value as long as the length representation fits the available space of the display. <br  />
@@ -218,8 +218,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr
   <br /></td></tr>
 <tr class="separator:ae00a0275a3fa0c1858e475d3e2f1272d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25fe31c0ee20fd4dfb96730b05776c28" id="r_a25fe31c0ee20fd4dfb96730b05776c28"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a25fe31c0ee20fd4dfb96730b05776c28">wait</a> (const unsigned long &amp;newWaitRate)</td></tr>
-<tr class="memdesc:a25fe31c0ee20fd4dfb96730b05776c28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the display enter the "Waiting mode" <br  />
-  <br /></td></tr>
+<tr class="memdesc:a25fe31c0ee20fd4dfb96730b05776c28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the display enter the "Waiting mode" with a specific wait rate.  <br /></td></tr>
 <tr class="separator:a25fe31c0ee20fd4dfb96730b05776c28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1c77aee430974cc460d259e600668ba" id="r_ab1c77aee430974cc460d259e600668ba"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab1c77aee430974cc460d259e600668ba">write</a> (const uint8_t &amp;segments, const uint8_t &amp;port)</td></tr>
 <tr class="memdesc:ab1c77aee430974cc460d259e600668ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints one character to the display, at a designated position (digit or port), without affecting the rest of the characters displayed.  <br /></td></tr>
@@ -305,7 +304,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Makes the display blink the contents it is showing." alt="" coords="671,123,839,149"/>
 <area shape="rect" href="class_seven_seg_displays.html#ade8596c25d7c6f2976422ef71a565508" title="Makes the display blink the contents it is showing." alt="" coords="456,47,623,73"/>
 <area shape="poly" title=" " alt="" coords="705,119,622,88,587,76,589,71,624,83,707,114"/>
-<area shape="rect" href="class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string." alt="" coords="456,97,622,124"/>
+<area shape="rect" href="class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string." alt="" coords="456,97,622,124"/>
 <area shape="poly" title=" " alt="" coords="656,127,622,123,623,118,656,122"/>
 <area shape="rect" href="class_seven_seg_displays.html#ac1b3ec1b047588cf8743bef6bf6bd565" title="Prints one character to the display, at a designated position (digit or port), without affecting the ..." alt="" coords="455,148,623,175"/>
 <area shape="poly" title=" " alt="" coords="656,150,624,154,623,149,656,145"/>
@@ -418,9 +417,9 @@ Here is the call graph for this function:</div>
  </td></tr>
     <tr><td class="paramname">levelRight</td><td>The integer value to display must be in the range 0 &lt;= level &lt;= 3 for the two rightside 7 segments displays. <br  />
  </td></tr>
-    <tr><td class="paramname">labelLeft</td><td>A char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the leftmost digit of the display. The character must be one of the "displayable" characters, as listed in the <b><code><a class="el" href="#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string.">print()</a></code></b> method description. <br  />
+    <tr><td class="paramname">labelLeft</td><td>A char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the leftmost digit of the display. The character must be one of the "displayable" characters, as listed in the <b><code><a class="el" href="#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string.">print()</a></code></b> method description. <br  />
  </td></tr>
-    <tr><td class="paramname">labelRight</td><td>A char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the position left to the <b>levelRight</b> display, just before the levelRight value. The character must be one of the "displayable" characters, as listed in the <b><code>.<a class="el" href="#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string.">print(String)</a></code></b> method description.</td></tr>
+    <tr><td class="paramname">labelRight</td><td>A char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the position left to the <b>levelRight</b> display, just before the levelRight value. The character must be one of the "displayable" characters, as listed in the <b><code>.<a class="el" href="#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string.">print(String)</a></code></b> method description.</td></tr>
   </table>
   </dd>
 </dl>
@@ -440,7 +439,7 @@ Here is the call graph for this function:</div>
 <area shape="rect" title="Displays a basic graphical representation of the level of fulfillment or completeness of two segmente..." alt="" coords="5,23,184,65"/>
 <area shape="rect" href="class_seven_seg_displays.html#a67a533e8239853768391bfe513fc318e" title="Clears the display, turning off all the segments and dots." alt="" coords="232,5,400,32"/>
 <area shape="poly" title=" " alt="" coords="184,31,216,27,217,33,184,36"/>
-<area shape="rect" href="class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string." alt="" coords="233,56,398,83"/>
+<area shape="rect" href="class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string." alt="" coords="233,56,398,83"/>
 <area shape="poly" title=" " alt="" coords="184,52,218,55,217,61,184,57"/>
 <area shape="rect" href="class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing." alt="" coords="456,5,623,32"/>
 <area shape="poly" title=" " alt="" coords="378,53,462,33,463,39,379,58"/>
@@ -482,7 +481,7 @@ Here is the call graph for this function:</div>
  0.50 &lt;= level &lt; 0.75 for the third level, and <br  />
  0.75 &lt;= level &lt;= 1.00 for the fourth and upper level. <br  />
 </td></tr>
-    <tr><td class="paramname">label</td><td>char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the leftmost digit of the display. The character must be one of the "displayable" characters, as listed in the <b><code><a class="el" href="#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string.">print(String)</a></code></b> method description. <br  />
+    <tr><td class="paramname">label</td><td>char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the leftmost digit of the display. The character must be one of the "displayable" characters, as listed in the <b><code><a class="el" href="#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string.">print(String)</a></code></b> method description. <br  />
 </td></tr>
   </table>
   </dd>
@@ -503,7 +502,7 @@ Here is the call graph for this function:</div>
 <area shape="rect" href="class_seven_seg_displays.html#aa00c8c2fbca4a0068590ef62de28f198" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ..." alt="" coords="229,56,404,83"/>
 <area shape="poly" title=" " alt="" coords="181,51,213,55,213,60,181,57"/>
 <area shape="poly" title=" " alt="" coords="377,53,460,33,461,39,378,58"/>
-<area shape="rect" href="class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string." alt="" coords="454,56,619,83"/>
+<area shape="rect" href="class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string." alt="" coords="454,56,619,83"/>
 <area shape="poly" title=" " alt="" coords="404,67,438,67,438,72,404,72"/>
 <area shape="rect" href="class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing." alt="" coords="676,5,844,32"/>
 <area shape="poly" title=" " alt="" coords="598,53,682,33,684,39,599,58"/>
@@ -541,7 +540,7 @@ Here is the call graph for this function:</div>
   <table class="params">
     <tr><td class="paramname">level</td><td>The integer value to display must be in the range 0 &lt;= level &lt;= 3. <br  />
  </td></tr>
-    <tr><td class="paramname">label</td><td>char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the leftmost digit of the display. The character must be one of the "displayable" characters, as listed in the <b><code><a class="el" href="#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string.">print(String)</a></code></b> method description.</td></tr>
+    <tr><td class="paramname">label</td><td>char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the leftmost digit of the display. The character must be one of the "displayable" characters, as listed in the <b><code><a class="el" href="#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string.">print(String)</a></code></b> method description.</td></tr>
   </table>
   </dd>
 </dl>
@@ -557,7 +556,7 @@ Here is the call graph for this function:</div>
 <area shape="rect" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ..." alt="" coords="5,31,181,57"/>
 <area shape="rect" href="class_seven_seg_displays.html#a67a533e8239853768391bfe513fc318e" title="Clears the display, turning off all the segments and dots." alt="" coords="229,5,397,32"/>
 <area shape="poly" title=" " alt="" coords="180,31,213,27,213,33,181,37"/>
-<area shape="rect" href="class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string." alt="" coords="230,56,396,83"/>
+<area shape="rect" href="class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string." alt="" coords="230,56,396,83"/>
 <area shape="poly" title=" " alt="" coords="181,51,215,55,214,61,180,57"/>
 <area shape="rect" href="class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing." alt="" coords="453,5,620,32"/>
 <area shape="poly" title=" " alt="" coords="375,53,459,33,460,39,376,58"/>
@@ -803,7 +802,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Returns a boolean value indicating if the display is set to "waiting mode" or not. </p>
-<p>Knowing if the display is set to "waiting mode" might be useful as the display will force the mode disabling if a <b><code><a class="el" href="#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string.">print()</a></code></b>, <b><code><a class="el" href="#ab1c77aee430974cc460d259e600668ba" title="Prints one character to the display, at a designated position (digit or port), without affecting the ...">write()</a></code></b>, <b><code><a class="el" href="#aa00c8c2fbca4a0068590ef62de28f198" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ...">gauge()</a></code></b>, etc. methods is invoked.</p>
+<p>Knowing if the display is set to "waiting mode" might be useful as the display will force the mode disabling if a <b><code><a class="el" href="#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string.">print()</a></code></b>, <b><code><a class="el" href="#ab1c77aee430974cc460d259e600668ba" title="Prints one character to the display, at a designated position (digit or port), without affecting the ...">write()</a></code></b>, <b><code><a class="el" href="#aa00c8c2fbca4a0068590ef62de28f198" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ...">gauge()</a></code></b>, etc. methods is invoked.</p>
 <dl class="section return"><dt>Returns</dt><dd>true If the display is set to <b>Waiting mode</b>. <br  />
  </dd>
 <dd>
@@ -846,7 +845,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="671,173,855,200"/>
 <area shape="rect" href="class_seven_seg_displays.html#aad6eac4fa55968318f6d0c1e4e80cb8e" title="Class destructor." alt="" coords="469,56,609,99"/>
 <area shape="poly" title=" " alt="" coords="724,168,622,113,596,102,599,97,625,108,727,163"/>
-<area shape="rect" href="class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string." alt="" coords="456,123,622,149"/>
+<area shape="rect" href="class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string." alt="" coords="456,123,622,149"/>
 <area shape="poly" title=" " alt="" coords="685,172,601,153,602,147,686,167"/>
 <area shape="rect" href="class_seven_seg_displays.html#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;" alt="" coords="457,173,621,200"/>
 <area shape="poly" title=" " alt="" coords="656,189,622,189,622,184,656,184"/>
@@ -864,7 +863,7 @@ Here is the caller graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="463,156,380,175,379,170,462,151"/>
 <area shape="rect" href="class_seven_seg_displays.html#a6fea06785902000457c1105c78d85093" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ..." alt="" coords="5,72,181,99"/>
 <area shape="poly" title=" " alt="" coords="215,88,181,88,181,83,215,83"/>
-<area shape="rect" href="class_seven_seg_displays.html#a25fe31c0ee20fd4dfb96730b05776c28" title="Makes the display enter the &quot;Waiting mode&quot;" alt="" coords="236,224,400,251"/>
+<area shape="rect" href="class_seven_seg_displays.html#a25fe31c0ee20fd4dfb96730b05776c28" title="Makes the display enter the &quot;Waiting mode&quot; with a specific wait rate." alt="" coords="236,224,400,251"/>
 <area shape="poly" title=" " alt="" coords="463,207,380,226,379,221,462,201"/>
 </map>
 </div>
@@ -906,7 +905,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Exits the Waiting mode" alt="" coords="668,68,849,95"/>
 <area shape="rect" href="class_seven_seg_displays.html#aad6eac4fa55968318f6d0c1e4e80cb8e" title="Class destructor." alt="" coords="468,31,608,73"/>
 <area shape="poly" title=" " alt="" coords="652,70,608,64,609,59,653,65"/>
-<area shape="rect" href="class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string." alt="" coords="455,97,620,124"/>
+<area shape="rect" href="class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string." alt="" coords="455,97,620,124"/>
 <area shape="poly" title=" " alt="" coords="653,98,621,102,621,97,652,93"/>
 <area shape="rect" href="class_seven_seg_displays.html#aa74bbf6a2436ea01c170459ef1da5fbe" title="Displays a basic graphical representation of the level of fulfillment or completeness of two segmente..." alt="" coords="229,5,407,48"/>
 <area shape="poly" title=" " alt="" coords="471,94,454,88,406,62,379,51,381,46,408,58,456,83,473,89"/>
@@ -954,10 +953,10 @@ Here is the caller graph for this function:</div>
 
 <p>Displays a floating point value. <br  />
  </p>
-<p>The floating point value will be displayed as long as the length representation fits the available space of the display. If the integer part of value is not in the displayable range or if the sum of the spaces needed by the integer part plus the indicated decimal places to display is greater than the available digits space, the <b><code><a class="el" href="#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string.">print()</a></code></b> will fail, returning a false value and clearing the display.</p>
+<p>The floating point value will be displayed as long as the length representation fits the available space of the display. If the integer part of value is not in the displayable range or if the sum of the spaces needed by the integer part plus the indicated decimal places to display is greater than the available digits space, the <b><code><a class="el" href="#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string.">print()</a></code></b> will fail, returning a false value and clearing the display.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">value</td><td>The floating point value which must be in the range ((-1)*(pow(10, ((dspDigits - decPlaces) - 1)) - 1)) &lt;= value &lt;= (pow(10, (dspDigits - decPlaces)) - 1). <br  />
+    <tr><td class="paramname">value</td><td>The floating point value which must be in the range ((-1)*(pow(10, ((dspDigits - decPlaces) - 1)) - 1)) &lt;= value &lt;= (pow(10, (dspDigits - decPlaces)) - 1), or _dspValMin &lt;= value &lt;= _dspValMax. <br  />
  </td></tr>
     <tr><td class="paramname">decPlaces</td><td>Decimal places to be displayed after the decimal point, ranging 0 &lt;= decPlaces &lt; dspDigits, selecting 0 value will display the number as an integer, with no '.' displayed. In any case the only modification that will be applied if value has a decimal part longer than the decPlaces number of digits is <b>truncation</b>, if any other rounding criteria is desired the developer must apply it to <b>value</b> before calling this method. <br  />
  </td></tr>
@@ -972,7 +971,7 @@ Here is the caller graph for this function:</div>
   <table class="retval">
     <tr><td class="paramname">true</td><td>The value could be represented. <br  />
  </td></tr>
-    <tr><td class="paramname">false</td><td>The value couldn't be represented. The display will be blanked. <br  />
+    <tr><td class="paramname">false</td><td>The value couldn't be represented. The display is blanked. <br  />
  </td></tr>
   </table>
   </dd>
@@ -985,7 +984,7 @@ Here is the call graph for this function:</div>
 <area shape="rect" title="Displays a floating point value." alt="" coords="5,31,171,57"/>
 <area shape="rect" href="class_seven_seg_displays.html#a67a533e8239853768391bfe513fc318e" title="Clears the display, turning off all the segments and dots." alt="" coords="219,5,387,32"/>
 <area shape="poly" title=" " alt="" coords="170,32,203,28,203,33,171,37"/>
-<area shape="rect" href="class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string." alt="" coords="220,56,386,83"/>
+<area shape="rect" href="class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string." alt="" coords="220,56,386,83"/>
 <area shape="poly" title=" " alt="" coords="171,51,205,55,204,60,170,56"/>
 <area shape="rect" href="class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing." alt="" coords="443,5,610,32"/>
 <area shape="poly" title=" " alt="" coords="365,53,449,33,450,39,366,58"/>
@@ -1026,7 +1025,7 @@ Here is the call graph for this function:</div>
  </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">value</td><td>The integer value to display which must be in the range (-1)*(pow(10, (dspDigits - 1)) - 1) &lt;= value &lt;= (pow(10, dspDigits) - 1). <br  />
+    <tr><td class="paramname">value</td><td>The integer value to display which must be in the range (-1)*(pow(10, (dspDigits - 1)) - 1) &lt;= value &lt;= (pow(10, dspDigits) - 1), or _dspValMin &lt;= value &lt;= _dspValMax. <br  />
  </td></tr>
     <tr><td class="paramname">rgtAlgn</td><td>Boolean, optional parameter (if not specified the default value, false, will be assumed), indicates if the represented value must be displayed right aligned, with the missing heading characters being completed with spaces or zeros, depending in the <b>zeroPad</b> optional parameter. When a negative value is displayed and it's less than (dspDigits - 1) digits long, a right aligned display will keep the '-' sign in the leftmost position, and the free space to the leftmost digit will be filled with spaces or zeros, depending in the <b>zeroPad</b> optional parameter. <br  />
  </td></tr>
@@ -1038,7 +1037,7 @@ Here is the call graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>true If the value could be represented. <br  />
  </dd>
 <dd>
-false If the value couldn't be represented. The display will be blanked. <br  />
+false If the value couldn't be represented as it was out of the valid range. The display will be blanked. <br  />
  </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
@@ -1048,7 +1047,7 @@ Here is the call graph for this function:</div>
 <area shape="rect" title="Displays an integer value as long as the length representation fits the available space of the displa..." alt="" coords="5,31,171,57"/>
 <area shape="rect" href="class_seven_seg_displays.html#a67a533e8239853768391bfe513fc318e" title="Clears the display, turning off all the segments and dots." alt="" coords="219,5,387,32"/>
 <area shape="poly" title=" " alt="" coords="170,32,203,28,203,33,171,37"/>
-<area shape="rect" href="class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string." alt="" coords="220,56,386,83"/>
+<area shape="rect" href="class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string." alt="" coords="220,56,386,83"/>
 <area shape="poly" title=" " alt="" coords="171,51,205,55,204,60,170,56"/>
 <area shape="rect" href="class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing." alt="" coords="443,5,610,32"/>
 <area shape="poly" title=" " alt="" coords="365,53,449,33,450,39,366,58"/>
@@ -1076,8 +1075,8 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Displays the text string. </p>
-<p>The text string if it contains all "displayable" characters, which are the ones included in the following list: <b>0123456789AabCcdEeFGHhIiJLlnOoPqrStUuY-_.</b> and the <b>space</b>. There are other special characters displayable, details in the notes. <br  />
+<p>Displays a text string. </p>
+<p>The text string must contains all "displayable" characters, which are the ones included in the following list: <b>0123456789AabCcdEeFGHhIiJLlnOoPqrStUuY-_.</b> and the <b>space</b>. There are other special characters displayable, details in the notes. <br  />
 </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1088,24 +1087,23 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>If the text could be represented. <br  />
+    <tr><td class="paramname">true</td><td>If the text complies with the requirements to be represented. The text string will be displayed. <br  />
  </td></tr>
-    <tr><td class="paramname">false</td><td>Otherwise, and the display will be blanked. <br  />
+    <tr><td class="paramname">false</td><td>Otherwise. The display will be blanked. <br  />
 </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>There are other 3 characters that can be represented in the display, but the conversion from a character to use while programming is "host language setting dependant", so those where assigned to available ASCII non displayable characters of easy access in any keyboard layout in most languages, they can be used as part of the text string to display, and they are: <br  />
- **=** Builds a character formed by lighting the lower 2 horizontal segments of the digit display, can be described as a "lower equal" symbol. <br  />
- **~** Builds a character formed by lighting the 3 horizontal segments of the digit display, can be described as an "equivalent" symbol. <br  />
- <b>'*'</b> (asterisk) Builds a character by lighting the upper 4 segments, forming a little square, can be described as the "degrees" symbol or º. <br  />
- </dd></dl>
+ **=** Builds a character formed by lighting the lower 2 horizontal segments (the d and g segments) of the digit display, can be described as a "lower equal" symbol. <br  />
+ **~** Builds a character formed by lighting the 3 horizontal segments (the a, d and g segments) of the digit display, can be described as an "equivalent" symbol. <br  />
+ <b>'*'</b> (asterisk) Builds a character by lighting the upper 4 segments (the a, b, f and g segments), forming a little square, can be described as the "degrees" symbol or º. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_ad9d15e373d8a27061ca32e5112379730_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_ad9d15e373d8a27061ca32e5112379730_cgraph" alt=""/></div>
 <map name="aclass_seven_seg_displays_ad9d15e373d8a27061ca32e5112379730_cgraph" id="aclass_seven_seg_displays_ad9d15e373d8a27061ca32e5112379730_cgraph">
-<area shape="rect" title="Displays the text string." alt="" coords="5,56,171,83"/>
+<area shape="rect" title="Displays a text string." alt="" coords="5,56,171,83"/>
 <area shape="rect" href="class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing." alt="" coords="227,5,394,32"/>
 <area shape="poly" title=" " alt="" coords="149,53,233,33,234,39,151,58"/>
 <area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="219,56,402,83"/>
@@ -1119,7 +1117,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_ad9d15e373d8a27061ca32e5112379730_icgraph.png" border="0" usemap="#aclass_seven_seg_displays_ad9d15e373d8a27061ca32e5112379730_icgraph" alt=""/></div>
 <map name="aclass_seven_seg_displays_ad9d15e373d8a27061ca32e5112379730_icgraph" id="aclass_seven_seg_displays_ad9d15e373d8a27061ca32e5112379730_icgraph">
-<area shape="rect" title="Displays the text string." alt="" coords="455,97,620,124"/>
+<area shape="rect" title="Displays a text string." alt="" coords="455,97,620,124"/>
 <area shape="rect" href="class_seven_seg_displays.html#aa74bbf6a2436ea01c170459ef1da5fbe" title="Displays a basic graphical representation of the level of fulfillment or completeness of two segmente..." alt="" coords="229,5,407,48"/>
 <area shape="poly" title=" " alt="" coords="486,94,406,62,376,51,378,46,408,58,488,89"/>
 <area shape="rect" href="class_seven_seg_displays.html#aa00c8c2fbca4a0068590ef62de28f198" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ..." alt="" coords="230,72,406,99"/>
@@ -1174,7 +1172,7 @@ Here is the caller graph for this function:</div>
 
 <p>Sets a new <b>blinking mask</b> for the display. <br  />
  </p>
-<p>The blinking mask indicates which digits will be involved when a <b><code><a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a></code></b> method is invoked. Indicating true for a digit makes it blink when the method is called, indicating false makes it display steady independently of the other digits. The parameter is positional referenced to the display, and for ease of use the index numbers of the array indicate their position relative to the rightmost digit (blnkPort0). The mask might be reset to its original value (all digits set to blink) by using this method with all parameters set to <b>true</b> or by using the <b><code>.<a class="el" href="#a71a1b9852c21835fa110ce0e64a0590e" title="Resets the blinking mask.">resetBlinkMask()</a></code></b> method. <br  />
+<p>The blinking mask indicates which digits will be involved when a <b><code><a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a></code></b> method is invoked. Indicating true for a digit makes it blink when the method is called, indicating false makes it display steady independently of the other digits. The parameter is positional referenced to the display, and for ease of use the index numbers of the array indicate their position relative to the rightmost digit (blnkPort0). The mask might be reset to its original value (all digits set to blink) by using this method with all parameters set to <b>true</b> or by using the <b><code><a class="el" href="#a71a1b9852c21835fa110ce0e64a0590e" title="Resets the blinking mask.">resetBlinkMask()</a></code></b> method. <br  />
 </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1207,7 +1205,7 @@ Here is the caller graph for this function:</div>
 
 <p>Changes the time parameters to use for the display blinking of the contents it shows. <br  />
  </p>
-<p>The parameters change will take immediate effect, either if the display is already blinking or not, in the latter case the parameters will be the ones used when a <b><code><a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a></code></b> method is called without parameters. The blinking will be <b>symmetrical</b> if only one parameter is passed, <b>asymmetrical</b> if two different parameters are passed, meaning that the time the display shows the contents and the time the display is blank will be equal (symmetrical) or not equal (asymmetrical), depending of those two parameters. The blink rate set will be kept after a <b><code>.<a class="el" href="#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on.">noBlink()</a></code></b> or new <b><code>.<a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a></code></b> without parameters call is done, until it is modified with a new <b><code>.<a class="el" href="#a5156b178ce490d7b5e1207aa3baa85dc" title="Changes the time parameters to use for the display blinking of the contents it shows.">setBlinkRate()</a></code></b> call, or it is restarted by a <b><code>.<a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a></code></b> with parameters. Note that to restart the blinking with a <b><code>.<a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a></code></b> the service must first be stopped, as the method makes no changes if the blinking service was already running. <br  />
+<p>The parameters change will take immediate effect, either if the display is already blinking or not, in the latter case the parameters will be the ones used when a <b><code><a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a></code></b> method is called without parameters. The blinking will be <b>symmetrical</b> if only one parameter is passed, <b>asymmetrical</b> if two different parameters are passed, meaning that the time the display shows the contents and the time the display is blank will be equal (symmetrical) or not equal (asymmetrical), depending of those two parameters. The blink rate set will be kept after a <b><code><a class="el" href="#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on.">noBlink()</a></code></b> or new <b><code><a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a></code></b> without parameters call is done, until it is modified with a new <b><code><a class="el" href="#a5156b178ce490d7b5e1207aa3baa85dc" title="Changes the time parameters to use for the display blinking of the contents it shows.">setBlinkRate()</a></code></b> call, or it is restarted by a <b><code><a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a></code></b> with parameters. Note that to restart the blinking with a <b><code><a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a></code></b> the service must first be stopped, as the method makes no changes if the blinking service was already running. <br  />
 </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1218,7 +1216,7 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true the parameter or parameters passed are within the valid range, and the change will take effect immediately. <br  />
+<dl class="section return"><dt>Returns</dt><dd>true The parameter or parameters passed are within the valid range, The change will take effect immediately. <br  />
  </dd>
 <dd>
 false One or more of the parameters passed were out of range. The rate change would not be made for none of the parameters. <br  />
@@ -1257,7 +1255,7 @@ Here is the caller graph for this function:</div>
 </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">newChar</td><td>A character the display must use for symbolizing the progress, the value must be in the displayable characters group as explained in the <a class="el" href="#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string.">print()</a> method. <br  />
+    <tr><td class="paramname">newChar</td><td>A character the display must use for symbolizing the progress, the value must be in the displayable characters group as explained in the <a class="el" href="#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string.">print()</a> method. <br  />
  </td></tr>
   </table>
   </dd>
@@ -1287,7 +1285,7 @@ false The parameter passed was invalid, i.e. it was a non displayable character,
 
 <p>Changes the timing parameter used to show the "progress ongoing bar advancement" speed. <br  />
  </p>
-<p>The parameter change will take immediate effect, either if the display is already in wait mode or not, in the latter case the parameter will be the one used when a <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> method is called without parameters. The wait rate set will be kept after a <b><code>.<a class="el" href="#a2e6d2565f90dc6acf546934dde557471" title="Exits the Waiting mode">noWait()</a></code></b> or new <b><code>.<a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> without parameters call is done, until it is modified with a new <b><code>.<a class="el" href="#acd0f00d24dbbaadec3fb06ffb991914c" title="Changes the timing parameter used to show the &quot;progress ongoing bar advancement&quot; speed.">setWaitRate()</a></code></b> call, or it is restarted by a <b><code>.<a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> with parameters. Note that to restart the waiting with a <b><code>.<a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> the service must first be stopped, as the method makes no changes if the waiting service was already running. <br  />
+<p>The parameter change will take immediate effect, either if the display is already in wait mode or not, in the latter case the parameter will be the one used when a <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> method is called without parameters. The wait rate set will be kept after a <b><code><a class="el" href="#a2e6d2565f90dc6acf546934dde557471" title="Exits the Waiting mode">noWait()</a></code></b> or new <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> without parameters call is done, until it is modified with a new <b><code><a class="el" href="#acd0f00d24dbbaadec3fb06ffb991914c" title="Changes the timing parameter used to show the &quot;progress ongoing bar advancement&quot; speed.">setWaitRate()</a></code></b> call, or it is restarted by a <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> with parameters. Note that to restart the waiting with a <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> the service must first be stopped, as the method makes no changes if the waiting service was already running. <br  />
 </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1324,7 +1322,7 @@ false The parameter passed was invalid, i.e. it was a non displayable character,
 
 <p>Makes the display enter the "Waiting mode" <br  />
  </p>
-<p>While in "Waiting mode" the display shows a simple animated progress bar or "process ongoing bar" until a <b><code><a class="el" href="#a2e6d2565f90dc6acf546934dde557471" title="Exits the Waiting mode">noWait()</a></code></b> method is invoked. The speed rate for the progress animation starts at a parameter passed rate when the method is invoked, or the last speed set will be used, having a preset value for the first time it's invoked if no parameter is passed. The animation rate can be changed by using the <b><code>.<a class="el" href="#acd0f00d24dbbaadec3fb06ffb991914c" title="Changes the timing parameter used to show the &quot;progress ongoing bar advancement&quot; speed.">setWaitRate()</a></code></b> method. The speed rate set will be kept after a <b><code>.<a class="el" href="#a2e6d2565f90dc6acf546934dde557471" title="Exits the Waiting mode">noWait()</a></code></b> or new <b><code>.<a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> without parameters call is done, until it is modified with a new <b><code>.<a class="el" href="#acd0f00d24dbbaadec3fb06ffb991914c" title="Changes the timing parameter used to show the &quot;progress ongoing bar advancement&quot; speed.">setWaitRate()</a></code></b> call, or it is restarted by a <b><code>.<a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> with a parameter. Note that to restart the waiting with a <b><code>.<a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> the service must first be stopped, as the method makes no changes if the waiting service was already running. <br  />
+<p>While in "Waiting mode" the display shows a simple animated progress bar or "process ongoing bar" until a <b><code><a class="el" href="#a2e6d2565f90dc6acf546934dde557471" title="Exits the Waiting mode">noWait()</a></code></b> method is invoked. The speed rate for the progress animation starts at a parameter passed rate when the method is invoked, or the last speed set will be used, having a preset value for the first time it's invoked if no parameter is passed. The animation rate can be changed by using the <b><code><a class="el" href="#acd0f00d24dbbaadec3fb06ffb991914c" title="Changes the timing parameter used to show the &quot;progress ongoing bar advancement&quot; speed.">setWaitRate()</a></code></b> method. The speed rate set will be kept after a <b><code><a class="el" href="#a2e6d2565f90dc6acf546934dde557471" title="Exits the Waiting mode">noWait()</a></code></b> or new <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> without parameters call is done, until it is modified with a new <b><code><a class="el" href="#acd0f00d24dbbaadec3fb06ffb991914c" title="Changes the timing parameter used to show the &quot;progress ongoing bar advancement&quot; speed.">setWaitRate()</a></code></b> call, or it is restarted by a <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> with a parameter. Note that to restart the waiting with a <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> the service must first be stopped, as the method makes no changes if the waiting service was already running. <br  />
 </p>
 <dl class="section return"><dt>Returns</dt><dd>true The display was not already set to wait (so now the "Waiting state" was started). <br  />
  </dd>
@@ -1347,7 +1345,7 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="class_seven_seg_displays_ae00a0275a3fa0c1858e475d3e2f1272d_icgraph.png" border="0" usemap="#aclass_seven_seg_displays_ae00a0275a3fa0c1858e475d3e2f1272d_icgraph" alt=""/></div>
 <map name="aclass_seven_seg_displays_ae00a0275a3fa0c1858e475d3e2f1272d_icgraph" id="aclass_seven_seg_displays_ae00a0275a3fa0c1858e475d3e2f1272d_icgraph">
 <area shape="rect" title="Makes the display enter the &quot;Waiting mode&quot;" alt="" coords="218,5,382,32"/>
-<area shape="rect" href="class_seven_seg_displays.html#a25fe31c0ee20fd4dfb96730b05776c28" title="Makes the display enter the &quot;Waiting mode&quot;" alt="" coords="5,5,170,32"/>
+<area shape="rect" href="class_seven_seg_displays.html#a25fe31c0ee20fd4dfb96730b05776c28" title="Makes the display enter the &quot;Waiting mode&quot; with a specific wait rate." alt="" coords="5,5,170,32"/>
 <area shape="poly" title=" " alt="" coords="202,21,170,21,170,16,202,16"/>
 </map>
 </div>
@@ -1369,9 +1367,8 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Makes the display enter the "Waiting mode" <br  />
- </p>
-<p>While in "Waiting mode" the display shows a simple animated progress bar or "process ongoing bar" until a <b><code><a class="el" href="#a2e6d2565f90dc6acf546934dde557471" title="Exits the Waiting mode">noWait()</a></code></b> method is invoked. The speed rate for the progress animation starts at a parameter passed rate when the method is invoked, or the last speed set will be used, having a preset value for the first time it's invoked if no parameter is passed. The animation rate can be changed by using the <b><code>.<a class="el" href="#acd0f00d24dbbaadec3fb06ffb991914c" title="Changes the timing parameter used to show the &quot;progress ongoing bar advancement&quot; speed.">setWaitRate()</a></code></b> method. The speed rate set will be kept after a <b><code>.<a class="el" href="#a2e6d2565f90dc6acf546934dde557471" title="Exits the Waiting mode">noWait()</a></code></b> or new <b><code>.<a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> without parameters call is done, until it is modified with a new <b><code>.<a class="el" href="#acd0f00d24dbbaadec3fb06ffb991914c" title="Changes the timing parameter used to show the &quot;progress ongoing bar advancement&quot; speed.">setWaitRate()</a></code></b> call, or it is restarted by a <b><code>.<a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> with a parameter. Note that to restart the waiting with a <b><code>.<a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> the service must first be stopped, as the method makes no changes if the waiting service was already running. <br  />
+<p>Makes the display enter the "Waiting mode" with a specific wait rate. </p>
+<p>The method is similar to the <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> method, the only difference is that before entering the "Waiting state" a <b><code><a class="el" href="#acd0f00d24dbbaadec3fb06ffb991914c" title="Changes the timing parameter used to show the &quot;progress ongoing bar advancement&quot; speed.">setWaitRate()</a></code></b> is executed, using the provided argument to set the new wait rate. <br  />
 </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1390,7 +1387,7 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_a25fe31c0ee20fd4dfb96730b05776c28_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_a25fe31c0ee20fd4dfb96730b05776c28_cgraph" alt=""/></div>
 <map name="aclass_seven_seg_displays_a25fe31c0ee20fd4dfb96730b05776c28_cgraph" id="aclass_seven_seg_displays_a25fe31c0ee20fd4dfb96730b05776c28_cgraph">
-<area shape="rect" title="Makes the display enter the &quot;Waiting mode&quot;" alt="" coords="5,5,170,32"/>
+<area shape="rect" title="Makes the display enter the &quot;Waiting mode&quot; with a specific wait rate." alt="" coords="5,5,170,32"/>
 <area shape="rect" href="class_seven_seg_displays.html#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;" alt="" coords="218,5,382,32"/>
 <area shape="poly" title=" " alt="" coords="170,16,202,16,202,21,170,21"/>
 <area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="430,5,613,32"/>
@@ -1422,7 +1419,7 @@ Here is the call graph for this function:</div>
 <p>Prints one character to the display, at a designated position (digit or port), without affecting the rest of the characters displayed. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">character</td><td>A single character string that must be displayable, as defined in the <b><code>.<a class="el" href="#ad9d15e373d8a27061ca32e5112379730" title="Displays the text string.">print()</a></code></b> method. <br  />
+    <tr><td class="paramname">character</td><td>A single character string that must be displayable, as defined in the <b><code><a class="el" href="#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string.">print()</a></code></b> method. <br  />
  </td></tr>
     <tr><td class="paramname">port</td><td>unsigned short integer value representing the position or digit where the character will be sent, being the range of valid values 0 &lt;= port &lt;= (dspDigits - 1), the 0 value is the rightmost digit, the 1 value the second from the right and so on.</td></tr>
   </table>

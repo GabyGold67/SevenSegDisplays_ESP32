@@ -174,8 +174,8 @@ void SevenSegDynamic::tmrCbRefreshDyn(TimerHandle_t rfrshTmrCbArg){
    //Timer Callback to keep the display lit by calling each display's fastRefresh() method
     
     for(uint8_t i {0}; i < _dspPtrArrLngth; i++){
-        // if (*(_instancesLstPtr + i) != nullptr)
-            // (*(_instancesLstPtr + i)) -> fastRefresh();
+        // if (*(_ssdInstancesLstPtr + i) != nullptr)
+            // (*(_ssdInstancesLstPtr + i)) -> fastRefresh();
     }    
 */
     return;
