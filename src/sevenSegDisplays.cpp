@@ -9,7 +9,7 @@
  * @version 3.0.0
  * 
  * @date First release: 20/12/2023 
- *       Last update:   13/03/2025 09:30 (GMT+0200)
+ *       Last update:   13/03/2025 13:40 (GMT+0200)
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -18,7 +18,6 @@
 
 uint8_t SevenSegDisplays::_displaysCount = 0;
 uint16_t SevenSegDisplays::_dspLastSerialNum = 0;
-// uint8_t SevenSegDisplays::_dspPtrArrLngth = 0;  //FFDR Will become obsolete as the _ssdInstancesLstPtr pointed list becomes dynamic
 SevenSegDisplays** SevenSegDisplays::_ssdInstancesLstPtr = nullptr;
 
 TimerHandle_t SevenSegDisplays::_blinkTmrHndl = NULL;
@@ -31,46 +30,35 @@ SevenSegDisplays::SevenSegDisplays()
 SevenSegDisplays::SevenSegDisplays(SevenSegDispHw dspUndrlHw)
 :_dspUndrlHw{dspUndrlHw}
 {
-   if(_ssdInstancesLstPtr == nullptr){
-      _ssdInstancesLstPtr = new SevenSegDisplays*[_dspPtrArrLngth](); //Initializes with all pointers value of 0, it might refuse to evaluate to nullptr, lookout!!
-      for(int i{0}; i < _dspPtrArrLngth; i++)
-         *(_ssdInstancesLstPtr + i) = nullptr;
-   }
-   if(_displaysCount < _dspPtrArrLngth){
-      _dspDigitsQty = _dspUndrlHw.getDspDigits(); //Now that we know the display size in digits, we can build the needed arrays for data
-      _dspBuffPtr  = new uint8_t[_dspDigitsQty];
-      _blinkMaskPtr = new bool[_dspDigitsQty];
-      _dspUndrlHw.setDspBuffPtr(_dspBuffPtr); //Indicate the hardware where de data to display is located
-      _dspInstNbr = _dspLastSerialNum++; //This value is always incremented, as it's not related to the active objects but to amount of different displays created
-      ++_displaysCount;  //This keeps the count of instantiated SevenSegDisplays objects
-      _dspInstance = this;
-      for (uint8_t i{0}; i < _dspPtrArrLngth; i++){
-         if(*(_ssdInstancesLstPtr + i) == nullptr){
-            *(_ssdInstancesLstPtr + i) = _dspInstance;
-            break;
-         }
-      }
-      _setAttrbts();
-      clear();
-   }
+   _dspUndrlHwPtr = &_dspUndrlHw;
+   _dspDigitsQty = _dspUndrlHw.getDspDigits(); //Now that we know the display size in digits, we can build the needed arrays for data
+   _dspBuffPtr  = new uint8_t[_dspDigitsQty];
+   _blinkMaskPtr = new bool[_dspDigitsQty];
+   _dspUndrlHw.setDspBuffPtr(_dspBuffPtr); //Indicate the hardware where de data to display is located
+   _dspInstNbr = _dspLastSerialNum++; //This value is always incremented, as it's not related to the active objects but to amount of different displays created
+   ++_displaysCount;  //This keeps the count of instantiated SevenSegDisplays objects
+   _dspInstance = this;
+   _pushSsd(_ssdInstancesLstPtr, _dspInstance);
+   _setAttrbts();
+   clear();
 }
 
 SevenSegDisplays::~SevenSegDisplays(){
-    if(_blinking)
-        noBlink();  //Stops the blinking, frees the _dspAuxBuffPtr pointed memory, Stops the timer attached to the process
-    if(_waiting)
-        noWait();   //Stops the waiting, frees the _dspAuxBuffPtr pointed memory, Stops the timer attached to the process    
-    if(_dspAuxBuffPtr)
-        delete [] _dspAuxBuffPtr;   //Free the resources of the auxiliary display digits buffer (to keep a copy of the dspBuffer contents for blinking, waiting, etc.)
-    delete [] _blinkMaskPtr;    //Free the resources of the blink mask buffer
-    delete [] _dspBuffPtr;  //Free the resources of the display digits buffer
-    for(uint8_t i{0}; i<_dspPtrArrLngth; i++){
-        if(*(_ssdInstancesLstPtr+  i) == _dspInstance){
-            *(_ssdInstancesLstPtr + i) = nullptr;  //Remove the display from the array of active displays pointers
-            break;
-        }
-    }     
-    --_displaysCount;
+   if(_blinking)
+      noBlink();  //Stops the blinking, frees the _dspAuxBuffPtr pointed memory, Stops the timer attached to the process
+   if(_waiting)
+      noWait();   //Stops the waiting, frees the _dspAuxBuffPtr pointed memory, Stops the timer attached to the process    
+   if(_dspAuxBuffPtr)
+      delete [] _dspAuxBuffPtr;   //Free the resources of the auxiliary display digits buffer (to keep a copy of the dspBuffer contents for blinking, waiting, etc.)
+   delete [] _blinkMaskPtr;    //Free the resources of the blink mask buffer
+   delete [] _dspBuffPtr;  //Free the resources of the display digits buffer
+   _popSsd(_ssdInstancesLstPtr, _dspInstance);
+   --_displaysCount;
+}
+
+bool SevenSegDisplays::begin(){
+
+	return _dspUndrlHwPtr->begin();
 }
 
 bool SevenSegDisplays::blink(){
@@ -88,19 +76,19 @@ bool SevenSegDisplays::blink(){
          strcat(blnkTmrName, "blnk_tmr");
 
          if (!_blinkTmrHndl){
-               _blinkTmrHndl = xTimerCreate(
-                  blnkTmrName,
-                  pdMS_TO_TICKS(_blinkRatesGCD),
-                  pdTRUE,  //Autoreload
-                  _dspInstance,   //TimerID, data to be passed to the callback function
-                  tmrCbBlink  //Callback function
-               );
+            _blinkTmrHndl = xTimerCreate(
+               blnkTmrName,
+               pdMS_TO_TICKS(_blinkRatesGCD),
+               pdTRUE,  //Autoreload
+               _dspInstance,   //TimerID, data to be passed to the callback function
+               tmrCbBlink  //Callback function
+            );
          }
          if(_blinkTmrHndl && (!xTimerIsTimerActive(_blinkTmrHndl))){
-               // The timer was created, but it wasn't started. Start the timer
-               tmrModResult = xTimerStart(_blinkTmrHndl, portMAX_DELAY);
-               if (tmrModResult == pdPASS)
-                  result = true;
+            // The timer was created, but it wasn't started. Start the timer
+            tmrModResult = xTimerStart(_blinkTmrHndl, portMAX_DELAY);
+            if (tmrModResult == pdPASS)
+               result = true;
          }
 
          _dspAuxBuffPtr = new uint8_t[_dspDigitsQty];
@@ -110,7 +98,7 @@ bool SevenSegDisplays::blink(){
          _blinkTimer = 0;  //Start the blinking pace timer...
          result = true;
       }
-    }
+   }
 
    return result;
 }
@@ -140,19 +128,17 @@ unsigned long SevenSegDisplays::_blinkTmrGCD(unsigned long blnkOnTm, unsigned lo
    unsigned long result{ 0 };
 
    if ((blnkOnTm != 0) && (blnkOffTm != 0)) {
-      if (blnkOnTm == blnkOffTm) {
+      if (blnkOnTm == blnkOffTm)
          result = blnkOnTm;
-      }
-      else if ((blnkOnTm % blnkOffTm == 0) || (blnkOffTm % blnkOnTm == 0)) {
+      else if ((blnkOnTm % blnkOffTm == 0) || (blnkOffTm % blnkOnTm == 0))
          result = (blnkOffTm < blnkOnTm)? blnkOffTm : blnkOnTm;
-      }
 
       if (result == 0) {
          for (unsigned long int i{ (blnkOnTm < blnkOffTm) ? blnkOnTm : blnkOffTm }; i > 0; i--) {
-               if ((blnkOnTm % i == 0) && (blnkOffTm % i == 0)) {
-                  result = i;
-                  break;
-               }
+            if ((blnkOnTm % i == 0) && (blnkOffTm % i == 0)) {
+               result = i;
+               break;
+            }
          }
       }
    }
@@ -167,9 +153,8 @@ void SevenSegDisplays::clear(){
          //If the display is blinking the backup buffer will be restored, so the display clearing() would be reverted
          //So BOTH buffers must be cleared, starting by the _dspAuxBuff, and blocking the access to it while clearing takes place
          for (int i{0}; i < _dspDigitsQty; i++){
-            if(*(_dspAuxBuffPtr + i) != _space){
+            if(*(_dspAuxBuffPtr + i) != _space)
                *(_dspAuxBuffPtr + i) = _space;
-            }
          }
       }
       for (int i{0}; i < _dspDigitsQty; i++){
@@ -184,52 +169,64 @@ void SevenSegDisplays::clear(){
 }
 
 bool SevenSegDisplays::doubleGauge(const int &levelLeft, const int &levelRight, char labelLeft, char labelRight){
-    bool displayable{true};
-    String readOut{""};
+   bool displayable{true};
+   String readOut{""};
+   String lvlChar{""};
 
-    if ((levelLeft < 0) || (levelRight < 0) || (levelLeft > 3 || (levelRight > 3))) {
-        clear();
-        displayable = false;
-    }
-    else {
-        readOut += labelLeft;
-        if (readOut == "")
-            readOut = " ";
-        switch (levelLeft) {
+   if ((levelLeft < 0) || (levelRight < 0) || (levelLeft > 3 || (levelRight > 3))) {
+      clear();
+      displayable = false;
+   }
+   else {
+      readOut += labelLeft;
+      if (readOut == "")
+         readOut = " ";
+         switch (levelLeft) {
             case 0:
-                readOut += " ";
+               //  readOut += " ";
+                lvlChar = " ";
                 break;
             case 1:
-                readOut += "_";
+               //  readOut += "_";
+                lvlChar = "_";
                 break;
             case 2:
-                readOut += "=";
+               //  readOut += "=";
+                lvlChar = "=";
                 break;
             case 3:
-                readOut += "~";
+               //  readOut += "~";
+                lvlChar = "~";
                 break;
-        };
-        if(_dspDigitsQty > 4){
+         };
+         readOut += lvlChar;
+
+         if(_dspDigitsQty > 4){
             for (int i{0}; i < (_dspDigitsQty - 4)/2; i++)
                readOut += " ";
-        }
+         }
         readOut += labelRight;
         if (readOut.length() == 2)
             readOut += " ";
         switch (levelRight) {
             case 0:
-                readOut += " ";
-                break;
+               //  readOut += " ";
+               lvlChar = " ";
+               break;
             case 1:
-                readOut += "_";
-                break;
+               //  readOut += "_";
+               lvlChar = "_";
+               break;
             case 2:
-                readOut += "=";
-                break;
+               //  readOut += "=";
+               lvlChar = "=";
+               break;
             case 3:
-                readOut += "~";
-                break;
+               //  readOut += "~";
+               lvlChar = "~";
+               break;
         };
+        readOut += lvlChar;
         displayable = print(readOut);
     }
 
@@ -237,58 +234,58 @@ bool SevenSegDisplays::doubleGauge(const int &levelLeft, const int &levelRight, 
 }
 
 bool SevenSegDisplays::gauge(const int &level, char label){
-    bool displayable{true};
-    String readOut{""};
+   bool displayable{true};
+   String readOut{""};
 
-    clear();
-    if (((level < 0) || (level > 3)) || (_dspDigitsQty < 4)) {
-        displayable = false;
-    }
-    else {
-        readOut += label;
-        if (readOut == "")
-            readOut = " ";
-        switch (level) {
-            case 0:
-                readOut += "   ";
-                break;
-            case 1:
-                readOut += "_  ";
-                break;
-            case 2:
-                readOut += "_= ";
-                break;
-            case 3:
-                readOut += "_=~";
-                break;
-        };
-        displayable = print(readOut);
-    }
+   clear();
+   if (((level < 0) || (level > 3)) || (_dspDigitsQty < 4)) {
+      displayable = false;
+   }
+   else {
+      readOut += label;
+      if (readOut == "")
+         readOut = " ";
+      switch (level) {
+         case 0:
+            readOut += "   ";
+            break;
+         case 1:
+            readOut += "_  ";
+            break;
+         case 2:
+            readOut += "_= ";
+            break;
+         case 3:
+            readOut += "_=~";
+            break;
+      };
+      displayable = print(readOut);
+   }
 
-    return displayable;
+   return displayable;
 }
 
 bool SevenSegDisplays::gauge(const double &level, char label) {
-    bool displayable{true};
-    int intLevel{0};
+   bool displayable{true};
+   int intLevel{0};
 
-    if (((level < 0.0) || (level > 1.0)) || (_dspDigitsQty < 4)) {
-        clear();
-        displayable = false;
-    }
-    else {
-        if (level < 0.25)
-            intLevel = 0;
-        else if (level < 0.50)
-            intLevel = 1;
-        else if (level < 0.75)
-            intLevel = 2;
-        else
-            intLevel = 3;
-        displayable = gauge(intLevel, label);
-    }
+   if (((level < 0.0) || (level > 1.0)) || (_dspDigitsQty < 4)) {
+      clear();
+      displayable = false;
+   }
+   else {
+      if (level < 0.25)
+         intLevel = 0;
+      else if (level < 0.50)
+         intLevel = 1;
+      else if (level < 0.75)
+         intLevel = 2;
+      else
+         intLevel = 3;
+      displayable = gauge(intLevel, label);
+   }
 
-    return displayable;
+   return displayable;
 }
 
 uint8_t SevenSegDisplays::getDigitsQty(){
@@ -372,7 +369,7 @@ bool SevenSegDisplays::noBlink(){
 bool SevenSegDisplays::noWait(){
    //Stops the waiting, frees the _dspAuxPtr pointed memory, Stops the timer attached to the process
    bool result {false};
-    BaseType_t tmrModResult {pdFAIL};
+   BaseType_t tmrModResult {pdFAIL};
 
    if (_waiting){
       _waiting = false;
@@ -602,17 +599,17 @@ void SevenSegDisplays::resetBlinkMask(){
 }
 
 void SevenSegDisplays::_restoreDspBuff(){
-    for (int i{0}; i < _dspDigitsQty; i++)
-        (*(_dspBuffPtr + i)) = (*(_dspAuxBuffPtr + i));
-   // strncpy((char*)_dspBuffPtr, (char*)_dspAuxBuffPtr, _dspDigitsQty );
+   //  for (int i{0}; i < _dspDigitsQty; i++)
+   //      (*(_dspBuffPtr + i)) = (*(_dspAuxBuffPtr + i));
+   memcpy(_dspBuffPtr, _dspAuxBuffPtr, _dspDigitsQty);   // destPtr, srcPtr, size
 
-    return;
+   return;
 }
 
 void SevenSegDisplays::_saveDspBuff(){
-    for (int i{0}; i < _dspDigitsQty; i++)
-        (*(_dspAuxBuffPtr + i)) = (*(_dspBuffPtr + i));
-   // strncpy((char*)_dspAuxBuffPtr, (char*)_dspBuffPtr, _dspDigitsQty );
+   //  for (int i{0}; i < _dspDigitsQty; i++)
+   //      (*(_dspAuxBuffPtr + i)) = (*(_dspBuffPtr + i));
+      memcpy(_dspAuxBuffPtr, _dspBuffPtr, _dspDigitsQty);   // destPtr, srcPtr, size
 
    return;
 }
@@ -729,6 +726,11 @@ bool SevenSegDisplays::setWaitRate(const unsigned long &newWaitRate){
    return result;
 }
 
+bool SevenSegDisplays::stop(){
+
+	return _dspUndrlHwPtr->stop();
+}
+
 void SevenSegDisplays::tmrCbBlink(TimerHandle_t blinkTmrCbArg){
    SevenSegDisplays* thisDisplay = (SevenSegDisplays*)blinkTmrCbArg;
    thisDisplay->_updBlinkState();
@@ -744,23 +746,7 @@ void SevenSegDisplays::tmrCbWait(TimerHandle_t waitTmrCbArg){
 }
 
 void SevenSegDisplays::_updBlinkState(){
-    //The use of a xTimer that keeps flip-floping the _blinkShowOn value is better suited for symmetrical blinking, but not for asymmetrical cases.
-    
-    // _ Confirm the condition _blinking
-        // _blinking = true
-            // _ calculate time elapsed since last _blinkShowOn change
-            // if ((_blinkShowOn && _blinkTimer > _blinkOnRate) ||(!_blinkShowOn && _blinkTimer > _blinkOffRate))
-                //Swap _blinkShowOn
-                //Reset _blinkTimer
-                // if (_blinkShowOn)
-                    //Retrieve full lit buffer (from _dspAuxBuffer to _dspBuffer)
-                    //Blank Aux buffer
-                // else
-                    //Save _dspBuffer to _dspAuxBuffer
-                    //Blank designated positions of the _dspBuffer
-        //blinking = false
-            //Abnormal situation, define if stops the timer or/and other corrective measures
-   
+   //The use of a xTimer that keeps flip-floping the _blinkShowOn value is better suited for symmetrical blinking, but not for asymmetrical cases.
    if (_blinking == true){
       if (_blinkShowOn == false) {
          if (_blinkTimer == 0){

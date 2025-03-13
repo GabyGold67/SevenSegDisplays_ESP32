@@ -15,7 +15,7 @@
  * @version 3.0.0
  * 
  * @date First release: 20/12/2023 
- *       Last update:   13/03/2025 09:30 (GMT+0200)
+ *       Last update:   13/03/2025 13:40 (GMT+0200)
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -38,7 +38,6 @@
   * Games people play in the middle of the night
  *******************************************************************************
  */
-
 #ifndef _SevenSegDisplays_H_
 #define _SevenSegDisplays_H_
 
@@ -78,6 +77,7 @@ protected:
    uint8_t* _dspBuffPtr{nullptr};
    uint8_t _dspDigitsQty{};
    SevenSegDispHw _dspUndrlHw{};
+   SevenSegDispHw* _dspUndrlHwPtr{};
    SevenSegDisplays* _dspInstance{nullptr};
    uint16_t _dspInstNbr{0};
    int32_t _dspValMax{};
@@ -171,6 +171,9 @@ public:
      * @brief Class destructor
      */
     ~SevenSegDisplays();
+
+   bool begin();
+
     /**
      * @brief Makes the display blink the contents it is showing.
      * 
@@ -433,6 +436,9 @@ public:
      * @retval false The parameter passed was out of range, the rate change will not be made.   
      */
     bool setWaitRate(const unsigned long &newWaitRate);
+
+   bool stop();
+
     /**
      * @brief Makes the display enter the "Waiting mode"  
      * 

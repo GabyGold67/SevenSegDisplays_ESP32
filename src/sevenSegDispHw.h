@@ -1,3 +1,39 @@
+/**
+ * @file SevenSegDisplays.h
+ * @brief Header file for the SevenSegDisplays_ESP32 library 
+ * 
+ * 
+ * 
+ * @author Gabriel D. Goldman
+ * 
+ * @version 3.0.0
+ * 
+ * @date First release: 20/12/2023 
+ *       Last update:   13/03/2025 13:40 (GMT+0200)
+ * 
+ * @copyright Copyright (c) 2025  GPL-3.0 license
+ *******************************************************************************
+  * @attention	This library was originally developed as part of the refactoring
+  * process for an industrial machines security enforcement and productivity control
+  * (hardware & firmware update). As such every class included complies **AT LEAST**
+  * with the provision of the attributes and methods to make the hardware & firmware
+  * replacement transparent to the controlled machines. Generic use attributes and
+  * methods were added to extend the usability to other projects and application
+  * environments, but no fitness nor completeness of those are given but for the
+  * intended refactoring project, and for the author's projects requirements.  
+  * 
+  * @warning **Use of this library is under your own responsibility**
+  * 
+  * @warning The use of this library falls in the category described by The Alan 
+  * Parsons Project (c) 1980 Games People play:   
+  * Games people play, you take it or you leave it
+  * Things that they say aren't alright
+  * If I promised you the moon and the stars, would you believe it?
+  * Games people play in the middle of the night
+ *******************************************************************************
+ */
+
+
 #ifndef sevenSegDispHw_H
 #define sevenSegDispHw_H
 
@@ -20,11 +56,13 @@ public:
     SevenSegDispHw();
     SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
     ~SevenSegDispHw();    
+    virtual bool begin();
     bool getCommAnode();
     uint8_t* getDspBuffPtr();
     uint8_t getDspDigits();
     bool setDigitsOrder(uint8_t* newOrderPtr);
     void setDspBuffPtr(uint8_t* newDspBuffPtr);
+    virtual bool stop();
 };
 
 //============================================================> Class declarations separator

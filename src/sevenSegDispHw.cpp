@@ -33,6 +33,11 @@ SevenSegDispHw::~SevenSegDispHw() {
     delete [] _digitPosPtr;
 }
 
+bool SevenSegDispHw::begin(){
+   
+    return true;
+}
+
 bool SevenSegDispHw::getCommAnode(){
 
     return _commAnode;
@@ -72,6 +77,10 @@ void SevenSegDispHw::setDspBuffPtr(uint8_t* newDspBuffPtr){
     return;
 }
 
+bool SevenSegDispHw::stop(){
+   
+    return true;
+}
 //============================================================> Class methods separator
 
 SevenSegDynamic::SevenSegDynamic(){}
