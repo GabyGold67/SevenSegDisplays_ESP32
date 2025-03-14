@@ -27,14 +27,13 @@ SevenSegDisplays::SevenSegDisplays()
 {
 }
 
-SevenSegDisplays::SevenSegDisplays(SevenSegDispHw dspUndrlHw)
-:_dspUndrlHw{dspUndrlHw}
+SevenSegDisplays::SevenSegDisplays(SevenSegDispHw* dspUndrlHwPtr)
+:_dspUndrlHwPtr{dspUndrlHwPtr}
 {
-   _dspUndrlHwPtr = &_dspUndrlHw;
-   _dspDigitsQty = _dspUndrlHw.getDspDigits(); //Now that we know the display size in digits, we can build the needed arrays for data
+   _dspDigitsQty = _dspUndrlHwPtr->getDspDigits(); //With the display size in digits, the needed arrays for data can be built
    _dspBuffPtr  = new uint8_t[_dspDigitsQty];
    _blinkMaskPtr = new bool[_dspDigitsQty];
-   _dspUndrlHw.setDspBuffPtr(_dspBuffPtr); //Indicate the hardware where de data to display is located
+   _dspUndrlHwPtr->setDspBuffPtr(_dspBuffPtr); //Indicates the hardware where the data to display is located
    _dspInstNbr = _dspLastSerialNum++; //This value is always incremented, as it's not related to the active objects but to amount of different displays created
    ++_displaysCount;  //This keeps the count of instantiated SevenSegDisplays objects
    _dspInstance = this;
@@ -55,12 +54,7 @@ SevenSegDisplays::~SevenSegDisplays(){
    _popSsd(_ssdInstancesLstPtr, _dspInstance);
    --_displaysCount;
 }
-
-bool SevenSegDisplays::begin(){
-
-	return _dspUndrlHwPtr->begin();
-}
-
+//FFDR Checked 2025-03-14 to this point
 bool SevenSegDisplays::blink(){
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
@@ -633,7 +627,7 @@ void SevenSegDisplays::_setAttrbts(){
    }
    --_dspValMax;
 
-   if (!_dspUndrlHw.getCommAnode()) {
+   if (!_dspUndrlHwPtr->getCommAnode()) {
       _waitChar = ~_waitChar;
       _space = ~_space;
       _dot = ~_dot;
@@ -724,11 +718,6 @@ bool SevenSegDisplays::setWaitRate(const unsigned long &newWaitRate){
       }
    }
    return result;
-}
-
-bool SevenSegDisplays::stop(){
-
-	return _dspUndrlHwPtr->stop();
 }
 
 void SevenSegDisplays::tmrCbBlink(TimerHandle_t blinkTmrCbArg){

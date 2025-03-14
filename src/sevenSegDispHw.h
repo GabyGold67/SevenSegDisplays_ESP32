@@ -79,6 +79,7 @@ protected:
     TimerHandle_t _svnSgDynTmrHndl{NULL};
 public:
     SevenSegDynamic();
+    SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
     ~SevenSegDynamic();
     bool begin();
     bool stop();
@@ -89,9 +90,13 @@ public:
 class SevenSegDynHC595: public SevenSegDynamic{
     static void tmrCbRefreshHC595(TimerHandle_t rfrshTmrCbArg);  //Will easily fail in subclasses calls, check it!!
 private:
-    const uint8_t _sclk {0};
-    const uint8_t _rclk {1};
-    const uint8_t _dio {2};
+    const uint8_t _sclkIndx {0};
+    const uint8_t _rclkIndx {1};
+    const uint8_t _dioIndx {2};
+    uint8_t _sclk {};
+    uint8_t _rclk {};
+    uint8_t _dio {};
+
 protected:
     void refresh();
     void send(uint8_t content);

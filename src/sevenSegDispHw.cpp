@@ -23,34 +23,43 @@ SevenSegDispHw::SevenSegDispHw() {}
 SevenSegDispHw::SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
 :_ioPins{ioPins}, _digitPosPtr{new uint8_t[dspDigits]}, _dspDigitsQty {dspDigits}, _commAnode {commAnode}
 {
-    _dspHwInstNbr = _dspHwSerialNum++;
-    for (uint8_t i{0}; i < _dspDigitsQty; i++){
-        *(_digitPosPtr + i) = i;
-    }
+   Serial.println("\n"); //FTPO
+   Serial.println("Entering the SevenSegDispHw constructor"); //FTPO
+   Serial.println("========================================"); //FTPO
+    
+    
+   _dspHwInstNbr = _dspHwSerialNum++;
+   for (uint8_t i{0}; i < _dspDigitsQty; i++){
+      *(_digitPosPtr + i) = i;
+   }
+    
+    
+   Serial.println("Exiting the SevenSegDispHw constructor"); //FTPO
+   Serial.println("========================================"); //FTPO
 }
 
 SevenSegDispHw::~SevenSegDispHw() {
-    delete [] _digitPosPtr;
+   delete [] _digitPosPtr;
 }
 
 bool SevenSegDispHw::begin(){
    
-    return true;
+   return true;
 }
 
 bool SevenSegDispHw::getCommAnode(){
 
-    return _commAnode;
+   return _commAnode;
 }
 
 uint8_t* SevenSegDispHw::getDspBuffPtr(){
     
-    return _dspBuffPtr;
+   return _dspBuffPtr;
 }
 
 uint8_t SevenSegDispHw::getDspDigits(){
 
-    return _dspDigitsQty;
+   return _dspDigitsQty;
 }
 
 bool SevenSegDispHw::setDigitsOrder(uint8_t* newOrderPtr){
@@ -72,24 +81,39 @@ bool SevenSegDispHw::setDigitsOrder(uint8_t* newOrderPtr){
 }
 
 void SevenSegDispHw::setDspBuffPtr(uint8_t* newDspBuffPtr){
-    _dspBuffPtr = newDspBuffPtr;
+   _dspBuffPtr = newDspBuffPtr;
 
-    return;
+   return;
 }
 
 bool SevenSegDispHw::stop(){
    
-    return true;
+   return true;
 }
 //============================================================> Class methods separator
 
 SevenSegDynamic::SevenSegDynamic(){}
+
+SevenSegDynamic::SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
+:SevenSegDispHw(ioPins, dspDigits, commAnode)
+{
+    
+   Serial.println("\n"); //FTPO
+   Serial.println("Passing through SevenSegDynamic constructor code section"); //FTPO
+   Serial.println("========================================"); //FTPO
+
+}
 
 SevenSegDynamic::~SevenSegDynamic(){}
 
 bool SevenSegDynamic::begin(){
     bool result {false};
     BaseType_t tmrModResult {pdFAIL};
+
+    Serial.println("\n"); //FTPO
+    Serial.println("Entering the SevenSegDinamic .begin()"); //FTPO
+    Serial.println("========================================"); //FTPO
+ 
 
     //Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)
     if (!_svnSgDynTmrHndl){
@@ -114,6 +138,10 @@ bool SevenSegDynamic::begin(){
                 result = true;
         }
     }
+
+    Serial.println("\n"); //FTPO
+    Serial.println("Exiting the SevenSegDinamic .begin()"); //FTPO
+    Serial.println("========================================"); //FTPO
 
     return result;
 }
@@ -193,19 +221,49 @@ void SevenSegDynamic::tmrCbRefreshDyn(TimerHandle_t rfrshTmrCbArg){
 //============================================================> Class methods separator
 
 SevenSegDynHC595::SevenSegDynHC595(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
+:SevenSegDynamic(ioPins, dspDigits, commAnode)
 {    
-    // _ioPins = ioPins;
-    // SevenSegDispHw(ioPins, dspDigits, commAnode);
-    pinMode(*(_ioPins + _sclk), OUTPUT);
-    pinMode(*(_ioPins + _rclk), OUTPUT);
-    pinMode(*(_ioPins + _dio), OUTPUT);
+    Serial.println("\n"); //FTPO
+    Serial.println("Entered the SevenSegDynHC595 constructor"); //FTPO
+    Serial.println("========================================"); //FTPO
+    
+    _sclk = *(ioPins + _sclkIndx);
+    _rclk = *(ioPins + _rclkIndx);
+    _dio = *(ioPins + _dioIndx);
+    
+    Serial.println("In the SevenSegDynHC595 constructor the pin assgmnt is"); //FTPO
+    Serial.println("======================================================"); //FTPO
+    Serial.print("Pin selected for sclk: ");//FTPO
+    Serial.println(_sclk, DEC); //FTPO
+    
+    digitalWrite(_sclk, LOW);
+    pinMode(_sclk, OUTPUT);
+    
+    Serial.print("Pin selected for rclk: ");//FTPO
+    Serial.println(_rclk, DEC); //FTPO
+    
+    digitalWrite(_rclk, LOW);
+    pinMode(_rclk, OUTPUT);
+    
+    Serial.print("Pin selected for dio: ");//FTPO
+    Serial.println(_dio, DEC); //FTPO
+    
+    digitalWrite(_dio, LOW);
+    pinMode(_dio, OUTPUT);
 
+    Serial.println("Invoking in-class .begin()"); //FTPO
+    
     begin();
+
+    Serial.println("Returned from in-class .begin()"); //FTPO
 }
 
 SevenSegDynHC595::~SevenSegDynHC595(){}
 
 bool SevenSegDynHC595::begin(){
+    Serial.println("\nEntered SevenSegDynHC595.begin()"); //FTPO
+    Serial.println("================"); //FTPO
+
     bool result {false};
     BaseType_t tmrModResult {pdFAIL};
 
@@ -234,6 +292,9 @@ bool SevenSegDynHC595::begin(){
         }
     }
 
+    Serial.println("\nExiting SevenSegDynHC595.begin()"); //FTPO
+    Serial.println("\n================"); //FTPO
+
     return result;
 }
 
@@ -241,37 +302,39 @@ void SevenSegDynHC595::refresh(){
    bool tmpLogic {true};
    uint8_t tmpDigToSend{0};
 
-    for (int i {0}; i < _dspDigitsQty; i++){
-        tmpDigToSend = *(_dspBuffPtr + ((i + _firstRefreshed) % _dspDigitsQty));
-        send(tmpDigToSend, uint8_t(1) << *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty)));
-    }
-    ++_firstRefreshed;
-    if (_firstRefreshed == _dspDigitsQty)
-        _firstRefreshed = 0;
+   for (int i {0}; i < _dspDigitsQty; i++){
+      tmpDigToSend = *(_dspBuffPtr + ((i + _firstRefreshed) % _dspDigitsQty));
+      send(tmpDigToSend, uint8_t(1) << *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty)));
+   }
+   ++_firstRefreshed;
+   if (_firstRefreshed == _dspDigitsQty)
+      _firstRefreshed = 0;
 
-    return;
+   return;
 }
 void SevenSegDynHC595::send(uint8_t content){
-    for (int i {7}; i >= 0; i--){   //Send each of the 8 bits representing the character
-        if (content & 0x80)
-            digitalWrite(*(_ioPins + _dio), HIGH);
-        else
-            digitalWrite(*(_ioPins + _dio), LOW);
-        content <<= 1;
-        digitalWrite(*(_ioPins + _sclk), LOW);
-        digitalWrite(*(_ioPins + _sclk), HIGH);
-    }
+   for (int i {7}; i >= 0; i--){   //Send each of the 8 bits representing the character
+      // digitalWrite(_sclk, LOW);
+      digitalWrite(GPIO_NUM_26, LOW);
+      // digitalWrite(_dio, (content & 0x80)?HIGH:LOW);   // Set the value of the next bit value
+      digitalWrite(GPIO_NUM_33, (content & 0x80)?HIGH:LOW);   // Set the value of the next bit value
+      content <<= 1;
+      delayMicroseconds(10);  // Time required by the 74HCx595 to modify the SH_CP line by datasheet
+      // digitalWrite(_sclk, HIGH);
+      digitalWrite(GPIO_NUM_26, HIGH);
+   }
 
-    return;
-
+   return;
 }
 
 void SevenSegDynHC595::send(const uint8_t &segments, const uint8_t &port){
 
-    digitalWrite(*(_ioPins + _rclk), LOW);
-    send(segments);
-    send(port);
-    digitalWrite(*(_ioPins + _rclk), HIGH);
+   // digitalWrite(_rclk, LOW);
+   digitalWrite(GPIO_NUM_25, LOW);
+   send(segments);
+   send(port);
+   // digitalWrite(_rclk, HIGH);
+   digitalWrite(GPIO_NUM_25, HIGH);
 
    return;
 }
@@ -301,16 +364,13 @@ void SevenSegDynHC595::tmrCbRefreshHC595(TimerHandle_t rfrshTmrCbArg){
 
 SevenSegDynDummy::SevenSegDynDummy(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
 {
-    _ioPins = ioPins;
-    _dspDigitsQty = dspDigits;
-    _commAnode = commAnode;
-    Serial.begin(9600);
-
+   _ioPins = ioPins;
+   _dspDigitsQty = dspDigits;
+   _commAnode = commAnode;
 }
 
 SevenSegDynDummy::~SevenSegDynDummy()
-{
-    
+{    
 }
 
 //============================================================> Class methods separator
