@@ -54,13 +54,15 @@ SevenSegDisplays::~SevenSegDisplays(){
    _popSsd(_ssdInstancesLstPtr, _dspInstance);
    --_displaysCount;
 }
-//FFDR Checked 2025-03-14 to this point
+
 bool SevenSegDisplays::blink(){
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
-   if(!_waiting){   //If the display is waiting the blinking option is blocked out as they are mutually excluyent, as both simultaneous has no logical use!
+   if(!_waiting){   //If the display is waiting the blinking option is blocked out as they are mutually excluyent, as both simultaneous states has no logical use!
       if (!_blinking){
+         taskENTER_CRITICAL(&mux);
          //Create a valid unique Name for identifying the timer created
          char blnkTmrName[15];
          char dspSerialNumChar[3]{};
@@ -78,8 +80,7 @@ bool SevenSegDisplays::blink(){
                tmrCbBlink  //Callback function
             );
          }
-         if(_blinkTmrHndl && (!xTimerIsTimerActive(_blinkTmrHndl))){
-            // The timer was created, but it wasn't started. Start the timer
+         if(_blinkTmrHndl && (!xTimerIsTimerActive(_blinkTmrHndl))){ // The timer was created, but it wasn't started. Start the timer            
             tmrModResult = xTimerStart(_blinkTmrHndl, portMAX_DELAY);
             if (tmrModResult == pdPASS)
                result = true;
@@ -91,6 +92,7 @@ bool SevenSegDisplays::blink(){
          _blinking = true;
          _blinkTimer = 0;  //Start the blinking pace timer...
          result = true;
+         taskEXIT_CRITICAL(&mux);
       }
    }
 
@@ -141,11 +143,12 @@ unsigned long SevenSegDisplays::_blinkTmrGCD(unsigned long blnkOnTm, unsigned lo
 }
 
 void SevenSegDisplays::clear(){
-   //Cleans the contents of the internal display buffer (All leds off for all digits)
-   if(!_waiting){ // If in waiting condition clearing makes no sense, the mechanism will keep displaying the sequence independently      
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+   bool mainBuffChng{false};
+
+   if(!_waiting){ // If in waiting condition clear() is not executed
+      taskENTER_CRITICAL(&mux);
       if(_blinking){         
-         //If the display is blinking the backup buffer will be restored, so the display clearing() would be reverted
-         //So BOTH buffers must be cleared, starting by the _dspAuxBuff, and blocking the access to it while clearing takes place
          for (int i{0}; i < _dspDigitsQty; i++){
             if(*(_dspAuxBuffPtr + i) != _space)
                *(_dspAuxBuffPtr + i) = _space;
@@ -154,9 +157,13 @@ void SevenSegDisplays::clear(){
       for (int i{0}; i < _dspDigitsQty; i++){
          if(*(_dspBuffPtr + i) != _space){
             *(_dspBuffPtr + i) = _space;
-            _dspBuffChng = true;    //Signal for the hardware refresh mechanism
+            if(!mainBuffChng)
+               mainBuffChng = true;
          }
       }
+      if(mainBuffChng)
+         _setDspBuffChng(); //_dspBuffChng = true;    //Signal for the hardware refresh mechanism
+      taskEXIT_CRITICAL(&mux);
    }
    
    return;
@@ -177,19 +184,15 @@ bool SevenSegDisplays::doubleGauge(const int &levelLeft, const int &levelRight, 
          readOut = " ";
          switch (levelLeft) {
             case 0:
-               //  readOut += " ";
                 lvlChar = " ";
                 break;
             case 1:
-               //  readOut += "_";
                 lvlChar = "_";
                 break;
             case 2:
-               //  readOut += "=";
                 lvlChar = "=";
                 break;
             case 3:
-               //  readOut += "~";
                 lvlChar = "~";
                 break;
          };
@@ -204,19 +207,15 @@ bool SevenSegDisplays::doubleGauge(const int &levelLeft, const int &levelRight, 
             readOut += " ";
         switch (levelRight) {
             case 0:
-               //  readOut += " ";
                lvlChar = " ";
                break;
             case 1:
-               //  readOut += "_";
                lvlChar = "_";
                break;
             case 2:
-               //  readOut += "=";
                lvlChar = "=";
                break;
             case 3:
-               //  readOut += "~";
                lvlChar = "~";
                break;
         };
@@ -230,6 +229,7 @@ bool SevenSegDisplays::doubleGauge(const int &levelLeft, const int &levelRight, 
 bool SevenSegDisplays::gauge(const int &level, char label){
    bool displayable{true};
    String readOut{""};
+   String lvlRdOut{_spacePadding};
 
    clear();
    if (((level < 0) || (level > 3)) || (_dspDigitsQty < 4)) {
@@ -239,7 +239,9 @@ bool SevenSegDisplays::gauge(const int &level, char label){
       readOut += label;
       if (readOut == "")
          readOut = " ";
-      switch (level) {
+
+//FFDR If the code below this commented out block works as expected eliminate the commented out!
+/*      switch (level) {
          case 0:
             readOut += "   ";
             break;
@@ -253,6 +255,17 @@ bool SevenSegDisplays::gauge(const int &level, char label){
             readOut += "_=~";
             break;
       };
+*/
+      switch (level) {
+         case 3:
+            lvlRdOut = "~" + lvlRdOut;
+         case 2:
+            lvlRdOut = "=" + lvlRdOut;
+         case 1:
+            lvlRdOut = "_" + lvlRdOut;
+      };
+      readOut += lvlRdOut;
+      readOut.substring(0, _dspDigitsQty);
       displayable = print(readOut);
    }
 
@@ -336,11 +349,12 @@ bool SevenSegDisplays::isWaiting(){
 }
 
 bool SevenSegDisplays::noBlink(){
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool result {false};
-    BaseType_t tmrModResult {pdFAIL};
-   //Stops the blinking, frees the _dspAuxPtr pointed memory, Stops the timer attached to the process, cleans flags
+   BaseType_t tmrModResult {pdFAIL};
 
    if(_blinking){
+      taskENTER_CRITICAL(&mux);
       _blinking = false;
       if(_blinkTmrHndl){   //if the timer still exists and is running, stop and delete
          tmrModResult = xTimerStop(_blinkTmrHndl, portMAX_DELAY);
@@ -353,15 +367,16 @@ bool SevenSegDisplays::noBlink(){
       delete [] _dspAuxBuffPtr;
       _blinkTimer = 0;
       _blinkShowOn = true;
-      _dspBuffChng = true;    //Signal for the hardware refresh mechanism
+      _setDspBuffChng(); //_dspBuffChng = true;    //Signal for the hardware refresh mechanism
       result = true;
+      taskEXIT_CRITICAL(&mux);
    }
 
    return result;
 }
 
 bool SevenSegDisplays::noWait(){
-   //Stops the waiting, frees the _dspAuxPtr pointed memory, Stops the timer attached to the process
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
@@ -377,7 +392,7 @@ bool SevenSegDisplays::noWait(){
       _restoreDspBuff();
       delete [] _dspAuxBuffPtr;
       _waitTimer = 0;
-      _dspBuffChng = true;    //Signal for the hardware refresh mechanism
+      _setDspBuffChng();
       result = true;
    }
 
@@ -387,6 +402,7 @@ bool SevenSegDisplays::noWait(){
 void SevenSegDisplays::_popSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDisplays* ssdToPop){
 	int arrSize{0};
 	int auxPtr{0};
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 	bool ssdFnd{false};
 	SevenSegDisplays** tmpArrPtr{nullptr};
 
@@ -397,6 +413,7 @@ void SevenSegDisplays::_popSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDisp
 		++arrSize;
 	}
 	if(ssdFnd){
+      taskENTER_CRITICAL(&mux);
 		if(arrSize > 1){
 			tmpArrPtr = new SevenSegDisplays* [arrSize];
 			arrSize = 0;
@@ -418,6 +435,7 @@ void SevenSegDisplays::_popSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDisp
 			delete [] ssdInstncObjLst;
 			ssdInstncObjLst = nullptr;
 		}
+      taskEXIT_CRITICAL(&mux);
 	}
 
    return;
@@ -425,10 +443,12 @@ void SevenSegDisplays::_popSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDisp
 
 void SevenSegDisplays::_pushSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDisplays* ssdToPush){
 	int arrSize{0};
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 	bool ssdFnd{false};
 	SevenSegDisplays** tmpArrPtr{nullptr};
 
-	if(ssdInstncObjLst == nullptr){	// There are no "Seven Segment displays instances list", so create it			
+   taskENTER_CRITICAL(&mux);
+   if(ssdInstncObjLst == nullptr){	// There are no "Seven Segment displays instances list", so create it			
 		ssdInstncObjLst = new SevenSegDisplays* [1];
 		*ssdInstncObjLst = nullptr;
 	}
@@ -452,12 +472,14 @@ void SevenSegDisplays::_pushSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDis
 		delete [] ssdInstncObjLst;
 		ssdInstncObjLst = tmpArrPtr;
 	}
+   taskEXIT_CRITICAL(&mux);
 
    return;
 }
 
 bool SevenSegDisplays::print(String text){
    bool displayable{true};
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool printOnBlink{_blinking};
    int position{-1};
 
@@ -499,6 +521,7 @@ bool SevenSegDisplays::print(String text){
       displayable = false;
    }
    if (displayable) {
+      taskENTER_CRITICAL(&mux);
       if(_waiting)
          noWait();
       if(printOnBlink)
@@ -507,7 +530,8 @@ bool SevenSegDisplays::print(String text){
          *(_dspBuffPtr + i) = temp7SegData[i] & tempDpData[i];
       if(printOnBlink)
          blink();
-      _dspBuffChng = true;
+      _setDspBuffChng();
+      taskEXIT_CRITICAL(&mux);
    }
 
    return displayable;
@@ -573,9 +597,9 @@ bool SevenSegDisplays::print(const double &value, const unsigned int &decPlaces,
             else
                pad += _spacePadding;
             if (value < 0)
-               readOut = pad.substring(0, (_dspDigitsQty+1) - (readOut.length()-1)) + readOut.substring(1);
+               readOut = pad.substring(0, (_dspDigitsQty + 1) - (readOut.length() - 1)) + readOut.substring(1);
             else
-               readOut = pad.substring(0, (_dspDigitsQty+1) - (readOut.length())) + readOut;
+               readOut = pad.substring(0, (_dspDigitsQty + 1) - (readOut.length())) + readOut;
             readOut = readOut.substring(0, _dspDigitsQty + 1);
          }
       }
@@ -586,30 +610,38 @@ bool SevenSegDisplays::print(const double &value, const unsigned int &decPlaces,
 }
 
 void SevenSegDisplays::resetBlinkMask(){
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+
+   taskENTER_CRITICAL(&mux);
    for (uint8_t i{0}; i < _dspDigitsQty; i++)
       *(_blinkMaskPtr + i) = true;
+      taskEXIT_CRITICAL(&mux);
 
    return;
 }
 
 void SevenSegDisplays::_restoreDspBuff(){
-   //  for (int i{0}; i < _dspDigitsQty; i++)
-   //      (*(_dspBuffPtr + i)) = (*(_dspAuxBuffPtr + i));
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+
+   taskENTER_CRITICAL(&mux);
    memcpy(_dspBuffPtr, _dspAuxBuffPtr, _dspDigitsQty);   // destPtr, srcPtr, size
+   taskEXIT_CRITICAL(&mux);
 
    return;
 }
 
 void SevenSegDisplays::_saveDspBuff(){
-   //  for (int i{0}; i < _dspDigitsQty; i++)
-   //      (*(_dspAuxBuffPtr + i)) = (*(_dspBuffPtr + i));
-      memcpy(_dspAuxBuffPtr, _dspBuffPtr, _dspDigitsQty);   // destPtr, srcPtr, size
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+
+   taskENTER_CRITICAL(&mux);
+   memcpy(_dspAuxBuffPtr, _dspBuffPtr, _dspDigitsQty);   // destPtr, srcPtr, size
+   taskEXIT_CRITICAL(&mux);
 
    return;
 }
 
 void SevenSegDisplays::_setAttrbts(){
-   if (_dspDigitsQty > 1){ // Calculate the minimum integer value displayable with this display's available digits
+   if (_dspDigitsQty > 1){ // Calculate the minimum integer value displayable with the available digits
       _dspValMin = 1;
       for (uint8_t i{0}; i < (_dspDigitsQty - 1); i++)
          _dspValMin *= 10;
@@ -618,7 +650,7 @@ void SevenSegDisplays::_setAttrbts(){
    else
       _dspValMin = 0;
 
-   _dspValMax = 1; // Calculate the maximum integer value displayable with this display's available digits, create a Zero and a Space padding string for right alignment
+   _dspValMax = 1; // Calculate the maximum integer value displayable with this display's available digits, create a Zero and a Space padding string for right alignment printing
    for (uint8_t i{0}; i < _dspDigitsQty; i++) {
       _dspValMax *= 10;
       _zeroPadding += "0";
@@ -639,13 +671,21 @@ void SevenSegDisplays::_setAttrbts(){
 }
 
 void SevenSegDisplays::setBlinkMask(const bool* newBlnkMsk){
-   for (int i{0}; i < _dspDigitsQty; i++)
-      *(_blinkMaskPtr + i) = *(newBlnkMsk + i);
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
+   //FFDR Remove commented code if the new one works ok
+   // for (int i{0}; i < _dspDigitsQty; i++)
+   //    *(_blinkMaskPtr + i) = *(newBlnkMsk + i);
+
+   taskENTER_CRITICAL(&mux);
+   memcpy(_blinkMaskPtr, newBlnkMsk, _dspDigitsQty);   // destPtr, srcPtr, size
+   taskEXIT_CRITICAL(&mux);
+   
    return;
 }
 
 bool SevenSegDisplays::setBlinkRate(const unsigned long &newOnRate, const unsigned long &newOffRate){
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool result {false};
    long unsigned tmpOffRate{newOffRate};
    BaseType_t tmrModResult {pdFAIL};
@@ -653,6 +693,7 @@ bool SevenSegDisplays::setBlinkRate(const unsigned long &newOnRate, const unsign
    if (tmpOffRate == 0)
       tmpOffRate = newOnRate;
    if ((newOnRate != _blinkOnRate) || (tmpOffRate != _blinkOffRate)) {
+      taskENTER_CRITICAL(&mux);
       if ((newOnRate >= _minBlinkRate) && (newOnRate <= _maxBlinkRate)) { //The new ON rate is in the valid range
          if ((tmpOffRate >= _minBlinkRate) && (tmpOffRate <= _maxBlinkRate)) {    //The new OFF rate is in the valid range or is equal to 0 to set a symmetric blink
             if(_blinkOnRate != newOnRate)
@@ -672,12 +713,20 @@ bool SevenSegDisplays::setBlinkRate(const unsigned long &newOnRate, const unsign
             }
          }
       }
+      taskEXIT_CRITICAL(&mux);
    }
    else{
       result = true; //There's no need to change the current values, but as those were valid, they are still valid
    }
 
    return result;  
+}
+
+void SevenSegDisplays::_setDspBuffChng(){
+   //FFDR Include in this method all the actions triggered by the change of the display buffer contents: Unblocking underlying hardware display renewal, fill message FIFOs, etc.
+   _dspBuffChng = true;
+
+   return;
 }
 
 bool SevenSegDisplays::setWaitChar (const char &newChar){
@@ -699,11 +748,13 @@ bool SevenSegDisplays::setWaitChar (const char &newChar){
 }
 
 bool SevenSegDisplays::setWaitRate(const unsigned long &newWaitRate){
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
    if(_waitRate != newWaitRate){
       if ((newWaitRate >= _minBlinkRate) && newWaitRate <= _maxBlinkRate) {//if the new waitRate is within the accepted range, set it
+         taskENTER_CRITICAL(&mux);
          _waitRate = newWaitRate;
          result =  true;
 
@@ -715,10 +766,13 @@ bool SevenSegDisplays::setWaitRate(const unsigned long &newWaitRate){
             if(tmrModResult == pdFAIL)
                result =  false;
          }
+         taskEXIT_CRITICAL(&mux);
       }
    }
    return result;
 }
+
+//FFDR Last checked point by Gaby. Start from here!
 
 void SevenSegDisplays::tmrCbBlink(TimerHandle_t blinkTmrCbArg){
    SevenSegDisplays* thisDisplay = (SevenSegDisplays*)blinkTmrCbArg;
@@ -782,7 +836,7 @@ void SevenSegDisplays::_updWaitState(){
             else
                *(_dspBuffPtr + i) = _space;
          }
-         _dspBuffChng = true;
+         _setDspBuffChng(); //_dspBuffChng = true;
          _waitCount++;
          if (_waitCount == (_dspDigitsQty + 1))
             _waitCount = 0;

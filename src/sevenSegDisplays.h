@@ -38,6 +38,9 @@
   * Games people play in the middle of the night
  *******************************************************************************
  */
+//FFDR For Future Development Reminder comments!!
+//FTPO For testing purposes only comments!!
+
 #ifndef _SevenSegDisplays_H_
 #define _SevenSegDisplays_H_
 
@@ -46,7 +49,6 @@
 #include <SevenSegDispHw.h>
 
 const int MAX_DIGITS_PER_DISPLAY{8};
-//FFDR For Future Development Reminder comments!!
 
 class SevenSegDisplays {
    static uint8_t _displaysCount;
@@ -146,6 +148,7 @@ protected:
    void _pushSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDisplays* ssdToPush);
    void _restoreDspBuff();
    void _setAttrbts();
+   void _setDspBuffChng();
    void _saveDspBuff();
    void _updBlinkState();
    void _updWaitState();
@@ -198,6 +201,10 @@ public:
    bool blink(const unsigned long &onRate, const unsigned long &offRate = 0);
    /**
     * @brief Clears the display, turning off all the segments and dots.
+    * 
+    * To ensure success the method must also clean auxiliary buffers used to save the main buffer contents while blinking, as the backup buffer will be restored, so the display clear() would be reverted  
+    * 
+    * @note The method will not produce any change if it's in "Waiting mode" as the blanked ports will be immediately overwritten by the waiting process, so it makes no sense. Consider, though, that the "Waiting mode" clears the display at it's exit.  
     */
    void clear();
    /**
@@ -329,16 +336,18 @@ public:
     */
    bool isWaiting();
    /**
-    * @brief Stops the display blinking, if it was doing so, leaving the display turned on.  
+    * @brief Stops the display blinking, if it was doing so, leaving the display turned on.
+    * 
+    * Stoping the blinking process includes retrieving the original contents from the _dspAuxPtr pointed memory (the Auxiliar Buffer), freeing the Auxiliar Buffer memory, stoping the timer attached to the process and cleaning the blinking state related flags  
     * 
     * @retval true If the display was set to blink, the blinking is stopped.  
     * @retval false If the display was not set to blink, no changes will be done.  
     */
    bool noBlink();
    /**
-    * @brief Exits the **Waiting mode**
+    * @brief Stops the **Waiting mode**, if it was doing so, leaving the display turned on. 
     * 
-    * The waiting mode, if active, will be stopped, leaving the display turned on and blanked.  
+    * Stoping the "Waiting mode" process includes retrieving the original contents from the _dspAuxPtr pointed memory (the Auxiliar Buffer), freeing the Auxiliar Buffer memory, stoping the timer attached to the process and cleaning the waiting state related flags    
     * 
     * @retval true If the display was set to wait, the **Waiting mode** is stopped.  
     * @retval false If the display was not set to wait, no changes will be done.  
