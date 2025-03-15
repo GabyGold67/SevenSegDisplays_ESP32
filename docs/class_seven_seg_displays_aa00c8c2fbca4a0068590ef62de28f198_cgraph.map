@@ -8,6 +8,6 @@
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="375,53,459,33,460,39,376,58"/>
 <area shape="rect" id="Node000005" href="$class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="445,56,628,83"/>
 <area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="396,67,429,67,429,72,396,72"/>
-<area shape="rect" id="Node000006" href="$class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Exits the Waiting mode" alt="" coords="446,107,627,133"/>
+<area shape="rect" id="Node000006" href="$class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="446,107,627,133"/>
 <area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="376,81,460,100,459,105,375,86"/>
 </map>

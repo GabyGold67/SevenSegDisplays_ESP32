@@ -1,5 +1,5 @@
 <map id="SevenSegDisplays::noWait" name="SevenSegDisplays::noWait">
-<area shape="rect" id="Node000001" title="Exits the Waiting mode" alt="" coords="668,68,849,95"/>
+<area shape="rect" id="Node000001" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="668,68,849,95"/>
 <area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#aad6eac4fa55968318f6d0c1e4e80cb8e" title="Class destructor." alt="" coords="468,31,608,73"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="652,70,608,64,609,59,653,65"/>
 <area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string." alt="" coords="455,97,620,124"/>

@@ -4,5 +4,5 @@ var searchData=
   ['setblinkrate_1',['setBlinkRate',['../class_seven_seg_displays.html#a5156b178ce490d7b5e1207aa3baa85dc',1,'SevenSegDisplays']]],
   ['setwaitchar_2',['setWaitChar',['../class_seven_seg_displays.html#a806a5ed32988ec7d82b65157b56b538e',1,'SevenSegDisplays']]],
   ['setwaitrate_3',['setWaitRate',['../class_seven_seg_displays.html#acd0f00d24dbbaadec3fb06ffb991914c',1,'SevenSegDisplays']]],
-  ['sevensegdisplays_4',['SevenSegDisplays',['../class_seven_seg_displays.html#a667dc425877769e610f33f70055158cb',1,'SevenSegDisplays']]]
+  ['sevensegdisplays_4',['SevenSegDisplays',['../class_seven_seg_displays.html#ada6d89fb083fd8a5a2ce603b3b1f5e43',1,'SevenSegDisplays']]]
 ];

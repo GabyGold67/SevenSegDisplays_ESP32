@@ -4,6 +4,6 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="149,53,233,33,234,39,151,58"/>
 <area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="219,56,402,83"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="171,67,203,67,203,72,171,72"/>
-<area shape="rect" id="Node000004" href="$class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Exits the Waiting mode" alt="" coords="220,107,400,133"/>
+<area shape="rect" id="Node000004" href="$class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="220,107,400,133"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="151,81,234,100,233,105,149,86"/>
 </map>

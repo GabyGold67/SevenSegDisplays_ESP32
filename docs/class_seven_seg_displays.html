@@ -120,9 +120,9 @@ Collaboration diagram for SevenSegDisplays:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a667dc425877769e610f33f70055158cb" id="r_a667dc425877769e610f33f70055158cb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a667dc425877769e610f33f70055158cb">SevenSegDisplays</a> (SevenSegDispHw dspUndrlHw)</td></tr>
-<tr class="memdesc:a667dc425877769e610f33f70055158cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor.  <br /></td></tr>
-<tr class="separator:a667dc425877769e610f33f70055158cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada6d89fb083fd8a5a2ce603b3b1f5e43" id="r_ada6d89fb083fd8a5a2ce603b3b1f5e43"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ada6d89fb083fd8a5a2ce603b3b1f5e43">SevenSegDisplays</a> (SevenSegDispHw *dspUndrlHwPtr)</td></tr>
+<tr class="memdesc:ada6d89fb083fd8a5a2ce603b3b1f5e43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor.  <br /></td></tr>
+<tr class="separator:ada6d89fb083fd8a5a2ce603b3b1f5e43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad6eac4fa55968318f6d0c1e4e80cb8e" id="r_aad6eac4fa55968318f6d0c1e4e80cb8e"><td class="memItemLeft" align="right" valign="top"><a id="aad6eac4fa55968318f6d0c1e4e80cb8e" name="aad6eac4fa55968318f6d0c1e4e80cb8e"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDisplays</b> ()</td></tr>
 <tr class="memdesc:aad6eac4fa55968318f6d0c1e4e80cb8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class destructor. <br /></td></tr>
@@ -133,9 +133,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ade8596c25d7c6f2976422ef71a565508" id="r_ade8596c25d7c6f2976422ef71a565508"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade8596c25d7c6f2976422ef71a565508">blink</a> (const unsigned long &amp;onRate, const unsigned long &amp;offRate=0)</td></tr>
 <tr class="memdesc:ade8596c25d7c6f2976422ef71a565508"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the display blink the contents it is showing.  <br /></td></tr>
 <tr class="separator:ade8596c25d7c6f2976422ef71a565508"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67a533e8239853768391bfe513fc318e" id="r_a67a533e8239853768391bfe513fc318e"><td class="memItemLeft" align="right" valign="top"><a id="a67a533e8239853768391bfe513fc318e" name="a67a533e8239853768391bfe513fc318e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr>
-<tr class="memdesc:a67a533e8239853768391bfe513fc318e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the display, turning off all the segments and dots. <br /></td></tr>
+<tr class="memitem:a67a533e8239853768391bfe513fc318e" id="r_a67a533e8239853768391bfe513fc318e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67a533e8239853768391bfe513fc318e">clear</a> ()</td></tr>
+<tr class="memdesc:a67a533e8239853768391bfe513fc318e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the display, turning off all the segments and dots.  <br /></td></tr>
 <tr class="separator:a67a533e8239853768391bfe513fc318e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa74bbf6a2436ea01c170459ef1da5fbe" id="r_aa74bbf6a2436ea01c170459ef1da5fbe"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa74bbf6a2436ea01c170459ef1da5fbe">doubleGauge</a> (const int &amp;levelLeft, const int &amp;levelRight, char labelLeft=' ', char labelRight=' ')</td></tr>
 <tr class="memdesc:aa74bbf6a2436ea01c170459ef1da5fbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays a basic graphical representation of the level of fulfillment or completeness of two segmented values or tasks.  <br /></td></tr>
@@ -176,11 +175,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr
 <tr class="memdesc:a718219a5716845dfa413f62218c575a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a boolean value indicating if the display is set to "waiting mode" or not.  <br /></td></tr>
 <tr class="separator:a718219a5716845dfa413f62218c575a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f790df925c994efb27f0ce1c39014dd" id="r_a9f790df925c994efb27f0ce1c39014dd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f790df925c994efb27f0ce1c39014dd">noBlink</a> ()</td></tr>
-<tr class="memdesc:a9f790df925c994efb27f0ce1c39014dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the display blinking, if it was doing so, leaving the display turned on. <br  />
-  <br /></td></tr>
+<tr class="memdesc:a9f790df925c994efb27f0ce1c39014dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the display blinking, if it was doing so, leaving the display turned on.  <br /></td></tr>
 <tr class="separator:a9f790df925c994efb27f0ce1c39014dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e6d2565f90dc6acf546934dde557471" id="r_a2e6d2565f90dc6acf546934dde557471"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2e6d2565f90dc6acf546934dde557471">noWait</a> ()</td></tr>
-<tr class="memdesc:a2e6d2565f90dc6acf546934dde557471"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exits the <b>Waiting mode</b>  <br /></td></tr>
+<tr class="memdesc:a2e6d2565f90dc6acf546934dde557471"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the <b>Waiting mode</b>, if it was doing so, leaving the display turned on.  <br /></td></tr>
 <tr class="separator:a2e6d2565f90dc6acf546934dde557471"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9d15e373d8a27061ca32e5112379730" id="r_ad9d15e373d8a27061ca32e5112379730"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad9d15e373d8a27061ca32e5112379730">print</a> (String text)</td></tr>
 <tr class="memdesc:ad9d15e373d8a27061ca32e5112379730"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays a text string.  <br /></td></tr>
@@ -230,8 +228,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Default constructor. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a667dc425877769e610f33f70055158cb" name="a667dc425877769e610f33f70055158cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a667dc425877769e610f33f70055158cb">&#9670;&#160;</a></span>SevenSegDisplays()</h2>
+<a id="ada6d89fb083fd8a5a2ce603b3b1f5e43" name="ada6d89fb083fd8a5a2ce603b3b1f5e43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada6d89fb083fd8a5a2ce603b3b1f5e43">&#9670;&#160;</a></span>SevenSegDisplays()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -239,7 +237,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr
         <tr>
           <td class="memname">SevenSegDisplays::SevenSegDisplays </td>
           <td>(</td>
-          <td class="paramtype">SevenSegDispHw</td>          <td class="paramname"><span class="paramname"><em>dspUndrlHw</em></span></td><td>)</td>
+          <td class="paramtype">SevenSegDispHw *</td>          <td class="paramname"><span class="paramname"><em>dspUndrlHwPtr</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -249,15 +247,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr
 <p>Instantiates a <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> class object</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dspUndrlHw</td><td>An instantiated SevenSegDispHw subclass object that models the hardware display that composes the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object </td></tr>
+    <tr><td class="paramname">dspUndrlHw</td><td>A pointer to an instantiated SevenSegDispHw subclass object that models the hardware display that composes the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object </td></tr>
   </table>
   </dd>
 </dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_seven_seg_displays_a667dc425877769e610f33f70055158cb_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_a667dc425877769e610f33f70055158cb_cgraph" alt=""/></div>
-<map name="aclass_seven_seg_displays_a667dc425877769e610f33f70055158cb_cgraph" id="aclass_seven_seg_displays_a667dc425877769e610f33f70055158cb_cgraph">
+<div class="center"><img src="class_seven_seg_displays_ada6d89fb083fd8a5a2ce603b3b1f5e43_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_ada6d89fb083fd8a5a2ce603b3b1f5e43_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_displays_ada6d89fb083fd8a5a2ce603b3b1f5e43_cgraph" id="aclass_seven_seg_displays_ada6d89fb083fd8a5a2ce603b3b1f5e43_cgraph">
 <area shape="rect" title="Class constructor." alt="" coords="5,5,206,48"/>
 <area shape="rect" href="class_seven_seg_displays.html#a67a533e8239853768391bfe513fc318e" title="Clears the display, turning off all the segments and dots." alt="" coords="254,13,422,40"/>
 <area shape="poly" title=" " alt="" coords="206,24,238,24,238,29,206,29"/>
@@ -380,6 +378,50 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="a67a533e8239853768391bfe513fc318e" name="a67a533e8239853768391bfe513fc318e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67a533e8239853768391bfe513fc318e">&#9670;&#160;</a></span>clear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SevenSegDisplays::clear </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clears the display, turning off all the segments and dots. </p>
+<p>To ensure success the method must also clean auxiliary buffers used to save the main buffer contents while blinking, as the backup buffer will be restored, so the display <a class="el" href="#a67a533e8239853768391bfe513fc318e" title="Clears the display, turning off all the segments and dots.">clear()</a> would be reverted <br  />
+</p>
+<dl class="section note"><dt>Note</dt><dd>The method will not produce any change if it's in "Waiting mode" as the blanked ports will be immediately overwritten by the waiting process, so it makes no sense. Consider, though, that the "Waiting mode" clears the display at it's exit. <br  />
+ </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_displays_a67a533e8239853768391bfe513fc318e_icgraph.png" border="0" usemap="#aclass_seven_seg_displays_a67a533e8239853768391bfe513fc318e_icgraph" alt=""/></div>
+<map name="aclass_seven_seg_displays_a67a533e8239853768391bfe513fc318e_icgraph" id="aclass_seven_seg_displays_a67a533e8239853768391bfe513fc318e_icgraph">
+<area shape="rect" title="Clears the display, turning off all the segments and dots." alt="" coords="477,164,645,191"/>
+<area shape="rect" href="class_seven_seg_displays.html#ada6d89fb083fd8a5a2ce603b3b1f5e43" title="Class constructor." alt="" coords="229,5,429,48"/>
+<area shape="poly" title=" " alt="" coords="536,154,489,108,459,83,428,62,404,51,407,46,430,58,462,79,492,104,540,150"/>
+<area shape="rect" href="class_seven_seg_displays.html#aa74bbf6a2436ea01c170459ef1da5fbe" title="Displays a basic graphical representation of the level of fulfillment or completeness of two segmente..." alt="" coords="240,72,418,115"/>
+<area shape="poly" title=" " alt="" coords="507,161,389,118,391,113,509,156"/>
+<area shape="rect" href="class_seven_seg_displays.html#a6fea06785902000457c1105c78d85093" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ..." alt="" coords="5,164,181,191"/>
+<area shape="poly" title=" " alt="" coords="462,180,181,180,181,175,462,175"/>
+<area shape="rect" href="class_seven_seg_displays.html#aa00c8c2fbca4a0068590ef62de28f198" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ..." alt="" coords="241,189,416,216"/>
+<area shape="poly" title=" " alt="" coords="462,191,417,196,417,190,462,185"/>
+<area shape="rect" href="class_seven_seg_displays.html#a57d180fb4339fe2359cc864660a765ac" title="Displays a floating point value." alt="" coords="246,240,412,267"/>
+<area shape="poly" title=" " alt="" coords="514,199,430,231,390,242,388,237,428,225,512,194"/>
+<area shape="rect" href="class_seven_seg_displays.html#a4858a1c2efaf8a7d0e67297948937d7c" title="Displays an integer value as long as the length representation fits the available space of the displa..." alt="" coords="246,291,412,317"/>
+<area shape="poly" title=" " alt="" coords="537,203,490,243,430,281,400,293,399,288,428,276,487,239,534,199"/>
+<area shape="poly" title=" " alt="" coords="225,194,181,189,182,184,226,189"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="aa74bbf6a2436ea01c170459ef1da5fbe" name="aa74bbf6a2436ea01c170459ef1da5fbe"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa74bbf6a2436ea01c170459ef1da5fbe">&#9670;&#160;</a></span>doubleGauge()</h2>
 
@@ -445,7 +487,7 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="378,53,462,33,463,39,379,58"/>
 <area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="448,56,631,83"/>
 <area shape="poly" title=" " alt="" coords="399,67,432,67,432,72,399,72"/>
-<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Exits the Waiting mode" alt="" coords="450,107,630,133"/>
+<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="450,107,630,133"/>
 <area shape="poly" title=" " alt="" coords="379,81,463,100,462,105,378,86"/>
 </map>
 </div>
@@ -508,7 +550,7 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="598,53,682,33,684,39,599,58"/>
 <area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="668,56,852,83"/>
 <area shape="poly" title=" " alt="" coords="619,67,653,67,653,72,619,72"/>
-<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Exits the Waiting mode" alt="" coords="670,107,850,133"/>
+<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="670,107,850,133"/>
 <area shape="poly" title=" " alt="" coords="599,81,684,100,682,105,598,86"/>
 </map>
 </div>
@@ -562,7 +604,7 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="375,53,459,33,460,39,376,58"/>
 <area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="445,56,628,83"/>
 <area shape="poly" title=" " alt="" coords="396,67,429,67,429,72,396,72"/>
-<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Exits the Waiting mode" alt="" coords="446,107,627,133"/>
+<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="446,107,627,133"/>
 <area shape="poly" title=" " alt="" coords="376,81,460,100,459,105,375,86"/>
 </map>
 </div>
@@ -826,8 +868,9 @@ false If the display is not set to <b>Waiting mode</b>. <br  />
       </table>
 </div><div class="memdoc">
 
-<p>Stops the display blinking, if it was doing so, leaving the display turned on. <br  />
- </p>
+<p>Stops the display blinking, if it was doing so, leaving the display turned on. </p>
+<p>Stoping the blinking process includes retrieving the original contents from the _dspAuxPtr pointed memory (the Auxiliar Buffer), freeing the Auxiliar Buffer memory, stoping the timer attached to the process and cleaning the blinking state related flags <br  />
+</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">true</td><td>If the display was set to blink, the blinking is stopped. <br  />
@@ -885,8 +928,8 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Exits the <b>Waiting mode</b> </p>
-<p>The waiting mode, if active, will be stopped, leaving the display turned on and blanked. <br  />
+<p>Stops the <b>Waiting mode</b>, if it was doing so, leaving the display turned on. </p>
+<p>Stoping the "Waiting mode" process includes retrieving the original contents from the _dspAuxPtr pointed memory (the Auxiliar Buffer), freeing the Auxiliar Buffer memory, stoping the timer attached to the process and cleaning the waiting state related flags <br  />
 </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
@@ -902,7 +945,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_a2e6d2565f90dc6acf546934dde557471_icgraph.png" border="0" usemap="#aclass_seven_seg_displays_a2e6d2565f90dc6acf546934dde557471_icgraph" alt=""/></div>
 <map name="aclass_seven_seg_displays_a2e6d2565f90dc6acf546934dde557471_icgraph" id="aclass_seven_seg_displays_a2e6d2565f90dc6acf546934dde557471_icgraph">
-<area shape="rect" title="Exits the Waiting mode" alt="" coords="668,68,849,95"/>
+<area shape="rect" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="668,68,849,95"/>
 <area shape="rect" href="class_seven_seg_displays.html#aad6eac4fa55968318f6d0c1e4e80cb8e" title="Class destructor." alt="" coords="468,31,608,73"/>
 <area shape="poly" title=" " alt="" coords="652,70,608,64,609,59,653,65"/>
 <area shape="rect" href="class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string." alt="" coords="455,97,620,124"/>
@@ -990,7 +1033,7 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="365,53,449,33,450,39,366,58"/>
 <area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="435,56,618,83"/>
 <area shape="poly" title=" " alt="" coords="386,67,419,67,419,72,386,72"/>
-<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Exits the Waiting mode" alt="" coords="436,107,617,133"/>
+<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="436,107,617,133"/>
 <area shape="poly" title=" " alt="" coords="366,81,450,100,449,105,365,86"/>
 </map>
 </div>
@@ -1053,7 +1096,7 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="365,53,449,33,450,39,366,58"/>
 <area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="435,56,618,83"/>
 <area shape="poly" title=" " alt="" coords="386,67,419,67,419,72,386,72"/>
-<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Exits the Waiting mode" alt="" coords="436,107,617,133"/>
+<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="436,107,617,133"/>
 <area shape="poly" title=" " alt="" coords="366,81,450,100,449,105,365,86"/>
 </map>
 </div>
@@ -1108,7 +1151,7 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="149,53,233,33,234,39,151,58"/>
 <area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="219,56,402,83"/>
 <area shape="poly" title=" " alt="" coords="171,67,203,67,203,72,171,72"/>
-<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Exits the Waiting mode" alt="" coords="220,107,400,133"/>
+<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="220,107,400,133"/>
 <area shape="poly" title=" " alt="" coords="151,81,234,100,233,105,149,86"/>
 </map>
 </div>
@@ -1285,7 +1328,7 @@ false The parameter passed was invalid, i.e. it was a non displayable character,
 
 <p>Changes the timing parameter used to show the "progress ongoing bar advancement" speed. <br  />
  </p>
-<p>The parameter change will take immediate effect, either if the display is already in wait mode or not, in the latter case the parameter will be the one used when a <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> method is called without parameters. The wait rate set will be kept after a <b><code><a class="el" href="#a2e6d2565f90dc6acf546934dde557471" title="Exits the Waiting mode">noWait()</a></code></b> or new <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> without parameters call is done, until it is modified with a new <b><code><a class="el" href="#acd0f00d24dbbaadec3fb06ffb991914c" title="Changes the timing parameter used to show the &quot;progress ongoing bar advancement&quot; speed.">setWaitRate()</a></code></b> call, or it is restarted by a <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> with parameters. Note that to restart the waiting with a <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> the service must first be stopped, as the method makes no changes if the waiting service was already running. <br  />
+<p>The parameter change will take immediate effect, either if the display is already in wait mode or not, in the latter case the parameter will be the one used when a <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> method is called without parameters. The wait rate set will be kept after a <b><code><a class="el" href="#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on.">noWait()</a></code></b> or new <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> without parameters call is done, until it is modified with a new <b><code><a class="el" href="#acd0f00d24dbbaadec3fb06ffb991914c" title="Changes the timing parameter used to show the &quot;progress ongoing bar advancement&quot; speed.">setWaitRate()</a></code></b> call, or it is restarted by a <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> with parameters. Note that to restart the waiting with a <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> the service must first be stopped, as the method makes no changes if the waiting service was already running. <br  />
 </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1322,7 +1365,7 @@ false The parameter passed was invalid, i.e. it was a non displayable character,
 
 <p>Makes the display enter the "Waiting mode" <br  />
  </p>
-<p>While in "Waiting mode" the display shows a simple animated progress bar or "process ongoing bar" until a <b><code><a class="el" href="#a2e6d2565f90dc6acf546934dde557471" title="Exits the Waiting mode">noWait()</a></code></b> method is invoked. The speed rate for the progress animation starts at a parameter passed rate when the method is invoked, or the last speed set will be used, having a preset value for the first time it's invoked if no parameter is passed. The animation rate can be changed by using the <b><code><a class="el" href="#acd0f00d24dbbaadec3fb06ffb991914c" title="Changes the timing parameter used to show the &quot;progress ongoing bar advancement&quot; speed.">setWaitRate()</a></code></b> method. The speed rate set will be kept after a <b><code><a class="el" href="#a2e6d2565f90dc6acf546934dde557471" title="Exits the Waiting mode">noWait()</a></code></b> or new <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> without parameters call is done, until it is modified with a new <b><code><a class="el" href="#acd0f00d24dbbaadec3fb06ffb991914c" title="Changes the timing parameter used to show the &quot;progress ongoing bar advancement&quot; speed.">setWaitRate()</a></code></b> call, or it is restarted by a <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> with a parameter. Note that to restart the waiting with a <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> the service must first be stopped, as the method makes no changes if the waiting service was already running. <br  />
+<p>While in "Waiting mode" the display shows a simple animated progress bar or "process ongoing bar" until a <b><code><a class="el" href="#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on.">noWait()</a></code></b> method is invoked. The speed rate for the progress animation starts at a parameter passed rate when the method is invoked, or the last speed set will be used, having a preset value for the first time it's invoked if no parameter is passed. The animation rate can be changed by using the <b><code><a class="el" href="#acd0f00d24dbbaadec3fb06ffb991914c" title="Changes the timing parameter used to show the &quot;progress ongoing bar advancement&quot; speed.">setWaitRate()</a></code></b> method. The speed rate set will be kept after a <b><code><a class="el" href="#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on.">noWait()</a></code></b> or new <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> without parameters call is done, until it is modified with a new <b><code><a class="el" href="#acd0f00d24dbbaadec3fb06ffb991914c" title="Changes the timing parameter used to show the &quot;progress ongoing bar advancement&quot; speed.">setWaitRate()</a></code></b> call, or it is restarted by a <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> with a parameter. Note that to restart the waiting with a <b><code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;">wait()</a></code></b> the service must first be stopped, as the method makes no changes if the waiting service was already running. <br  />
 </p>
 <dl class="section return"><dt>Returns</dt><dd>true The display was not already set to wait (so now the "Waiting state" was started). <br  />
  </dd>
