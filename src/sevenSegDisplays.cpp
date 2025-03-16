@@ -9,7 +9,7 @@
  * @version 3.0.0
  * 
  * @date First release: 20/12/2023 
- *       Last update:   13/03/2025 13:40 (GMT+0200)
+ *       Last update:   16/03/2025 09:10 (GMT+0200)
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -934,8 +934,6 @@ bool SevenSegDisplays::write(const uint8_t &segments, const uint8_t &port){
     return result;
 }
 
-//FFDR Last checked point by Gaby. Start from here!
-
 bool SevenSegDisplays::write(const String &character, const uint8_t &port){
    bool result {false};
    int position {-1};
@@ -946,12 +944,15 @@ bool SevenSegDisplays::write(const String &character, const uint8_t &port){
       if (position > -1) { // Character found for translation                
          if(writeOnBlink)
             noBlink();
-            *(_dspBuffPtr + port) = _charLeds[position];
-         if(writeOnBlink)
+            if(*(_dspBuffPtr + port) != _charLeds[position]){
+               *(_dspBuffPtr + port) = _charLeds[position];
+               _setDspBuffChng(); // Notify underlying display the change of buffer data
+            }
+               if(writeOnBlink)
             blink();
          result = true;
       }
-    }
+   }
 
    return result;
 }

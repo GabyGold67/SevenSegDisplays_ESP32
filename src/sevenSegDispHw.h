@@ -26,14 +26,11 @@
   * 
   * @warning The use of this library falls in the category described by The Alan 
   * Parsons Project (c) 1980 Games People play:   
-  * Games people play, you take it or you leave it
+  * "Games people play, you take it or you leave it
   * Things that they say aren't alright
-  * If I promised you the moon and the stars, would you believe it?
-  * Games people play in the middle of the night
+  * If I promised you the moon and the stars, would you believe it?"
  *******************************************************************************
  */
-
-
 #ifndef sevenSegDispHw_H
 #define sevenSegDispHw_H
 

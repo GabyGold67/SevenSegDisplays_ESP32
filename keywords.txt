@@ -9,7 +9,7 @@ SevenSegDisplays KEYWORD1
 ###############################################
 # Methods and Functions (KEYWORD2)
 ###############################################
-#SevenSeg74HC595 class
+#SevenSegDisplays class
 #######################
 blink       KEYWORD2
 clear	    KEYWORD2

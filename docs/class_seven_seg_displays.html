@@ -247,11 +247,25 @@ Public Member Functions</h2></td></tr>
 <p>Instantiates a <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> class object</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dspUndrlHw</td><td>A pointer to an instantiated SevenSegDispHw subclass object that models the hardware display that composes the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object </td></tr>
+    <tr><td class="paramname">dspUndrlHw</td><td>A pointer to an instantiated SevenSegDispHw subclass object that models the hardware display that composes the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object</td></tr>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
+<dl class="section note"><dt>Note</dt><dd>The library structure design, built on the idea of keeping the API and the services provided consistent, and connecting the hardware managing level through specific subclasses of the SevenSegDispHw class gives a variety of valid instantiation procedures, through different code but with the same result. This might help the developer to keep his/hers most comfortable practices to get the object needed created. Some examples of this are: <br  />
+</dd></dl>
+<p>A three lines step by step code example: <br  />
+ </p><div class="fragment"><div class="line">SevenSegDynHC595 myLedDispHw(myDispIOPins, 4, <span class="keyword">true</span>);  <span class="comment">// Instantiation of the underlying hardware object</span></div>
+<div class="line">SevenSegDispHw* myLedDispHwPtr = &amp;myLedDispHw;        <span class="comment">// Creation of a pointer to the instantiated hardware object</span></div>
+<div class="line"><a class="code hl_class" href="class_seven_seg_displays.html">SevenSegDisplays</a> myLedDisp(myLedDispHwPtr);           <span class="comment">// Instantiation of the SevenSegDisplays object using the pointer created</span></div>
+<div class="ttc" id="aclass_seven_seg_displays_html"><div class="ttname"><a href="class_seven_seg_displays.html">SevenSegDisplays</a></div><div class="ttdoc">Default constructor.</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.h:51</div></div>
+</div><!-- fragment --><p>A two lines example using the &amp; operand to pass the pointer </p><div class="fragment"><div class="line">SevenSegDynHC595 myLedDispHw(myDispIOPins, 4, <span class="keyword">true</span>);  <span class="comment">// Instantiation of the underlying hardware object</span></div>
+<div class="line"><a class="code hl_class" href="class_seven_seg_displays.html">SevenSegDisplays</a> myLedDisp(&amp;myLedDispHw);             <span class="comment">// Instantiation of the SevenSegDisplays object using the &amp; operand over the hardware object created</span></div>
+</div><!-- fragment --><p>A two lines example using a sub-class pointer to a dynamic instantiated object </p><div class="fragment"><div class="line">SevenSegDynHC595* myLedDispPtr {<span class="keyword">new</span> SevenSegDynHC595 (myDispIOPins, 4, <span class="keyword">true</span>)};   <span class="comment">// Dynamic instantiation of the underlying hardware object, pointed by a subclass pointer</span></div>
+<div class="line"><a class="code hl_class" href="class_seven_seg_displays.html">SevenSegDisplays</a> myLedDisp(myLedDispPtr);    <span class="comment">// Instantiation of the SevenSegDisplays object using the subclass pointer to the hardware object dynamically created</span></div>
+</div><!-- fragment --><p>A two lines example using a base class pointer to a dynamic instantiated object </p><div class="fragment"><div class="line">SevenSegDispHw* myLedDispPtr {<span class="keyword">new</span> SevenSegDynHC595 (myDispIOPins, 4, <span class="keyword">true</span>)};  <span class="comment">// Dynamic instantiation of the underlying hardware object, pointed by a base class pointer</span></div>
+<div class="line"><a class="code hl_class" href="class_seven_seg_displays.html">SevenSegDisplays</a> myLedDisp(myLedDispPtr); <span class="comment">// Instantiation of the SevenSegDisplays object using the base class pointer to the hardware object dynamically created</span></div>
+</div><!-- fragment --><p>A one liner example using as argument the pointer returned from dynamic instantiated object </p><div class="fragment"><div class="line"><a class="code hl_class" href="class_seven_seg_displays.html">SevenSegDisplays</a> myLedDisp(<span class="keyword">new</span> SevenSegDynHC595 (myDispIOPins, 4, <span class="keyword">true</span>));  <span class="comment">// Easy to understand reading from right to left, as usual!!</span></div>
+</div><!-- fragment --> <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_ada6d89fb083fd8a5a2ce603b3b1f5e43_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_ada6d89fb083fd8a5a2ce603b3b1f5e43_cgraph" alt=""/></div>
@@ -283,7 +297,7 @@ Here is the call graph for this function:</div>
 <p>Makes the display blink the contents it is showing. </p>
 <p>The display will blink the contents it is showing until a <b><code><a class="el" href="#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on.">noBlink()</a></code></b> method is invoked. The display will continue blinking even if the contents are changed. <br  />
  By default all the digits will be set to blink, but each digit might be configured individually to blink or not by using the <b><code><a class="el" href="#adbf4a53a706c00d9a237991e234a9353" title="Sets a new blinking mask for the display.">setBlinkMask(const bool*)</a></code></b> method. <br  />
- When invoking the <b><code><a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a></code></b> method with no parameters the blinking pace (timmings) previously set will be used. If no <b><code>setBlinkRate(const unsigned long, const unsigned long)</code></b> and no <b><code>blink(const unsigned long, const unsigned long)</code></b> with parameters was used before this call, the blinking will be symmetrical, meaning that the time the display shows the contents and the time the display is blank are equal. The on time and the off time of the blinking starts at a preset rate this first time the method is invoked. <br  />
+ When invoking the <b><code><a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a></code></b> method with no parameters the blinking pace (timings) previously set will be used. If no <b><code>setBlinkRate(const unsigned long, const unsigned long)</code></b> and no <b><code>blink(const unsigned long, const unsigned long)</code></b> with parameters was used before this call, the blinking will be symmetrical, meaning that the time the display shows the contents and the time the display is blank are equal. The on time and the off time of the blinking starts at a preset rate this first time the method is invoked. <br  />
  The blinking rate can be changed by using the <b><code>setBlinkRate(const unsigned long, const unsigned long)</code></b> method. After changing the blinking rate, the new blinking rate will be kept after a <b><code><a class="el" href="#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on.">noBlink()</a></code></b> call is done, until it is modified with a new <b><code>setBlinkRate(const unsigned long, const unsigned long)</code></b> call, or it is restarted by a <b><code>blink(const unsigned long, const unsigned long)</code></b> with parameters. <br  />
  </p><dl class="section note"><dt>Note</dt><dd>To restart the blinking with a <b><code><a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a></code></b> or a <b><code>blink(const unsigned long, const unsigned long)</code></b> the service must first be stopped, as the method call makes no changes if the blinking service was already running. <br  />
 </dd></dl>
@@ -708,7 +722,7 @@ Here is the caller graph for this function:</div>
 <p>Returns a unique numeric identification of the object. </p>
 <p>The Returned unsigned integer value identifies the object. Each time the class is instantiated the created object receives a serial instantiation number that can be used in order to identify each object in case of need.</p>
 <dl class="section return"><dt>Returns</dt><dd>The unsigned number indicating the identification Instance Number.</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>As <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> objects might be constructed and destructed at need, the largest Instance number is not necesarily coincidental with the quantity of objects instantiated at any given moment, as the numeric identification of the object is an always increasing value incremented every time a new object is instantiated, but never decremented due to destructions. <br  />
+<dl class="section note"><dt>Note</dt><dd>As <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> objects might be constructed and destructed at need, the largest Instance number is not necessarily coincidental with the quantity of objects instantiated at any given moment, as the numeric identification of the object is an always increasing value incremented every time a new object is instantiated, but never decremented due to destructions. <br  />
 </dd></dl>
 <dl class="section attention"><dt>Attention</dt><dd>Not to be confused with a pointer to the object or other internal unique identification mechanism results </dd></dl>
 
@@ -869,7 +883,7 @@ false If the display is not set to <b>Waiting mode</b>. <br  />
 </div><div class="memdoc">
 
 <p>Stops the display blinking, if it was doing so, leaving the display turned on. </p>
-<p>Stoping the blinking process includes retrieving the original contents from the _dspAuxPtr pointed memory (the Auxiliar Buffer), freeing the Auxiliar Buffer memory, stoping the timer attached to the process and cleaning the blinking state related flags <br  />
+<p>Stoping the blinking process includes retrieving the original contents from the _dspAuxPtr pointed memory (the Auxiliary Buffer), freeing the Auxiliary Buffer memory, stoping the timer attached to the process and cleaning the blinking state related flags <br  />
 </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
@@ -929,7 +943,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Stops the <b>Waiting mode</b>, if it was doing so, leaving the display turned on. </p>
-<p>Stoping the "Waiting mode" process includes retrieving the original contents from the _dspAuxPtr pointed memory (the Auxiliar Buffer), freeing the Auxiliar Buffer memory, stoping the timer attached to the process and cleaning the waiting state related flags <br  />
+<p>Stoping the "Waiting mode" process includes retrieving the original contents from the _dspAuxPtr pointed memory (the Auxiliary Buffer), freeing the Auxiliary Buffer memory, stoping the timer attached to the process and cleaning the waiting state related flags <br  />
 </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">

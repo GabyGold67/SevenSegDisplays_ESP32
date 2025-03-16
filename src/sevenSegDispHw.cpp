@@ -10,7 +10,6 @@ static void  tmrStaticCbBlink(TimerHandle_t blinkTmrCbArg){
     return;
 }*/
 
-const int MAX_DIGITS_PER_DISPLAY{8};
 const uint8_t diyMore8Bits[8] {3, 2, 1, 0, 7, 6, 5, 4};
 const uint8_t noName4Bits[4] {0, 1, 2, 3};
 
@@ -111,7 +110,7 @@ bool SevenSegDynamic::begin(){
     BaseType_t tmrModResult {pdFAIL};
 
     Serial.println("\n"); //FTPO
-    Serial.println("Entering the SevenSegDinamic .begin()"); //FTPO
+    Serial.println("Entering the SevenSegDynamic .begin()"); //FTPO
     Serial.println("========================================"); //FTPO
  
 
@@ -128,7 +127,7 @@ bool SevenSegDynamic::begin(){
         _dspRfrshTmrHndl = xTimerCreate(
             rfrshTmrName,
             pdMS_TO_TICKS((int)(1000/(30 * _dspDigitsQty))),
-            pdTRUE,  //Autoreload
+            pdTRUE,  //Auto-reload
             NULL,   //TimerID, data to be passed to the callback function
             tmrCbRefreshDyn  //Callback function
         );
@@ -140,7 +139,7 @@ bool SevenSegDynamic::begin(){
     }
 
     Serial.println("\n"); //FTPO
-    Serial.println("Exiting the SevenSegDinamic .begin()"); //FTPO
+    Serial.println("Exiting the SevenSegDynamic .begin()"); //FTPO
     Serial.println("========================================"); //FTPO
 
     return result;
@@ -231,7 +230,7 @@ SevenSegDynHC595::SevenSegDynHC595(uint8_t* ioPins, uint8_t dspDigits, bool comm
     _rclk = *(ioPins + _rclkIndx);
     _dio = *(ioPins + _dioIndx);
     
-    Serial.println("In the SevenSegDynHC595 constructor the pin assgmnt is"); //FTPO
+    Serial.println("In the SevenSegDynHC595 constructor the pin assignement is"); //FTPO
     Serial.println("======================================================"); //FTPO
     Serial.print("Pin selected for sclk: ");//FTPO
     Serial.println(_sclk, DEC); //FTPO
