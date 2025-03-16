@@ -1,15 +1,6 @@
 #include "Arduino.h"
 #include "sevenSegDispHw.h"
 
-/*Prototype for a SevenSegDispHw classes and SUBClasses timer callback function
-static void  tmrStaticCbBlink(TimerHandle_t blinkTmrCbArg){
-    SevenSegDispHw* SevenSegUndrlHw = (SevenSegDispHw*) blinkTmrCbArg;
-
-    //***************
-
-    return;
-}*/
-
 const uint8_t diyMore8Bits[8] {3, 2, 1, 0, 7, 6, 5, 4};
 const uint8_t noName4Bits[4] {0, 1, 2, 3};
 
@@ -26,12 +17,10 @@ SevenSegDispHw::SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits, bool commAnod
    Serial.println("Entering the SevenSegDispHw constructor"); //FTPO
    Serial.println("========================================"); //FTPO
     
-    
    _dspHwInstNbr = _dspHwSerialNum++;
    for (uint8_t i{0}; i < _dspDigitsQty; i++){
       *(_digitPosPtr + i) = i;
    }
-    
     
    Serial.println("Exiting the SevenSegDispHw constructor"); //FTPO
    Serial.println("========================================"); //FTPO
@@ -56,27 +45,34 @@ uint8_t* SevenSegDispHw::getDspBuffPtr(){
    return _dspBuffPtr;
 }
 
-uint8_t SevenSegDispHw::getDspDigits(){
+uint8_t SevenSegDispHw::getHwDspDigitsQty(){
 
    return _dspDigitsQty;
 }
 
+void SevenSegDispHw::send(uint8_t *digitsBuffer){
+
+   return;
+}
+
+void SevenSegDispHw::send(const uint8_t &segments, const uint8_t &port){
+
+   return;
+}
+
 bool SevenSegDispHw::setDigitsOrder(uint8_t* newOrderPtr){
-    bool result{true};
+   bool result{true};
 
-    for(int i {0}; i < _dspDigitsQty; i++){
-        if (*(newOrderPtr + i) >= _dspDigitsQty){
-            result = false;
-            break;
-        }   
-    }
-    if (result){
-        for(int i {0}; i < _dspDigitsQty; i++){
-            *(_digitPosPtr + i) = *(newOrderPtr + i);
-        }
-    }
+   for(int i {0}; i < _dspDigitsQty; i++){
+      if (*(newOrderPtr + i) >= _dspDigitsQty){
+         result = false;
+         break;
+      }   
+   }
+   if (result)
+      memcpy(_digitPosPtr, newOrderPtr, _dspDigitsQty);
 
-    return result;
+   return result;
 }
 
 void SevenSegDispHw::setDspBuffPtr(uint8_t* newDspBuffPtr){
@@ -89,18 +85,17 @@ bool SevenSegDispHw::stop(){
    
    return true;
 }
-//============================================================> Class methods separator
 
+//============================================================> Class methods separator
+//FFDR Start revision from here Gaby
 SevenSegDynamic::SevenSegDynamic(){}
 
 SevenSegDynamic::SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
 :SevenSegDispHw(ioPins, dspDigits, commAnode)
 {
-    
    Serial.println("\n"); //FTPO
    Serial.println("Passing through SevenSegDynamic constructor code section"); //FTPO
    Serial.println("========================================"); //FTPO
-
 }
 
 SevenSegDynamic::~SevenSegDynamic(){}
@@ -145,36 +140,13 @@ bool SevenSegDynamic::begin(){
     return result;
 }
 
-/*void SevenSegDisplays::fastRefresh(){
-   bool tmpLogic {true};
-
-   _updBlinkState();
-   _updWaitState();
-   if ((_blinking == false) || (_blinkShowOn == true)) {
-    //   send(*(_dspBuffPtr + _firstRefreshed), uint8_t(1) << *(_digitPosPtr + _firstRefreshed));
-   }
-   else if(_blinking && !_blinkShowOn){
-      for(uint8_t i{0}; i<_dspHwPtr->getDspDigits(); i++)
-         tmpLogic = tmpLogic && *(_blinkMaskPtr + i);
-      if (!tmpLogic){   //At least one digit is set NOT TO BLINK
-         if(!*(_blinkMaskPtr + _firstRefreshed))
-            // send(*(_dspBuffPtr + _firstRefreshed), uint8_t(1) << *(_digitPosPtr + _firstRefreshed));
-      }
-   }
-   ++_firstRefreshed;
-   if (_firstRefreshed == _dspHwPtr->getDspDigits())
-      _firstRefreshed = 0;
-
-   return;
-}*/
-
 void SevenSegDynamic::refresh(){
    bool tmpLogic {true};
    uint8_t tmpDigToSend{0};
 
     for (int i {0}; i < _dspDigitsQty; i++){
         tmpDigToSend = *(_dspBuffPtr + ((i + _firstRefreshed) % _dspDigitsQty));
-        // send(tmpDigToSend, uint8_t(1) << *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty)));
+        send(tmpDigToSend, uint8_t(1) << *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty)));
     }
     ++_firstRefreshed;
     if (_firstRefreshed == _dspDigitsQty)
@@ -183,15 +155,15 @@ void SevenSegDynamic::refresh(){
     return;
 }
 
-// void SevenSegDynamic::send(uint8_t content){    // Implementation is hardware dependant (subclasses) protocol!!
-// 
-//     return;
-// }
+void SevenSegDynamic::send(uint8_t content){ // Implementation is hardware dependant (subclasses) protocol!!
 
-// void SevenSegDynamic::send(const uint8_t &segments, const uint8_t &port){
-// 
-//    return;
-// }
+   return;
+}
+
+void SevenSegDynamic::send(const uint8_t &segments, const uint8_t &port){
+
+   return;
+}
 
 bool SevenSegDynamic::stop() {
     bool result {false};

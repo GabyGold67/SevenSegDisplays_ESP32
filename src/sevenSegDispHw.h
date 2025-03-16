@@ -1,6 +1,6 @@
 /**
- * @file SevenSegDisplays.h
- * @brief Header file for the SevenSegDisplays_ESP32 library 
+ * @file SevenSegDispHw.h
+ * @brief Header file for the SevenSegDisplays_ESP32 library, SevenSegDispHw class and subclasses 
  * 
  * 
  * 
@@ -35,20 +35,21 @@
 #define sevenSegDispHw_H
 
 #include "Arduino.h"
-//============================================================> Class declarations separator
+#include <stdint.h>
 
+//============================================================> Class declarations separator
 class SevenSegDispHw{
     static uint8_t _dspHwSerialNum;
 protected:
-    bool _commAnode {true}; //SevenSegDisplays objects will retrieve this info to build the right segments for each character
+    bool _commAnode {true}; // SevenSegDisplays objects need this info to build the right segments to represent each character
     uint8_t* _digitPosPtr{nullptr};
-    uint8_t* _dspBuffPtr{nullptr};
-    uint8_t _dspDigitsQty{}; //Display size in digits    
+    uint8_t* _dspBuffPtr{nullptr};  //FFDR Shouldn't the display buffer shared with the display be held in the HEAP?
+    uint8_t _dspDigitsQty{}; // Display size in digits    
     uint8_t _dspHwInstNbr{0};
     uint8_t* _ioPins{};
 
-    // virtual void send(uint8_t* digitsBuffer);  //===================>> To be implemented
-    // virtual void send(const uint8_t &segments, const uint8_t &port);  //===================>> To be implemented
+    virtual void send(uint8_t* digitsBuffer);
+    virtual void send(const uint8_t &segments, const uint8_t &port);
 public:
     SevenSegDispHw();
     SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
@@ -56,7 +57,7 @@ public:
     virtual bool begin();
     bool getCommAnode();
     uint8_t* getDspBuffPtr();
-    uint8_t getDspDigits();
+    uint8_t getHwDspDigitsQty();
     bool setDigitsOrder(uint8_t* newOrderPtr);
     void setDspBuffPtr(uint8_t* newDspBuffPtr);
     virtual bool stop();
@@ -69,17 +70,16 @@ class SevenSegDynamic: public SevenSegDispHw{
 protected:
     TimerHandle_t _dspRfrshTmrHndl{nullptr};
     uint8_t _firstRefreshed{0};
-    // void fastRefresh();  //===================>> To be implemented
     void refresh();
-    // void send(uint8_t content);
-    // void send(const uint8_t &segments, const uint8_t &port);
+    virtual void send(uint8_t content);
+    virtual void send(const uint8_t &segments, const uint8_t &port);
     TimerHandle_t _svnSgDynTmrHndl{NULL};
 public:
     SevenSegDynamic();
     SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
     ~SevenSegDynamic();
-    bool begin();
-    bool stop();
+    virtual bool begin();
+    virtual bool stop();
 };
 
 //============================================================> Class declarations separator

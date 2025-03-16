@@ -30,7 +30,7 @@ SevenSegDisplays::SevenSegDisplays()
 SevenSegDisplays::SevenSegDisplays(SevenSegDispHw* dspUndrlHwPtr)
 :_dspUndrlHwPtr{dspUndrlHwPtr}
 {
-   _dspDigitsQty = _dspUndrlHwPtr->getDspDigits(); //With the display size in digits, the needed arrays for data can be built
+   _dspDigitsQty = _dspUndrlHwPtr->getHwDspDigitsQty(); //With the display size in digits, the needed arrays for data can be built
    _dspBuffPtr  = new uint8_t[_dspDigitsQty];
    _blinkMaskPtr = new bool[_dspDigitsQty];
    _dspUndrlHwPtr->setDspBuffPtr(_dspBuffPtr); //Indicates the hardware where the data to display is located
