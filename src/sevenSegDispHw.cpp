@@ -1,11 +1,17 @@
 #include "Arduino.h"
 #include "sevenSegDispHw.h"
 
+//----------------------------------------->> Global constants declaration BEGIN
 const uint8_t diyMore8Bits[8] {3, 2, 1, 0, 7, 6, 5, 4};
 const uint8_t noName4Bits[4] {0, 1, 2, 3};
+//------------------------------------------->> Global constants declaration END
 
-//---------------------------------------------------------------
+//-------------------------------------->> Static variables initialization BEGIN
 uint8_t SevenSegDispHw::_dspHwSerialNum = 0;
+TimerHandle_t SevenSegDynamic::_dynDspRfrshTmrHndl = nullptr;
+TimerHandle_t SevenSegDynHC595::_dynHC595DspRfrshTmrHndl = nullptr;
+//---------------------------------------->> Static variables initialization END
+
 //============================================================> Class methods separator
 
 SevenSegDispHw::SevenSegDispHw() {}
@@ -119,15 +125,15 @@ bool SevenSegDynamic::begin(){
         strcat(rfrshTmrName, dspSerialNumChar);
         strcat(rfrshTmrName, "rfrsh_tmr");
       //Initialize the Display refresh timer. Considering each digit to be refreshed at 30 Hz in turn, the freq might be (Max qty of digits * 30Hz)
-        _dspRfrshTmrHndl = xTimerCreate(
+        _dynDspRfrshTmrHndl = xTimerCreate(
             rfrshTmrName,
             pdMS_TO_TICKS((int)(1000/(30 * _dspDigitsQty))),
             pdTRUE,  //Auto-reload
             NULL,   //TimerID, data to be passed to the callback function
-            tmrCbRefreshDyn  //Callback function
+            SevenSegDynamic::tmrCbRfrshDyn  //Callback function
         );
-        if((_dspRfrshTmrHndl != nullptr) && (!xTimerIsTimerActive(_dspRfrshTmrHndl))){
-            tmrModResult = xTimerStart(_dspRfrshTmrHndl, portMAX_DELAY);
+        if((_dynDspRfrshTmrHndl != nullptr) && (!xTimerIsTimerActive(_dynDspRfrshTmrHndl))){
+            tmrModResult = xTimerStart(_dynDspRfrshTmrHndl, portMAX_DELAY);
             if (tmrModResult == pdPASS)
                 result = true;
         }
@@ -168,22 +174,23 @@ void SevenSegDynamic::send(const uint8_t &segments, const uint8_t &port){
 bool SevenSegDynamic::stop() {
     bool result {false};
 
-    if(_dspRfrshTmrHndl){   //if the timer still exists and is running, stop and delete
-        xTimerStop(_dspRfrshTmrHndl, portMAX_DELAY);
-        xTimerDelete(_dspRfrshTmrHndl, portMAX_DELAY);
-        _dspRfrshTmrHndl = nullptr;
+    if(_dynDspRfrshTmrHndl){   //if the timer still exists and is running, stop and delete
+        xTimerStop(_dynDspRfrshTmrHndl, portMAX_DELAY);
+        xTimerDelete(_dynDspRfrshTmrHndl, portMAX_DELAY);
+        _dynDspRfrshTmrHndl = nullptr;
     }
 
     return result;
 }
 
-void SevenSegDynamic::tmrCbRefreshDyn(TimerHandle_t rfrshTmrCbArg){
-/*   SevenSegDisplays **argObj = (SevenSegDisplays**)pvTimerGetTimerID(rfrshTmrCbArg);
-   //Timer Callback to keep the display lit by calling each display's fastRefresh() method
+void SevenSegDynamic::tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg){
+/*   
+   SevenSegDisplays** argObj = (SevenSegDisplays**)pvTimerGetTimerID(rfrshTmrCbArg);
+   Timer Callback to keep the display lit by calling each display's fastRefresh() method
     
     for(uint8_t i {0}; i < _dspPtrArrLngth; i++){
-        // if (*(_ssdInstancesLstPtr + i) != nullptr)
-            // (*(_ssdInstancesLstPtr + i)) -> fastRefresh();
+         if (*(_ssdInstancesLstPtr + i) != nullptr)
+            (*(_ssdInstancesLstPtr + i)) -> fastRefresh();
     }    
 */
     return;
@@ -249,15 +256,15 @@ bool SevenSegDynHC595::begin(){
         strcat(rfrshTmrName, dspSerialNumChar);
         strcat(rfrshTmrName, "rfrsh_tmr");
         //Initialize the Display refresh timer. Considering each digit to be refreshed at 30 Hz in turn, the freq might be (Qty of digits * 30Hz)
-        _dspRfrshTmrHndl = xTimerCreate(
+        _dynDspRfrshTmrHndl = xTimerCreate(
             rfrshTmrName,
             pdMS_TO_TICKS((int)(1000/(30 * _dspDigitsQty))),
             pdTRUE,  //Autoreload
             this,   //TimerID, data to be passed to the callback function
-            tmrCbRefreshHC595  //Callback function
+            tmrCbRfrshDynHC595  //Callback function
         );
-        if((_dspRfrshTmrHndl != NULL) && (!xTimerIsTimerActive(_dspRfrshTmrHndl))){
-            tmrModResult = xTimerStart(_dspRfrshTmrHndl, portMAX_DELAY);
+        if((_dynDspRfrshTmrHndl != NULL) && (!xTimerIsTimerActive(_dynDspRfrshTmrHndl))){
+            tmrModResult = xTimerStart(_dynDspRfrshTmrHndl, portMAX_DELAY);
             if (tmrModResult == pdPASS)
                 result = true;
         }
@@ -283,29 +290,24 @@ void SevenSegDynHC595::refresh(){
 
    return;
 }
+
 void SevenSegDynHC595::send(uint8_t content){
    for (int i {7}; i >= 0; i--){   //Send each of the 8 bits representing the character
-      // digitalWrite(_sclk, LOW);
-      digitalWrite(GPIO_NUM_26, LOW);
-      // digitalWrite(_dio, (content & 0x80)?HIGH:LOW);   // Set the value of the next bit value
-      digitalWrite(GPIO_NUM_33, (content & 0x80)?HIGH:LOW);   // Set the value of the next bit value
+      digitalWrite(_sclk, LOW);
+      digitalWrite(_dio, (content & 0x80)?HIGH:LOW);   // Set the value of the next bit value
       content <<= 1;
       delayMicroseconds(10);  // Time required by the 74HCx595 to modify the SH_CP line by datasheet
-      // digitalWrite(_sclk, HIGH);
-      digitalWrite(GPIO_NUM_26, HIGH);
+      digitalWrite(_sclk, HIGH);
    }
 
    return;
 }
 
 void SevenSegDynHC595::send(const uint8_t &segments, const uint8_t &port){
-
-   // digitalWrite(_rclk, LOW);
-   digitalWrite(GPIO_NUM_25, LOW);
+   digitalWrite(_rclk, LOW);
    send(segments);
    send(port);
-   // digitalWrite(_rclk, HIGH);
-   digitalWrite(GPIO_NUM_25, HIGH);
+   digitalWrite(_rclk, HIGH);
 
    return;
 }
@@ -313,17 +315,17 @@ void SevenSegDynHC595::send(const uint8_t &segments, const uint8_t &port){
 bool SevenSegDynHC595::stop() {
     bool result {false};
 
-    if(_dspRfrshTmrHndl){   //if the timer still exists and is running, stop and delete
-        xTimerStop(_dspRfrshTmrHndl, portMAX_DELAY);
-        xTimerDelete(_dspRfrshTmrHndl, portMAX_DELAY);
-        _dspRfrshTmrHndl = NULL;
+    if(_dynDspRfrshTmrHndl){   //if the timer still exists and is running, stop and delete
+        xTimerStop(_dynDspRfrshTmrHndl, portMAX_DELAY);
+        xTimerDelete(_dynDspRfrshTmrHndl, portMAX_DELAY);
+        _dynDspRfrshTmrHndl = NULL;
     }
 
     return result;
 }
 
-void SevenSegDynHC595::tmrCbRefreshHC595(TimerHandle_t rfrshTmrCbArg){
-    SevenSegDynHC595* SevenSegUndrlHC595 = (SevenSegDynHC595*) rfrshTmrCbArg;
+void SevenSegDynHC595::tmrCbRfrshDynHC595(TimerHandle_t rfrshTmrCbArg){
+    SevenSegDynHC595* SevenSegUndrlHC595 = (SevenSegDynHC595*) pvTimerGetTimerID(rfrshTmrCbArg);
     //Timer Callback to keep the display lit by calling this display's refresh() method
     
     SevenSegUndrlHC595->refresh();
@@ -333,6 +335,7 @@ void SevenSegDynHC595::tmrCbRefreshHC595(TimerHandle_t rfrshTmrCbArg){
 
 //============================================================> Class methods separator
 
+/*
 SevenSegDynDummy::SevenSegDynDummy(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
 {
    _ioPins = ioPins;
@@ -343,33 +346,42 @@ SevenSegDynDummy::SevenSegDynDummy(uint8_t* ioPins, uint8_t dspDigits, bool comm
 SevenSegDynDummy::~SevenSegDynDummy()
 {    
 }
+*/
 
 //============================================================> Class methods separator
 
-// SevenSegStatic::SevenSegStatic() {}
+/*
+SevenSegStatic::SevenSegStatic() {}
 
 SevenSegStatic::~SevenSegStatic() {}
+*/
 
 //============================================================> Class methods separator
 
-// SevenSegTM1637::SevenSegTM1637() {}
+/*
+SevenSegTM1637::SevenSegTM1637() {}
 
 SevenSegTM1637::~SevenSegTM1637() {}
+*/
 
 //============================================================> Class methods separator
 
+/*
 SevenSegStatHC595::SevenSegStatHC595() {}
 
 SevenSegStatHC595::~SevenSegStatHC595() {}
+*/
 
 //============================================================> Class methods separator
 
+/*
 SevenSegStatDummy::SevenSegStatDummy(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
 {
-    _ioPins = ioPins;
-    _dspDigitsQty = dspDigits;
-    _commAnode = commAnode;
-    Serial.begin(9600);
+   _ioPins = ioPins;
+   _dspDigitsQty = dspDigits;
+   _commAnode = commAnode;
+   Serial.begin(9600);
 }
 
 SevenSegStatDummy::~SevenSegStatDummy(){}
+*/

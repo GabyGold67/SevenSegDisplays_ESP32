@@ -66,9 +66,10 @@ public:
 //============================================================> Class declarations separator
 
 class SevenSegDynamic: public SevenSegDispHw{    
-    static void tmrCbRefreshDyn(TimerHandle_t rfrshTmrCbArg);  //Will easily fail in subclasses calls, check it!!
+    static void tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg);
+
 protected:
-    TimerHandle_t _dspRfrshTmrHndl{nullptr};
+    static TimerHandle_t _dynDspRfrshTmrHndl;
     uint8_t _firstRefreshed{0};
     void refresh();
     virtual void send(uint8_t content);
@@ -85,7 +86,8 @@ public:
 //============================================================> Class declarations separator
 
 class SevenSegDynHC595: public SevenSegDynamic{
-    static void tmrCbRefreshHC595(TimerHandle_t rfrshTmrCbArg);  //Will easily fail in subclasses calls, check it!!
+    static void tmrCbRfrshDynHC595(TimerHandle_t rfrshTmrCbArg);  //Will easily fail in subclasses calls, check it!!
+
 private:
     const uint8_t _sclkIndx {0};
     const uint8_t _rclkIndx {1};
@@ -93,8 +95,8 @@ private:
     uint8_t _sclk {};
     uint8_t _rclk {};
     uint8_t _dio {};
-
 protected:
+    static TimerHandle_t _dynHC595DspRfrshTmrHndl;
     void refresh();
     void send(uint8_t content);
     void send(const uint8_t &segments, const uint8_t &port);
@@ -107,23 +109,28 @@ public:
 
 //============================================================> Class declarations separator
 
+/*
 class SevenSegDynDummy: public SevenSegDynamic{
 public:
     SevenSegDynDummy(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
     ~SevenSegDynDummy();
 };
+*/
 
 //============================================================> Class declarations separator
 
+/*
 class SevenSegStatic: public SevenSegDispHw{
 
 public:
     // SevenSegStatic();    //No differentiated default constructor for this class yet!!
     ~SevenSegStatic();
 };
+*/
 
 //============================================================> Class declarations separator
 
+/*
 class SevenSegTM1637: public SevenSegStatic{
     const uint8_t maxBrightLvl{0b0111};
     const uint8_t minBrightLvl{0b0000};
@@ -137,23 +144,27 @@ public:
     bool turnOn();
     ~SevenSegTM1637();
 };
+*/
 
 //============================================================> Class declarations separator
 
+/*
 class SevenSegStatHC595: public SevenSegStatic{
-// protected:
 public:
     SevenSegStatHC595();
     ~SevenSegStatHC595();
 };
+*/
 
 //============================================================> Class declarations separator
 
+/*
 class SevenSegStatDummy: public SevenSegStatic{
 public:
     SevenSegStatDummy(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
     ~SevenSegStatDummy();
 };
+*/
 
 //============================================================> Class declarations separator
 

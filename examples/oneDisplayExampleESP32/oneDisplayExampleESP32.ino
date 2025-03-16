@@ -5,7 +5,7 @@
   Released into the public domain in accordance with "GPL-3.0-or-later" license terms.
 */
 #include <Arduino.h>
-#include <SevenSeg-74HC595.h>
+#include <SevenSegDisplays.h>
 
 // Pin connected to DS of 74HC595 AKA DIO
 const uint8_t dio {4}; // // Board pin # of ESP32 WROOM-32 uPesy dev Board
