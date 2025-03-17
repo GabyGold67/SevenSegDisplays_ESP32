@@ -43,9 +43,9 @@ SevenSegDisplays::SevenSegDisplays(SevenSegDispHw* dspUndrlHwPtr)
 }
 
 SevenSegDisplays::~SevenSegDisplays(){
-   if(_blinking)
+   if(_isBlinking)
       noBlink();  //Stops the blinking, frees the _dspAuxBuffPtr pointed memory, Stops the timer attached to the process
-   if(_waiting)
+   if(_isWaiting)
       noWait();   //Stops the waiting, frees the _dspAuxBuffPtr pointed memory, Stops the timer attached to the process    
    if(_dspAuxBuffPtr)
       delete [] _dspAuxBuffPtr;   //Free the resources of the auxiliary display digits buffer (to keep a copy of the dspBuffer contents for blinking, waiting, etc.)
@@ -60,20 +60,18 @@ bool SevenSegDisplays::blink(){
    BaseType_t tmrModResult {pdFAIL};
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
-   if(!_waiting){   //If the display is waiting the blinking option is blocked out as they are mutually excluyent, as both simultaneous states has no logical use!
-      if (!_blinking){
+   if(!_isWaiting){   //If the display is waiting the blinking option is blocked out as they are mutually excluyent, as both simultaneous states has no logical use!
+      if (!_isBlinking){
          taskENTER_CRITICAL(&mux);
          //Create a valid unique Name for identifying the timer created
-         char blnkTmrName[15];
-         char dspSerialNumChar[3]{};
-         sprintf(dspSerialNumChar, "%0.2d", (int)_dspLastSerialNum);
-         strcpy(blnkTmrName, "Disp");
-         strcat(blnkTmrName, dspSerialNumChar);
-         strcat(blnkTmrName, "blnk_tmr");
+         String blnkTmrName{""};
+         String dspSerialNumStr {"000" + String(_dspInstNbr)};
+         dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length()); //FTPO
+         blnkTmrName = "Disp" + dspSerialNumStr + "blnk_tmr";
 
          if (!_blinkTmrHndl){
             _blinkTmrHndl = xTimerCreate(
-               blnkTmrName,
+               blnkTmrName.c_str(),  // Timer name
                pdMS_TO_TICKS(_blinkRatesGCD),
                pdTRUE,  //Autoreload
                _dspInstance,   //TimerID, data to be passed to the callback function
@@ -89,7 +87,7 @@ bool SevenSegDisplays::blink(){
          _dspAuxBuffPtr = new uint8_t[_dspDigitsQty];
          _saveDspBuff();
          _blinkShowOn = false;
-         _blinking = true;
+         _isBlinking = true;
          _blinkTimer = 0;  //Start the blinking pace timer...
          result = true;
          taskEXIT_CRITICAL(&mux);
@@ -102,8 +100,8 @@ bool SevenSegDisplays::blink(){
 bool SevenSegDisplays::blink(const unsigned long &onRate, const unsigned long &offRate){
    bool result {false};
 
-   if(!_waiting){
-      if (!_blinking){
+   if(!_isWaiting){
+      if (!_isBlinking){
          if (offRate == 0)
             result = setBlinkRate(onRate, onRate);
          else
@@ -146,9 +144,9 @@ void SevenSegDisplays::clear(){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool mainBuffChng{false};
 
-   if(!_waiting){ // If in waiting condition clear() is not executed
+   if(!_isWaiting){ // If in waiting condition clear() is not executed
       taskENTER_CRITICAL(&mux);
-      if(_blinking){         
+      if(_isBlinking){         
          for (int i{0}; i < _dspDigitsQty; i++){
             if(*(_dspAuxBuffPtr + i) != _space)
                *(_dspAuxBuffPtr + i) = _space;
@@ -230,44 +228,23 @@ bool SevenSegDisplays::doubleGauge(const int &levelLeft, const int &levelRight, 
 
 bool SevenSegDisplays::gauge(const int &level, char label){
    bool displayable{true};
-   String readOut{""};
-   String lvlRdOut{_spacePadding};
+   String readOut{_spacePadding};
 
    clear();
    if (((level < 0) || (level > 3)) || (_dspDigitsQty < 4)) {
       displayable = false;
    }
    else {
-      readOut += label;
-      if (readOut == "")
-         readOut = " ";
-
-//FFDR If the code below this commented out block works as expected eliminate the commented out!
-/*      switch (level) {
-         case 0:
-            readOut += "   ";
-            break;
-         case 1:
-            readOut += "_  ";
-            break;
-         case 2:
-            readOut += "_= ";
-            break;
-         case 3:
-            readOut += "_=~";
-            break;
-      };
-*/
       switch (level) {
          case 3:
-            lvlRdOut = "~" + lvlRdOut;
+         readOut = "~" + readOut;
          case 2:
-            lvlRdOut = "=" + lvlRdOut;
+         readOut = "=" + readOut;
          case 1:
-            lvlRdOut = "_" + lvlRdOut;
+         readOut = "_" + readOut;
       };
-      readOut += lvlRdOut;
-      readOut.substring(0, _dspDigitsQty);
+      readOut = (label == ' ')?" ":label + readOut;
+      readOut = readOut.substring(0, _dspDigitsQty);
       displayable = print(readOut);
    }
 
@@ -342,12 +319,12 @@ bool SevenSegDisplays::isBlank(){
 
 bool SevenSegDisplays::isBlinking(){
 
-   return _blinking;
+   return _isBlinking;
 }
 
 bool SevenSegDisplays::isWaiting(){
 
-   return _waiting;
+   return _isWaiting;
 }
 
 bool SevenSegDisplays::noBlink(){
@@ -355,9 +332,9 @@ bool SevenSegDisplays::noBlink(){
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
-   if(_blinking){
+   if(_isBlinking){
       taskENTER_CRITICAL(&mux);
-      _blinking = false;
+      _isBlinking = false;
       if(_blinkTmrHndl){   //if the timer still exists and is running, stop and delete
          tmrModResult = xTimerStop(_blinkTmrHndl, portMAX_DELAY);
          if(tmrModResult == pdPASS)
@@ -382,8 +359,8 @@ bool SevenSegDisplays::noWait(){
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
-   if (_waiting){
-      _waiting = false;
+   if (_isWaiting){
+      _isWaiting = false;
       if(_waitTmrHndl){   //if the timer still exists and is running, stop and delete
          tmrModResult = xTimerStop(_waitTmrHndl, portMAX_DELAY);
          if(tmrModResult == pdPASS)
@@ -482,17 +459,20 @@ void SevenSegDisplays::_pushSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDis
 bool SevenSegDisplays::print(String text){
    bool displayable{true};
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
-   bool printOnBlink{_blinking};
+   bool printOnBlink{_isBlinking};
    int position{-1};
 
    String tempText{""};
    uint8_t temp7SegData[_dspDigitsQty];
    uint8_t tempDpData[_dspDigitsQty];
 
-   for (int i{0}; i < _dspDigitsQty; i++){
-      temp7SegData[i] = _space;
-      tempDpData[i] = _space;
-   }
+   // for (int i{0}; i < _dspDigitsQty; i++){
+   //    temp7SegData[i] = _space;
+   //    tempDpData[i] = _space;
+   // }
+   memset(temp7SegData,_space, _dspDigitsQty);
+   memset(tempDpData,_space, _dspDigitsQty);
+
    // Finds out if there are '.' in the string to display, creates a mask to add them to the display
    // and takes them out of the string to process the chars/digits
    for(unsigned int i{0}; i < text.length(); ++i){
@@ -524,7 +504,7 @@ bool SevenSegDisplays::print(String text){
    }
    if (displayable) {
       taskENTER_CRITICAL(&mux);
-      if(_waiting)
+      if(_isWaiting)
          noWait();
       if(printOnBlink)
          noBlink();
@@ -705,7 +685,7 @@ bool SevenSegDisplays::setBlinkRate(const unsigned long &newOnRate, const unsign
             _blinkRatesGCD = _blinkTmrGCD(newOnRate, newOffRate);
             result =  true;
 
-            if(_blinking){ // If it's active and running modify the timer taking care of the blinking               
+            if(_isBlinking){ // If it's active and running modify the timer taking care of the blinking               
                tmrModResult = xTimerChangePeriod(_blinkTmrHndl, 
                               pdMS_TO_TICKS(_blinkRatesGCD),
                               portMAX_DELAY
@@ -760,7 +740,7 @@ bool SevenSegDisplays::setWaitRate(const unsigned long &newWaitRate){
          _waitRate = newWaitRate;
          result =  true;
 
-         if(_waiting){  // If it's active and running modify the timer taking care of the blinking            
+         if(_isWaiting){  // If it's active and running modify the timer taking care of the blinking            
             tmrModResult = xTimerChangePeriod(_waitTmrHndl, 
                            pdMS_TO_TICKS(_waitRate),
                            portMAX_DELAY
@@ -792,7 +772,7 @@ void SevenSegDisplays::_updBlinkState(){
    bool mainBuffChng{false};
 
    //The use of a xTimer that keeps flip-floping the _blinkShowOn value is better suited for symmetrical blinking, but not for asymmetrical cases.
-   if (_blinking == true){
+   if (_isBlinking == true){
       if (_blinkShowOn == false) {
          if (_blinkTimer == 0){  // The turn-Off display stage of the blinking started, copy the dspBuff contents to the dspAuxBuff before blanking the appropriate ports            
             _saveDspBuff();            
@@ -831,7 +811,7 @@ void SevenSegDisplays::_updBlinkState(){
 }
 
 void SevenSegDisplays::_updWaitState(){
-   if (_waiting == true){
+   if (_isWaiting == true){
       if (_waitTimer == 0){
          clear();
          _waitTimer = xTaskGetTickCount()/portTICK_RATE_MS;
@@ -858,23 +838,21 @@ bool SevenSegDisplays::wait(){
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
-   if(!_waiting){   //If the display is waiting the blinking option is blocked out as they are mutually excluyent, as both simultaneous has no logical use!
-      //Create a valid unique Name for identifying the timer created
-      char waitTmrName[15];
-      char dspSerialNumChar[3]{};
-      sprintf(dspSerialNumChar, "%0.2d", (int)_dspLastSerialNum);
-      strcpy(waitTmrName, "Disp");
-      strcat(waitTmrName, dspSerialNumChar);
-      strcat(waitTmrName, "wait_tmr");
+   if(!_isWaiting){   //If the display is waiting the blinking option is blocked out as they are mutually excluyent, as both simultaneous has no logical use!
+      //Create a valid unique Name for identifying the Wait timer created
+      String waitTmrName{""};
+      String dspSerialNumStr {"000" + String(_dspInstNbr)};
+      dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length()); //FTPO
+      waitTmrName = "Disp" + dspSerialNumStr + "wait_tmr";
 
       if (!_waitTmrHndl){
-            _waitTmrHndl = xTimerCreate(
-               waitTmrName,
-               pdMS_TO_TICKS(_waitRate),
-               pdTRUE,  //Autoreload
-               _dspInstance,   //TimerID, data to be passed to the callback function
-               tmrCbWait  //Callback function
-            );
+         _waitTmrHndl = xTimerCreate(
+            waitTmrName.c_str(),  // Timer name
+            pdMS_TO_TICKS(_waitRate),
+            pdTRUE,  //Autoreload
+            _dspInstance,   //TimerID, data to be passed to the callback function
+            tmrCbWait  //Callback function
+         );
       }
       if(_waitTmrHndl && (!xTimerIsTimerActive(_waitTmrHndl))){   // The timer was created, but it wasn't started. Start the timer            
          tmrModResult = xTimerStart(_waitTmrHndl, portMAX_DELAY);
@@ -882,13 +860,13 @@ bool SevenSegDisplays::wait(){
             result = true;
       }
 
-      if (_blinking)
+      if (_isBlinking)
          noBlink();
       _dspAuxBuffPtr = new uint8_t[_dspDigitsQty];
       _saveDspBuff();
       _waitCount = 0;
       _waitTimer = 0;  //Start the blinking pace timer...
-      _waiting = true;
+      _isWaiting = true;
       result = true;
    }
 
@@ -898,7 +876,7 @@ bool SevenSegDisplays::wait(){
 bool SevenSegDisplays::wait(const unsigned long &newWaitRate){
    bool result {true};
    
-   if (!_waiting){
+   if (!_isWaiting){
       if(_waitRate != newWaitRate){
          if ((newWaitRate >= _minBlinkRate) && (newWaitRate <= _maxBlinkRate))
             _waitRate = newWaitRate;         
@@ -917,7 +895,7 @@ bool SevenSegDisplays::wait(const unsigned long &newWaitRate){
 
 bool SevenSegDisplays::write(const uint8_t &segments, const uint8_t &port){
    bool result {false};
-   bool writeOnBlink{_blinking};
+   bool writeOnBlink{_isBlinking};
     
    if (port < _dspDigitsQty){
       if(writeOnBlink)
@@ -937,7 +915,7 @@ bool SevenSegDisplays::write(const uint8_t &segments, const uint8_t &port){
 bool SevenSegDisplays::write(const String &character, const uint8_t &port){
    bool result {false};
    int position {-1};
-   bool writeOnBlink{_blinking};
+   bool writeOnBlink{_isBlinking};
     
    if (port < _dspDigitsQty){
       position = _charSet.indexOf(character);

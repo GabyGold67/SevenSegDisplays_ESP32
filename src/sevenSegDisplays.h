@@ -65,7 +65,7 @@ class SevenSegDisplays {
 private:
    uint8_t _waitChar {0xBF};
    uint8_t _waitCount {0};
-   bool _waiting {false};
+   bool _isWaiting {false};
    unsigned long _waitRate {250};
    unsigned long _waitTimer {0};
 
@@ -81,7 +81,7 @@ protected:
    int32_t _dspValMax{};
    int32_t _dspValMin{};
     
-   bool _blinking{false};
+   bool _isBlinking{false};
    bool _blinkShowOn{false};
    unsigned long _blinkTimer{0};
    unsigned long _blinkOffRate{500};

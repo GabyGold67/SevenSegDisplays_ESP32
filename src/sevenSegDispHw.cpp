@@ -19,17 +19,13 @@ SevenSegDispHw::SevenSegDispHw() {}
 SevenSegDispHw::SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
 :_ioPins{ioPins}, _digitPosPtr{new uint8_t[dspDigits]}, _dspDigitsQty {dspDigits}, _commAnode {commAnode}
 {
-   Serial.println("\n"); //FTPO
-   Serial.println("Entering the SevenSegDispHw constructor"); //FTPO
-   Serial.println("========================================"); //FTPO
+   Serial.println("\nSevenSegDispHw constructor"); //FTPO
+   Serial.println("=========================="); //FTPO
     
    _dspHwInstNbr = _dspHwSerialNum++;
    for (uint8_t i{0}; i < _dspDigitsQty; i++){
       *(_digitPosPtr + i) = i;
-   }
-    
-   Serial.println("Exiting the SevenSegDispHw constructor"); //FTPO
-   Serial.println("========================================"); //FTPO
+   }    
 }
 
 SevenSegDispHw::~SevenSegDispHw() {
@@ -99,51 +95,48 @@ SevenSegDynamic::SevenSegDynamic(){}
 SevenSegDynamic::SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
 :SevenSegDispHw(ioPins, dspDigits, commAnode)
 {
-   Serial.println("\n"); //FTPO
-   Serial.println("Passing through SevenSegDynamic constructor code section"); //FTPO
-   Serial.println("========================================"); //FTPO
+   Serial.println("\nSevenSegDynamic constructor"); //FTPO
+   Serial.println("==========================="); //FTPO
 }
 
 SevenSegDynamic::~SevenSegDynamic(){}
 
 bool SevenSegDynamic::begin(){
-    bool result {false};
-    BaseType_t tmrModResult {pdFAIL};
+   bool result {false};
+   BaseType_t tmrModResult {pdFAIL};
 
-    Serial.println("\n"); //FTPO
-    Serial.println("Entering the SevenSegDynamic .begin()"); //FTPO
-    Serial.println("========================================"); //FTPO
- 
+   Serial.println("\n"); //FTPO
+   Serial.println("SevenSegDynamic .begin()"); //FTPO
+   Serial.println("\n"); //FTPO
 
-    //Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)
-    if (!_svnSgDynTmrHndl){
-        //Create a valid unique Name for identifying the timer created
-        char rfrshTmrName[18];
-        char dspSerialNumChar[3]{};
-        sprintf(dspSerialNumChar, "%0.2d", (int)_dspHwInstNbr);
-        strcpy(rfrshTmrName, "DynDsp");
-        strcat(rfrshTmrName, dspSerialNumChar);
-        strcat(rfrshTmrName, "rfrsh_tmr");
+   //Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)
+   if (!_svnSgDynTmrHndl){
+      //Create a valid unique Name for identifying the timer created
+      String rfrshTmrName{""};
+      String dspSerialNumStr {"000" + String(_dspHwInstNbr)};
+      dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length());
+      rfrshTmrName = "DynDsp" + dspSerialNumStr + "rfrsh_tmr";
+
+      Serial.print("\nSevenSegDynHC595 refresh timer name: "); //FTPO
+      Serial.println(rfrshTmrName); //FTPO
+      Serial.println("================"); //FTPO
+
       //Initialize the Display refresh timer. Considering each digit to be refreshed at 30 Hz in turn, the freq might be (Max qty of digits * 30Hz)
-        _dynDspRfrshTmrHndl = xTimerCreate(
-            rfrshTmrName,
-            pdMS_TO_TICKS((int)(1000/(30 * _dspDigitsQty))),
-            pdTRUE,  //Auto-reload
-            NULL,   //TimerID, data to be passed to the callback function
-            SevenSegDynamic::tmrCbRfrshDyn  //Callback function
-        );
-        if((_dynDspRfrshTmrHndl != nullptr) && (!xTimerIsTimerActive(_dynDspRfrshTmrHndl))){
-            tmrModResult = xTimerStart(_dynDspRfrshTmrHndl, portMAX_DELAY);
-            if (tmrModResult == pdPASS)
-                result = true;
-        }
-    }
+      _dynDspRfrshTmrHndl = xTimerCreate(
+         rfrshTmrName.c_str(),
+         pdMS_TO_TICKS((int)(1000/(30 * _dspDigitsQty))),
+         pdTRUE,  //Auto-reload
+         NULL,   //TimerID, data to be passed to the callback function
+         SevenSegDynamic::tmrCbRfrshDyn  //Callback function
+      );
+      if((_dynDspRfrshTmrHndl != nullptr) && (!xTimerIsTimerActive(_dynDspRfrshTmrHndl))){
+         tmrModResult = xTimerStart(_dynDspRfrshTmrHndl, portMAX_DELAY);
+         if (tmrModResult == pdPASS)
+            result = true;
+      }
+   }
 
-    Serial.println("\n"); //FTPO
-    Serial.println("Exiting the SevenSegDynamic .begin()"); //FTPO
-    Serial.println("========================================"); //FTPO
-
-    return result;
+   return result;
 }
 
 void SevenSegDynamic::refresh(){
@@ -201,30 +194,18 @@ void SevenSegDynamic::tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg){
 SevenSegDynHC595::SevenSegDynHC595(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
 :SevenSegDynamic(ioPins, dspDigits, commAnode)
 {    
-    Serial.println("\n"); //FTPO
-    Serial.println("Entered the SevenSegDynHC595 constructor"); //FTPO
-    Serial.println("========================================"); //FTPO
+    Serial.println("\nSevenSegDynHC595 constructor"); //FTPO
+    Serial.println("============================="); //FTPO
     
     _sclk = *(ioPins + _sclkIndx);
     _rclk = *(ioPins + _rclkIndx);
     _dio = *(ioPins + _dioIndx);
     
-    Serial.println("In the SevenSegDynHC595 constructor the pin assignement is"); //FTPO
-    Serial.println("======================================================"); //FTPO
-    Serial.print("Pin selected for sclk: ");//FTPO
-    Serial.println(_sclk, DEC); //FTPO
-    
     digitalWrite(_sclk, LOW);
     pinMode(_sclk, OUTPUT);
     
-    Serial.print("Pin selected for rclk: ");//FTPO
-    Serial.println(_rclk, DEC); //FTPO
-    
     digitalWrite(_rclk, LOW);
     pinMode(_rclk, OUTPUT);
-    
-    Serial.print("Pin selected for dio: ");//FTPO
-    Serial.println(_dio, DEC); //FTPO
     
     digitalWrite(_dio, LOW);
     pinMode(_dio, OUTPUT);
@@ -234,33 +215,37 @@ SevenSegDynHC595::SevenSegDynHC595(uint8_t* ioPins, uint8_t dspDigits, bool comm
     begin();
 
     Serial.println("Returned from in-class .begin()"); //FTPO
+    Serial.println("========================"); //FTPO
 }
 
 SevenSegDynHC595::~SevenSegDynHC595(){}
 
 bool SevenSegDynHC595::begin(){
-    Serial.println("\nEntered SevenSegDynHC595.begin()"); //FTPO
-    Serial.println("================"); //FTPO
+   Serial.println("\nSevenSegDynHC595.begin()"); //FTPO
+   Serial.println("================"); //FTPO
 
-    bool result {false};
-    BaseType_t tmrModResult {pdFAIL};
+   bool result {false};
+   BaseType_t tmrModResult {pdFAIL};
 
-    _firstRefreshed = 0;
-    //Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)
-    if (!_svnSgDynTmrHndl){
+   _firstRefreshed = 0;
+   //Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)
+   if (!_svnSgDynTmrHndl){
         //Create a valid unique Name for identifying the timer created
-        char rfrshTmrName[18];
-        char dspSerialNumChar[3]{};
-        sprintf(dspSerialNumChar, "%0.2d", (int)_dspHwInstNbr);
-        strcpy(rfrshTmrName, "DynDsp");
-        strcat(rfrshTmrName, dspSerialNumChar);
-        strcat(rfrshTmrName, "rfrsh_tmr");
+         String rfrshTmrName{""};
+         String dspSerialNumStr {"000" + String(_dspHwInstNbr)};
+         dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length());
+         rfrshTmrName = "DynDsp" + dspSerialNumStr + "rfrsh_tmr";
+
+         Serial.print("\nSevenSegDynHC595 refresh timer name: "); //FTPO
+         Serial.println(rfrshTmrName); //FTPO
+         Serial.println("================"); //FTPO
+      
         //Initialize the Display refresh timer. Considering each digit to be refreshed at 30 Hz in turn, the freq might be (Qty of digits * 30Hz)
         _dynDspRfrshTmrHndl = xTimerCreate(
-            rfrshTmrName,
+            rfrshTmrName.c_str(),   // Timer human readable name
             pdMS_TO_TICKS((int)(1000/(30 * _dspDigitsQty))),
-            pdTRUE,  //Autoreload
-            this,   //TimerID, data to be passed to the callback function
+            pdTRUE,  // Autoreload
+            this,   // TimerID, data to be passed to the callback function
             tmrCbRfrshDynHC595  //Callback function
         );
         if((_dynDspRfrshTmrHndl != NULL) && (!xTimerIsTimerActive(_dynDspRfrshTmrHndl))){
@@ -269,9 +254,6 @@ bool SevenSegDynHC595::begin(){
                 result = true;
         }
     }
-
-    Serial.println("\nExiting SevenSegDynHC595.begin()"); //FTPO
-    Serial.println("\n================"); //FTPO
 
     return result;
 }
