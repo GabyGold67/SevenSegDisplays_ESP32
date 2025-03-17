@@ -279,6 +279,12 @@ uint8_t SevenSegDisplays::getDigitsQty(){
    return _dspDigitsQty;
 }
 
+SevenSegDispHw* SevenSegDisplays::getDspUndrlHwPtr(){
+   
+   return _dspUndrlHwPtr;
+}
+
+
 int32_t SevenSegDisplays::getDspValMax(){
 
    return _dspValMax;
@@ -655,10 +661,6 @@ void SevenSegDisplays::_setAttrbts(){
 void SevenSegDisplays::setBlinkMask(const bool* newBlnkMsk){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
-   //FFDR Remove commented code if the new one works ok
-   // for (int i{0}; i < _dspDigitsQty; i++)
-   //    *(_blinkMaskPtr + i) = *(newBlnkMsk + i);
-
    taskENTER_CRITICAL(&mux);
    memcpy(_blinkMaskPtr, newBlnkMsk, _dspDigitsQty);   // destPtr, srcPtr, size
    taskEXIT_CRITICAL(&mux);
@@ -682,7 +684,10 @@ bool SevenSegDisplays::setBlinkRate(const unsigned long &newOnRate, const unsign
                _blinkOnRate = newOnRate;
             if(_blinkOffRate != tmpOffRate)
                _blinkOffRate = tmpOffRate;
-            _blinkRatesGCD = _blinkTmrGCD(newOnRate, newOffRate);
+            if(_blinkOnRate == _blinkOffRate)
+               _blinkRatesGCD = _blinkOnRate;
+            else
+               _blinkRatesGCD = _blinkTmrGCD(_blinkOnRate, _blinkOffRate);
             result =  true;
 
             if(_isBlinking){ // If it's active and running modify the timer taking care of the blinking               

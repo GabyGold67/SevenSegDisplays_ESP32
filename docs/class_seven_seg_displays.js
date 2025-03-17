@@ -9,6 +9,7 @@ var class_seven_seg_displays =
     [ "gauge", "class_seven_seg_displays.html#a6fea06785902000457c1105c78d85093", null ],
     [ "gauge", "class_seven_seg_displays.html#aa00c8c2fbca4a0068590ef62de28f198", null ],
     [ "getDigitsQty", "class_seven_seg_displays.html#a05ddffe49e505638382affaa0426b272", null ],
+    [ "getDspUndrlHwPtr", "class_seven_seg_displays.html#aeebf7611c82002d5a206a6b7ff3946ac", null ],
     [ "getDspValMax", "class_seven_seg_displays.html#ace9c93b38f969bac953449c506c2ce2f", null ],
     [ "getDspValMin", "class_seven_seg_displays.html#a09b7157b7be5f4c4b0562f862d6aaf5c", null ],
     [ "getInstanceNbr", "class_seven_seg_displays.html#a8faca0f757c0477f59a73668b6041689", null ],

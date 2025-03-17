@@ -1,10 +1,11 @@
 <map id="C:/Users/DevPadawan/Documents/My Projects/Training Projects/LibsDev_ESP32/lib/SevenSegDisplays_ESP32/src/SevenSegDisplays.h" name="C:/Users/DevPadawan/Documents/My Projects/Training Projects/LibsDev_ESP32/lib/SevenSegDisplays_ESP32/src/SevenSegDisplays.h">
 <area shape="rect" id="Node000001" title="Header file for the SevenSegDisplays_ESP32 library." alt="" coords="5,5,223,96"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="104,219,180,245"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,97,69,133,68,152,72,170,87,191,107,208,103,212,83,194,68,172,62,152,64,132,78,95"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="82,144,146,171"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="117,96,117,128,111,128,111,96"/>
-<area shape="rect" id="Node000004" href="$seven_seg_disp_hw_8h_source.html" title=" " alt="" coords="170,144,308,171"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="169,94,215,132,211,136,166,98"/>
-<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="224,173,172,212,169,207,221,169"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="25,219,102,245"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="66,98,48,120,35,145,32,160,35,175,47,205,43,207,29,177,27,160,30,143,44,117,61,95"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="131,219,196,245"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="167,95,184,117,198,143,201,160,198,177,185,207,180,205,193,176,195,160,193,145,180,120,162,98"/>
+<area shape="rect" id="Node000004" href="$seven_seg_disp_hw_8h.html" title="Header file for the SevenSegDisplays_ESP32 library, SevenSegDispHw class and subclasses." alt="" coords="45,144,183,171"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="117,96,117,128,111,128,111,96"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="107,173,83,208,78,205,103,170"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="125,170,148,204,144,207,120,173"/>
 </map>

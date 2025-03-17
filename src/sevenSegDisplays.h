@@ -343,6 +343,19 @@ public:
     */
    unsigned long getMinBlinkRate();
    /**
+    * @brief Returns a pointer to the underlying hardware display object
+    * 
+    * The pointer returned is of the type SevenSegDispHw*, i.e. a base class pointer. One of the most important and practical use for this method is to give direct access to exclusive attributes, properties and characteristics some of the hardware display models have, and functions they may execute that have no way of being used through the SevenDisplays class methods. Some of those attributes known to exist are: 
+    * - Activation and deactivation of semicolons
+    * - Change the level of brightness
+    * - Change the display color
+    * - Some kind of contents animations
+    * - Reading the state of pushbuttons managed by the driver chip
+    * 
+    * @return A SevenSegDispHw* type pointer to the underlying display object
+    */
+   SevenSegDispHw* getDspUndrlHwPtr();
+   /**
     * @brief Returns a value indicating if the display is blank. 
     * 
     * The condition of blank is the one in which "All the display ports/digits of the display show spaces, and no decimal points or semicolons are active". This definition is important as it not refers to the display buffer holding any specific arbitrary value (0x00 or 0xFF) but the value designated as **_space**.  

@@ -117,7 +117,7 @@ bool SevenSegDynamic::begin(){
       dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length());
       rfrshTmrName = "DynDsp" + dspSerialNumStr + "rfrsh_tmr";
 
-      Serial.print("\nSevenSegDynHC595 refresh timer name: "); //FTPO
+      Serial.print("\nSevenSegDynamic refresh timer name: "); //FTPO
       Serial.println(rfrshTmrName); //FTPO
       Serial.println("================"); //FTPO
 
@@ -177,16 +177,9 @@ bool SevenSegDynamic::stop() {
 }
 
 void SevenSegDynamic::tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg){
-/*   
-   SevenSegDisplays** argObj = (SevenSegDisplays**)pvTimerGetTimerID(rfrshTmrCbArg);
-   Timer Callback to keep the display lit by calling each display's fastRefresh() method
-    
-    for(uint8_t i {0}; i < _dspPtrArrLngth; i++){
-         if (*(_ssdInstancesLstPtr + i) != nullptr)
-            (*(_ssdInstancesLstPtr + i)) -> fastRefresh();
-    }    
-*/
-    return;
+   // No need for specific executable code in this callback function at this stage
+
+   return;
 }
 
 //============================================================> Class methods separator
@@ -194,8 +187,8 @@ void SevenSegDynamic::tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg){
 SevenSegDynHC595::SevenSegDynHC595(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
 :SevenSegDynamic(ioPins, dspDigits, commAnode)
 {    
-    Serial.println("\nSevenSegDynHC595 constructor"); //FTPO
-    Serial.println("============================="); //FTPO
+   Serial.println("\nSevenSegDyHC595 constructor"); //FTPO
+   Serial.println("============================="); //FTPO
     
     _sclk = *(ioPins + _sclkIndx);
     _rclk = *(ioPins + _rclkIndx);
@@ -210,20 +203,12 @@ SevenSegDynHC595::SevenSegDynHC595(uint8_t* ioPins, uint8_t dspDigits, bool comm
     digitalWrite(_dio, LOW);
     pinMode(_dio, OUTPUT);
 
-    Serial.println("Invoking in-class .begin()"); //FTPO
-    
     begin();
-
-    Serial.println("Returned from in-class .begin()"); //FTPO
-    Serial.println("========================"); //FTPO
 }
 
 SevenSegDynHC595::~SevenSegDynHC595(){}
 
 bool SevenSegDynHC595::begin(){
-   Serial.println("\nSevenSegDynHC595.begin()"); //FTPO
-   Serial.println("================"); //FTPO
-
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
@@ -236,10 +221,6 @@ bool SevenSegDynHC595::begin(){
          dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length());
          rfrshTmrName = "DynDsp" + dspSerialNumStr + "rfrsh_tmr";
 
-         Serial.print("\nSevenSegDynHC595 refresh timer name: "); //FTPO
-         Serial.println(rfrshTmrName); //FTPO
-         Serial.println("================"); //FTPO
-      
         //Initialize the Display refresh timer. Considering each digit to be refreshed at 30 Hz in turn, the freq might be (Qty of digits * 30Hz)
         _dynDspRfrshTmrHndl = xTimerCreate(
             rfrshTmrName.c_str(),   // Timer human readable name
@@ -296,7 +277,7 @@ void SevenSegDynHC595::send(const uint8_t &segments, const uint8_t &port){
 
 bool SevenSegDynHC595::stop() {
     bool result {false};
-
+   //FFDR Check for the blink and the WAIT (specially the wait) timers to stop them if they are running to avoid funny combinations
     if(_dynDspRfrshTmrHndl){   //if the timer still exists and is running, stop and delete
         xTimerStop(_dynDspRfrshTmrHndl, portMAX_DELAY);
         xTimerDelete(_dynDspRfrshTmrHndl, portMAX_DELAY);
