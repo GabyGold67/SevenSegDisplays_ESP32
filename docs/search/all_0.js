@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['a_20seven_20segments_20led_20multidigits_20and_20multidisplay_20easy_20to_20use_20library_20strong_0',['&lt;strong&gt;SevenSegDisplays: A Seven Segments Led Multidigits and Multidisplay easy to use library&lt;/strong&gt;',['../index.html',1,'']]],
-  ['and_20multidisplay_20easy_20to_20use_20library_20strong_1',['&lt;strong&gt;SevenSegDisplays: A Seven Segments Led Multidigits and Multidisplay easy to use library&lt;/strong&gt;',['../index.html',1,'']]]
+  ['a_20seven_20segments_20displays_20easy_20to_20use_20library_20strong_0',['&lt;strong&gt;SevenSegDisplays_ESP32: A Seven Segments displays easy to use library&lt;/strong&gt;',['../index.html',1,'']]]
 ];

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['noblink_0',['noBlink',['../class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd',1,'SevenSegDisplays']]],
-  ['nowait_1',['noWait',['../class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471',1,'SevenSegDisplays']]]
+  ['print_0',['print',['../class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730',1,'SevenSegDisplays::print(String text)'],['../class_seven_seg_displays.html#a4858a1c2efaf8a7d0e67297948937d7c',1,'SevenSegDisplays::print(const int32_t &amp;value, bool rgtAlgn=false, bool zeroPad=false)'],['../class_seven_seg_displays.html#a57d180fb4339fe2359cc864660a765ac',1,'SevenSegDisplays::print(const double &amp;value, const unsigned int &amp;decPlaces, bool rgtAlgn=false, bool zeroPad=false)']]]
 ];

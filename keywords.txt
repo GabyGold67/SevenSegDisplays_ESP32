@@ -16,6 +16,7 @@ clear	    KEYWORD2
 doubleGauge KEYWORD2
 gauge       KEYWORD2
 getDigitsQty   KEYWORD2
+getDspUndrlHwPtr  KEYWORD2
 getDspValMax   KEYWORD2
 getDspValMin   KEYWORD2
 getInstanceNbr  KEYWORD2
@@ -34,6 +35,16 @@ setWaitChar KEYWORD2
 setWaitRate KEYWORD2
 wait    KEYWORD2
 write   KEYWORD2
+#######################
+#SevenSegDispHw class
+#######################
+begin KEYWORD2
+getCommAnode   KEYWORD2
+getDspBuffPtr  KEYWORD2
+getHwDspDigitsQty KEYWORD2
+setDigitsOrder KEYWORD2
+setDspBuffPtr  KEYWORD2
+stop  KEYWORD2
 
 ###############################################
 # Constants (LITERAL1)

@@ -43,7 +43,7 @@ class SevenSegDispHw{
 protected:
     bool _commAnode {true}; // SevenSegDisplays objects need this info to build the right segments to represent each character
     uint8_t* _digitPosPtr{nullptr};
-    uint8_t* _dspBuffPtr{nullptr};  //FFDR Shouldn't the display buffer shared with the display be held in the HEAP?
+    uint8_t* _dspBuffPtr{nullptr};  //FFDR Shouldn't the display buffer shared with the display better be placed in the HEAP?
     uint8_t _dspDigitsQty{}; // Display size in digits    
     uint8_t _dspHwInstNbr{0};
     uint8_t* _ioPins{};
@@ -54,11 +54,42 @@ public:
     SevenSegDispHw();
     SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
     ~SevenSegDispHw();    
+   /**
+    * @brief Sets up the hardware display to work.  
+    * 
+    * Depending on the display technology and the resources it needs to start working, this method takes care of those preparation. That means that each specific subclass of display will have to provide it's version of `begin()` that will take care of:  
+    * - Configuring timmers or interrupts.  
+    * - Setup communications parameters.  
+    * - Establish communications with the display.  
+    * - Other specific services configuration and starting.  
+    * 
+    * @retval true The specific configurations and startups could be successfuly made
+    * @return false One or more of the specific configurations or startups failed.  
+    */
     virtual bool begin();
+    /**
+     * @brief Returns a value indicating if the hardware has the led display wired as common anode or common cathode
+     * 
+     * The SevenSegDisplays instantiated objects will compose the values corresponding to each character it can display according to the SevenSegDispHw attribute _commAnode. Each SevenSegDispHw instantiable subclass will have that constant attribute set by the subclass developer to correspond to the technical specifications of the display hardware. 
+     * 
+     * @retval true The display is built with Common Annode seven segment display modules
+     * @retval false The display is built with Common Cathode seven segment display modules
+     */
     bool getCommAnode();
     uint8_t* getDspBuffPtr();
     uint8_t getHwDspDigitsQty();
     bool setDigitsOrder(uint8_t* newOrderPtr);
+    /**
+     * @brief Returns the pointer to the Display Buffer
+     * 
+     * When a SevenSegDisplays object is instantiated it's constructor sets a display buffer memory area to store the contents ready to be displayed. Part of the constructor execution includes passing to the SevenSegDispHw subclass component that pointer, as the underlying hardware display object will be taking the information to display from that memory buffer. The resource to set the pointer is this method. 
+     * 
+     * @return uint8_t* The pointer to the **Display Buffer Memory Area**  
+     * 
+     * @attention Using this method is a resource to generate "animations" by changing the memory area from with the hardware displays takes it's contents, to some other area with ready to display information
+     * 
+     * @warning Setting the display buffer pointer to an address not coinciding with the one configured in the SevenSegDisplays will **disable** the possibility for it to get new generated content displayed!! Handle with extreme care!!
+     */
     void setDspBuffPtr(uint8_t* newDspBuffPtr);
     virtual bool stop();
 };

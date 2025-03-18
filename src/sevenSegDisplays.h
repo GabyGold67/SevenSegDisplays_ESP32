@@ -215,6 +215,12 @@ public:
     * 
     * @retval true: If the display was not already set to blink (so now the blinking was started)
     * @retval false: The display was already set to blink
+    * 
+    * Use example:  
+    * @code {.cpp}
+    * myLedDisp.blink(); // Begin blinking at the already set rate
+    * @endcode
+    * 
     */
    bool blink();
    /**
@@ -229,6 +235,22 @@ public:
    * 
    * @retval true If the display was not already set to blink (so now the blinking was started).  
    * @retval false The display was already set to blink, and/or one or more of the parameters passed were out of range.  
+   * 
+   * Use examples:  
+   * @code {.cpp}
+   * myLedDisp.blink(400); // Starts blinking setting the rate to 400 millisecs on, 400 millisecs off (symmetrical blink). And returns true.  
+   * @endcode
+   * 
+   * @code {.cp}
+   * myLedDisp.blink(800, 200); // Sets the blinking rate to 800 millisecs on, 200 millisecs off (asymmetrical blink), starts blinking, and returns true.  
+   * @endcode
+   * 
+   * @code {.cpp}
+   * unsigned long rateTooBig {myLedDisp.getMaxBlinkRate() + 10} // Saves in a variable a blinking rate out of accepted range
+   * myLedDisp.blink(rateTooBig); //Returns false and the display stays without change.  
+   * @endcode
+   * 
+   * 
    */
    bool blink(const unsigned long &onRate, const unsigned long &offRate = 0);
    /**
@@ -237,6 +259,12 @@ public:
     * To ensure success the method must also clean auxiliary buffers used to save the main buffer contents while blinking, as the backup buffer will be restored, so the display clear() would be reverted  
     * 
     * @note The method will not produce any change if it's in "Waiting mode" as the blanked ports will be immediately overwritten by the waiting process, so it makes no sense. Consider, though, that the "Waiting mode" clears the display at it's exit.  
+    * 
+    * Use example:  
+    * @code {.cpp}
+    * myLedDisp.clear();
+    * @endcode
+    * 
     */
    void clear();
    /**
@@ -291,6 +319,19 @@ public:
     */
    uint8_t getDigitsQty();
    /**
+    * @brief Returns a pointer to the underlying hardware display object
+    * 
+    * The pointer returned is of the type SevenSegDispHw*, i.e. a base class pointer. One of the most important and practical use for this method is to give direct access to exclusive attributes, properties and characteristics some of the hardware display models have, and functions they may execute that have no way of being used through the SevenDisplays class methods. Some of those attributes known to exist are: 
+    * - Activation and deactivation of semicolons
+    * - Change the level of brightness
+    * - Change the display color
+    * - Some kind of contents animations
+    * - Reading the state of pushbuttons managed by the driver chip
+    * 
+    * @return A SevenSegDispHw* type pointer to the underlying display object
+    */
+   SevenSegDispHw* getDspUndrlHwPtr();
+   /**
     * @brief Returns a value equivalent to the greatest displayable number for the display.  
     * 
     * The value indicates the greatest displayable number according to the quantity of digits (ports) the display have as indicated at the object instantiation.  
@@ -342,19 +383,6 @@ public:
     * @attention Opposite to the concept of Hertz, that designates how many times an action happens in a fixed period of time (a second), the value used in the `blink()` and all related methods is **the time set to elapse before the next action happens**.  
     */
    unsigned long getMinBlinkRate();
-   /**
-    * @brief Returns a pointer to the underlying hardware display object
-    * 
-    * The pointer returned is of the type SevenSegDispHw*, i.e. a base class pointer. One of the most important and practical use for this method is to give direct access to exclusive attributes, properties and characteristics some of the hardware display models have, and functions they may execute that have no way of being used through the SevenDisplays class methods. Some of those attributes known to exist are: 
-    * - Activation and deactivation of semicolons
-    * - Change the level of brightness
-    * - Change the display color
-    * - Some kind of contents animations
-    * - Reading the state of pushbuttons managed by the driver chip
-    * 
-    * @return A SevenSegDispHw* type pointer to the underlying display object
-    */
-   SevenSegDispHw* getDspUndrlHwPtr();
    /**
     * @brief Returns a value indicating if the display is blank. 
     * 
@@ -491,7 +519,9 @@ public:
     * While in "Waiting mode" the display shows a simple animated progress bar or "process ongoing bar" until a **`noWait()`** method is invoked. The speed rate for the progress animation starts at a parameter passed rate when the method is invoked, or the last speed set will be used, having a preset value for the first time it's invoked if no parameter is passed. The animation rate can be changed by using the **`setWaitRate()`** method. The speed rate set will be kept after a **`noWait()`** or new **`wait()`** without parameters call is done, until it is modified with a new **`setWaitRate()`** call, or it is restarted by a **`wait()`** with a parameter. Note that to restart the waiting with a **`wait()`** the service must first be stopped, as the method makes no changes if the waiting service was already running.  
     * 
     * @return true The display was not already set to wait (so now the "Waiting state" was started).  
-    * @return false The display was already set to wait, and/or the parameter passed was out of range.  
+    * @return false The display was already set to wait, and/or the parameter passed was out of range. 
+    * 
+    * @attention The **Waiting state** is considereda transitory state (or situation), as in most systems a "progression bar" is used it's main target is to show the system is not stalled or crashed, it's just waiting for a process to end. As a transitory state, the value displayed before entering the "Waiting state" will be saved, and will be restored automaticaly when the "Waiting state" is ended by the use of the `noWait()` method. 
     */
    bool wait();
    /**
@@ -503,6 +533,8 @@ public:
     * 
     * @return true The display was not already set to wait (so now the "Waiting state" was started).  
     * @return false The display was already set to wait, and/or the parameter passed was out of range.  
+    * 
+    * @attention The **Waiting state** is considereda transitory state (or situation), as in most systems a "progression bar" is used it's main target is to show the system is not stalled or crashed, it's just waiting for a process to end. As a transitory state, the value displayed before entering the "Waiting state" will be saved, and will be restored automaticaly when the "Waiting state" is ended by the use of the `noWait()` method. 
     */
    bool wait(const unsigned long &newWaitRate);
    /**

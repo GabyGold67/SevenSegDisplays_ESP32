@@ -66,7 +66,7 @@ bool SevenSegDisplays::blink(){
          //Create a valid unique Name for identifying the timer created
          String blnkTmrName{""};
          String dspSerialNumStr {"000" + String(_dspInstNbr)};
-         dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length()); //FTPO
+         dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length());
          blnkTmrName = "Disp" + dspSerialNumStr + "blnk_tmr";
 
          if (!_blinkTmrHndl){
@@ -283,7 +283,6 @@ SevenSegDispHw* SevenSegDisplays::getDspUndrlHwPtr(){
    
    return _dspUndrlHwPtr;
 }
-
 
 int32_t SevenSegDisplays::getDspValMax(){
 
@@ -847,7 +846,7 @@ bool SevenSegDisplays::wait(){
       //Create a valid unique Name for identifying the Wait timer created
       String waitTmrName{""};
       String dspSerialNumStr {"000" + String(_dspInstNbr)};
-      dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length()); //FTPO
+      dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length());
       waitTmrName = "Disp" + dspSerialNumStr + "wait_tmr";
 
       if (!_waitTmrHndl){
