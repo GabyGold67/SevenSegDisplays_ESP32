@@ -261,6 +261,7 @@ public:
     * @note The method will not produce any change if it's in "Waiting mode" as the blanked ports will be immediately overwritten by the waiting process, so it makes no sense. Consider, though, that the "Waiting mode" clears the display at it's exit.  
     * 
     * Use example:  
+    * 
     * @code {.cpp}
     * myLedDisp.clear();
     * @endcode
@@ -278,7 +279,28 @@ public:
     * @param labelRight A char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the position left to the **levelRight** display, just before the levelRight value. The character must be one of the "displayable" characters, as listed in the **`.print(String)`** method description.
     * 
     * @retval true: If the values could be represented.  
-    * @retval false: Otherwise, being that the **levelLeft** and/or **levelRight** parameter was out of range and/or the **labelLeft** and/or **labelRight** parameter was not in the list of displayable characters. The display will be blanked. 
+    * @retval false: Otherwise, being that the **levelLeft** and/or **levelRight** parameter was out of range and/or the **labelLeft** and/or **labelRight** parameter was not in the list of displayable characters. The display will be blanked.  
+    * 
+    * Use example:  
+    * @code {.cpp}
+    * myLedDisp.gauge(3, 2); // Displays a double gauge with no labels, the left level in the fourth (higher) level, the right level in it's third level.  
+    * @endcode
+    * 
+    * @code {.cpp}
+    * myLedDisp.gauge(2, 1, 'b', 't');  // Displays a double gauge, the left indicator with a **b** letter as label and a third level value, and the right side indicator with a **t** label and a second level value.  
+    * @endcode
+    * 
+    * @code {.cpp}
+    * myLedDisp.gauge(1, 3, 'F');  // Displays a double gauge, the left indicator with a **F** letter as label and a second level value, and the right side indicator with a no label and a fourth level value.  
+    * @endcode
+    * 
+    * @code {.cpp}
+    * myLedDisp.gauge(4, 2,'d', 'b'); // Error: the left level is outside valid range (value 4, valid range is 0<=value<=3). The method will return false and the display will be cleared.  
+    * @endcode
+    * 
+    * @code {.cpp}
+    * myLedDisp.gauge(3, 0, 'X');  // Error: 'X' (the left indicator label) is not a "displayable" character. The method will return false and the display will be cleared.  
+    * @endcode
     */
    bool doubleGauge(const int &levelLeft, const int &levelRight, char labelLeft = ' ', char labelRight = ' ');
    /**
@@ -291,6 +313,28 @@ public:
     * 
     * @return true If the value could be represented.  
     * @return false Otherwise, being that the **level** parameter was out of range and/or the **label** parameter was not in the list of displayable characters. The display will be blanked.
+    * 
+    * Use example:  
+    * 
+    * @code {.cpp}
+    * `myLedDisp.gauge(2, 'b');` // Displays a gauge with a label **b** in it's leftmost position, the next two positions with level indicators for second and third levels
+    * @endcode
+    * 
+    * @code {.cpp}
+    * `myLedDisp.gauge(3);`   // Displays a gauge with a blank space as label and the next three positions with their respective levels indicators
+    * @endcode
+    * 
+    * @code {.cpp}
+    * `myLedDisp.gauge(1, 'F');` // Displays a gauge with a **F** as label in it's leftmost position, and the next position holding the second level indicator
+    * @endcode
+    * 
+    * @code {.cpp}
+    * `myLedDisp.**gauge(4, 'd');`  // Error, the value 4 is outside valid range, the method will return **false** and the display will be cleared.  
+    * @endcode
+    * 
+    * @code {.cpp}
+    * `myLedDisp.gauge(3, 'X');` // Error, **X** is not a displayable character, the method will return **false** and the display will be cleared
+    * @endcode
     */
    bool gauge(const int &level, char label = ' ');
    /**
@@ -308,6 +352,32 @@ public:
     *
     * @return true If the value could be represented.  
     * @return false Otherwise, being that the **level** parameter was out of range and/or the **label** parameter was not in the list of displayable characters. The display will be blanked.  
+    * 
+    * Use example:  
+    * 
+    * @code {.cpp}
+    * myLedDisp.gauge(0.0);   // Generates a display with no label and 0 level indication, so it will be a blank display  
+    * @endcode
+    * 
+    * @code {.cpp}
+    * myLedDisp.gauge(0.4);   // Generates a display with no label, and level 1 indicator  
+    * @endcode
+    * 
+    * @code {.cpp}
+    * myLedDisp.gauge(0.55, 'b');   // Generates a display with a letter b as label, the level 1 and level 2 indicators  
+    * @endcode
+    * 
+    * @code {.cpp}
+    * myLedDisp.gauge(1.0, 'F'); // Generates a display with a letter F as label, the level 1 level 2 and level 3 indicators  
+    * @endcode
+    * 
+    * @code {.cpp}
+    * myLedDisp.gauge(1.5, 'd'); //Error: 4 is outside the accepted values range  
+    * @endcode
+    * 
+    * @code {.cpp}
+    * myLedDisp.gauge(3.0, 'X'); //Error: 'X' is not a "displayable" character  
+    * @endcode
     */
    bool gauge(const double &level, char label = ' ');
    /**
@@ -316,6 +386,13 @@ public:
     * Returns an unsigned short integer value indicating the the quantity of digits (ports), the display have as declared at the object instantiation. Each time the class is instantiated the object is created with the needed resources and the range of values it's capable of displaying are calculated based on the dspDigits parameter, and that value is the one returned by this method.  
     * 
     * @return The unsigned short number indicating the quantity of digits of the instantiated display.
+    * 
+    * Use example:  
+    * 
+    * @code {.cpp}
+    * uint8_t portsQty = myLedDisp.getDigistsQty(); // Saves in the portsQty variable the number of display ports (digits) of the display
+    * @endcode
+    * 
     */
    uint8_t getDigitsQty();
    /**
@@ -337,6 +414,13 @@ public:
     * The value indicates the greatest displayable number according to the quantity of digits (ports) the display have as indicated at the object instantiation.  
     * 
     * @return The integer number indicating the maximum value that the display might display according to the quantity of digits of the instantiated display.  
+    * Use example:  
+    * 
+    * Use example:  
+    * 
+    * @code {.cpp}
+    * int32_t maxLimit = myLedDisp.getDspMax();  // Sets the variable maxLimit to the maximum displayable value for the display
+    * @endcode
     */
    int32_t getDspValMax();
    /**
@@ -345,6 +429,12 @@ public:
     * The value indicates the smallest displayable number according to the quantity of digits (ports) the display have as indicated at the object instantiation.
     * 
     * @return The integer number indicating the minimum value that the display might display according to the quantity of digits of the instantiated display.  
+    * 
+    * Use example:  
+    * 
+    * @code {.cpp}
+    * `uint32_t minLimit = myLedDisp.getDspMin();` // Sets the variable minLimit to the minimum displayable value for the display
+    * @endcode
     */
    int32_t getDspValMin();
    /**
@@ -356,7 +446,13 @@ public:
     * 
     * @note As SevenSegDisplays objects might be constructed and destructed at need, the largest Instance number is not necessarily coincidental with the quantity of objects instantiated at any given moment, as the numeric identification of the object is an always increasing value incremented every time a new object is instantiated, but never decremented due to destructions.  
     * 
-    * @attention Not to be confused with a pointer to the object or other internal unique identification mechanism results
+    * @attention Not to be confused with a pointer to the object or other internal unique identification mechanism results  
+    * 
+    * Use example:  
+    * 
+    * @code {.cpp}
+    * uint8_t dspNmbr = myLedDisp.getInstanceNbr();
+    * @endcode
     */
    uint16_t getInstanceNbr();
    /**
@@ -369,6 +465,12 @@ public:
     * @return The maximum time, in milliseconds, the display can be set to blink. This value is the maximum to set as the turned-on or the turned-off stage of the blinking process started by a **`blink()`** or a **`blink(const unsigned long, const unsigned long)`** method.  
     * 
     * @attention Opposite to the concept of Hertz, that designates how many times an action happens in a fixed period of time (a second), the value used in the `blink()` and all related methods is **the time set to elapse before the next action happens**.  
+    * 
+    * Use example:  
+    * 
+    * @code {.cpp}
+    * unsigned long myDispMaxBlnkRt = myLedDisp.getMaxBlinkRate();
+    * @endcode
     */
    unsigned long getMaxBlinkRate();
    /**
@@ -381,6 +483,12 @@ public:
     * @return The minimum time, in milliseconds, the display can be set to blink. This value is the minimum to set as the turned-on or the turned-off stage of the blinking process started by a **`.blink()`** or a **`blink(const unsigned long, const unsigned long)`** method.  
     * 
     * @attention Opposite to the concept of Hertz, that designates how many times an action happens in a fixed period of time (a second), the value used in the `blink()` and all related methods is **the time set to elapse before the next action happens**.  
+    * 
+    * Use example:  
+    * 
+    * @code {.cpp}
+    * unsigned long myDispMinBlnkRt = myLedDisp.getMinBlinkRate();
+    * @endcode
     */
    unsigned long getMinBlinkRate();
    /**
@@ -390,13 +498,26 @@ public:
     * 
     * @retval true The display buffer is filled with _space values
     * @retval false At least one memory element of the buffer is filled with a value that is not a _space
+    * 
+    * Use example:  
+    * @code {.cpp}
+    * if(!myDisplay.isBlank())
+    *    myDisplay.clear();
+    * @endcode
     */
    bool isBlank();
    /**
     * @brief Returns a boolean value indicating if the display is set to blink or not.
     * 
     * @retval true The display is set to blink.  
-    * @retval false The display is set not to blink.   
+    * @retval false The display is set not to blink. 
+    * 
+    * Use example:  
+    *   
+    * @code {.cpp}
+    * if(myDisplay.isBlinking)
+    *    myDisplay.noBlink();
+    * @endcode
     */
    bool isBlinking();
    /**
@@ -406,6 +527,13 @@ public:
     * 
     * @return true If the display is set to **Waiting mode**.  
     * @return false If the display is not set to **Waiting mode**.   
+    * 
+    * Use example:  
+    * 
+    * @code {.cpp}
+    * if(myDisplay.isWaiting)
+    *    myDisplay.noWait();
+    * @endcode
     */
    bool isWaiting();
    /**
@@ -415,6 +543,12 @@ public:
     * 
     * @retval true If the display was set to blink, the blinking is stopped.  
     * @retval false If the display was not set to blink, no changes will be done.  
+    * 
+    * Code example:  
+    * 
+    * @code {.cpp}
+    * myLedDisp.noBlink();
+    * @endcode
     */
    bool noBlink();
    /**
@@ -424,6 +558,12 @@ public:
     * 
     * @retval true If the display was set to wait, the **Waiting mode** is stopped.  
     * @retval false If the display was not set to wait, no changes will be done.  
+    * 
+    * Code example:  
+    * @code {.cpp}
+    * myLedDisp.noWait();
+    * @endcode
+    * 
     */
    bool noWait();
    /**
@@ -440,6 +580,16 @@ public:
     * **=** Builds a character formed by lighting the lower 2 horizontal segments (the d and g segments) of the digit display, can be described as a "lower equal" symbol.    
     * **~** Builds a character formed by lighting the 3 horizontal segments (the a, d and g segments) of the digit display, can be described as an "equivalent" symbol.  
     * **'*'** (asterisk) Builds a character by lighting the upper 4 segments (the a, b, f and g segments), forming a little square, can be described as the "degrees" symbol or º. 
+    * 
+    * Code example:  
+    * 
+    * @code {.cpp}
+    * myLedDisp.print("Hi");  // Valid for 2 or more digits displays  
+    * myLedDisp.print("Strt");   // Valid for 4 or more digits displays  
+    * myLedDisp.print("L.A.X."); // Error, as 'X' is a not displayable character  
+    * myLedDisp.print("36.70*"); // Valid for 5 or more digits displays  
+    * myLedDisp.print("........");  // Valid for 8 digits displays  
+    * @endcode
     */
    bool print(String text);
    /**
@@ -450,6 +600,18 @@ public:
     * @param zeroPad Boolean, optional parameter (if not specified the default value, false, will be assumed), indicates if the heading free spaces of the integer right aligned displayed must be filled with zeros (true) or spaces (false). In the case of a negative integer the spaces or zeros will fill the gap between the '-' sign kept in the leftmost position, and the first digit.  
     * @return true If the value could be represented.  
     * @return false If the value couldn't be represented as it was out of the valid range. The display will be blanked.  
+    * 
+    * Code example
+    * 
+    * @code {.cpp}
+    * myLedDisp.print(12);  //Displays '12  ' on a 4 digits display  
+    * myLedDisp.print(12, true); //Displays '  12' on a 4 digits display  
+    * myLedDisp.print(12, true, true); //Displays '0012' on a 4 digits display  
+    * myLedDisp.print(-12);   //Displays '-12     ' on a 8 digits display  
+    * myLedDisp.print(-12, true);   //Displays '-   12' on a 6 digits display  
+    * myLedDisp.print(-12, true, true);   //Displays '-012' on a 4 digits display    
+    * @endcode
+
     */
    bool print(const int32_t &value, bool rgtAlgn = false, bool zeroPad = false);
    /**
@@ -464,12 +626,30 @@ public:
     * 
     * @retval true The value could be represented.  
     * @retval false The value couldn't be represented. The display is blanked.  
+    * 
+    * Code example (on a 4-bits display):  
+    * 
+    * @code {.cpp}
+    * myLedDisp.print(1.2, 2);   //Displays '1.20 '  
+    * myLedDisp.print(1.2, 2, true);   //Displays ' 1.20'  
+    * myLedDisp.print(12, 2, true, true); //Displays '01.20'    
+    * myLedDisp.print(-1.2, 2);  //Displays '-1.20'  
+    * myLedDisp.print(-1.28, 1, true); //Displays '- 1.2'  
+    * myLedDisp.print(-1.28, 1, true, true); //Displays '-01.2'    
+    * myLedDisp.print(-1.28, 3, true, true); //Error
+    * @endcode
     */
    bool print(const double &value, const unsigned int &decPlaces, bool rgtAlgn = false, bool zeroPad = false);
    /**
     * @brief Resets the blinking mask.  
     * 
     * The blinking mask configures which digits of the display will be affected by the **`.blink()`** method. This method resets the mask so that **all** the digits will be affected when blinking is active.  
+    * 
+    * Code example
+    * 
+    * @code {.cpp}
+    * myLedDisp.resetBlinkMask();  
+    * @endcode
     */
    void resetBlinkMask();
    /**
@@ -478,6 +658,22 @@ public:
     * The blinking mask indicates which digits will be involved when a **`blink()`** method is invoked. Indicating true for a digit makes it blink when the method is called, indicating false makes it display steady independently of the other digits. The parameter is positional referenced to the display, and for ease of use the index numbers of the array indicate their position relative to the rightmost digit (blnkPort0). The mask might be reset to its original value (all digits set to blink) by using this method with all parameters set to **true** or by using the **`resetBlinkMask()`** method.  
     * 
     * @param newBlnkMsk Array of booleans of length **dspDigits**, indexes are positional referenced to the display, indicating each one which digits must blink after a **`blink()`** method is invoked (true) or stay steady (false). The indexes valid range is 0 <= index <= (dspDigits-1), corresponding the [0] position withe the rightmost display port, the [1] position the second from the right and so on.  
+    * 
+    * Code example  
+    * 
+    * @code {.cpp}
+    * bool tstMask[4]{true, true, true, true};  
+    * testResult = myLedDisp.blink();  //Sets all the  digits to blink in a 4 digits display  
+    * tstMask[0] = true;  
+    * tstMask[1] = false;  
+    * tstMask[2] = false;  
+    * tstMask[3] = false;  
+    * myLedDisp.setBlinkMask(tstMask); //Sets only the rightmost digit to blink in a 4 digits display  
+    * tstMask[0] = false;  
+    * tstMask[1] = true;  
+    * tstMask[2] = true;  
+    * myLedDisp.setBlinkMask(tstMask); //Sets the two central digits to blink in a 4 digits display
+    * @endcode
     */
    void setBlinkMask(const bool* newBlnkMsk);
    /**
@@ -490,6 +686,15 @@ public:
     * 
     * @return true The parameter or parameters passed are within the valid range, The change will take effect immediately.  
     * @return false One or more of the parameters passed were out of range. The rate change would not be made for none of the parameters.  
+    * 
+    * Code example
+    * 
+    * @code {.cpp}
+    * myLedDisp.setBlinkRate(400);  //Returns true and sets the blinking rate to 400 millisecs on, 400 millisecs off (symmetrical blink).  
+    * myLedDisp.setBlinkRate(800, 200);   //Returns true and sets the blinking rate to 800 millisecs on, 200 millisecs off (asymmetrical blink)  
+    * myLedDisp.setBlinkRate(3000); //Returns false and the display blinking rate stays without change.  
+    * myLedDisp.setBlinkRate(600, 3500);  //Returns false and the display blinking rate stays without change.  
+    * @endcode
     */
    bool setBlinkRate(const unsigned long &newOnRate, const unsigned long &newOffRate = 0);
    /**
@@ -500,6 +705,13 @@ public:
     * @param newChar A character the display must use for symbolizing the progress, the value must be in the displayable characters group as explained in the print() method.  
     * @return true The character passed is within the displayable characters range, the change will take effect immediately.  
     * @return false The parameter passed was invalid, i.e. it was a non displayable character, the character change will not be made.  
+    * 
+    * Code example  
+    * 
+    * @code {.cpp}
+    * myLedDisp.setWaitRate('_');   // Returns true and sets the wait character to '_'.  
+    * myLedDisp.setWaitRate('#');   // Error, returns false and the display wait character stays without change.  
+    * @endcode
     */
    bool setWaitChar (const char &newChar);
    /**
@@ -510,7 +722,14 @@ public:
     * @param newWaitRate unsigned long integer containing the time (in milliseconds) the display must take to advance the next character symbolizing the progress, the value must be in the range _minBlinkRate <= newWaitRate <= _maxBlinkRate. Those values can be known by the use of the **`getMinBlinkRate()`** and the **`getMaxBlinkRate()`** methods.  
     * 
     * @retval true The parameter passed is within the valid range, the change takes effect.
-    * @retval false The parameter passed was out of range, the rate change will not be made.   
+    * @retval false The parameter passed was out of range, the rate change will not be made.  
+    * 
+    * Code example  
+    * 
+    * @code {.cpp}
+    * myLedDisp.setWaitRate(400);   //Returns true and sets the advancement rate to 400 millisecs.  
+    * myLedDisp.setWaitRate(myLedDisp.getMinBlinkRate() - 10); //Returns false and the display wait rate stays without change.  
+    * @endcode
     */
    bool setWaitRate(const unsigned long &newWaitRate);
    /**
@@ -521,7 +740,15 @@ public:
     * @return true The display was not already set to wait (so now the "Waiting state" was started).  
     * @return false The display was already set to wait, and/or the parameter passed was out of range. 
     * 
-    * @attention The **Waiting state** is considereda transitory state (or situation), as in most systems a "progression bar" is used it's main target is to show the system is not stalled or crashed, it's just waiting for a process to end. As a transitory state, the value displayed before entering the "Waiting state" will be saved, and will be restored automaticaly when the "Waiting state" is ended by the use of the `noWait()` method. 
+    * @attention The **Waiting state** is considereda transitory state (or situation), as in most systems a "progression bar" is used it's main target is to show the system is not stalled or crashed, it's just waiting for a process to end. As a transitory state, the value displayed before entering the "Waiting state" will be saved, and will be restored automaticaly when the "Waiting state" is ended by the use of the `noWait()` method.  
+    * 
+    * Code example  
+    * 
+    * @code {.cpp}
+    * myLedDisp.wait(); //Returns true and shows advancement animation to the already set value.  
+    * myLedDisp.wait(800); //Returns true and sets the advancement animation rate to 800 millisecs.  
+    * myLedDisp.wait(getMaxBlinkRate() + 10);   //Returns false and the display stays without change.  
+    * @endcode
     */
    bool wait();
    /**
@@ -545,6 +772,13 @@ public:
     * 
     * @retval true The parameters are within the acceptable range, in this case 0 <= port <= (dspDigits - 1).  
     * @retval false: The port value was outside the acceptable range.  
+    * 
+    * Code example
+    * 
+    * @code {.cpp}
+    * myLedDisp.write(0xA4, 1);  // Modifies the displayed data, placing a '2' in the second digit from right to left in a common anode display.
+    * myLedDisp.write(0xB9, 0);  // Modifies the displayed data, placing a non ASCII identifiable shape, with the central horizontal (g segment) and the two vertical rightside segments (b & c) lit, in the first digit from right to left in a common anode display.
+    * @endcode
     */
    bool write(const uint8_t &segments, const uint8_t &port);
    /**
@@ -555,6 +789,13 @@ public:
     * 
     * @retval true **character** is a displayable one char string, and **port** value is in the range 0 <= value <= (dspDigits - 1).  
     * @retval false **character** was not "displayable" or the **port** value was out of range.   
+    * 
+    * Use example
+    * 
+    * @code {.cpp}
+    * myLedDisp.write("A", 1);   // Modifies the displayed data, placing a 'A' in the second digit from right to left, returns true  
+    * myLedDisp.write("X", 1);   // Fails as "X" is not a displayable character, returns false.  
+    * @endcode
     */
    bool write(const String &character, const uint8_t &port);
 };

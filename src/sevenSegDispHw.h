@@ -38,6 +38,13 @@
 #include <stdint.h>
 
 //============================================================> Class declarations separator
+
+/**
+ * @class SevenSegDispHw
+ * 
+ * @brief Base abstract class models a generic Seven Segment display hardware
+ * 
+ */
 class SevenSegDispHw{
     static uint8_t _dspHwSerialNum;
 protected:
@@ -59,6 +66,7 @@ public:
     * 
     * Depending on the display technology and the resources it needs to start working, this method takes care of those preparation. That means that each specific subclass of display will have to provide it's version of `begin()` that will take care of:  
     * - Configuring timmers or interrupts.  
+    * - Setup tasks and unblocking procedures to get new contents from the SevenSegDisplays object
     * - Setup communications parameters.  
     * - Establish communications with the display.  
     * - Other specific services configuration and starting.  
@@ -96,6 +104,12 @@ public:
 
 //============================================================> Class declarations separator
 
+/**
+ * @class SevenSegDynamic
+ * 
+ * @brief Abstract class models a generic dynamically updated Seven Segment display hardware
+ * 
+ */
 class SevenSegDynamic: public SevenSegDispHw{    
     static void tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg);
 
@@ -110,14 +124,34 @@ public:
     SevenSegDynamic();
     SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
     ~SevenSegDynamic();
+   /**
+    * @brief Sets up the hardware display to work.  
+    * 
+    * Depending on the display technology and the resources it needs to start working, this method takes care of those preparation. That means that each specific subclass of display will have to provide it's version of `begin()`.  
+    * The SevenSegDynamic abstract class and it's subclasses model displays that need regular refreshing of its contents, and for this to happen their `begin()` method must implement and start timers and/or periodic interrupts to handle it's refreshing rutines.  
+    *   
+    * @retval true The specific configurations and startups could be successfuly made
+    * @return false One or more of the specific configurations or startups failed.  
+    * 
+    * @note For each SevenSegDynamic instantiable subclass a short description of their respective `begin()` actions will be added if they are relevant to the developer using the library.  
+    */
     virtual bool begin();
     virtual bool stop();
 };
 
 //============================================================> Class declarations separator
 
+/**
+ * @class SevenSegDynHC595
+ * 
+ * @brief Models seven segmentd displays driven by two 74HC595 shift registers
+ * 
+ * The display is wired so that one shift register holds the active segments of the display digit, so it is connected in parallel to every digit segment, to the activation pin of the same segment in each one, and the second shift register holds the active digit enabled, so it's pins are connected independently to each digit, selecting which will be active at any given moment.
+ * As detailed in the **SevenSegDynamic** class, this wiring arrange requires the display to be refreshed to generate a cinematic effect or animation showing the full contents of all the digits at the same time, while the hardware is capable of liting one at a time. This cinematic effect is also managed by the library.  
+ * 
+ */
 class SevenSegDynHC595: public SevenSegDynamic{
-    static void tmrCbRfrshDynHC595(TimerHandle_t rfrshTmrCbArg);  //Will easily fail in subclasses calls, check it!!
+    static void tmrCbRfrshDynHC595(TimerHandle_t rfrshTmrCbArg);
 
 private:
     const uint8_t _sclkIndx {0};
@@ -134,7 +168,38 @@ protected:
 public:
     SevenSegDynHC595(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
     ~SevenSegDynHC595();
+    /**
+     * @brief Sets up the required resources for the hardware display to work
+     * 
+     * For the Seven Segments Dynamic 74HC595 displays to work several procedures must be completed by this method.  
+     * 
+     * Attaches the display to the O.S. software timer service, which takes care of refreshing the display regularly. An unlimited amount of displays might be attached to the timer theoretically, as long as there's enough resources available for them, but in practice the refreshing work takes time, and the time taken is proportional to the quantity of displays attached. And as Timers consume time for other tasks done by the microcontroller, the time taken by the timers must be kept to minimal or the stability of the whole system will be compromised. As the time available to execute the refreshing time without risking the stability of the system depends on various factors, the number of supported displays has to be tested in each development environment at development time.
+     * @retval true he display could be attached to the software timer service, or if the display was already attached to it. This not ensures system stability.  
+     * @return false the display couldn't be attached to the software timer service, due to O.S. failure.  
+     * 
+     * Use example
+     * 
+     * @code {.cpp}
+     * myLedDisp.begin();
+     * @endcode
+     * 
+     */
     bool begin();
+    /**
+     * @brief Stops the active display updating.  
+     * 
+     * Detaches the display from the Software Timer Service which takes care of refreshing the display regularly. The method then checks the array (list) of active serviced displays, if none is left in that array, the timer service is stopped and deleted, and the array is deleted from the heap to free the allocated resources. This last actions are reversed when a new begin() method is executed in any display.  
+     * 
+     * @return true The instance of the display was found and detached from the STS.  
+     * @return false The instance of the display wasn't found attached to the STS, no detach was carried as it wasn't needed.  
+     * 
+     * Use example
+     * 
+     * @code {.cpp}
+     * myLedDisp.stop();
+     * @endcode
+     * 
+     */
     bool stop();
 };
 

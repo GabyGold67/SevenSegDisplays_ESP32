@@ -1,5 +1,7 @@
 <map id="SevenSegDisplays::SevenSegDisplays" name="SevenSegDisplays::SevenSegDisplays">
-<area shape="rect" id="Node000001" title="Class constructor." alt="" coords="5,5,206,48"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#a67a533e8239853768391bfe513fc318e" title="Clears the display, turning off all the segments and dots." alt="" coords="254,13,422,40"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="206,24,238,24,238,29,206,29"/>
+<area shape="rect" id="Node000001" title="Class constructor." alt="" coords="5,23,206,65"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#a67a533e8239853768391bfe513fc318e" title="Clears the display, turning off all the segments and dots." alt="" coords="279,5,447,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="206,31,263,26,264,31,206,37"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff" title="Returns the pointer to the Display Buffer." alt="" coords="254,56,472,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="206,51,238,54,238,60,206,57"/>
 </map>

@@ -113,14 +113,16 @@ Collaboration diagram for SevenSegDisplays:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays__coll__graph.png" border="0" usemap="#a_seven_seg_displays_coll__map" alt="Collaboration graph"/></div>
 <map name="a_seven_seg_displays_coll__map" id="a_seven_seg_displays_coll__map">
-<area shape="rect" title="Default constructor." alt="" coords="5,5,138,32"/>
-<area shape="poly" title=" " alt="" coords="154,13,164,19,138,26,137,21,159,18,152,18"/>
+<area shape="rect" title="Default constructor." alt="" coords="5,96,138,123"/>
+<area shape="poly" title=" " alt="" coords="154,101,164,109,156,117,138,120,138,115,154,112,159,109,151,105"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware." alt="" coords="7,5,136,32"/>
+<area shape="poly" title=" " alt="" coords="74,48,74,95,69,95,69,48"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ada6d89fb083fd8a5a2ce603b3b1f5e43" id="r_ada6d89fb083fd8a5a2ce603b3b1f5e43"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ada6d89fb083fd8a5a2ce603b3b1f5e43">SevenSegDisplays</a> (SevenSegDispHw *dspUndrlHwPtr)</td></tr>
+<tr class="memitem:ada6d89fb083fd8a5a2ce603b3b1f5e43" id="r_ada6d89fb083fd8a5a2ce603b3b1f5e43"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ada6d89fb083fd8a5a2ce603b3b1f5e43">SevenSegDisplays</a> (<a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a> *dspUndrlHwPtr)</td></tr>
 <tr class="memdesc:ada6d89fb083fd8a5a2ce603b3b1f5e43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor.  <br /></td></tr>
 <tr class="separator:ada6d89fb083fd8a5a2ce603b3b1f5e43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad6eac4fa55968318f6d0c1e4e80cb8e" id="r_aad6eac4fa55968318f6d0c1e4e80cb8e"><td class="memItemLeft" align="right" valign="top"><a id="aad6eac4fa55968318f6d0c1e4e80cb8e" name="aad6eac4fa55968318f6d0c1e4e80cb8e"></a>
@@ -149,7 +151,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a05ddffe49e505638382affaa0426b272"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the number of digits of the display hardware. <br  />
   <br /></td></tr>
 <tr class="separator:a05ddffe49e505638382affaa0426b272"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeebf7611c82002d5a206a6b7ff3946ac" id="r_aeebf7611c82002d5a206a6b7ff3946ac"><td class="memItemLeft" align="right" valign="top">SevenSegDispHw *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeebf7611c82002d5a206a6b7ff3946ac">getDspUndrlHwPtr</a> ()</td></tr>
+<tr class="memitem:aeebf7611c82002d5a206a6b7ff3946ac" id="r_aeebf7611c82002d5a206a6b7ff3946ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeebf7611c82002d5a206a6b7ff3946ac">getDspUndrlHwPtr</a> ()</td></tr>
 <tr class="memdesc:aeebf7611c82002d5a206a6b7ff3946ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to the underlying hardware display object.  <br /></td></tr>
 <tr class="separator:aeebf7611c82002d5a206a6b7ff3946ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace9c93b38f969bac953449c506c2ce2f" id="r_ace9c93b38f969bac953449c506c2ce2f"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace9c93b38f969bac953449c506c2ce2f">getDspValMax</a> ()</td></tr>
@@ -240,7 +242,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">SevenSegDisplays::SevenSegDisplays </td>
           <td>(</td>
-          <td class="paramtype">SevenSegDispHw *</td>          <td class="paramname"><span class="paramname"><em>dspUndrlHwPtr</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a> *</td>          <td class="paramname"><span class="paramname"><em>dspUndrlHwPtr</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -250,32 +252,36 @@ Public Member Functions</h2></td></tr>
 <p>Instantiates a <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> class object</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dspUndrlHw</td><td>A pointer to an instantiated SevenSegDispHw subclass object that models the hardware display that composes the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object</td></tr>
+    <tr><td class="paramname">dspUndrlHw</td><td>A pointer to an instantiated <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> subclass object that models the hardware display that composes the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The library structure design, built on the idea of keeping the API and the services provided consistent, and connecting the hardware managing level through specific subclasses of the SevenSegDispHw class gives a variety of valid instantiation procedures, through different code but with the same result. This might help the developer to keep his/hers most comfortable practices to get the object needed created. Some examples of this are: <br  />
+<dl class="section note"><dt>Note</dt><dd>The library structure design, built on the idea of keeping the API and the services provided consistent, and connecting the hardware managing level through specific subclasses of the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> class gives a variety of valid instantiation procedures, through different code but with the same result. This might help the developer to keep his/hers most comfortable practices to get the object needed created. Some examples of this are: <br  />
 </dd></dl>
 <p>A three lines step by step code example: <br  />
- </p><div class="fragment"><div class="line">SevenSegDynHC595 myLedDispHw(myDispIOPins, 4, <span class="keyword">true</span>);  <span class="comment">// Instantiation of the underlying hardware object</span></div>
-<div class="line">SevenSegDispHw* myLedDispHwPtr = &amp;myLedDispHw;        <span class="comment">// Creation of a pointer to the instantiated hardware object</span></div>
+ </p><div class="fragment"><div class="line"><a class="code hl_class" href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a> myLedDispHw(myDispIOPins, 4, <span class="keyword">true</span>);  <span class="comment">// Instantiation of the underlying hardware object</span></div>
+<div class="line"><a class="code hl_class" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a>* myLedDispHwPtr = &amp;myLedDispHw;        <span class="comment">// Creation of a pointer to the instantiated hardware object</span></div>
 <div class="line"><a class="code hl_class" href="class_seven_seg_displays.html">SevenSegDisplays</a> myLedDisp(myLedDispHwPtr);           <span class="comment">// Instantiation of the SevenSegDisplays object using the pointer created</span></div>
+<div class="ttc" id="aclass_seven_seg_disp_hw_html"><div class="ttname"><a href="class_seven_seg_disp_hw.html">SevenSegDispHw</a></div><div class="ttdoc">Base abstract class models a generic Seven Segment display hardware.</div><div class="ttdef"><b>Definition</b> sevenSegDispHw.h:48</div></div>
 <div class="ttc" id="aclass_seven_seg_displays_html"><div class="ttname"><a href="class_seven_seg_displays.html">SevenSegDisplays</a></div><div class="ttdoc">Default constructor.</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.h:51</div></div>
-</div><!-- fragment --><p>A two lines example using the &amp; operand to pass the pointer </p><div class="fragment"><div class="line">SevenSegDynHC595 myLedDispHw(myDispIOPins, 4, <span class="keyword">true</span>);  <span class="comment">// Instantiation of the underlying hardware object</span></div>
+<div class="ttc" id="aclass_seven_seg_dyn_h_c595_html"><div class="ttname"><a href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a></div><div class="ttdoc">Models seven segmentd displays driven by two 74HC595 shift registers.</div><div class="ttdef"><b>Definition</b> sevenSegDispHw.h:153</div></div>
+</div><!-- fragment --><p>A two lines example using the &amp; operand to pass the pointer </p><div class="fragment"><div class="line"><a class="code hl_class" href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a> myLedDispHw(myDispIOPins, 4, <span class="keyword">true</span>);  <span class="comment">// Instantiation of the underlying hardware object</span></div>
 <div class="line"><a class="code hl_class" href="class_seven_seg_displays.html">SevenSegDisplays</a> myLedDisp(&amp;myLedDispHw);             <span class="comment">// Instantiation of the SevenSegDisplays object using the &amp; operand over the hardware object created</span></div>
-</div><!-- fragment --><p>A two lines example using a sub-class pointer to a dynamic instantiated object </p><div class="fragment"><div class="line">SevenSegDynHC595* myLedDispPtr {<span class="keyword">new</span> SevenSegDynHC595 (myDispIOPins, 4, <span class="keyword">true</span>)};   <span class="comment">// Dynamic instantiation of the underlying hardware object, pointed by a subclass pointer</span></div>
+</div><!-- fragment --><p>A two lines example using a sub-class pointer to a dynamic instantiated object </p><div class="fragment"><div class="line"><a class="code hl_class" href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a>* myLedDispPtr {<span class="keyword">new</span> <a class="code hl_class" href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a> (myDispIOPins, 4, <span class="keyword">true</span>)};   <span class="comment">// Dynamic instantiation of the underlying hardware object, pointed by a subclass pointer</span></div>
 <div class="line"><a class="code hl_class" href="class_seven_seg_displays.html">SevenSegDisplays</a> myLedDisp(myLedDispPtr);    <span class="comment">// Instantiation of the SevenSegDisplays object using the subclass pointer to the hardware object dynamically created</span></div>
-</div><!-- fragment --><p>A two lines example using a base class pointer to a dynamic instantiated object </p><div class="fragment"><div class="line">SevenSegDispHw* myLedDispPtr {<span class="keyword">new</span> SevenSegDynHC595 (myDispIOPins, 4, <span class="keyword">true</span>)};  <span class="comment">// Dynamic instantiation of the underlying hardware object, pointed by a base class pointer</span></div>
+</div><!-- fragment --><p>A two lines example using a base class pointer to a dynamic instantiated object </p><div class="fragment"><div class="line"><a class="code hl_class" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a>* myLedDispPtr {<span class="keyword">new</span> <a class="code hl_class" href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a> (myDispIOPins, 4, <span class="keyword">true</span>)};  <span class="comment">// Dynamic instantiation of the underlying hardware object, pointed by a base class pointer</span></div>
 <div class="line"><a class="code hl_class" href="class_seven_seg_displays.html">SevenSegDisplays</a> myLedDisp(myLedDispPtr); <span class="comment">// Instantiation of the SevenSegDisplays object using the base class pointer to the hardware object dynamically created</span></div>
-</div><!-- fragment --><p>A one liner example using as argument the pointer returned from dynamic instantiated object </p><div class="fragment"><div class="line"><a class="code hl_class" href="class_seven_seg_displays.html">SevenSegDisplays</a> myLedDisp(<span class="keyword">new</span> SevenSegDynHC595 (myDispIOPins, 4, <span class="keyword">true</span>));  <span class="comment">// Easy to understand reading from right to left, as usual!!</span></div>
+</div><!-- fragment --><p>A one liner example using as argument the pointer returned from dynamic instantiated object </p><div class="fragment"><div class="line"><a class="code hl_class" href="class_seven_seg_displays.html">SevenSegDisplays</a> myLedDisp(<span class="keyword">new</span> <a class="code hl_class" href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a> (myDispIOPins, 4, <span class="keyword">true</span>));  <span class="comment">// Easy to understand reading from right to left, as usual!!</span></div>
 </div><!-- fragment --> <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_ada6d89fb083fd8a5a2ce603b3b1f5e43_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_ada6d89fb083fd8a5a2ce603b3b1f5e43_cgraph" alt=""/></div>
 <map name="aclass_seven_seg_displays_ada6d89fb083fd8a5a2ce603b3b1f5e43_cgraph" id="aclass_seven_seg_displays_ada6d89fb083fd8a5a2ce603b3b1f5e43_cgraph">
-<area shape="rect" title="Class constructor." alt="" coords="5,5,206,48"/>
-<area shape="rect" href="class_seven_seg_displays.html#a67a533e8239853768391bfe513fc318e" title="Clears the display, turning off all the segments and dots." alt="" coords="254,13,422,40"/>
-<area shape="poly" title=" " alt="" coords="206,24,238,24,238,29,206,29"/>
+<area shape="rect" title="Class constructor." alt="" coords="5,23,206,65"/>
+<area shape="rect" href="class_seven_seg_displays.html#a67a533e8239853768391bfe513fc318e" title="Clears the display, turning off all the segments and dots." alt="" coords="279,5,447,32"/>
+<area shape="poly" title=" " alt="" coords="206,31,263,26,264,31,206,37"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff" title="Returns the pointer to the Display Buffer." alt="" coords="254,56,472,83"/>
+<area shape="poly" title=" " alt="" coords="206,51,238,54,238,60,206,57"/>
 </map>
 </div>
 
@@ -423,7 +429,8 @@ Here is the call graph for this function:</div>
 <dl class="section note"><dt>Note</dt><dd>The method will not produce any change if it's in "Waiting mode" as the blanked ports will be immediately overwritten by the waiting process, so it makes no sense. Consider, though, that the "Waiting mode" clears the display at it's exit. <br  />
 </dd></dl>
 <p>Use example: <br  />
- </p><div class="fragment"><div class="line">myLedDisp.clear();</div>
+</p>
+<div class="fragment"><div class="line">myLedDisp.clear();</div>
 </div><!-- fragment --> <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -495,11 +502,18 @@ Here is the caller graph for this function:</div>
   <table class="retval">
     <tr><td class="paramname">true</td><td>If the values could be represented. <br  />
  </td></tr>
-    <tr><td class="paramname">false</td><td>Otherwise, being that the <b>levelLeft</b> and/or <b>levelRight</b> parameter was out of range and/or the <b>labelLeft</b> and/or <b>labelRight</b> parameter was not in the list of displayable characters. The display will be blanked. </td></tr>
+    <tr><td class="paramname">false</td><td>Otherwise, being that the <b>levelLeft</b> and/or <b>levelRight</b> parameter was out of range and/or the <b>labelLeft</b> and/or <b>labelRight</b> parameter was not in the list of displayable characters. The display will be blanked. <br  />
+</td></tr>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
+<p>Use example: <br  />
+ </p><div class="fragment"><div class="line">myLedDisp.gauge(3, 2); <span class="comment">// Displays a double gauge with no labels, the left level in the fourth (higher) level, the right level in it&#39;s third level.  </span></div>
+</div><!-- fragment --><div class="fragment"><div class="line">myLedDisp.gauge(2, 1, <span class="charliteral">&#39;b&#39;</span>, <span class="charliteral">&#39;t&#39;</span>);  <span class="comment">// Displays a double gauge, the left indicator with a **b** letter as label and a third level value, and the right side indicator with a **t** label and a second level value.  </span></div>
+</div><!-- fragment --><div class="fragment"><div class="line">myLedDisp.gauge(1, 3, <span class="charliteral">&#39;F&#39;</span>);  <span class="comment">// Displays a double gauge, the left indicator with a **F** letter as label and a second level value, and the right side indicator with a no label and a fourth level value.  </span></div>
+</div><!-- fragment --><div class="fragment"><div class="line">myLedDisp.gauge(4, 2,<span class="charliteral">&#39;d&#39;</span>, <span class="charliteral">&#39;b&#39;</span>); <span class="comment">// Error: the left level is outside valid range (value 4, valid range is 0&lt;=value&lt;=3). The method will return false and the display will be cleared.  </span></div>
+</div><!-- fragment --><div class="fragment"><div class="line">myLedDisp.gauge(3, 0, <span class="charliteral">&#39;X&#39;</span>);  <span class="comment">// Error: &#39;X&#39; (the left indicator label) is not a &quot;displayable&quot; character. The method will return false and the display will be cleared.  </span></div>
+</div><!-- fragment --> <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_aa74bbf6a2436ea01c170459ef1da5fbe_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_aa74bbf6a2436ea01c170459ef1da5fbe_cgraph" alt=""/></div>
@@ -558,8 +572,16 @@ Here is the call graph for this function:</div>
  </dd>
 <dd>
 false Otherwise, being that the <b>level</b> parameter was out of range and/or the <b>label</b> parameter was not in the list of displayable characters. The display will be blanked. <br  />
- </dd></dl>
-<div class="dynheader">
+</dd></dl>
+<p>Use example: <br  />
+</p>
+<div class="fragment"><div class="line">myLedDisp.gauge(0.0);   <span class="comment">// Generates a display with no label and 0 level indication, so it will be a blank display  </span></div>
+</div><!-- fragment --><div class="fragment"><div class="line">myLedDisp.gauge(0.4);   <span class="comment">// Generates a display with no label, and level 1 indicator  </span></div>
+</div><!-- fragment --><div class="fragment"><div class="line">myLedDisp.gauge(0.55, <span class="charliteral">&#39;b&#39;</span>);   <span class="comment">// Generates a display with a letter b as label, the level 1 and level 2 indicators  </span></div>
+</div><!-- fragment --><div class="fragment"><div class="line">myLedDisp.gauge(1.0, <span class="charliteral">&#39;F&#39;</span>); <span class="comment">// Generates a display with a letter F as label, the level 1 level 2 and level 3 indicators  </span></div>
+</div><!-- fragment --><div class="fragment"><div class="line">myLedDisp.gauge(1.5, <span class="charliteral">&#39;d&#39;</span>); <span class="comment">//Error: 4 is outside the accepted values range  </span></div>
+</div><!-- fragment --><div class="fragment"><div class="line">myLedDisp.gauge(3.0, <span class="charliteral">&#39;X&#39;</span>); <span class="comment">//Error: &#39;X&#39; is not a &quot;displayable&quot; character  </span></div>
+</div><!-- fragment --> <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_a6fea06785902000457c1105c78d85093_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_a6fea06785902000457c1105c78d85093_cgraph" alt=""/></div>
@@ -615,8 +637,16 @@ Here is the call graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>true If the value could be represented. <br  />
  </dd>
 <dd>
-false Otherwise, being that the <b>level</b> parameter was out of range and/or the <b>label</b> parameter was not in the list of displayable characters. The display will be blanked. </dd></dl>
-<div class="dynheader">
+false Otherwise, being that the <b>level</b> parameter was out of range and/or the <b>label</b> parameter was not in the list of displayable characters. The display will be blanked.</dd></dl>
+<p>Use example: <br  />
+</p>
+<div class="fragment"><div class="line">`myLedDisp.gauge(2, <span class="charliteral">&#39;b&#39;</span>);` <span class="comment">// Displays a gauge with a label **b** in it&#39;s leftmost position, the next two positions with level indicators for second and third levels</span></div>
+</div><!-- fragment --><div class="fragment"><div class="line">`myLedDisp.gauge(3);`   <span class="comment">// Displays a gauge with a blank space as label and the next three positions with their respective levels indicators</span></div>
+</div><!-- fragment --><div class="fragment"><div class="line">`myLedDisp.gauge(1, <span class="charliteral">&#39;F&#39;</span>);` <span class="comment">// Displays a gauge with a **F** as label in it&#39;s leftmost position, and the next position holding the second level indicator</span></div>
+</div><!-- fragment --><div class="fragment"><div class="line">`myLedDisp.**<a class="code hl_function" href="#aa00c8c2fbca4a0068590ef62de28f198">gauge</a>(4, <span class="charliteral">&#39;d&#39;</span>);`  <span class="comment">// Error, the value 4 is outside valid range, the method will return **false** and the display will be cleared.  </span></div>
+<div class="ttc" id="aclass_seven_seg_displays_html_aa00c8c2fbca4a0068590ef62de28f198"><div class="ttname"><a href="#aa00c8c2fbca4a0068590ef62de28f198">SevenSegDisplays::gauge</a></div><div class="ttdeci">bool gauge(const int &amp;level, char label=' ')</div><div class="ttdoc">Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ...</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.cpp:229</div></div>
+</div><!-- fragment --><div class="fragment"><div class="line">`myLedDisp.gauge(3, <span class="charliteral">&#39;X&#39;</span>);` <span class="comment">// Error, **X** is not a displayable character, the method will return **false** and the display will be cleared</span></div>
+</div><!-- fragment --> <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_aa00c8c2fbca4a0068590ef62de28f198_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_aa00c8c2fbca4a0068590ef62de28f198_cgraph" alt=""/></div>
@@ -666,8 +696,11 @@ Here is the caller graph for this function:</div>
  </p>
 <p>Returns an unsigned short integer value indicating the the quantity of digits (ports), the display have as declared at the object instantiation. Each time the class is instantiated the object is created with the needed resources and the range of values it's capable of displaying are calculated based on the dspDigits parameter, and that value is the one returned by this method. <br  />
 </p>
-<dl class="section return"><dt>Returns</dt><dd>The unsigned short number indicating the quantity of digits of the instantiated display. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>The unsigned short number indicating the quantity of digits of the instantiated display.</dd></dl>
+<p>Use example: <br  />
+</p>
+<div class="fragment"><div class="line">uint8_t portsQty = myLedDisp.getDigistsQty(); <span class="comment">// Saves in the portsQty variable the number of display ports (digits) of the display</span></div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="aeebf7611c82002d5a206a6b7ff3946ac" name="aeebf7611c82002d5a206a6b7ff3946ac"></a>
@@ -677,7 +710,7 @@ Here is the caller graph for this function:</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">SevenSegDispHw * SevenSegDisplays::getDspUndrlHwPtr </td>
+          <td class="memname"><a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a> * SevenSegDisplays::getDspUndrlHwPtr </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -717,8 +750,12 @@ Here is the caller graph for this function:</div>
 <p>The value indicates the greatest displayable number according to the quantity of digits (ports) the display have as indicated at the object instantiation. <br  />
 </p>
 <dl class="section return"><dt>Returns</dt><dd>The integer number indicating the maximum value that the display might display according to the quantity of digits of the instantiated display. <br  />
- </dd></dl>
-
+ Use example: <br  />
+</dd></dl>
+<p>Use example: <br  />
+</p>
+<div class="fragment"><div class="line">int32_t maxLimit = myLedDisp.getDspMax();  <span class="comment">// Sets the variable maxLimit to the maximum displayable value for the display</span></div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="a09b7157b7be5f4c4b0562f862d6aaf5c" name="a09b7157b7be5f4c4b0562f862d6aaf5c"></a>
@@ -739,8 +776,11 @@ Here is the caller graph for this function:</div>
 <p>Returns a value equivalent to the smallest displayable number for the display. </p>
 <p>The value indicates the smallest displayable number according to the quantity of digits (ports) the display have as indicated at the object instantiation.</p>
 <dl class="section return"><dt>Returns</dt><dd>The integer number indicating the minimum value that the display might display according to the quantity of digits of the instantiated display. <br  />
- </dd></dl>
-
+</dd></dl>
+<p>Use example: <br  />
+</p>
+<div class="fragment"><div class="line">`uint32_t minLimit = myLedDisp.getDspMin();` <span class="comment">// Sets the variable minLimit to the minimum displayable value for the display</span></div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="a8faca0f757c0477f59a73668b6041689" name="a8faca0f757c0477f59a73668b6041689"></a>
@@ -763,8 +803,12 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>The unsigned number indicating the identification Instance Number.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>As <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> objects might be constructed and destructed at need, the largest Instance number is not necessarily coincidental with the quantity of objects instantiated at any given moment, as the numeric identification of the object is an always increasing value incremented every time a new object is instantiated, but never decremented due to destructions. <br  />
 </dd></dl>
-<dl class="section attention"><dt>Attention</dt><dd>Not to be confused with a pointer to the object or other internal unique identification mechanism results </dd></dl>
-
+<dl class="section attention"><dt>Attention</dt><dd>Not to be confused with a pointer to the object or other internal unique identification mechanism results <br  />
+</dd></dl>
+<p>Use example: <br  />
+</p>
+<div class="fragment"><div class="line">uint8_t dspNmbr = myLedDisp.getInstanceNbr();</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="a66d298970031a709ee5bad045a8356fb" name="a66d298970031a709ee5bad045a8356fb"></a>
@@ -792,8 +836,11 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>The maximum time, in milliseconds, the display can be set to blink. This value is the maximum to set as the turned-on or the turned-off stage of the blinking process started by a <b><code><a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a></code></b> or a <b><code>blink(const unsigned long, const unsigned long)</code></b> method. <br  />
 </dd></dl>
 <dl class="section attention"><dt>Attention</dt><dd>Opposite to the concept of Hertz, that designates how many times an action happens in a fixed period of time (a second), the value used in the <code><a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a></code> and all related methods is <b>the time set to elapse before the next action happens</b>. <br  />
- </dd></dl>
-
+</dd></dl>
+<p>Use example: <br  />
+</p>
+<div class="fragment"><div class="line"><span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> myDispMaxBlnkRt = myLedDisp.getMaxBlinkRate();</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="a9bc655b23f3edd12f2b127441e4e1310" name="a9bc655b23f3edd12f2b127441e4e1310"></a>
@@ -821,8 +868,11 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>The minimum time, in milliseconds, the display can be set to blink. This value is the minimum to set as the turned-on or the turned-off stage of the blinking process started by a <b><code>.<a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a></code></b> or a <b><code>blink(const unsigned long, const unsigned long)</code></b> method. <br  />
 </dd></dl>
 <dl class="section attention"><dt>Attention</dt><dd>Opposite to the concept of Hertz, that designates how many times an action happens in a fixed period of time (a second), the value used in the <code><a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a></code> and all related methods is <b>the time set to elapse before the next action happens</b>. <br  />
- </dd></dl>
-
+</dd></dl>
+<p>Use example: <br  />
+</p>
+<div class="fragment"><div class="line"><span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> myDispMinBlnkRt = myLedDisp.getMinBlinkRate();</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="a8f52f000dcfe6c75be15f94b21556cb4" name="a8f52f000dcfe6c75be15f94b21556cb4"></a>
@@ -846,11 +896,14 @@ Here is the caller graph for this function:</div>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">true</td><td>The display buffer is filled with _space values </td></tr>
-    <tr><td class="paramname">false</td><td>At least one memory element of the buffer is filled with a value that is not a _space </td></tr>
+    <tr><td class="paramname">false</td><td>At least one memory element of the buffer is filled with a value that is not a _space</td></tr>
   </table>
   </dd>
 </dl>
-
+<p>Use example: <br  />
+ </p><div class="fragment"><div class="line"><span class="keywordflow">if</span>(!myDisplay.isBlank())</div>
+<div class="line">   myDisplay.clear();</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="a60fbaa5167e7f5de53b48855a67f5c17" name="a60fbaa5167e7f5de53b48855a67f5c17"></a>
@@ -873,12 +926,15 @@ Here is the caller graph for this function:</div>
   <table class="retval">
     <tr><td class="paramname">true</td><td>The display is set to blink. <br  />
  </td></tr>
-    <tr><td class="paramname">false</td><td>The display is set not to blink. <br  />
- </td></tr>
+    <tr><td class="paramname">false</td><td>The display is set not to blink.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p>Use example: <br  />
+</p>
+<div class="fragment"><div class="line"><span class="keywordflow">if</span>(myDisplay.isBlinking)</div>
+<div class="line">   myDisplay.noBlink();</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="a718219a5716845dfa413f62218c575a7" name="a718219a5716845dfa413f62218c575a7"></a>
@@ -902,8 +958,12 @@ Here is the caller graph for this function:</div>
  </dd>
 <dd>
 false If the display is not set to <b>Waiting mode</b>. <br  />
- </dd></dl>
-
+</dd></dl>
+<p>Use example: <br  />
+</p>
+<div class="fragment"><div class="line"><span class="keywordflow">if</span>(myDisplay.isWaiting)</div>
+<div class="line">   myDisplay.noWait();</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="a9f790df925c994efb27f0ce1c39014dd" name="a9f790df925c994efb27f0ce1c39014dd"></a>
@@ -929,11 +989,14 @@ false If the display is not set to <b>Waiting mode</b>. <br  />
     <tr><td class="paramname">true</td><td>If the display was set to blink, the blinking is stopped. <br  />
  </td></tr>
     <tr><td class="paramname">false</td><td>If the display was not set to blink, no changes will be done. <br  />
- </td></tr>
+</td></tr>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
+<p>Code example: <br  />
+</p>
+<div class="fragment"><div class="line">myLedDisp.noBlink();</div>
+</div><!-- fragment --> <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_a9f790df925c994efb27f0ce1c39014dd_icgraph.png" border="0" usemap="#aclass_seven_seg_displays_a9f790df925c994efb27f0ce1c39014dd_icgraph" alt=""/></div>
@@ -989,11 +1052,13 @@ Here is the caller graph for this function:</div>
     <tr><td class="paramname">true</td><td>If the display was set to wait, the <b>Waiting mode</b> is stopped. <br  />
  </td></tr>
     <tr><td class="paramname">false</td><td>If the display was not set to wait, no changes will be done. <br  />
- </td></tr>
+</td></tr>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
+<p>Code example: <br  />
+ </p><div class="fragment"><div class="line">myLedDisp.noWait();</div>
+</div><!-- fragment --> <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_a2e6d2565f90dc6acf546934dde557471_icgraph.png" border="0" usemap="#aclass_seven_seg_displays_a2e6d2565f90dc6acf546934dde557471_icgraph" alt=""/></div>
@@ -1068,11 +1133,20 @@ Here is the caller graph for this function:</div>
     <tr><td class="paramname">true</td><td>The value could be represented. <br  />
  </td></tr>
     <tr><td class="paramname">false</td><td>The value couldn't be represented. The display is blanked. <br  />
- </td></tr>
+</td></tr>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
+<p>Code example (on a 4-bits display): <br  />
+</p>
+<div class="fragment"><div class="line">myLedDisp.print(1.2, 2);   <span class="comment">//Displays &#39;1.20 &#39;  </span></div>
+<div class="line">myLedDisp.print(1.2, 2, <span class="keyword">true</span>);   <span class="comment">//Displays &#39; 1.20&#39;  </span></div>
+<div class="line">myLedDisp.print(12, 2, <span class="keyword">true</span>, <span class="keyword">true</span>); <span class="comment">//Displays &#39;01.20&#39;    </span></div>
+<div class="line">myLedDisp.print(-1.2, 2);  <span class="comment">//Displays &#39;-1.20&#39;  </span></div>
+<div class="line">myLedDisp.print(-1.28, 1, <span class="keyword">true</span>); <span class="comment">//Displays &#39;- 1.2&#39;  </span></div>
+<div class="line">myLedDisp.print(-1.28, 1, <span class="keyword">true</span>, <span class="keyword">true</span>); <span class="comment">//Displays &#39;-01.2&#39;    </span></div>
+<div class="line">myLedDisp.print(-1.28, 3, <span class="keyword">true</span>, <span class="keyword">true</span>); <span class="comment">//Error</span></div>
+</div><!-- fragment --> <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_a57d180fb4339fe2359cc864660a765ac_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_a57d180fb4339fe2359cc864660a765ac_cgraph" alt=""/></div>
@@ -1134,8 +1208,15 @@ Here is the call graph for this function:</div>
  </dd>
 <dd>
 false If the value couldn't be represented as it was out of the valid range. The display will be blanked. <br  />
- </dd></dl>
-<div class="dynheader">
+</dd></dl>
+<p>Code example</p>
+<div class="fragment"><div class="line">myLedDisp.print(12);  <span class="comment">//Displays &#39;12  &#39; on a 4 digits display  </span></div>
+<div class="line">myLedDisp.print(12, <span class="keyword">true</span>); <span class="comment">//Displays &#39;  12&#39; on a 4 digits display  </span></div>
+<div class="line">myLedDisp.print(12, <span class="keyword">true</span>, <span class="keyword">true</span>); <span class="comment">//Displays &#39;0012&#39; on a 4 digits display  </span></div>
+<div class="line">myLedDisp.print(-12);   <span class="comment">//Displays &#39;-12     &#39; on a 8 digits display  </span></div>
+<div class="line">myLedDisp.print(-12, <span class="keyword">true</span>);   <span class="comment">//Displays &#39;-   12&#39; on a 6 digits display  </span></div>
+<div class="line">myLedDisp.print(-12, <span class="keyword">true</span>, <span class="keyword">true</span>);   <span class="comment">//Displays &#39;-012&#39; on a 4 digits display    </span></div>
+</div><!-- fragment --> <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_a4858a1c2efaf8a7d0e67297948937d7c_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_a4858a1c2efaf8a7d0e67297948937d7c_cgraph" alt=""/></div>
@@ -1193,8 +1274,15 @@ Here is the call graph for this function:</div>
 <dl class="section note"><dt>Note</dt><dd>There are other 3 characters that can be represented in the display, but the conversion from a character to use while programming is "host language setting dependant", so those where assigned to available ASCII non displayable characters of easy access in any keyboard layout in most languages, they can be used as part of the text string to display, and they are: <br  />
  **=** Builds a character formed by lighting the lower 2 horizontal segments (the d and g segments) of the digit display, can be described as a "lower equal" symbol. <br  />
  **~** Builds a character formed by lighting the 3 horizontal segments (the a, d and g segments) of the digit display, can be described as an "equivalent" symbol. <br  />
- <b>'*'</b> (asterisk) Builds a character by lighting the upper 4 segments (the a, b, f and g segments), forming a little square, can be described as the "degrees" symbol or º. </dd></dl>
-<div class="dynheader">
+ <b>'*'</b> (asterisk) Builds a character by lighting the upper 4 segments (the a, b, f and g segments), forming a little square, can be described as the "degrees" symbol or º.</dd></dl>
+<p>Code example: <br  />
+</p>
+<div class="fragment"><div class="line">myLedDisp.print(<span class="stringliteral">&quot;Hi&quot;</span>);  <span class="comment">// Valid for 2 or more digits displays  </span></div>
+<div class="line">myLedDisp.print(<span class="stringliteral">&quot;Strt&quot;</span>);   <span class="comment">// Valid for 4 or more digits displays  </span></div>
+<div class="line">myLedDisp.print(<span class="stringliteral">&quot;L.A.X.&quot;</span>); <span class="comment">// Error, as &#39;X&#39; is a not displayable character  </span></div>
+<div class="line">myLedDisp.print(<span class="stringliteral">&quot;36.70*&quot;</span>); <span class="comment">// Valid for 5 or more digits displays  </span></div>
+<div class="line">myLedDisp.print(<span class="stringliteral">&quot;........&quot;</span>);  <span class="comment">// Valid for 8 digits displays  </span></div>
+</div><!-- fragment --> <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_ad9d15e373d8a27061ca32e5112379730_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_ad9d15e373d8a27061ca32e5112379730_cgraph" alt=""/></div>
@@ -1247,8 +1335,10 @@ Here is the caller graph for this function:</div>
 <p>Resets the blinking mask. <br  />
  </p>
 <p>The blinking mask configures which digits of the display will be affected by the <b><code>.<a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a></code></b> method. This method resets the mask so that <b>all</b> the digits will be affected when blinking is active. <br  />
- </p>
-
+</p>
+<p>Code example</p>
+<div class="fragment"><div class="line">myLedDisp.resetBlinkMask();  </div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="adbf4a53a706c00d9a237991e234a9353" name="adbf4a53a706c00d9a237991e234a9353"></a>
@@ -1273,11 +1363,24 @@ Here is the caller graph for this function:</div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">newBlnkMsk</td><td>Array of booleans of length <b>dspDigits</b>, indexes are positional referenced to the display, indicating each one which digits must blink after a <b><code><a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a></code></b> method is invoked (true) or stay steady (false). The indexes valid range is 0 &lt;= index &lt;= (dspDigits-1), corresponding the [0] position withe the rightmost display port, the [1] position the second from the right and so on. <br  />
- </td></tr>
+</td></tr>
   </table>
   </dd>
 </dl>
-
+<p>Code example <br  />
+</p>
+<div class="fragment"><div class="line"><span class="keywordtype">bool</span> tstMask[4]{<span class="keyword">true</span>, <span class="keyword">true</span>, <span class="keyword">true</span>, <span class="keyword">true</span>};  </div>
+<div class="line">testResult = myLedDisp.blink();  <span class="comment">//Sets all the  digits to blink in a 4 digits display  </span></div>
+<div class="line">tstMask[0] = <span class="keyword">true</span>;  </div>
+<div class="line">tstMask[1] = <span class="keyword">false</span>;  </div>
+<div class="line">tstMask[2] = <span class="keyword">false</span>;  </div>
+<div class="line">tstMask[3] = <span class="keyword">false</span>;  </div>
+<div class="line">myLedDisp.setBlinkMask(tstMask); <span class="comment">//Sets only the rightmost digit to blink in a 4 digits display  </span></div>
+<div class="line">tstMask[0] = <span class="keyword">false</span>;  </div>
+<div class="line">tstMask[1] = <span class="keyword">true</span>;  </div>
+<div class="line">tstMask[2] = <span class="keyword">true</span>;  </div>
+<div class="line">myLedDisp.setBlinkMask(tstMask); <span class="comment">//Sets the two central digits to blink in a 4 digits display</span></div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="a5156b178ce490d7b5e1207aa3baa85dc" name="a5156b178ce490d7b5e1207aa3baa85dc"></a>
@@ -1316,8 +1419,13 @@ Here is the caller graph for this function:</div>
  </dd>
 <dd>
 false One or more of the parameters passed were out of range. The rate change would not be made for none of the parameters. <br  />
- </dd></dl>
-<div class="dynheader">
+</dd></dl>
+<p>Code example</p>
+<div class="fragment"><div class="line">myLedDisp.setBlinkRate(400);  <span class="comment">//Returns true and sets the blinking rate to 400 millisecs on, 400 millisecs off (symmetrical blink).  </span></div>
+<div class="line">myLedDisp.setBlinkRate(800, 200);   <span class="comment">//Returns true and sets the blinking rate to 800 millisecs on, 200 millisecs off (asymmetrical blink)  </span></div>
+<div class="line">myLedDisp.setBlinkRate(3000); <span class="comment">//Returns false and the display blinking rate stays without change.  </span></div>
+<div class="line">myLedDisp.setBlinkRate(600, 3500);  <span class="comment">//Returns false and the display blinking rate stays without change.  </span></div>
+</div><!-- fragment --> <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_a5156b178ce490d7b5e1207aa3baa85dc_icgraph.png" border="0" usemap="#aclass_seven_seg_displays_a5156b178ce490d7b5e1207aa3baa85dc_icgraph" alt=""/></div>
@@ -1360,8 +1468,12 @@ Here is the caller graph for this function:</div>
  </dd>
 <dd>
 false The parameter passed was invalid, i.e. it was a non displayable character, the character change will not be made. <br  />
- </dd></dl>
-
+</dd></dl>
+<p>Code example <br  />
+</p>
+<div class="fragment"><div class="line">myLedDisp.setWaitRate(<span class="charliteral">&#39;_&#39;</span>);   <span class="comment">// Returns true and sets the wait character to &#39;_&#39;.  </span></div>
+<div class="line">myLedDisp.setWaitRate(<span class="charliteral">&#39;#&#39;</span>);   <span class="comment">// Error, returns false and the display wait character stays without change.  </span></div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="acd0f00d24dbbaadec3fb06ffb991914c" name="acd0f00d24dbbaadec3fb06ffb991914c"></a>
@@ -1394,11 +1506,15 @@ false The parameter passed was invalid, i.e. it was a non displayable character,
   <table class="retval">
     <tr><td class="paramname">true</td><td>The parameter passed is within the valid range, the change takes effect. </td></tr>
     <tr><td class="paramname">false</td><td>The parameter passed was out of range, the rate change will not be made. <br  />
- </td></tr>
+</td></tr>
   </table>
   </dd>
 </dl>
-
+<p>Code example <br  />
+</p>
+<div class="fragment"><div class="line">myLedDisp.setWaitRate(400);   <span class="comment">//Returns true and sets the advancement rate to 400 millisecs.  </span></div>
+<div class="line">myLedDisp.setWaitRate(myLedDisp.getMinBlinkRate() - 10); <span class="comment">//Returns false and the display wait rate stays without change.  </span></div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="ae00a0275a3fa0c1858e475d3e2f1272d" name="ae00a0275a3fa0c1858e475d3e2f1272d"></a>
@@ -1424,8 +1540,15 @@ false The parameter passed was invalid, i.e. it was a non displayable character,
  </dd>
 <dd>
 false The display was already set to wait, and/or the parameter passed was out of range.</dd></dl>
-<dl class="section attention"><dt>Attention</dt><dd>The <b>Waiting state</b> is considereda transitory state (or situation), as in most systems a "progression bar" is used it's main target is to show the system is not stalled or crashed, it's just waiting for a process to end. As a transitory state, the value displayed before entering the "Waiting state" will be saved, and will be restored automaticaly when the "Waiting state" is ended by the use of the <code><a class="el" href="#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on.">noWait()</a></code> method. </dd></dl>
-<div class="dynheader">
+<dl class="section attention"><dt>Attention</dt><dd>The <b>Waiting state</b> is considereda transitory state (or situation), as in most systems a "progression bar" is used it's main target is to show the system is not stalled or crashed, it's just waiting for a process to end. As a transitory state, the value displayed before entering the "Waiting state" will be saved, and will be restored automaticaly when the "Waiting state" is ended by the use of the <code><a class="el" href="#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on.">noWait()</a></code> method. <br  />
+</dd></dl>
+<p>Code example <br  />
+</p>
+<div class="fragment"><div class="line">myLedDisp.wait(); <span class="comment">//Returns true and shows advancement animation to the already set value.  </span></div>
+<div class="line">myLedDisp.wait(800); <span class="comment">//Returns true and sets the advancement animation rate to 800 millisecs.  </span></div>
+<div class="line">myLedDisp.wait(<a class="code hl_function" href="#a66d298970031a709ee5bad045a8356fb">getMaxBlinkRate</a>() + 10);   <span class="comment">//Returns false and the display stays without change.  </span></div>
+<div class="ttc" id="aclass_seven_seg_displays_html_a66d298970031a709ee5bad045a8356fb"><div class="ttname"><a href="#a66d298970031a709ee5bad045a8356fb">SevenSegDisplays::getMaxBlinkRate</a></div><div class="ttdeci">unsigned long getMaxBlinkRate()</div><div class="ttdoc">Returns the maximum rate the display can be configured to blink at.</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.cpp:302</div></div>
+</div><!-- fragment --> <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_ae00a0275a3fa0c1858e475d3e2f1272d_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_ae00a0275a3fa0c1858e475d3e2f1272d_cgraph" alt=""/></div>
@@ -1527,11 +1650,14 @@ Here is the call graph for this function:</div>
     <tr><td class="paramname">true</td><td><b>character</b> is a displayable one char string, and <b>port</b> value is in the range 0 &lt;= value &lt;= (dspDigits - 1). <br  />
  </td></tr>
     <tr><td class="paramname">false</td><td><b>character</b> was not "displayable" or the <b>port</b> value was out of range. <br  />
- </td></tr>
+</td></tr>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
+<p>Use example</p>
+<div class="fragment"><div class="line">myLedDisp.write(<span class="stringliteral">&quot;A&quot;</span>, 1);   <span class="comment">// Modifies the displayed data, placing a &#39;A&#39; in the second digit from right to left, returns true  </span></div>
+<div class="line">myLedDisp.write(<span class="stringliteral">&quot;X&quot;</span>, 1);   <span class="comment">// Fails as &quot;X&quot; is not a displayable character, returns false.  </span></div>
+</div><!-- fragment --> <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_ac1b3ec1b047588cf8743bef6bf6bd565_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_ac1b3ec1b047588cf8743bef6bf6bd565_cgraph" alt=""/></div>
@@ -1579,11 +1705,14 @@ Here is the call graph for this function:</div>
     <tr><td class="paramname">true</td><td>The parameters are within the acceptable range, in this case 0 &lt;= port &lt;= (dspDigits - 1). <br  />
  </td></tr>
     <tr><td class="paramname">false</td><td>The port value was outside the acceptable range. <br  />
- </td></tr>
+</td></tr>
   </table>
   </dd>
 </dl>
-<div class="dynheader">
+<p>Code example</p>
+<div class="fragment"><div class="line">myLedDisp.write(0xA4, 1);  <span class="comment">// Modifies the displayed data, placing a &#39;2&#39; in the second digit from right to left in a common anode display.</span></div>
+<div class="line">myLedDisp.write(0xB9, 0);  <span class="comment">// Modifies the displayed data, placing a non ASCII identifiable shape, with the central horizontal (g segment) and the two vertical rightside segments (b &amp; c) lit, in the first digit from right to left in a common anode display.</span></div>
+</div><!-- fragment --> <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_ab1c77aee430974cc460d259e600668ba_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_ab1c77aee430974cc460d259e600668ba_cgraph" alt=""/></div>

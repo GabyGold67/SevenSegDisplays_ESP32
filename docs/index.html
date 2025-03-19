@@ -119,7 +119,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <li>Adding a redirection level for the different hardware implementations, as different displays wire each individual digit to a different shift register pins, mixing the output display. <br  />
 </li>
 </ul>
-<h1>But the main objetive remain the same:</h1>
+<h1>But the main objetives remain the same:</h1>
 <h2>Ease of use:</h2>
 <ul>
 <li>Instance the class passing as little parameters as required: connection pins, display digits quantity, type of seven segment display connection (common anode, common cathode) <br  />
@@ -149,107 +149,101 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 </ul>
 <p>The first mechanism frees the user from the load of calling the refreshing methods periodically, specially considering that long looping times (when executing <b><code>for</code></b>, <b><code>while</code></b> and <b><code>do</code></b> loops included), or the use of <b><code>delay()</code></b> type of commands could make the display flicker or simply stop until next refresh. The second option is given for the develpment of special display schemes. In any case the library is capable of working in any platform, using one way when possible, or the other always. <br  />
 </p>
-<h1><b>Included Methods for SevenSeg74HC595 class</b></h1>
+<h1><b>Included Methods for <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> class</b></h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Method   </th><th class="markdownTableHeadNone">Parameters    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">**_HC595_**   </td><td class="markdownTableBodyNone">uint8_t <b>sclk</b>, uint8_t <b>rclk</b>, uint8_t <b>dio</b>(, bool <b>commAnode</b>(, uint8_t <b>dspDigits</b>))    </td></tr>
+<td class="markdownTableBodyNone">**_SevenSegDisplays_**   </td><td class="markdownTableBodyNone">SevenSegDispHw* <b>dspUndrlHwPtr</b>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>begin()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
-<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>blink()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">unsigned long <b>onRate</b> (,unsigned long <b>offRate</b>)    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>clear()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>doubleGauge()</b>   </td><td class="markdownTableBodyNone">int <b>levelLeft</b>, int <b>levelRight</b> (, char <b>labeLeft</b>(, char <b>labelRight</b>))    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>fastRefresh()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>fastSend()</b>   </td><td class="markdownTableBodyNone">uint8_t <b>segments</b>, uint8_t <b>port</b>    </td></tr>
-<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>gauge()</b>   </td><td class="markdownTableBodyNone">int <b>level</b> (, char <b>label</b>)    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">double <b>level</b> (, char <b>label</b>)    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>getDigitsQty()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>getDspValMax()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>getDspValMin()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>getInstanceNbr()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>getMaxBlinkRate()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>getMinBlinkRate()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>isBlinking()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>isWaiting()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>noBlink()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>noWait()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>print()</b>   </td><td class="markdownTableBodyNone">String <b>text</b>    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">int <b>value</b> (, bool <b>rgtAlgn</b> (, bool <b>zeroPad</b>))    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">double <b>value</b> (, unsigned int <b>decPlaces</b> (, bool <b>rgtAlgn</b> (, bool <b>zeroPad</b>)))    </td></tr>
+<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">int <b>value</b> (, bool <b>rgtAlgn</b> (, bool <b>zeroPad</b>))    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>refresh()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">double <b>value</b> (, unsigned int <b>decPlaces</b> (, bool <b>rgtAlgn</b> (, bool <b>zeroPad</b>)))    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>resetBlinkMask()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>send()</b>   </td><td class="markdownTableBodyNone">uint8_t <b>segments</b>, uint8_t <b>port</b>    </td></tr>
-<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>setBlinkMask()</b>   </td><td class="markdownTableBodyNone">bool <b>blnkPort[]</b>    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>setBlinkRate()</b>   </td><td class="markdownTableBodyNone">unsigned long <b>newOnRate</b>, (unsigned long <b>newOffRate</b>)    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>setDigitsOrder()</b>   </td><td class="markdownTableBodyNone">uint8_t* <b>newOrder</b>, uint8_t <b>newOrderSize</b>    </td></tr>
+<td class="markdownTableBodyNone"><b>setBlinkRate()</b>   </td><td class="markdownTableBodyNone">unsigned long <b>newOnRate</b>, (unsigned long <b>newOffRate</b>)    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>setWaitChar()</b>   </td><td class="markdownTableBodyNone">char <b>newWaitChar</b>    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>setWaitRate()</b>   </td><td class="markdownTableBodyNone">unsigned long <b>newWaitRate</b>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>stop()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
-<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>wait()</b>   </td><td class="markdownTableBodyNone">(unsigned long <b>waitRate</b>)    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>write()</b>   </td><td class="markdownTableBodyNone">uint8_t <b>segments</b>, uint8_t <b>port</b>    </td></tr>
 <tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>write()</b>   </td><td class="markdownTableBodyNone">uint8_t <b>segments</b>, uint8_t <b>port</b>    </td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">String <b>character</b>, uint8_t <b>port</b>   </td></tr>
 </table>
 <hr  />
- <h2>## <b>Methods definition and use description</b> </h2>
-<h3><b>begin</b>();</h3>
-<h3>Description:</h3>
-<p>Attaches the display to the O.S. software timer service, which takes care of refreshing the display regularly. An unlimited amount of displays might be attached to the timer theoretically, as long as there's enough resources available for them, but in practice the refreshing work takes time, and the time taken is proportional to the quantity of displays attached. And as Timers consume time for other tasks done by the microcontroller, the time taken by the timers must be kept to minimal or the stability of the whole system will be compromised. As the time available to execute the refreshing time without risking the stability of the system depends on various factors, the number of supported displays has to be tested in each development environment at development time. To keep a safe limit, up to ten displays (including all classes defined in this library) can be attached to the timer service. If the stability of the system is compromised then the displays exceeding the number of tolerated units will have to be refreshed by periodically using the <b><code>refresh()</code></b> method. The maximum number of 10 might be modified in code. <br  />
- </p><h3>Parameters:</h3>
-<p>None </p><h3>Return value:</h3>
-<p>true: If the display could be attached to the software timer service, or if the display was already attached to it. This not ensures system stability. <br  />
- false: If the display couldn't be attached to the software timer service, due to lack of free slots. <br  />
- </p><h3>Use example:</h3>
-<p><b><code>myLedDisp.begin();</code></b> <br  />
-</p>
+<h1><b>Included Methods for <a class="el" href="class_seven_seg_dynamic.html" title="Abstract class models a generic dynamically updated Seven Segment display hardware.">SevenSegDynamic</a> class</b></h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Method   </th><th class="markdownTableHeadNone">Parameters    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">**_SevenSegDynamic_**   </td><td class="markdownTableBodyNone">uint8_t* <b>ioPins</b>, uint8_t <b>dspDigits</b>, bool <b>commAnode</b>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>begin()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>fastRefresh()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>fastSend()</b>   </td><td class="markdownTableBodyNone">uint8_t <b>segments</b>, uint8_t <b>port</b>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>refresh()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>send()</b>   </td><td class="markdownTableBodyNone">uint8_t <b>segments</b>, uint8_t <b>port</b>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>setDigitsOrder()</b>   </td><td class="markdownTableBodyNone">uint8_t* <b>newOrder</b>, uint8_t <b>newOrderSize</b>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>stop()</b>   </td><td class="markdownTableBodyNone">None   </td></tr>
+</table>
 <hr  />
-<h3><b>clear</b>();</h3>
-<h3>Use example:</h3>
+<h1><b>Included Methods for <a class="el" href="class_seven_seg_dyn_h_c595.html" title="Models seven segmentd displays driven by two 74HC595 shift registers.">SevenSegDynHC595</a> class</b></h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Method   </th><th class="markdownTableHeadNone">Parameters    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">**_SevenSegDynHC595_**   </td><td class="markdownTableBodyNone">uint8_t* <b>ioPins</b>, uint8_t <b>dspDigits</b>, bool <b>commAnode</b>   </td></tr>
+</table>
 <hr  />
+<h2><b>Methods definition and use description</b></h2>
 <hr  />
- <h3><b>doubleGauge</b>(int <b>levelLeft</b>,int <b>levelRight</b>(, char <b>labelLeft</b>(, char <b>labelRight</b>)));</h3>
-<h3>Use example:</h3>
-<p><b><code>myLedDisp.gauge(3, 2);</code></b> <br  />
- <b>&lsquo;myLedDisp.**gauge(2, 1, 'b&rsquo;, 't');`</b> <br  />
- <b>&lsquo;myLedDisp.**gauge(1, 3, 'F&rsquo;);`</b> <b>&lsquo;myLedDisp.**gauge(4, 2,'d&rsquo;, 'b');`</b> //Error: 4 is outside the accepted values range <br  />
- <b>&lsquo;myLedDisp.**gauge(3, 0, 'X&rsquo;);`</b> //Error: 'X' is not a "displayable" character <br  />
-</p>
-<hr  />
- <h3><b>refresh</b>();</h3>
+<h3><b>refresh</b>();</h3>
 <h3>Description:</h3>
 <p>Refreshes the display, <b>only one digit per call</b>, the method takes care of registering which digit was redrawn last and move to the next until the last is reached and then restart from the first, and uses direct pin handling instead of using pre-built <code>shiftOut()</code> kind of methods. This working criteria has two consequences:</p><ul>
 <li>The method works faster than redrawing all the digits each time and using the call to <code>shiftOut()</code> methods, so it is less time consuming and so is the most appropriate to be used within an , or software timer.</li>
@@ -259,7 +253,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 </ul>
 <p><b><code>myLedDisp.fastRefresh();</code></b></p>
 <hr  />
- <h3><b>send</b>(uint8_t <b>segments</b>, uint8_t <b>port</b>);</h3>
+<h3><b>send</b>(uint8_t <b>segments</b>, uint8_t <b>port</b>);</h3>
 <h3>Description:</h3>
 <p>Sends one character to the display, using direct pin handling instead of using pre-built <code>shiftOut()</code> kind of methods. The parameters indicate which character and to which digit will be sent. This is the method used by fastRefresh() to send the digit when it has to be refreshed. **_Keep in mind_** that sending a character directly to the display has no connection to keep it displayed as it must be resent periodically to keep the cinematic effect. Also the refresh() and fastRefresh() methods will overwrite the character sent, explicitly called or by the ISR service if started by the <b><code>begin()</code></b> method. If the display is being kept by the provided timer (after a <code>.begin()</code>), the characters sent by this methods will be overwritten in the next ISR callback. <br  />
  </p><h3>Parameters:</h3>
@@ -269,96 +263,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
  </p><h3>Use example:</h3>
 <p><b><code>myLedDisp.fastSend(0x88, 1);</code></b> // Sends a capital A to the second digit from right to left.</p>
 <hr  />
- <h3><b>gauge</b>(int <b>level</b>(, char <b>label</b>));</h3>
-<h3>Use example:</h3>
-<p><b><code>myLedDisp.gauge(3);</code></b> <br  />
- <b>&lsquo;myLedDisp.**gauge(2, 'b&rsquo;);`</b> <br  />
- <b>&lsquo;myLedDisp.**gauge(1, 'F&rsquo;);`</b> <b>&lsquo;myLedDisp.**gauge(4, 'd&rsquo;);`</b> //Error <br  />
- <b>&lsquo;myLedDisp.**gauge(3, 'X&rsquo;);`</b> //Error <br  />
- <b>&lsquo;myLedDisp.**gauge(4, 2,'d&rsquo;, 'b');`</b> //Error: 4 is outside the accepted values range <br  />
- <b>&lsquo;myLedDisp.**gauge(3, 0, 'X&rsquo;);`</b> //Error: 'X' is not a "displayable" character <br  />
-</p>
-<hr  />
- <h3><b>gauge</b>(double <b>level</b>(, char <b>label</b>));</h3>
-<h3>Use example:</h3>
-<p><b><code>myLedDisp.gauge(0.0);</code></b> <br  />
- <b><code>myLedDisp.gauge(0.4);</code></b> <br  />
- <b>&lsquo;myLedDisp.gauge(0.55, 'b&rsquo;);`</b> <br  />
- <b>&lsquo;myLedDisp.gauge(1.0, 'F&rsquo;);`</b> <br  />
- <b>&lsquo;myLedDisp.gauge(1.5, 'd&rsquo;);`</b> //Error: 4 is outside the accepted values range <br  />
- <b>&lsquo;myLedDisp.gauge(3.0, 'X&rsquo;);`</b> //Error: 'X' is not a "displayable" character <br  />
-</p>
-<hr  />
- <h3><b>getDigitsQty</b>();</h3>
-<h3>Use example:</h3>
-<p><b><code>uint8_t portsQty = myLedDisp.getDigistsQty();</code></b></p>
-<hr  />
- <h3><b>getDspValMax</b>();</h3>
-<h3>Use example:</h3>
-<p><b><code>long maxLimit = myLedDisp.getDspMax();</code></b></p>
-<hr  />
- <h3><b>getDspValMin</b>();</h3>
-<h3>Use example:</h3>
-<p><b><code>long minLimit = myLedDisp.getDspMin();</code></b></p>
-<hr  />
- <h3><b>getInstanceNbr</b>();</h3>
-<h3>Use example:</h3>
-<p><b><code>uint8_t dspNmbr = myLedDisp.getInstanceNbr();</code></b></p>
-<hr  />
- <h3><b>getMaxBlinkRate</b>();</h3>
-<h3>Use example:</h3>
-<p><b><code>myLedDisp.getMaxBlinkRate();</code></b></p>
-<hr  />
- <h3><b>getMinBlinkRate</b>();</h3>
-<h3>Use example:</h3>
-<p><b><code>myLedDisp.getMinBlinkRate();</code></b></p>
-<hr  />
- <h3><b>isBlinking</b>();</h3>
-<h3>Use example:</h3>
-<p><b><code>myLedDisp.isBlinking();</code></b></p>
-<hr  />
- <h3><b>isWaiting</b>();</h3>
-<h3>Use example:</h3>
-<p><b><code>myLedDisp.isWaiting();</code></b></p>
-<hr  />
- <h3><b>noBlink</b>();</h3>
-<h3>Use example:</h3>
-<p><b><code>myLedDisp.noBlink();</code></b></p>
-<hr  />
- <h3><b>noWait</b>();</h3>
-<h3>Use example:</h3>
-<p><b><code>myLedDisp.noWait();</code></b></p>
-<hr  />
- <h3><b>print</b>(String <b>text</b>);</h3>
-<h3>Use example:</h3>
-<p><b><code>myLedDisp.print("Hi");</code></b> //Valid for 2 or more digits displays <br  />
- <b><code>myLedDisp.print("Strt");</code></b> //Valid for 4 or more digits displays <br  />
- <b><code>myLedDisp.print("L.O.L.");</code></b> //Valid for 3 or more digits displays <br  />
- <b><code>myLedDisp.print("36.70*");</code></b> //Valid for 5 or more digits displays <br  />
- <b><code>myLedDisp.print("........");</code></b> //Valid for 8 digits displays</p>
-<hr  />
- <h3><b>print</b>(int <b>value</b>(, bool <b>rgtAlgn</b>(, bool <b>zeroPad</b>)));</h3>
-<h3>Use example:</h3>
-<p><b><code>myLedDisp.print(12);</code></b> //Displays '<b><code>12</code></b>' on a 4 digits display <br  />
- <b><code>myLedDisp.print(12, true);</code></b> //Displays '<b><code>12</code></b>' on a 4 digits display <br  />
- <b><code>myLedDisp.print(12, true, true);</code></b> //Displays '<b><code>0012</code></b>' on a 4 digits display <br  />
- <b><code>myLedDisp.print(-12);</code></b> //Displays '<b><code>-12</code></b>' on a 8 digits display <br  />
- <b><code>myLedDisp.print(-12, true);</code></b> //Displays '<b><code>- 12</code></b>' on a 6 digits display <br  />
- <b><code>myLedDisp.print(-12, true, true);</code></b> //Displays '<b><code>-012</code></b>' on a 4 digits display <br  />
-</p>
-<hr  />
- <h3><b>print</b>(double <b>value</b>, unsigned int <b>decPlaces</b>(, bool <b>rgtAlgn</b>(, bool <b>zeroPad</b>)));</h3>
-<h3>Description:</h3>
-<h3>Use example (on a 4-bits display):</h3>
-<p><b><code>myLedDisp.print(1.2, 2);</code></b> //Displays '<b><code>1.20</code></b>' <br  />
- <b><code>myLedDisp.print(1.2, 2, true);</code></b> //Displays '<b><code>1.20</code></b>' <br  />
- <b><code>myLedDisp.print(12, 2, true, true);</code></b> //Displays '<b><code>01.20</code></b>' <br  />
- <b><code>myLedDisp.print(-1.2, 2);</code></b> //Displays '<b><code>-1.20</code></b>' <br  />
- <b><code>myLedDisp.print(-1.28, 1, true);</code></b> //Displays '<b><code>- 1.2</code></b>' <br  />
- <b><code>myLedDisp.print(-1.28, 1, true, true);</code></b> //Displays '<b><code>-01.2</code></b>' <br  />
- <b><code>myLedDisp.print(-1.28, 3, true, true);</code></b> //Error</p>
-<hr  />
- <h3><b>refresh</b>();</h3>
+<h3><b>refresh</b>();</h3>
 <h3>Description:</h3>
 <p>Refreshes the display, <b>all available digits per call</b>, the method takes care of registering which digit was redrawn first and each call starts from the next until the last is reached and then restart from the first, to minimize ghosting and keep all the digits brightness even, and uses pre-built <b><code>shiftOut()</code></b> kind of methods. This working criteria has two consequences:</p><ul>
 <li>The method works slower than the <b><code>fastRefresh()</code></b>, so it will take more time to execute. <br  />
@@ -374,11 +279,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <p><b><code>myLedDisp.refresh();</code></b> <br  />
 </p>
 <hr  />
- <h3><b>resetBlinkMask</b>();</h3>
-<h3>Use example:</h3>
-<p><b><code>myLedDisp.resetBlinkMask();</code></b></p>
-<hr  />
- <h3><b>send</b>(uint8_t <b>segments</b>, uint8_t <b>port</b>);</h3>
+<h3><b>send</b>(uint8_t <b>segments</b>, uint8_t <b>port</b>);</h3>
 <h3>Description:</h3>
 <p>Sends one character to the display, using pre-built <code>shiftOut()</code> kind of methods, which takes unknown time to complete depending on the implementation of the framework used to develop. The parameters indicate which character and to which digit will be sent. This is the method used by refresh() to send the digit when it has to be refreshed. **_Keep in mind_** that sending a character directly to the display has no connection to keep it displayed as it must be resent periodically to keep the cinematic effect. Also the refresh() and fastRefresh() methods will overwrite the character sent, explicitly called or by the Software Timer Service if started by the <b><code>begin()</code></b> method. </p><h3>Parameters:</h3>
 <p><b>segments:</b> An unsigned short integer value representing which segments to turn on and which off to get the graphic representation of a character in the seven segment display, the corresponding value can be looked up in the **_charLeds[]** array definition in the header file of the library. Any other uint8_t (char or unsigned short int are equivalent terms here) value is admissible, but the displayed result might not be easily recognized as a known ASCII character. In the case of a common cathode display the values there listed must be complemented to calculate the value to send. <br  />
@@ -387,29 +288,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
  </p><h3>Use example:</h3>
 <p><b><code>myLedDisp.send(0x91, 2);</code></b> // Sends a Y to the third digit from right to left.</p>
 <hr  />
- <h3><b>setBlinkMask</b>(bool <b>blnkPort[]</b>);</h3>
-<h3>Use example:</h3>
-<p><b><code>bool tstMask[4]{true, true, true, true};</code></b> <br  />
- <b><code>testResult = myLedDisp.blink();</code></b> //Sets all the digits to blink in a 4 digits display <br  />
- <b><code>tstMask[0] = true;</code></b> <br  />
- <b><code>tstMask[1] = false;</code></b> <br  />
- <b><code>tstMask[2] = false;</code></b> <br  />
- <b><code>tstMask[3] = false;</code></b> <br  />
- <b><code>myLedDisp.setBlinkMask(tstMask);</code></b> //Sets only the rightmost digit to blink in a 4 digits display <br  />
- <b><code>tstMask[0] = false;</code></b> <br  />
- <b><code>tstMask[1] = true;</code></b> <br  />
- <b><code>tstMask[2] = true;</code></b> <br  />
- <b><code>myLedDisp.setBlinkMask(tstMask);</code></b> //Sets the two central digits to blink in a 4 digits display</p>
-<hr  />
- <h3><b>setBlinkRate</b>(unsigned long <b>onRate</b>(,unsigned long <b>offRate</b>));</h3>
-<h3>Use example:</h3>
-<p><b><code>myLedDisp.setBlinkRate(400);</code></b> //Returns true and sets the blinking rate to 400 millisecs on, 400 millisecs off (symmetrical blink). <br  />
- <b><code>myLedDisp.setBlinkRate(800, 200);</code></b> //Returns true and sets the blinking rate to 800 millisecs on, 200 millisecs off (asymmetrical blink) <br  />
- <b><code>myLedDisp.setBlinkRate(3000);</code></b> //Returns false and the display blinking rate stays without change. <br  />
- <b><code>myLedDisp.setBlinkRate(600, 3500);</code></b> //Returns false and the display blinking rate stays without change. <br  />
-</p>
-<hr  />
- <h3><b>setDigitsOrder</b>(uint8_t* <b>newOrderPtr</b>);</h3>
+<h3><b>setDigitsOrder</b>(uint8_t* <b>newOrderPtr</b>);</h3>
 <h3>Description:</h3>
 <p>As different 7 segments dynamic displays based on two 74HC595 are differently wired, some implement the leftmost display port as the LSb of the shift register driving the port selection, some implement it as the MSb. When more than one display modules are used it adds a new level of hardware implementation that differs from one supplier to the other. The library implements a mechanism to provide the instantiated object to relate the positions of the display ports to the bits of the selection byte through an array. The array has the size of the display instantiated, and each array elment is meant to hold the number of the bit that selects the corresponding port, being the first element of the array (array[0]) the corresponding to the leftmost display digit, array[1], the next to it's right and so on. The array is default defined in the constructor as (0, 1, 2,...) that is the most usual implementation found. If the order needs to be changed the <code>.setDigitsOrder()</code> method is the way to set a new mapping. </p><h3>Parameters:</h3>
 <p><b>newOrderPtr</b>: pointer to an uint8_t array of **_dspDigits** lenght containing the position of the bit corresponding to each display port. Each value will be checked against the _dspDigits value to ensure that they are all in the range acceptable, 0 &lt;= value &lt;= _dspDigits - 1. If one of the values is out of the valid range no change will be done. Please note that no checking will be done to ensure all of the array values are different. A repeated value will be accepted. <br  />
@@ -421,46 +300,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
  <b><code>myLedDisp.setDigitsOrder(diyMore8Bits);</code></b> //Changes the display bit to port mapping according to the display characteristics. <br  />
 </p>
 <hr  />
- <h3><b>setWaitChar</b>(char <b>newWaitChar</b>);</h3>
-<h3>Use example:</h3>
-<p><b>&lsquo;myLedDisp.setWaitRate(&rsquo;_');`</b> //Returns true and sets the wait character to '_'. <br  />
- <b>&lsquo;myLedDisp.setWaitRate(&rsquo;#');`</b> //Error, returns false and the display wait character stays without change. <br  />
-</p>
-<hr  />
- <h3><b>setWaitRate</b>(unsigned long <b>newWaitRate</b>);</h3>
-<h3>Use example:</h3>
-<p><b><code>myLedDisp.setWaitRate(400);</code></b> //Returns true and sets the advancement rate to 400 millisecs. <br  />
- <b><code>myLedDisp.setWaitRate(getMinBlinkRate() - 10);</code></b> //Returns false and the display wait rate stays without change. <br  />
-</p>
-<hr  />
- <h3><b>stop</b>();</h3>
-<h3>Description:</h3>
-<p>Detaches the display from the Software Timer Service which takes care of refreshing the display regularly (if it was attached to it, if the display wasn't attached to the STS no modification is made). The method then checks the array (list) of active serviced displays, if none is left in that array, the timer service is stopped and deleted, and the array is deleted from the heap to free the allocated resources. This last actions are reversed when a new begin() method is executed in any display. <br  />
- </p><h3>Parameters:</h3>
-<p><b>None</b> <br  />
- </p><h3>Return value:</h3>
-<p>true: The instance of the display was found and detached from the STS. <br  />
- false: The instance of the display wasn't found attached to the STS, no detach was carried as it wasn't needed. <br  />
- </p><h3>Use example:</h3>
-<p><b><code>myLedDisp.stop();</code></b> <br  />
-</p>
-<hr  />
-<h3><b>wait</b>(unsigned long <b>newWaitRate</b>);</h3>
-<h3>Use example:</h3>
-<p><b><code>myLedDisp.wait();</code></b> //Returns true and shows advancement animation to the already set value. <br  />
- <b><code>myLedDisp.wait(800);</code></b> //Returns true and sets the advancement animation rate to 800 millisecs. <br  />
- <b><code>myLedDisp.wait(getMaxBlinkRate() + 10);</code></b> //Returns false and the display stays without change. <br  />
-</p>
-<hr  />
- <h3><b>write</b>(uint8_t <b>segments</b>, uint8_t <b>port</b>);</h3>
-<h3>Use example:</h3>
-<p><b><code>myLedDisp.write(0xA4, 1);</code></b> // Modifies the displayed data, placing a '2' in the second digit from right to left in a common anode display.</p>
-<hr  />
-<h3><b>write</b>(String <b>character</b>, uint8_t <b>port</b>);</h3>
-<h3>Use example:</h3>
-<p><b><code>myLedDisp.write("J", 1);</code></b> // Modifies the displayed data, placing a 'J' in the second digit from right to left. <br  />
- </p>
-</div></div><!-- PageDoc -->
+ </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
 </div><!-- contents -->
 </div><!-- doc-content -->
