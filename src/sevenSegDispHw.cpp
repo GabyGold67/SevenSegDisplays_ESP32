@@ -125,6 +125,7 @@ bool SevenSegDynamic::begin(){
       _dynDspRfrshTmrHndl = xTimerCreate(
          rfrshTmrName.c_str(),
          pdMS_TO_TICKS((int)(1000/(30 * _dspDigitsQty))),
+         // pdMS_TO_TICKS(100),
          pdTRUE,  //Auto-reload
          NULL,   //TimerID, data to be passed to the callback function
          SevenSegDynamic::tmrCbRfrshDyn  //Callback function
