@@ -1,6 +1,5 @@
 #include "Arduino.h"
 #include "sevenSegDispHw.h"
-
 //----------------------------------------->> Global constants declaration BEGIN
 const uint8_t diyMore8Bits[8] {3, 2, 1, 0, 7, 6, 5, 4};
 const uint8_t noName4Bits[4] {0, 1, 2, 3};
@@ -79,6 +78,11 @@ bool SevenSegDispHw::setDigitsOrder(uint8_t* newOrderPtr){
 
 void SevenSegDispHw::setDspBuffPtr(uint8_t* newDspBuffPtr){
    _dspBuffPtr = newDspBuffPtr;
+
+   return;
+}
+
+void SevenSegDispHw::setNtfyUpdDsply(){
 
    return;
 }
@@ -188,21 +192,21 @@ void SevenSegDynamic::tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg){
 SevenSegDynHC595::SevenSegDynHC595(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
 :SevenSegDynamic(ioPins, dspDigits, commAnode)
 {    
-   Serial.println("\nSevenSegDyHC595 constructor"); //FTPO
-   Serial.println("============================="); //FTPO
+   _sclk = *(ioPins + _sclkIndx);
+   _rclk = *(ioPins + _rclkIndx);
+   _dio = *(ioPins + _dioIndx);
     
-    _sclk = *(ioPins + _sclkIndx);
-    _rclk = *(ioPins + _rclkIndx);
-    _dio = *(ioPins + _dioIndx);
+   //  digitalWrite(_sclk, LOW);
+   //  pinMode(_sclk, OUTPUT);
     
-    digitalWrite(_sclk, LOW);
-    pinMode(_sclk, OUTPUT);
+   //  digitalWrite(_rclk, LOW);
+   //  pinMode(_rclk, OUTPUT);
     
-    digitalWrite(_rclk, LOW);
-    pinMode(_rclk, OUTPUT);
-    
-    digitalWrite(_dio, LOW);
-    pinMode(_dio, OUTPUT);
+   //  digitalWrite(_dio, LOW);
+   //  pinMode(_dio, OUTPUT);
+
+    _drvrShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, 2, nullptr);
+    _drvrShftRegSndPtr = new uint8_t[2];
 
     begin();
 }
@@ -212,6 +216,10 @@ SevenSegDynHC595::~SevenSegDynHC595(){}
 bool SevenSegDynHC595::begin(){
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
+
+   Serial.println("\n"); //FTPO
+   Serial.println("SevenSegDynHC595 .begin()"); //FTPO
+   Serial.println("\n"); //FTPO
 
    _firstRefreshed = 0;
    //Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)
@@ -246,7 +254,12 @@ void SevenSegDynHC595::refresh(){
 
    for (int i {0}; i < _dspDigitsQty; i++){
       tmpDigToSend = *(_dspBuffPtr + ((i + _firstRefreshed) % _dspDigitsQty));
-      send(tmpDigToSend, uint8_t(1) << *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty)));
+      // send(tmpDigToSend, uint8_t(1) << *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty)));
+
+      *(_drvrShftRegSndPtr + 0) = uint8_t(1) << *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty));
+      *(_drvrShftRegSndPtr + 1) = tmpDigToSend;
+      _drvrShftRegPtr->stampOverMain(_drvrShftRegSndPtr);
+
    }
    ++_firstRefreshed;
    if (_firstRefreshed == _dspDigitsQty)
@@ -256,22 +269,11 @@ void SevenSegDynHC595::refresh(){
 }
 
 void SevenSegDynHC595::send(uint8_t content){
-   for (int i {7}; i >= 0; i--){   //Send each of the 8 bits representing the character
-      digitalWrite(_sclk, LOW);
-      digitalWrite(_dio, (content & 0x80)?HIGH:LOW);   // Set the value of the next bit value
-      content <<= 1;
-      delayMicroseconds(10);  // Time required by the 74HCx595 to modify the SH_CP line by datasheet
-      digitalWrite(_sclk, HIGH);
-   }
 
    return;
 }
 
 void SevenSegDynHC595::send(const uint8_t &segments, const uint8_t &port){
-   digitalWrite(_rclk, LOW);
-   send(segments);
-   send(port);
-   digitalWrite(_rclk, HIGH);
 
    return;
 }

@@ -36,6 +36,7 @@
 
 #include "Arduino.h"
 #include <stdint.h>
+#include "ShiftRegGPIOXpander.h"
 
 //============================================================> Class declarations separator
 
@@ -99,6 +100,7 @@ public:
      * @warning Setting the display buffer pointer to an address not coinciding with the one configured in the SevenSegDisplays will **disable** the possibility for it to get new generated content displayed!! Handle with extreme care!!
      */
     void setDspBuffPtr(uint8_t* newDspBuffPtr);
+    virtual void setNtfyUpdDsply();
     virtual bool stop();
 };
 
@@ -157,6 +159,8 @@ private:
     const uint8_t _sclkIndx {0};
     const uint8_t _rclkIndx {1};
     const uint8_t _dioIndx {2};
+    ShiftRegGPIOXpander* _drvrShftRegPtr{nullptr};
+    uint8_t* _drvrShftRegSndPtr{nullptr};
     uint8_t _sclk {};
     uint8_t _rclk {};
     uint8_t _dio {};

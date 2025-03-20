@@ -72,7 +72,7 @@ private:
 protected:
    bool* _blinkMaskPtr{nullptr};
    uint8_t* _dspAuxBuffPtr{nullptr};
-   bool _dspBuffChng{false};
+   // bool _dspBuffChng{false};
    uint8_t* _dspBuffPtr{nullptr};
    uint8_t _dspDigitsQty{};
    SevenSegDispHw* _dspUndrlHwPtr{};
@@ -142,6 +142,7 @@ protected:
    String _spacePadding{""};
 
    unsigned long _blinkTmrGCD(unsigned long blnkOnTm, unsigned long blnkOffTm);
+   void _ntfyToHwBuffChng();
    void _popSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDisplays* ssdToPop);
    void _pushSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDisplays* ssdToPush);
    void _restoreDspBuff();
