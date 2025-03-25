@@ -1,14 +1,14 @@
-###############################################
-# Syntax Coloring Map For SevenSegDisplays
-###############################################
+################################################
+# Syntax Coloring Map For SevenSegDisplays_ESP32
+################################################
 
-###############################################
+################################################
 # Datatypes (KEYWORD1)
-###############################################
+################################################
 SevenSegDisplays KEYWORD1
-###############################################
+################################################
 # Methods and Functions (KEYWORD2)
-###############################################
+################################################
 #SevenSegDisplays class
 #######################
 blink       KEYWORD2
@@ -39,12 +39,12 @@ write   KEYWORD2
 #SevenSegDispHw class
 #######################
 begin KEYWORD2
+end  KEYWORD2
 getCommAnode   KEYWORD2
 getDspBuffPtr  KEYWORD2
 getHwDspDigitsQty KEYWORD2
 setDigitsOrder KEYWORD2
 setDspBuffPtr  KEYWORD2
-stop  KEYWORD2
 
 ###############################################
 # Constants (LITERAL1)

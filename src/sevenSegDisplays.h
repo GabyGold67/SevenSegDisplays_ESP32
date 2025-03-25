@@ -15,7 +15,7 @@
  * @version 3.0.0
  * 
  * @date First release: 20/12/2023 
- *       Last update:   16/03/2025 09:10 (GMT+0200)
+ *       Last update:   25/03/2025 11:20 (GMT+0200)
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -59,20 +59,19 @@ class SevenSegDisplays {
    static void tmrCbBlink(TimerHandle_t blinkTmrCbArg);
    static void tmrCbWait(TimerHandle_t waitTmrCbArg);
 
-   static const unsigned long _minBlinkRate{100};
-   static const unsigned long _maxBlinkRate{2000};
+   static const uint32_t _minBlinkRate{100};  //unsigned long for ESP32 in Arduino enviornment
+   static const uint32_t _maxBlinkRate{2000};   //unsigned long for ESP32 in Arduino enviornment
 
 private:
    uint8_t _waitChar {0xBF};
    uint8_t _waitCount {0};
    bool _isWaiting {false};
-   unsigned long _waitRate {250};
-   unsigned long _waitTimer {0};
+   uint32_t _waitRate {250};
+   uint32_t _waitTimer {0};
 
 protected:
    bool* _blinkMaskPtr{nullptr};
    uint8_t* _dspAuxBuffPtr{nullptr};
-   // bool _dspBuffChng{false};
    uint8_t* _dspBuffPtr{nullptr};
    uint8_t _dspDigitsQty{};
    SevenSegDispHw* _dspUndrlHwPtr{};
@@ -83,10 +82,10 @@ protected:
     
    bool _isBlinking{false};
    bool _blinkShowOn{false};
-   unsigned long _blinkTimer{0};
-   unsigned long _blinkOffRate{500};
-   unsigned long _blinkOnRate{500};
-   unsigned long _blinkRatesGCD{500};  //Holds the value for the minimum timer checking the change ON/OFF of the blinking, saving unneeded timer interruptions, and without the need of the std::gcd function
+   uint32_t _blinkTimer{0};
+   uint32_t _blinkOffRate{500};
+   uint32_t _blinkOnRate{500};
+   uint32_t _blinkRatesGCD{500};  //Holds the value for the minimum timer checking the change ON/OFF of the blinking, saving unneeded timer interruptions, and without the need of the std::gcd function
    String _charSet{"0123456789AabCcdEeFGHhIiJLlnOoPqrStUuY-_=~* ."}; // for using indexOf() method
    uint8_t _charLeds[45] = {   //Values valid for a Common Anode display. For a Common Cathode display values must be logically bit negated
       0xC0, // 0
@@ -141,7 +140,7 @@ protected:
    String _zeroPadding{""};
    String _spacePadding{""};
 
-   unsigned long _blinkTmrGCD(unsigned long blnkOnTm, unsigned long blnkOffTm);
+   uint32_t _blinkTmrGCD(uint32_t blnkOnTm, uint32_t blnkOffTm);
    void _ntfyToHwBuffChng();
    void _popSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDisplays* ssdToPop);
    void _pushSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDisplays* ssdToPush);
@@ -166,7 +165,7 @@ public:
     * 
     * @param dspUndrlHw A pointer to an instantiated SevenSegDispHw subclass object that models the hardware display that composes the SevenSegDisplays object
     * 
-    * @note The library structure design, built on the idea of keeping the API and the services provided consistent, and connecting the hardware managing level through specific subclasses of the SevenSegDispHw class gives a variety of valid instantiation procedures, through different code but with the same result. This might help the developer to keep his/hers most comfortable practices to get the object needed created. Some examples of this are:  
+    * @note The library structure design, built on the idea of keeping the API and the services provided consistent, and connecting to the hardware managing level through specific subclasses of the SevenSegDispHw class gives a variety of valid instantiation procedures, through different code but with the same result. This might help the developer to keep his/hers most comfortable practices to get the object needed created. Some examples of this are:  
     * 
     * A three lines step by step code example:  
     * @code {.cpp}
@@ -175,7 +174,7 @@ public:
     * SevenSegDisplays myLedDisp(myLedDispHwPtr);           // Instantiation of the SevenSegDisplays object using the pointer created
     * @endcode
     *
-    * A two lines example using the & operand to pass the pointer
+    * A two lines example using the & operand to pass the pointer to the constructor
     * @code {.cpp}
     * SevenSegDynHC595 myLedDispHw(myDispIOPins, 4, true);  // Instantiation of the underlying hardware object
     * SevenSegDisplays myLedDisp(&myLedDispHw);             // Instantiation of the SevenSegDisplays object using the & operand over the hardware object created
@@ -253,7 +252,7 @@ public:
    * 
    * 
    */
-   bool blink(const unsigned long &onRate, const unsigned long &offRate = 0);
+   bool blink(const uint32_t &onRate, const uint32_t &offRate = 0);
    /**
     * @brief Clears the display, turning off all the segments and dots.
     * 
@@ -473,7 +472,7 @@ public:
     * unsigned long myDispMaxBlnkRt = myLedDisp.getMaxBlinkRate();
     * @endcode
     */
-   unsigned long getMaxBlinkRate();
+   uint32_t getMaxBlinkRate();
    /**
     * @brief Returns the minimum rate the display can be configured to blink at. 
     * 
@@ -491,7 +490,7 @@ public:
     * unsigned long myDispMinBlnkRt = myLedDisp.getMinBlinkRate();
     * @endcode
     */
-   unsigned long getMinBlinkRate();
+   uint32_t getMinBlinkRate();
    /**
     * @brief Returns a value indicating if the display is blank. 
     * 
@@ -697,7 +696,7 @@ public:
     * myLedDisp.setBlinkRate(600, 3500);  //Returns false and the display blinking rate stays without change.  
     * @endcode
     */
-   bool setBlinkRate(const unsigned long &newOnRate, const unsigned long &newOffRate = 0);
+   bool setBlinkRate(const uint32_t &newOnRate, const uint32_t &newOffRate = 0);
    /**
     * @brief Sets the "Waiting" character.  
     * 
@@ -732,7 +731,7 @@ public:
     * myLedDisp.setWaitRate(myLedDisp.getMinBlinkRate() - 10); //Returns false and the display wait rate stays without change.  
     * @endcode
     */
-   bool setWaitRate(const unsigned long &newWaitRate);
+   bool setWaitRate(const uint32_t &newWaitRate);
    /**
     * @brief Makes the display enter the "Waiting mode"  
     * 
@@ -764,7 +763,7 @@ public:
     * 
     * @attention The **Waiting state** is considereda transitory state (or situation), as in most systems a "progression bar" is used it's main target is to show the system is not stalled or crashed, it's just waiting for a process to end. As a transitory state, the value displayed before entering the "Waiting state" will be saved, and will be restored automaticaly when the "Waiting state" is ended by the use of the `noWait()` method. 
     */
-   bool wait(const unsigned long &newWaitRate);
+   bool wait(const uint32_t &newWaitRate);
    /**
     * @brief Prints one character to the display, at a designated position (digit or port), without affecting the rest of the characters displayed.
     * 

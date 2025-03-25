@@ -9,7 +9,7 @@
  * @version 3.0.0
  * 
  * @date First release: 20/12/2023 
- *       Last update:   16/03/2025 09:10 (GMT+0200)
+ *       Last update:   25/03/2025 11:20 (GMT+0200)
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -97,7 +97,7 @@ bool SevenSegDisplays::blink(){
    return result;
 }
 
-bool SevenSegDisplays::blink(const unsigned long &onRate, const unsigned long &offRate){
+bool SevenSegDisplays::blink(const uint32_t &onRate, const uint32_t &offRate){
    bool result {false};
 
    if(!_isWaiting){
@@ -114,12 +114,12 @@ bool SevenSegDisplays::blink(const unsigned long &onRate, const unsigned long &o
    return result;
 }
 
-unsigned long SevenSegDisplays::_blinkTmrGCD(unsigned long blnkOnTm, unsigned long blnkOffTm){
+uint32_t SevenSegDisplays::_blinkTmrGCD(uint32_t blnkOnTm, uint32_t blnkOffTm){
    /*returning values:
       0: One of the input values was 0
       1: No GDC greater than 1
       Other: This value would make the blink timer save resources by checking the blink time as less frequent as possible*/
-   unsigned long result{ 0 };
+      uint32_t result{ 0 };
 
    if ((blnkOnTm != 0) && (blnkOffTm != 0)) {
       if (blnkOnTm == blnkOffTm)
@@ -299,12 +299,12 @@ uint16_t SevenSegDisplays::getInstanceNbr(){
    return _dspInstNbr;
 }
 
-unsigned long SevenSegDisplays::getMaxBlinkRate(){
+uint32_t SevenSegDisplays::getMaxBlinkRate(){
     
    return _maxBlinkRate;
 }
 
-unsigned long  SevenSegDisplays::getMinBlinkRate(){
+uint32_t  SevenSegDisplays::getMinBlinkRate(){
 
    return _minBlinkRate;
 }
@@ -364,8 +364,6 @@ void SevenSegDisplays::_ntfyToHwBuffChng(){
 
    return;
 }
-
-
 
 bool SevenSegDisplays::noWait(){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
@@ -679,7 +677,7 @@ void SevenSegDisplays::setBlinkMask(const bool* newBlnkMsk){
    return;
 }
 
-bool SevenSegDisplays::setBlinkRate(const unsigned long &newOnRate, const unsigned long &newOffRate){
+bool SevenSegDisplays::setBlinkRate(const uint32_t &newOnRate, const uint32_t &newOffRate){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool result {false};
    long unsigned tmpOffRate{newOffRate};
@@ -720,9 +718,7 @@ bool SevenSegDisplays::setBlinkRate(const unsigned long &newOnRate, const unsign
    return result;  
 }
 
-void SevenSegDisplays::_setDspBuffChng(){
-   //FFDR Include in this method all the actions triggered by the change of the display buffer contents: Unblocking underlying hardware display renewal, fill message FIFOs, etc.
-   // _dspBuffChng = true;
+void SevenSegDisplays::_setDspBuffChng(){//FFDR Include in this method all the actions triggered by the change of the display buffer contents: Unblocking underlying hardware display renewal, fill message FIFOs, etc.
    _ntfyToHwBuffChng();
 
    return;
@@ -746,7 +742,7 @@ bool SevenSegDisplays::setWaitChar (const char &newChar){
    return result;
 }
 
-bool SevenSegDisplays::setWaitRate(const unsigned long &newWaitRate){
+bool SevenSegDisplays::setWaitRate(const uint32_t &newWaitRate){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
@@ -887,7 +883,7 @@ bool SevenSegDisplays::wait(){
    return result;
 }
 
-bool SevenSegDisplays::wait(const unsigned long &newWaitRate){
+bool SevenSegDisplays::wait(const uint32_t &newWaitRate){
    bool result {true};
    
    if (!_isWaiting){

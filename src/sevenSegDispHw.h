@@ -2,14 +2,12 @@
  * @file SevenSegDispHw.h
  * @brief Header file for the SevenSegDisplays_ESP32 library, SevenSegDispHw class and subclasses 
  * 
- * 
- * 
  * @author Gabriel D. Goldman
  * 
  * @version 3.0.0
  * 
  * @date First release: 20/12/2023 
- *       Last update:   13/03/2025 13:40 (GMT+0200)
+ *       Last update:   25/03/2025 11:20 (GMT+0200)
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -36,7 +34,7 @@
 
 #include "Arduino.h"
 #include <stdint.h>
-#include "ShiftRegGPIOXpander.h"
+#include <ShiftRegGPIOXpander.h>
 
 //============================================================> Class declarations separator
 
@@ -101,7 +99,7 @@ public:
      */
     void setDspBuffPtr(uint8_t* newDspBuffPtr);
     virtual void setNtfyUpdDsply();
-    virtual bool stop();
+    virtual bool end();
 };
 
 //============================================================> Class declarations separator
@@ -110,7 +108,6 @@ public:
  * @class SevenSegDynamic
  * 
  * @brief Abstract class models a generic dynamically updated Seven Segment display hardware
- * 
  */
 class SevenSegDynamic: public SevenSegDispHw{    
     static void tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg);
@@ -138,7 +135,7 @@ public:
     * @note For each SevenSegDynamic instantiable subclass a short description of their respective `begin()` actions will be added if they are relevant to the developer using the library.  
     */
     virtual bool begin();
-    virtual bool stop();
+    virtual bool end();
 };
 
 //============================================================> Class declarations separator
@@ -159,13 +156,15 @@ private:
     const uint8_t _sclkIndx {0};
     const uint8_t _rclkIndx {1};
     const uint8_t _dioIndx {2};
+
     ShiftRegGPIOXpander* _drvrShftRegPtr{nullptr};
     uint8_t* _drvrShftRegSndPtr{nullptr};
     uint8_t _sclk {};
     uint8_t _rclk {};
     uint8_t _dio {};
 protected:
-    static TimerHandle_t _dynHC595DspRfrshTmrHndl;
+    static TimerHandle_t _dynHC595DspRfrshTmrHndl;  //FFDR if the timerhandle is static there's only one for all the displays of this type!!
+
     void refresh();
     void send(uint8_t content);
     void send(const uint8_t &segments, const uint8_t &port);
@@ -200,22 +199,28 @@ public:
      * Use example
      * 
      * @code {.cpp}
-     * myLedDisp.stop();
+     * myLedDisp.end();
      * @endcode
      * 
      */
-    bool stop();
+    bool end();
 };
 
 //============================================================> Class declarations separator
 
-/*
 class SevenSegDynDummy: public SevenSegDynamic{
+    static void tmrCbRfrshDynDummy(TimerHandle_t rfrshTmrCbArg);
+protected:
+    static TimerHandle_t _dynDummyDspRfrshTmrHndl;
+
+    void refresh();
+    void send(const uint8_t &segments, const uint8_t &port);
 public:
-    SevenSegDynDummy(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
+    SevenSegDynDummy(uint8_t dspDigits = 4, bool commAnode = true);
     ~SevenSegDynDummy();
+    bool begin();
+    bool end();
 };
-*/
 
 //============================================================> Class declarations separator
 
