@@ -38,8 +38,8 @@
   * If I promised you the moon and the stars, would you believe it?"  
  *******************************************************************************
  */
-//FFDR For Future Development Reminder comments!!
-//FTPO For testing purposes only comments!!
+//FFDR For Future Development Reminder!!
+//FTPO For Testing Purposes Only code!!
 
 #ifndef _SevenSegDisplays_H_
 #define _SevenSegDisplays_H_

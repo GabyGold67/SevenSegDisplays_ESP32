@@ -21,9 +21,9 @@ const uint8_t noName4Bits[4] {0, 1, 2, 3};
 
 //-------------------------------------->> Static variables initialization BEGIN
 uint8_t SevenSegDispHw::_dspHwSerialNum = 0;
-TimerHandle_t SevenSegDynamic::_dynDspRfrshTmrHndl = nullptr;
-TimerHandle_t SevenSegDynHC595::_dynHC595DspRfrshTmrHndl = nullptr;
-TimerHandle_t SevenSegDynDummy::_dynDummyDspRfrshTmrHndl = nullptr;
+// TimerHandle_t SevenSegDynamic::_dynDspRfrshTmrHndl = nullptr;
+// TimerHandle_t SevenSegDynHC595::_dynHC595DspRfrshTmrHndl = nullptr;
+// TimerHandle_t SevenSegDynDummy::_dynDummyDspRfrshTmrHndl = nullptr;
 //---------------------------------------->> Static variables initialization END
 
 //============================================================> Class methods separator
@@ -46,7 +46,7 @@ SevenSegDispHw::~SevenSegDispHw() {
    delete [] _digitPosPtr;
 }
 
-bool SevenSegDispHw::begin(){
+bool SevenSegDispHw::begin(uint32_t updtLps){
    
    return true;
 }
@@ -120,7 +120,7 @@ SevenSegDynamic::SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAn
 
 SevenSegDynamic::~SevenSegDynamic(){}
 
-bool SevenSegDynamic::begin(){
+bool SevenSegDynamic::begin(uint32_t updtLps){
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
@@ -219,7 +219,7 @@ SevenSegDynHC595::SevenSegDynHC595(uint8_t* ioPins, uint8_t dspDigits, bool comm
 
 SevenSegDynHC595::~SevenSegDynHC595(){}
 
-bool SevenSegDynHC595::begin(){
+bool SevenSegDynHC595::begin(uint32_t updtLps){
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
@@ -322,12 +322,12 @@ SevenSegDynDummy::SevenSegDynDummy(uint8_t dspDigits, bool commAnode)
 
 SevenSegDynDummy::~SevenSegDynDummy(){}
 
-bool SevenSegDynDummy::begin(){
+bool SevenSegDynDummy::begin(uint32_t updtLps){
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
    Serial.begin(9600);
-   Serial.println("Seven Segment Dynamic Display Simulation Started");
+   Serial.println("Seven Segment Dynamic Dummy Display Begin");
    Serial.println("================================================");
    Serial.println("For testing purposes the 'display' will be refreshed once every 2 seconds or 0.5Hz");
    Serial.println("================================================");
@@ -372,22 +372,43 @@ bool SevenSegDynDummy::end(){
    }
 
 
-   Serial.println("================================================");
-   Serial.println("Seven Segment Dynamic Display Simulation Ended");
+   Serial.println("=======================================");
+   Serial.println("Seven Segment Dynamic Dummy Display End");
    Serial.end();
 
    return result;
 }
 
 void SevenSegDynDummy::refresh(){
-   //FFDR serial.print() text indicating it's refreshing and the content is sending to the display, going through the contents array and using the send methdo for each one
+   bool tmpLogic {true};
+   uint8_t tmpDigToSend{0};
+
+   Serial.print("\nDynamic Dumb Display refreshing. Timestamp: ");
+   Serial.println(millis(), DEC);
+   Serial.println("--------------------------------------------------------");
+
+   for (int i {0}; i < _dspDigitsQty; i++){
+      tmpDigToSend = *(_dspBuffPtr + ((i + _firstRefreshed) % _dspDigitsQty));
+      send(tmpDigToSend, /*uint8_t(1) <<*/ *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty)));
+
+   }
+   Serial.println("\n\rRefreshing complete.");
+   Serial.println("--------------------");
+
+   ++_firstRefreshed;
+   if (_firstRefreshed == _dspDigitsQty)
+      _firstRefreshed = 0;
 
    return;
 }
 
 void SevenSegDynDummy::send(const uint8_t &segments, const uint8_t &port){
    //FFDR serial.print() text indicating which sengment and what content is sending to each
-
+   Serial.print("Pos.: ");
+   Serial.print(port, DEC);
+   Serial.print(", Cont.: ");
+   Serial.print(segments, HEX);
+   Serial.print("// ");
    return;
 }
 
@@ -399,7 +420,6 @@ void SevenSegDynDummy::tmrCbRfrshDynDummy(TimerHandle_t rfrshTmrCbArg){
 
    return;
 }
-
 
 //============================================================> Class methods separator
 

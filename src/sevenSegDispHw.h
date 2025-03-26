@@ -49,7 +49,7 @@ class SevenSegDispHw{
 protected:
     bool _commAnode {true}; // SevenSegDisplays objects need this info to build the right segments to represent each character
     uint8_t* _digitPosPtr{nullptr};
-    uint8_t* _dspBuffPtr{nullptr};  //FFDR Shouldn't the display buffer shared with the display better be placed in the HEAP?
+    uint8_t* _dspBuffPtr{nullptr};  
     uint8_t _dspDigitsQty{}; // Display size in digits    
     uint8_t _dspHwInstNbr{0};
     uint8_t* _ioPins{};
@@ -73,7 +73,8 @@ public:
     * @retval true The specific configurations and startups could be successfuly made
     * @return false One or more of the specific configurations or startups failed.  
     */
-    virtual bool begin();
+    virtual bool begin(uint32_t updtLps = 0);
+    virtual bool end();
     /**
      * @brief Returns a value indicating if the hardware has the led display wired as common anode or common cathode
      * 
@@ -99,7 +100,6 @@ public:
      */
     void setDspBuffPtr(uint8_t* newDspBuffPtr);
     virtual void setNtfyUpdDsply();
-    virtual bool end();
 };
 
 //============================================================> Class declarations separator
@@ -113,7 +113,8 @@ class SevenSegDynamic: public SevenSegDispHw{
     static void tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg);
 
 protected:
-    static TimerHandle_t _dynDspRfrshTmrHndl;
+    // static TimerHandle_t _dynDspRfrshTmrHndl;
+    TimerHandle_t _dynDspRfrshTmrHndl{NULL};
     uint8_t _firstRefreshed{0};
     void refresh();
     virtual void send(uint8_t content);
@@ -134,7 +135,7 @@ public:
     * 
     * @note For each SevenSegDynamic instantiable subclass a short description of their respective `begin()` actions will be added if they are relevant to the developer using the library.  
     */
-    virtual bool begin();
+    virtual bool begin(uint32_t updtLps = 0);
     virtual bool end();
 };
 
@@ -163,7 +164,8 @@ private:
     uint8_t _rclk {};
     uint8_t _dio {};
 protected:
-    static TimerHandle_t _dynHC595DspRfrshTmrHndl;  //FFDR if the timerhandle is static there's only one for all the displays of this type!!
+    // static TimerHandle_t _dynHC595DspRfrshTmrHndl;  //FFDR if the timerhandle is static there's only one for all the displays of this type!!
+    TimerHandle_t _dynHC595DspRfrshTmrHndl{NULL};  
 
     void refresh();
     void send(uint8_t content);
@@ -187,7 +189,7 @@ public:
      * @endcode
      * 
      */
-    bool begin();
+    bool begin(uint32_t updtLps = 0);
     /**
      * @brief Stops the active display updating.  
      * 
@@ -211,14 +213,15 @@ public:
 class SevenSegDynDummy: public SevenSegDynamic{
     static void tmrCbRfrshDynDummy(TimerHandle_t rfrshTmrCbArg);
 protected:
-    static TimerHandle_t _dynDummyDspRfrshTmrHndl;
+    // static TimerHandle_t _dynDummyDspRfrshTmrHndl;
+    TimerHandle_t _dynDummyDspRfrshTmrHndl{NULL};
 
     void refresh();
     void send(const uint8_t &segments, const uint8_t &port);
 public:
     SevenSegDynDummy(uint8_t dspDigits = 4, bool commAnode = true);
     ~SevenSegDynDummy();
-    bool begin();
+    bool begin(uint32_t updtLps = 0);
     bool end();
 };
 
