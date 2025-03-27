@@ -360,7 +360,7 @@ bool SevenSegDisplays::noBlink(){
 }
 
 void SevenSegDisplays::_ntfyToHwBuffChng(){
-   _dspUndrlHwPtr->setNtfyUpdDsply();
+   _dspUndrlHwPtr->ntfyUpdDsply();
 
    return;
 }

@@ -16,7 +16,8 @@
 #include "sevenSegDispHw.h"
 //----------------------------------------->> Global constants declaration BEGIN
 const uint8_t diyMore8Bits[8] {3, 2, 1, 0, 7, 6, 5, 4};
-const uint8_t noName4Bits[4] {0, 1, 2, 3};
+const uint8_t stdLtoRx4 [4] {0, 1, 2, 3};
+const uint8_t stdRtoLx4 [4] {3, 2, 1, 0};
 //------------------------------------------->> Global constants declaration END
 
 //-------------------------------------->> Static variables initialization BEGIN
@@ -97,7 +98,7 @@ void SevenSegDispHw::setDspBuffPtr(uint8_t* newDspBuffPtr){
    return;
 }
 
-void SevenSegDispHw::setNtfyUpdDsply(){
+void SevenSegDispHw::ntfyUpdDsply(){
 
    return;
 }
@@ -403,7 +404,6 @@ void SevenSegDynDummy::refresh(){
 }
 
 void SevenSegDynDummy::send(const uint8_t &segments, const uint8_t &port){
-   //FFDR serial.print() text indicating which sengment and what content is sending to each
    Serial.print("Pos.: ");
    Serial.print(port, DEC);
    Serial.print(", Cont.: ");
@@ -423,26 +423,65 @@ void SevenSegDynDummy::tmrCbRfrshDynDummy(TimerHandle_t rfrshTmrCbArg){
 
 //============================================================> Class methods separator
 
-/*
-SevenSegStatic::SevenSegStatic() {}
+SevenSegStatic::SevenSegStatic(){}
+
+SevenSegStatic::SevenSegStatic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
+:SevenSegDispHw(ioPins, dspDigits, commAnode)
+{   
+   Serial.println("\nSevenSegStatic constructor"); //FTPO
+   Serial.println("==========================="); //FTPO
+}
 
 SevenSegStatic::~SevenSegStatic() {}
-*/
 
+void SevenSegStatic::ntfyUpdDsply(){
+
+   return;
+}
+//============================================================> Class methods separator
+
+SevenSegStatHC595::SevenSegStatHC595(){}
+
+SevenSegStatHC595::SevenSegStatHC595(uint8_t *ioPins, uint8_t dspDigits, bool commAnode)
+:SevenSegStatic(ioPins, dspDigits, commAnode)
+{
+   _sclk = *(ioPins + _sclkIndx);
+   _rclk = *(ioPins + _rclkIndx);
+   _dio = *(ioPins + _dioIndx);
+    
+    _dsplyHwShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, _dspDigitsQty, nullptr);
+    _lclDspBuffPtr = new uint8_t[_dspDigitsQty];
+}
+
+SevenSegStatHC595::~SevenSegStatHC595() {}
+
+void SevenSegStatHC595::ntfyUpdDsply(){
+//FFDR Reload the display content
+   _updDsplyCntnt();
+
+   return;
+}
+
+void SevenSegStatHC595::_updDsplyCntnt(){
+   // for each byte(char) on the display buffer pick it and place it on the local pointed display buffer in the position indicated by sorting display array
+   // send the local pointed display buffer
+  
+   uint8_t dspBuffPtrOffset{0};
+
+   for (int i {0}; i < _dspDigitsQty; i++){
+      dspBuffPtrOffset = *(_digitPosPtr + i);
+      *(_lclDspBuffPtr + i) = *(_dspBuffPtr + dspBuffPtrOffset);
+   }
+   _dsplyHwShftRegPtr->stampOverMain(_lclDspBuffPtr);
+
+   return;
+}
 //============================================================> Class methods separator
 
 /*
 SevenSegTM1637::SevenSegTM1637() {}
 
 SevenSegTM1637::~SevenSegTM1637() {}
-*/
-
-//============================================================> Class methods separator
-
-/*
-SevenSegStatHC595::SevenSegStatHC595() {}
-
-SevenSegStatHC595::~SevenSegStatHC595() {}
 */
 
 //============================================================> Class methods separator

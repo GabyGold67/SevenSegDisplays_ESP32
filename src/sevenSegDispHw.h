@@ -99,7 +99,7 @@ public:
      * @warning Setting the display buffer pointer to an address not coinciding with the one configured in the SevenSegDisplays will **disable** the possibility for it to get new generated content displayed!! Handle with extreme care!!
      */
     void setDspBuffPtr(uint8_t* newDspBuffPtr);
-    virtual void setNtfyUpdDsply();
+    virtual void ntfyUpdDsply();
 };
 
 //============================================================> Class declarations separator
@@ -227,14 +227,36 @@ public:
 
 //============================================================> Class declarations separator
 
-/*
 class SevenSegStatic: public SevenSegDispHw{
-
+    
 public:
-    // SevenSegStatic();    //No differentiated default constructor for this class yet!!
+    SevenSegStatic();
+    SevenSegStatic(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
     ~SevenSegStatic();
+    virtual void ntfyUpdDsply();
 };
-*/
+
+//============================================================> Class declarations separator
+
+class SevenSegStatHC595: public SevenSegStatic{
+private:
+    const uint8_t _sclkIndx {0};
+    const uint8_t _rclkIndx {1};
+    const uint8_t _dioIndx {2};
+
+    ShiftRegGPIOXpander* _dsplyHwShftRegPtr{nullptr};
+    uint8_t* _lclDspBuffPtr{nullptr};
+    uint8_t _sclk {};
+    uint8_t _rclk {};
+    uint8_t _dio {};
+
+    void _updDsplyCntnt();
+public:
+    SevenSegStatHC595();
+    SevenSegStatHC595(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
+    ~SevenSegStatHC595();
+    void ntfyUpdDsply();
+};
 
 //============================================================> Class declarations separator
 
@@ -244,23 +266,15 @@ class SevenSegTM1637: public SevenSegStatic{
     const uint8_t minBrightLvl{0b0000};
 protected:
     uint8_t _brightLvl{};
-    void send();
+    uint8_t* colonPosPtr{nullptr};
+    uint8_t colonQty{0};
+    virtual void send();
 public:
     // SevenSegTM1637();
     bool setBrightness(uint8_t &newBrightLevel);
     bool turnOff();
     bool turnOn();
     ~SevenSegTM1637();
-};
-*/
-
-//============================================================> Class declarations separator
-
-/*
-class SevenSegStatHC595: public SevenSegStatic{
-public:
-    SevenSegStatHC595();
-    ~SevenSegStatHC595();
 };
 */
 

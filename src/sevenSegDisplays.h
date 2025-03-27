@@ -198,6 +198,7 @@ public:
     * SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));  // Easy to understand reading from right to left, as usual!!
     * @endcode
     * 
+    * @attention Note that two or more lines instantiations will be needed when specific display hardware configuration is required before the hardware use: semicolon setting, starting brightness levels, etc. Making use of the one, two, three or more lines instantiation is not a sign of smartness or elegance, but options to be taken by the development need.  
     */
    SevenSegDisplays(SevenSegDispHw* dspUndrlHwPtr);
     /**
