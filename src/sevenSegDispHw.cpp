@@ -125,10 +125,6 @@ bool SevenSegDynamic::begin(uint32_t updtLps){
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
-   Serial.println("\n"); //FTPO
-   Serial.println("SevenSegDynamic .begin()"); //FTPO
-   Serial.println("\n"); //FTPO
-
    //Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)
    if (!_svnSgDynTmrHndl){
       //Create a valid unique Name for identifying the timer created
@@ -136,10 +132,6 @@ bool SevenSegDynamic::begin(uint32_t updtLps){
       String dspSerialNumStr {"000" + String(_dspHwInstNbr)};
       dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length());
       rfrshTmrName = "DynDsp" + dspSerialNumStr + "rfrsh_tmr";
-
-      Serial.print("\nSevenSegDynamic refresh timer name: "); //FTPO
-      Serial.println(rfrshTmrName); //FTPO
-      Serial.println("================"); //FTPO
 
       //Initialize the Display refresh timer. Considering each digit to be refreshed at 30 Hz in turn, the freq might be (Max qty of digits * 30Hz)
       _dynDspRfrshTmrHndl = xTimerCreate(
@@ -223,10 +215,6 @@ SevenSegDynHC595::~SevenSegDynHC595(){}
 bool SevenSegDynHC595::begin(uint32_t updtLps){
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
-
-   Serial.println("\n"); //FTPO
-   Serial.println("SevenSegDynHC595 .begin()"); //FTPO
-   Serial.println("\n"); //FTPO
 
    _firstRefreshed = 0;
    //Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)
@@ -445,6 +433,9 @@ SevenSegStatHC595::SevenSegStatHC595(){}
 SevenSegStatHC595::SevenSegStatHC595(uint8_t *ioPins, uint8_t dspDigits, bool commAnode)
 :SevenSegStatic(ioPins, dspDigits, commAnode)
 {
+   Serial.println("\nSevenSegStatHC595 constructor"); //FTPO
+   Serial.println("==========================="); //FTPO
+
    _sclk = *(ioPins + _sclkIndx);
    _rclk = *(ioPins + _rclkIndx);
    _dio = *(ioPins + _dioIndx);
@@ -456,16 +447,12 @@ SevenSegStatHC595::SevenSegStatHC595(uint8_t *ioPins, uint8_t dspDigits, bool co
 SevenSegStatHC595::~SevenSegStatHC595() {}
 
 void SevenSegStatHC595::ntfyUpdDsply(){
-//FFDR Reload the display content
    _updDsplyCntnt();
 
    return;
 }
 
 void SevenSegStatHC595::_updDsplyCntnt(){
-   // for each byte(char) on the display buffer pick it and place it on the local pointed display buffer in the position indicated by sorting display array
-   // send the local pointed display buffer
-  
    uint8_t dspBuffPtrOffset{0};
 
    for (int i {0}; i < _dspDigitsQty; i++){
@@ -478,11 +465,254 @@ void SevenSegStatHC595::_updDsplyCntnt(){
 }
 //============================================================> Class methods separator
 
-/*
-SevenSegTM1637::SevenSegTM1637() {}
+SevenSegTM163X::SevenSegTM163X()
+{}
 
-SevenSegTM1637::~SevenSegTM1637() {}
-*/
+SevenSegTM163X::SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits)
+:SevenSegStatic(ioPins, dspDigits, false)
+{
+   Serial.println("\nSevenSegTM163X constructor"); //FTPO
+   Serial.println("==========================="); //FTPO
+
+    _clk = *(ioPins + _clkIndx);
+	 _dio = *(ioPins + _dioIndx);
+
+   digitalWrite(_clk, LOW);
+   digitalWrite(_dio, LOW);
+   pinMode(_clk, OUTPUT);
+   pinMode(_dio, OUTPUT);
+
+   _brghtnssLvlMax = _hwBrghtnssLvlMax;
+   _brghtnssLvlMin = _hwBrghtnssLvlMin;
+   _brghtnss = _brghtnssLvlMax;
+
+}
+
+SevenSegTM163X::~SevenSegTM163X()
+{
+}
+
+bool SevenSegTM163X::begin(){
+
+	return true;
+}
+
+bool SevenSegTM163X::end(){
+
+	return true;
+}
+
+void SevenSegTM163X::composeMssg(){
+	/* If it's low cost confirm the new buffer contents are different from the display content
+	 * Create a message buffer according to the TM1637 I2C modified protocol:
+	 * Invoke the send() method to output the message to the display
+	 * Delete the message buffer
+	 * >> SOT commands + buffer contents + EOT command
+	 * SOT Commands: Command1 + Command2
+	 * >> - Command1: Data command
+	 * -----------------
+	 * |7|6|5|4|3|2|1|0|
+	 *  --- --- - - ---
+	 *   |   |  | |  |
+	 *   |   |  | |  Data Write to display: 00
+	 *   |   |  | Address auto-increment:  0
+	 *   |   |  Normal/Test mode:         0
+	 *   |   N/C:                      00
+	 *   Data command setting:       01
+	 *   Command1:                 0b01000000 = 0x40 
+	 *
+	 * >> - Command2: Address command setting, for TM1637 and TM1639 is 0xC0, 6 consecutive addresses for TM1637, 16 for TM1639
+	 * -----------------
+	 * |7|6|5|4|3|2|1|0|
+	 *  --- --- -------
+	 *   |   |     |
+	 *   |   |     00H:  0000 First address of the data register
+	 *   |   N/C:      00
+	 *   Add. comm.: 11
+	 *             0b11000000 = 0xC0
+	 *
+	 * >> Buffer contents: 6 ~ 16 bytes data sequence
+	 *
+	 * >> EOT commands: Command3:
+	 * Command3: Display control
+	 * -----------------
+	 * |7|6|5|4|3|2|1|0|
+	 *  --- --- - -----
+	 *   |   |  |   |
+	 *   |   |  |   Brightness control:    000~111
+	 *   |   |  Display switch On/Off:    1/0
+	 *   |   N/C:                       00
+	 *   Display Control:             10
+	 *                              0b1000XXXX -> 0x8F Display On, maximum brightness
+	 */
+
+
+   //===============================================================
+   // Compose new message to send the new contents to the display
+   // 1. generate the corresponding command bytes and enqueue them and increment the queue count
+   // 2. generate the data bytes for ports displaying and enqueue them and increment the queue count
+   // 3. generate the ending command bytes and enqueue them and increment the queue count
+   //===============================================================
+   // 4. Send the new complete contents to the display
+   //===============================================================
+   // 5. Send extra-digits data to the display
+   //    - Brightness level
+   //    - Colons
+   //    - Others specific to the display
+   //===============================================================
+   // 6. Send the extra-digits data to the display
+   //===============================================================
+   // 7. Close transmition
+   //===============================================================
+   
+   uint8_t mssgUnt{0};
+   uint8_t mssgLnght{0};
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+
+   if(_msgBffrPtr != nullptr){
+      delete[] _msgBffrPtr;
+      _msgBffrPtr = nullptr;
+   }
+   _mssgBffrLngth = 0;
+   
+   mssgUnt = 0x40;   // FFDR Compose Command1 to view why it's value is 0x40
+   pushElmnt<uint8_t>(_msgBffrPtr, mssgUnt, mssgLnght);
+
+   mssgUnt = 0xC0;   // FFDR Compose Command2 to view why it's value is 0xC0
+   pushElmnt<uint8_t>(_msgBffrPtr, mssgUnt, mssgLnght);
+
+   taskENTER_CRITICAL(&mux);
+   for(uint8_t i{0}; i<_dspDigitsQty; i++)
+      pushElmnt<uint8_t>(_msgBffrPtr, *(_dspBuffPtr + i), mssgLnght);
+   taskEXIT_CRITICAL(&mux);
+
+   mssgUnt = 0x8F; // FFDR Compose Command3 to view why it's value is 0x8F
+   pushElmnt<uint8_t>(_msgBffrPtr, mssgUnt, mssgLnght);
+
+//-------------------------   
+	return;
+}
+
+uint8_t SevenSegTM163X::getBrghtnssLvl(){
+
+   return _brghtnss;
+}
+
+uint8_t SevenSegTM163X::getBrghtnssMaxLvl(){
+
+   return _brghtnssLvlMax;
+}
+
+uint8_t SevenSegTM163X::getBrghtnssMinLvl(){
+
+   return _brghtnssLvlMin;
+}
+
+void SevenSegTM163X::ntfyUpdDsply(){
+   // composeMssg();
+   // send(_msgBffrPtr, _mssgBffrLngth);
+   send(_dspBuffPtr, _dspDigitsQty);
+   return;
+}
+
+bool SevenSegTM163X::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
+   bool result{false};
+
+   if((newBrghtnssLvl >=_brghtnssLvlMin)&&(newBrghtnssLvl<=_brghtnssLvlMax)){
+      _brghtnss = newBrghtnssLvl;
+      result = true;
+   }
+
+   return result;
+}
+
+void SevenSegTM163X::_txAsk(){   // void I2Cask (void)
+   pinMode(_dio, INPUT);   //! Check!!
+
+   digitalWrite(_clk, LOW);
+   delayMicroseconds(5);
+   while (digitalRead(_dio)){
+   }
+   digitalWrite(_clk, HIGH);
+   delayMicroseconds(2);
+   digitalWrite(_clk, LOW);
+   
+   pinMode(_dio, OUTPUT);   //! Check!!
+
+	return;
+}
+
+void SevenSegTM163X::_txStart(){ // void I2CStart(void)
+   digitalWrite(_clk, HIGH);
+   digitalWrite(_dio, HIGH);
+   delayMicroseconds(2);
+   digitalWrite(_dio, LOW);
+
+	return;
+}
+
+void SevenSegTM163X::_txStop(){  // void I2CStop (void)
+   digitalWrite(_clk, LOW);
+   delayMicroseconds(2);
+   digitalWrite(_dio, LOW);
+   delayMicroseconds(2);
+   digitalWrite(_clk, HIGH);
+   delayMicroseconds(2);
+   digitalWrite(_dio, HIGH);
+
+	return;
+}
+
+void SevenSegTM163X::_txWrByte(uint8_t data){   // void I2CWrByte (unsigned char oneByte)
+   for(uint8_t i{0}; i < 8; i++){
+      digitalWrite(_clk, LOW);
+      if(data &0x01)
+         digitalWrite(_dio, HIGH);
+      else
+         digitalWrite(_dio, LOW);
+      //digitalWrite(_dio, (data &0x01)?HIGH:LOW); //Equivalent single line ternary operation
+      delayMicroseconds(3);
+      data = data >> 1;
+      digitalWrite(_clk, HIGH);
+      delayMicroseconds(3);
+   }
+   
+	return;
+}
+
+void SevenSegTM163X::send(const uint8_t* data, const uint8_t dataQty){
+   uint8_t dspBuffPtrOffset{0};
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+
+   _txStart();
+   _txWrByte(0x40);  // TM1637_COMM1: 40H -> address is automatically incremented by 1 mode (44H -> fixed address mode)
+   _txAsk();
+   _txStop();
+
+   _txStart();
+   _txWrByte(0xC0);  // Set the first address
+   _txAsk();
+   taskENTER_CRITICAL(&mux);
+   // for(uint8_t i{0}; i < dataQty; i++){
+   //    dspBuffPtrOffset = *(_digitPosPtr + i);
+   //    _txWrByte(*(data + dspBuffPtrOffset));
+   //    _txAsk();
+   // }
+   for(uint8_t i{dataQty}; i > 0 ; i--){
+      _txWrByte(*(data + (i-1)));
+      _txAsk();
+   }
+   taskEXIT_CRITICAL(&mux);
+   _txStop();
+
+   _txStart();
+   _txWrByte(0x8F);  // Open display, maximum brightness
+   _txAsk();
+   _txStop();
+
+	return;
+}
+
 
 //============================================================> Class methods separator
 
@@ -497,3 +727,30 @@ SevenSegStatDummy::SevenSegStatDummy(uint8_t* ioPins, uint8_t dspDigits, bool co
 
 SevenSegStatDummy::~SevenSegStatDummy(){}
 */
+
+
+
+template<typename T>
+void pushElmnt(T* &elmntLstPtr, T elmntToPush, uint8_t &elmntQty){
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+	T* tmpArrPtr{nullptr};
+
+   taskENTER_CRITICAL(&mux);
+   if(elmntLstPtr == nullptr){	// There are no array previously created			
+		elmntLstPtr = new T [1];
+	}
+
+   tmpArrPtr = new T [elmntQty + 1];
+   for (int i{0}; i < elmntQty; ++i){
+      *(tmpArrPtr + i) = *(elmntLstPtr + i);
+   }
+   *(tmpArrPtr + elmntQty) = elmntToPush;
+   if(elmntLstPtr != nullptr)
+      delete [] elmntLstPtr;
+   elmntLstPtr = tmpArrPtr;
+   elmntQty++;
+
+   taskEXIT_CRITICAL(&mux);
+
+   return;
+}

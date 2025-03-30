@@ -661,7 +661,7 @@ void SevenSegDisplays::_setAttrbts(){
       _space = ~_space;
       _dot = ~_dot;
       for (int i{0}; i < (int)_charSet.length(); i++)
-         _charLeds[i] = ~_charLeds[i];
+         _charLeds[i] = ~(_charLeds[i]);
    }
 
    return;

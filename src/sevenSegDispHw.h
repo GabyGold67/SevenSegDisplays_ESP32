@@ -36,6 +36,12 @@
 #include <stdint.h>
 #include <ShiftRegGPIOXpander.h>
 
+//------- Gen Func proto BEGIN
+template<typename T>
+void pushElmnt(T* &elmntLstPtr, T ssdToPush, uint8_t &elmntQty);
+//------- Gen Func proto BEGIN
+
+
 //============================================================> Class declarations separator
 
 /**
@@ -255,29 +261,92 @@ public:
     SevenSegStatHC595();
     SevenSegStatHC595(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
     ~SevenSegStatHC595();
-    void ntfyUpdDsply();
+    virtual void ntfyUpdDsply();
 };
 
 //============================================================> Class declarations separator
 
-/*
-class SevenSegTM1637: public SevenSegStatic{
-    const uint8_t maxBrightLvl{0b0111};
-    const uint8_t minBrightLvl{0b0000};
-protected:
-    uint8_t _brightLvl{};
-    uint8_t* colonPosPtr{nullptr};
-    uint8_t colonQty{0};
-    virtual void send();
-public:
-    // SevenSegTM1637();
-    bool setBrightness(uint8_t &newBrightLevel);
-    bool turnOff();
-    bool turnOn();
-    ~SevenSegTM1637();
-};
-*/
+/**
+ * @brief Implements specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series chips
+ *
+ * As TM163X series chips have some differences among them, this class implements the base common characteristics, de differences are implemented in corresponding subclasses.
+ *
+ * Common attributes include:
+ * - Communications protocol (a non standard variation of the I2C protocol).
+ * - Commands structure.
+ * - Read/Write commands.
+ * - Brightness commands, capabilities and values.
+ * - Start and Stop commands.
+ *
+ * Different attributes include:
+ * - Maximum number of ports addressable.
+ *
+ * @note As the communications protocol does't comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet **Maximum clock frequency** stated as 500KHz to a less demanding 100KHz time slices, managed by a timer interrupt set at 100KHz, enabling the timer interrupt service only while transmitting data, and disabling it while idle. The transmission protocol will implement the data sheet requirements, part of it being the use of a 0.5 long CLK multiples for signaling, so **TWO** 100 KHz periods will be set as the CLK width standard.
+ *
+ * @class SevenSegTM163X
+ */
+class SevenSegTM163X: public SevenSegStatic{
+    static uint8_t _usTmrUsrs;
+private:
+    const uint8_t _clkIndx {0};
+    const uint8_t _dioIndx {1};
+    const uint8_t _dspDigitsQtyMax{6}; // Maximum display size in digits for TM1637, is 16 for TM1639
+    const uint8_t _hwBrghtnssLvlMax{0x07};
+    const uint8_t _hwBrghtnssLvlMin{0x00};
 
+    uint8_t _clk {};
+    uint8_t _dio {}; 
+protected:
+    uint8_t _brghtnss{};
+    uint8_t _brghtnssLvlMax{};
+    uint8_t _brghtnssLvlMin{};
+    uint8_t* _msgBffrPtr{nullptr};
+    uint8_t _mssgBffrLngth{0};
+ 
+    bool _turnOff();
+    bool _turnOn();
+ 
+    void send(const uint8_t* data, const uint8_t dataQty);
+    void _txStart();
+    void _txAsk();
+    void _txStop();
+    void _txWrByte(uint8_t data);
+ 
+ public:
+    SevenSegTM163X();
+    SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits);
+    ~SevenSegTM163X();
+    bool begin();
+    virtual void composeMssg();
+    bool end();
+    uint8_t getBrghtnssLvl();
+    uint8_t getBrghtnssMaxLvl();
+    uint8_t getBrghtnssMinLvl();
+    virtual void ntfyUpdDsply();
+    bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl); 
+ };
+ 
+ //============================================================> Class declarations separator
+/* 
+ class SevenSegTM1637: public SevenSegTM163X{
+ protected:
+ public:
+     SevenSegTM1637(gpioPinId_t* ioPins, uint8_t dspDigits);
+     ~SevenSegTM1637();
+ 
+ };
+ */
+ //============================================================> Class declarations separator
+ /*
+ class SevenSegTM1639: public SevenSegTM163X{
+ protected:
+     const uint8_t _dspDigitsQtyMax{16}; // Maximum display size in digits, hardware dependent
+ public:
+     SevenSegTM1639(gpioPinId_t* ioPins, uint8_t dspDigits);
+     ~SevenSegTM1639();
+ 
+ };
+ */
 //============================================================> Class declarations separator
 
 /*

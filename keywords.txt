@@ -5,7 +5,10 @@
 ################################################
 # Datatypes (KEYWORD1)
 ################################################
-SevenSegDisplays KEYWORD1
+SevenSegDisplays  KEYWORD1
+SevenSegDynHC595  KEYWORD1
+SevenSegDynDummy  KEYWORD1
+SevenSegStatHC595 KEYWORD1
 ################################################
 # Methods and Functions (KEYWORD2)
 ################################################
@@ -43,6 +46,7 @@ end  KEYWORD2
 getCommAnode   KEYWORD2
 getDspBuffPtr  KEYWORD2
 getHwDspDigitsQty KEYWORD2
+ntfyUpdDsply   KEYWORD2
 setDigitsOrder KEYWORD2
 setDspBuffPtr  KEYWORD2
 
