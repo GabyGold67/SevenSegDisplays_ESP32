@@ -1,0 +1,166 @@
+{
+   "version": 1,
+   "author": "Gaby Goldman",
+   "editor": "wokwi",
+   "parts": [
+     { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 9.6, "left": 350.44, "attrs": {} },
+     { "type": "wokwi-junction", "id": "j8", "top": 158.4, "left": 350.4, "attrs": {} },
+     { "type": "wokwi-junction", "id": "j9", "top": 110.4, "left": 292.8, "attrs": {} },
+     { "type": "wokwi-junction", "id": "j10", "top": 100.8, "left": 273.6, "attrs": {} },
+     { "type": "wokwi-junction", "id": "j11", "top": 120, "left": 312, "attrs": {} },
+     {
+       "type": "wokwi-7segment",
+       "id": "sevseg1",
+       "top": 313.02,
+       "left": 423.52,
+       "attrs": { "digits": "4", "color": "#00ff00" }
+     },
+     { "type": "wokwi-74hc595", "id": "sr1", "top": 344.4, "left": 322.24, "attrs": {} },
+     { "type": "wokwi-74hc595", "id": "sr2", "top": 344.4, "left": 235.84, "attrs": {} },
+     { "type": "wokwi-vcc", "id": "vcc1", "top": 211.96, "left": 211.2, "attrs": {} },
+     { "type": "wokwi-gnd", "id": "gnd1", "top": 508.8, "left": 210.6, "attrs": {} },
+     {
+       "type": "wokwi-resistor",
+       "id": "r1",
+       "top": 426.35,
+       "left": 412.8,
+       "attrs": { "value": "150" }
+     },
+     {
+       "type": "wokwi-resistor",
+       "id": "r2",
+       "top": 435.95,
+       "left": 412.8,
+       "attrs": { "value": "150" }
+     },
+     {
+       "type": "wokwi-resistor",
+       "id": "r3",
+       "top": 445.55,
+       "left": 412.8,
+       "attrs": { "value": "150" }
+     },
+     {
+       "type": "wokwi-resistor",
+       "id": "r4",
+       "top": 407.15,
+       "left": 412.8,
+       "attrs": { "value": "150" }
+     },
+     {
+       "type": "wokwi-resistor",
+       "id": "r5",
+       "top": 397.55,
+       "left": 412.8,
+       "attrs": { "value": "150" }
+     },
+     {
+       "type": "wokwi-resistor",
+       "id": "r6",
+       "top": 291.95,
+       "left": 422.4,
+       "attrs": { "value": "150" }
+     },
+     {
+       "type": "wokwi-resistor",
+       "id": "r7",
+       "top": 282.35,
+       "left": 422.4,
+       "attrs": { "value": "150" }
+     },
+     {
+       "type": "wokwi-resistor",
+       "id": "r8",
+       "top": 272.75,
+       "left": 422.4,
+       "attrs": { "value": "150" }
+     },
+     { "type": "wokwi-junction", "id": "j1", "top": 206.4, "left": 254.4, "attrs": {} },
+     { "type": "wokwi-junction", "id": "j2", "top": 206.4, "left": 292.8, "attrs": {} },
+     { "type": "wokwi-junction", "id": "j3", "top": 206.4, "left": 273.6, "attrs": {} },
+     {
+       "type": "wokwi-text",
+       "id": "text1",
+       "top": 220.8,
+       "left": 230.4,
+       "attrs": { "text": "DIO" }
+     },
+     {
+       "type": "wokwi-text",
+       "id": "text2",
+       "top": 211.2,
+       "left": 259.2,
+       "attrs": { "text": "RCLK" }
+     },
+     {
+       "type": "wokwi-text",
+       "id": "text3",
+       "top": 220.8,
+       "left": 297.6,
+       "attrs": { "text": "SCLK" }
+     },
+     { "type": "wokwi-text", "id": "text4", "top": 518.4, "left": 240, "attrs": { "text": "GND" } },
+     { "type": "wokwi-junction", "id": "j4", "top": 254.4, "left": 456, "attrs": {} },
+     { "type": "wokwi-junction", "id": "j5", "top": 254.4, "left": 638.4, "attrs": {} },
+     {
+       "type": "wokwi-text",
+       "id": "text5",
+       "top": 240,
+       "left": 470.4,
+       "attrs": { "text": "4-Bit LED Digital Tube" }
+     },
+     { "type": "wokwi-junction", "id": "j6", "top": 254.4, "left": 456, "attrs": {} },
+     { "type": "wokwi-junction", "id": "j7", "top": 254.4, "left": 638.4, "attrs": {} }
+   ],
+   "connections": [
+     [ "esp:TX", "$serialMonitor:RX", "", [] ],
+     [ "esp:RX", "$serialMonitor:TX", "", [] ],
+     [ "j10:J", "esp:33", "violet", [ "v0" ] ],
+     [ "j9:J", "esp:25", "orange", [ "h28.8", "v-9.6" ] ],
+     [ "j11:J", "esp:26", "blue", [ "h48", "v-19.2" ] ],
+     [ "j8:J", "esp:GND.1", "black", [ "v0", "h9.6", "v28.8" ] ],
+     [ "sr2:VCC", "vcc1:VCC", "red", [ "v-27.6", "h-19.2", "v-38.4" ] ],
+     [ "sr2:OE", "gnd1:GND", "black", [ "v-8.4", "h-48" ] ],
+     [ "sr2:GND", "gnd1:GND", "black", [ "v9.6", "h-86.4" ] ],
+     [ "sr1:GND", "gnd1:GND", "black", [ "v9.6", "h-172.8" ] ],
+     [ "sr1:OE", "gnd1:GND", "black", [ "v-8.4", "h-38.4", "v48", "h-96" ] ],
+     [ "sr2:Q7S", "sr1:DS", "magenta", [ "v-18", "h38.4" ] ],
+     [ "sr2:Q0", "sevseg1:DIG4", "blue", [ "v-75.6", "h374.4", "v134.4", "h-86.4" ] ],
+     [ "sr2:Q1", "sevseg1:DIG3", "blue", [ "v105.6", "h412.8", "v-192", "h-124.8" ] ],
+     [ "sr2:Q2", "sevseg1:DIG2", "blue", [ "v96", "h393.6", "v-172.8", "h-124.8" ] ],
+     [ "sr2:Q3", "sevseg1:DIG1", "blue", [ "v86.4", "h374.4", "v-153.6", "h-144.01" ] ],
+     [ "sr2:MR", "vcc1:VCC", "red", [ "v-27.6", "h-96" ] ],
+     [ "sr1:VCC", "vcc1:VCC", "red", [ "v-27.6", "h-153.6" ] ],
+     [ "sr1:MR", "vcc1:VCC", "red", [ "v-27.6", "h-211.2" ] ],
+     [ "sr1:Q4", "r1:1", "purple", [ "v67.2" ] ],
+     [ "r1:2", "sevseg1:E", "purple", [ "v0", "h18" ] ],
+     [ "sr1:Q3", "r2:1", "purple", [ "v76.8" ] ],
+     [ "r2:2", "sevseg1:D", "purple", [ "v0", "h37.2" ] ],
+     [ "sr1:Q2", "r3:1", "purple", [ "v86.4" ] ],
+     [ "r3:2", "sevseg1:C", "purple", [ "v0", "h46.8" ] ],
+     [ "sr1:Q6", "r4:1", "purple", [ "v0" ] ],
+     [ "r4:2", "sevseg1:G", "purple", [ "v0", "h56.4" ] ],
+     [ "sr1:Q7", "r5:1", "purple", [ "v28.8", "h28.8" ] ],
+     [ "r5:2", "sevseg1:DP", "purple", [ "v0", "h37.2" ] ],
+     [ "sr1:Q0", "r6:1", "purple", [ "v0" ] ],
+     [ "r6:2", "sevseg1:A", "purple", [ "v0", "h18" ] ],
+     [ "sr1:Q5", "r7:1", "purple", [ "v48", "h48", "v-134.4" ] ],
+     [ "r7:2", "sevseg1:F", "purple", [ "v0", "h27.6" ] ],
+     [ "sr1:Q1", "r8:1", "purple", [ "v19.2", "h76.8", "v-115.2" ] ],
+     [ "r8:2", "sevseg1:B", "purple", [ "v0", "h56.4" ] ],
+     [ "sr2:DS", "j1:J", "magenta", [ "v0" ] ],
+     [ "sr1:SHCP", "j2:J", "cyan", [ "v-56.4", "h-76.8", "v-57.6" ] ],
+     [ "sr2:SHCP", "j2:J", "cyan", [ "v-56.4", "h9.6" ] ],
+     [ "sr1:STCP", "j3:J", "yellow", [ "v-66", "h-86.4", "v-57.6" ] ],
+     [ "sevseg1:COM", "gnd1:GND", "black", [ "v104.76", "h-326.4" ] ],
+     [ "j3:J", "sr2:STCP", "yellow", [ "v0" ] ],
+     [ "j4:J", "j5:J", "limegreen", [ "h-249.6", "v240", "h451.2", "v-240" ] ],
+     [ "j7:J", "j6:J", "limegreen", [ "v-19.2", "h-182.4" ] ],
+     [ "j4:J", "j6:J", "limegreen", [ "v0" ] ],
+     [ "j5:J", "j7:J", "limegreen", [ "v0" ] ],
+     [ "j1:J", "j10:J", "magenta", [ "v-105.6" ] ],
+     [ "j3:J", "j9:J", "yellow", [ "v-96" ] ],
+     [ "j2:J", "j11:J", "cyan", [ "v-86.4" ] ]
+   ],
+   "dependencies": {}
+ }

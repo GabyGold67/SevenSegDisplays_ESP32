@@ -516,9 +516,17 @@ bool SevenSegDisplays::print(String text){
       if(printOnBlink)
          noBlink();
       for (uint8_t i{0}; i < _dspDigitsQty; ++i){
-         if(*(_dspBuffPtr + i) != temp7SegData[i] & tempDpData[i]){
-            *(_dspBuffPtr + i) = temp7SegData[i] & tempDpData[i];
-            dspCntnChng = true;   
+         if(_dspUndrlHwCommAnode){
+            if(*(_dspBuffPtr + i) != temp7SegData[i] & tempDpData[i]){
+               *(_dspBuffPtr + i) = temp7SegData[i] & tempDpData[i];
+               dspCntnChng = true;   
+            }             
+         }
+         else{
+            if(*(_dspBuffPtr + i) != temp7SegData[i] | tempDpData[i]){
+               *(_dspBuffPtr + i) = temp7SegData[i] | tempDpData[i];
+               dspCntnChng = true;   
+            }             
          }
       }
       if(printOnBlink)
@@ -656,12 +664,20 @@ void SevenSegDisplays::_setAttrbts(){
    }
    --_dspValMax;
 
-   if (!_dspUndrlHwPtr->getCommAnode()) {
+   _dspUndrlHwCommAnode = _dspUndrlHwPtr->getCommAnode();
+
+   if (!_dspUndrlHwCommAnode) {
       _waitChar = ~_waitChar;
       _space = ~_space;
       _dot = ~_dot;
-      for (int i{0}; i < (int)_charSet.length(); i++)
+      for (int i{0}; i < (int)_charSet.length(); i++){
+         Serial.print("Orig.val.: ");  //FTPO
+         Serial.print(_charLeds[i], BIN); //FTPO
          _charLeds[i] = ~(_charLeds[i]);
+         Serial.print(" Neg.val: ");   //FTPO
+         Serial.println(_charLeds[i], BIN);  //FTPO
+      }
+
    }
 
    return;

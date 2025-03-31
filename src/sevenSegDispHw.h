@@ -296,6 +296,9 @@ private:
 
     uint8_t _clk {};
     uint8_t _dio {}; 
+    uint8_t* _lclDspBuffPtr{nullptr};
+
+    void _updDsplyCntnt();
 protected:
     uint8_t _brghtnss{};
     uint8_t _brghtnssLvlMax{};
@@ -303,21 +306,20 @@ protected:
     uint8_t* _msgBffrPtr{nullptr};
     uint8_t _mssgBffrLngth{0};
  
-    bool _turnOff();
-    bool _turnOn();
+    void _turnOff(uint8_t brghtnss = 0x07);
+    void _turnOn(uint8_t brghtnss = 0x07);
  
-    void send(const uint8_t* data, const uint8_t dataQty);
     void _txStart();
     void _txAsk();
     void _txStop();
     void _txWrByte(uint8_t data);
+    virtual void _sendBffr();
  
  public:
     SevenSegTM163X();
     SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits);
     ~SevenSegTM163X();
     bool begin();
-    virtual void composeMssg();
     bool end();
     uint8_t getBrghtnssLvl();
     uint8_t getBrghtnssMaxLvl();
@@ -327,15 +329,12 @@ protected:
  };
  
  //============================================================> Class declarations separator
-/* 
- class SevenSegTM1637: public SevenSegTM163X{
- protected:
- public:
-     SevenSegTM1637(gpioPinId_t* ioPins, uint8_t dspDigits);
-     ~SevenSegTM1637();
- 
+ class SevenSegTM1637NDPnC: public SevenSegTM163X{
+public:
+    SevenSegTM1637NDPnC(uint8_t* ioPins, uint8_t dspDigits);
+    ~SevenSegTM1637NDPnC(); 
  };
- */
+
  //============================================================> Class declarations separator
  /*
  class SevenSegTM1639: public SevenSegTM163X{

@@ -79,6 +79,7 @@ protected:
    uint16_t _dspInstNbr{0};
    int32_t _dspValMax{};
    int32_t _dspValMin{};
+   bool _dspUndrlHwCommAnode{};
     
    bool _isBlinking{false};
    bool _blinkShowOn{false};

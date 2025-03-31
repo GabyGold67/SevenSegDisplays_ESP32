@@ -486,6 +486,8 @@ SevenSegTM163X::SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits)
    _brghtnssLvlMin = _hwBrghtnssLvlMin;
    _brghtnss = _brghtnssLvlMax;
 
+   _lclDspBuffPtr = new uint8_t[_dspDigitsQty];
+   begin();
 }
 
 SevenSegTM163X::~SevenSegTM163X()
@@ -493,16 +495,40 @@ SevenSegTM163X::~SevenSegTM163X()
 }
 
 bool SevenSegTM163X::begin(){
+   _turnOn();
 
 	return true;
 }
 
 bool SevenSegTM163X::end(){
+   _turnOff();
 
 	return true;
 }
 
-void SevenSegTM163X::composeMssg(){
+uint8_t SevenSegTM163X::getBrghtnssLvl(){
+
+   return _brghtnss;
+}
+
+uint8_t SevenSegTM163X::getBrghtnssMaxLvl(){
+
+   return _brghtnssLvlMax;
+}
+
+uint8_t SevenSegTM163X::getBrghtnssMinLvl(){
+
+   return _brghtnssLvlMin;
+}
+
+void SevenSegTM163X::ntfyUpdDsply(){
+   _updDsplyCntnt();
+   _sendBffr();
+
+   return;
+}
+
+void SevenSegTM163X::_sendBffr(){
 	/* If it's low cost confirm the new buffer contents are different from the display content
 	 * Create a message buffer according to the TM1637 I2C modified protocol:
 	 * Invoke the send() method to output the message to the display
@@ -565,53 +591,26 @@ void SevenSegTM163X::composeMssg(){
    // 7. Close transmition
    //===============================================================
    
-   uint8_t mssgUnt{0};
-   uint8_t mssgLnght{0};
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+   _txStart();
+   _txWrByte(0x40);  // TM1637_COMM1: 40H -> address is automatically incremented by 1 mode (44H -> fixed address mode)
+   _txAsk();
+   _txStop();
 
-   if(_msgBffrPtr != nullptr){
-      delete[] _msgBffrPtr;
-      _msgBffrPtr = nullptr;
+   _txStart();
+   _txWrByte(0xC0);  // Set the first address
+   _txAsk();
+
+   for(uint8_t i{0}; i < _dspDigitsQty ; i++){
+      _txWrByte(*(_lclDspBuffPtr + i));
+      _txAsk();
    }
-   _mssgBffrLngth = 0;
-   
-   mssgUnt = 0x40;   // FFDR Compose Command1 to view why it's value is 0x40
-   pushElmnt<uint8_t>(_msgBffrPtr, mssgUnt, mssgLnght);
+   for(uint8_t i{_dspDigitsQty}; i < 6 ; i++){
+      _txWrByte(0x00);
+      _txAsk();
+   }
 
-   mssgUnt = 0xC0;   // FFDR Compose Command2 to view why it's value is 0xC0
-   pushElmnt<uint8_t>(_msgBffrPtr, mssgUnt, mssgLnght);
+   _txStop();
 
-   taskENTER_CRITICAL(&mux);
-   for(uint8_t i{0}; i<_dspDigitsQty; i++)
-      pushElmnt<uint8_t>(_msgBffrPtr, *(_dspBuffPtr + i), mssgLnght);
-   taskEXIT_CRITICAL(&mux);
-
-   mssgUnt = 0x8F; // FFDR Compose Command3 to view why it's value is 0x8F
-   pushElmnt<uint8_t>(_msgBffrPtr, mssgUnt, mssgLnght);
-
-//-------------------------   
-	return;
-}
-
-uint8_t SevenSegTM163X::getBrghtnssLvl(){
-
-   return _brghtnss;
-}
-
-uint8_t SevenSegTM163X::getBrghtnssMaxLvl(){
-
-   return _brghtnssLvlMax;
-}
-
-uint8_t SevenSegTM163X::getBrghtnssMinLvl(){
-
-   return _brghtnssLvlMin;
-}
-
-void SevenSegTM163X::ntfyUpdDsply(){
-   // composeMssg();
-   // send(_msgBffrPtr, _mssgBffrLngth);
-   send(_dspBuffPtr, _dspDigitsQty);
    return;
 }
 
@@ -626,8 +625,26 @@ bool SevenSegTM163X::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
    return result;
 }
 
+void SevenSegTM163X::_turnOff(uint8_t brghtnss){
+   // _txStart();
+   // _txWrByte(0x80|brghtnss);  // Open display, maximum brightness
+   // _txAsk();
+   // _txStop();
+
+   return;
+}
+
+void SevenSegTM163X::_turnOn(uint8_t brghtnss){
+   _txStart();
+   _txWrByte(0x88|brghtnss);  // Open display, maximum brightness
+   _txAsk();
+   _txStop();
+
+   return;
+}
+
 void SevenSegTM163X::_txAsk(){   // void I2Cask (void)
-   pinMode(_dio, INPUT);   //! Check!!
+   pinMode(_dio, INPUT);
 
    digitalWrite(_clk, LOW);
    delayMicroseconds(5);
@@ -637,7 +654,7 @@ void SevenSegTM163X::_txAsk(){   // void I2Cask (void)
    delayMicroseconds(2);
    digitalWrite(_clk, LOW);
    
-   pinMode(_dio, OUTPUT);   //! Check!!
+   pinMode(_dio, OUTPUT);
 
 	return;
 }
@@ -666,11 +683,7 @@ void SevenSegTM163X::_txStop(){  // void I2CStop (void)
 void SevenSegTM163X::_txWrByte(uint8_t data){   // void I2CWrByte (unsigned char oneByte)
    for(uint8_t i{0}; i < 8; i++){
       digitalWrite(_clk, LOW);
-      if(data &0x01)
-         digitalWrite(_dio, HIGH);
-      else
-         digitalWrite(_dio, LOW);
-      //digitalWrite(_dio, (data &0x01)?HIGH:LOW); //Equivalent single line ternary operation
+      digitalWrite(_dio, (data &0x01)?HIGH:LOW); //Equivalent single line ternary operation
       delayMicroseconds(3);
       data = data >> 1;
       digitalWrite(_clk, HIGH);
@@ -680,39 +693,24 @@ void SevenSegTM163X::_txWrByte(uint8_t data){   // void I2CWrByte (unsigned char
 	return;
 }
 
-void SevenSegTM163X::send(const uint8_t* data, const uint8_t dataQty){
+void SevenSegTM163X::_updDsplyCntnt(){
    uint8_t dspBuffPtrOffset{0};
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
-   _txStart();
-   _txWrByte(0x40);  // TM1637_COMM1: 40H -> address is automatically incremented by 1 mode (44H -> fixed address mode)
-   _txAsk();
-   _txStop();
-
-   _txStart();
-   _txWrByte(0xC0);  // Set the first address
-   _txAsk();
    taskENTER_CRITICAL(&mux);
-   // for(uint8_t i{0}; i < dataQty; i++){
-   //    dspBuffPtrOffset = *(_digitPosPtr + i);
-   //    _txWrByte(*(data + dspBuffPtrOffset));
-   //    _txAsk();
-   // }
-   for(uint8_t i{dataQty}; i > 0 ; i--){
-      _txWrByte(*(data + (i-1)));
-      _txAsk();
+   for (int i {0}; i < _dspDigitsQty; i++){
+      dspBuffPtrOffset = *(_digitPosPtr + i);
+      *(_lclDspBuffPtr + i) = *(_dspBuffPtr + dspBuffPtrOffset);
    }
    taskEXIT_CRITICAL(&mux);
-   _txStop();
 
-   _txStart();
-   _txWrByte(0x8F);  // Open display, maximum brightness
-   _txAsk();
-   _txStop();
-
-	return;
+   return;
 }
 
+//============================================================> Class methods separator
+
+SevenSegTM1637NDPnC::SevenSegTM1637NDPnC(uint8_t* ioPins, uint8_t dspDigits){}
+SevenSegTM1637NDPnC::~SevenSegTM1637NDPnC(){}
 
 //============================================================> Class methods separator
 
