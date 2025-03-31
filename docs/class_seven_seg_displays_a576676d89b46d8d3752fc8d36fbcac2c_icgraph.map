@@ -1,21 +1,21 @@
 <map id="SevenSegDisplays::blink" name="SevenSegDisplays::blink">
 <area shape="rect" id="Node000001" title="Makes the display blink the contents it is showing." alt="" coords="671,123,839,149"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#ade8596c25d7c6f2976422ef71a565508" title="Makes the display blink the contents it is showing." alt="" coords="456,47,623,73"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="705,119,622,88,587,76,589,71,624,83,707,114"/>
-<area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string." alt="" coords="456,97,622,124"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="656,127,622,123,623,118,656,122"/>
-<area shape="rect" id="Node000009" href="$class_seven_seg_displays.html#ac1b3ec1b047588cf8743bef6bf6bd565" title="Prints one character to the display, at a designated position (digit or port), without affecting the ..." alt="" coords="455,148,623,175"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="656,150,624,154,623,149,656,145"/>
-<area shape="rect" id="Node000010" href="$class_seven_seg_displays.html#ab1c77aee430974cc460d259e600668ba" title="Prints one character to the display, at a designated position (digit or port), without affecting the ..." alt="" coords="455,199,623,225"/>
-<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="707,158,624,189,589,201,587,196,622,184,705,153"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#a13e2b854efd3d0c923e933c9fd875af1" title="Makes the display blink the contents it is showing." alt="" coords="456,72,623,99"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="679,121,599,102,600,97,681,116"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string." alt="" coords="456,123,622,149"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="656,139,622,139,622,133,656,133"/>
+<area shape="rect" id="Node000009" href="$class_seven_seg_displays.html#ab1c77aee430974cc460d259e600668ba" title="Prints one character to the display, at a designated position (digit or port), without affecting the ..." alt="" coords="455,199,623,225"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="701,158,581,201,579,196,699,153"/>
 <area shape="rect" id="Node000004" href="$class_seven_seg_displays.html#aa74bbf6a2436ea01c170459ef1da5fbe" title="Displays a basic graphical representation of the level of fulfillment or completeness of two segmente..." alt="" coords="229,5,407,48"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="472,95,454,88,406,62,379,51,381,46,408,58,456,83,474,90"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="463,118,453,113,438,100,429,87,420,75,405,62,385,51,388,46,409,58,424,71,433,84,442,96,457,108,466,114"/>
 <area shape="rect" id="Node000005" href="$class_seven_seg_displays.html#aa00c8c2fbca4a0068590ef62de28f198" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ..." alt="" coords="230,72,406,99"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="441,102,406,98,406,93,442,97"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="462,121,379,102,380,97,463,116"/>
 <area shape="rect" id="Node000007" href="$class_seven_seg_displays.html#a57d180fb4339fe2359cc864660a765ac" title="Displays a floating point value." alt="" coords="235,123,400,149"/>
-<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="442,124,401,129,401,124,441,119"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="441,139,401,139,401,133,441,133"/>
 <area shape="rect" id="Node000008" href="$class_seven_seg_displays.html#a4858a1c2efaf8a7d0e67297948937d7c" title="Displays an integer value as long as the length representation fits the available space of the displa..." alt="" coords="235,173,400,200"/>
-<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="474,132,456,138,408,164,375,175,373,170,406,159,454,134,472,127"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="463,156,380,175,379,170,462,151"/>
 <area shape="rect" id="Node000006" href="$class_seven_seg_displays.html#a6fea06785902000457c1105c78d85093" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ..." alt="" coords="5,72,181,99"/>
 <area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="215,88,181,88,181,83,215,83"/>
+<area shape="rect" id="Node000010" href="$class_seven_seg_displays.html#ac1b3ec1b047588cf8743bef6bf6bd565" title="Prints one character to the display, at a designated position (digit or port), without affecting the ..." alt="" coords="234,224,402,251"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="440,226,403,230,402,225,439,221"/>
 </map>

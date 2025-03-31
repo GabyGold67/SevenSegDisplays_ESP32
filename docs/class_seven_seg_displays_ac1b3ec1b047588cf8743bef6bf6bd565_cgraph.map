@@ -1,7 +1,9 @@
 <map id="SevenSegDisplays::write" name="SevenSegDisplays::write">
 <area shape="rect" id="Node000001" title="Prints one character to the display, at a designated position (digit or port), without affecting the ..." alt="" coords="5,31,174,57"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing." alt="" coords="230,5,397,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,32,214,27,215,33,174,37"/>
-<area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="222,56,405,83"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="174,51,206,55,206,60,174,56"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#ab1c77aee430974cc460d259e600668ba" title="Prints one character to the display, at a designated position (digit or port), without affecting the ..." alt="" coords="222,31,390,57"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,41,206,41,206,47,174,47"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing." alt="" coords="446,5,613,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="390,32,430,27,431,33,390,37"/>
+<area shape="rect" id="Node000004" href="$class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="438,56,621,83"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="390,51,423,55,422,60,390,56"/>
 </map>

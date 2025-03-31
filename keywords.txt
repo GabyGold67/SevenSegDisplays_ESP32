@@ -19,12 +19,15 @@ clear	    KEYWORD2
 doubleGauge KEYWORD2
 gauge       KEYWORD2
 getDigitsQty   KEYWORD2
+getDspCount KEYWORD2
 getDspUndrlHwPtr  KEYWORD2
 getDspValMax   KEYWORD2
 getDspValMin   KEYWORD2
 getInstanceNbr  KEYWORD2
 getMaxBlinkRate KEYWORD2
 getMinBlinkRate KEYWORD2
+getSerialNbr   KEYWORD2
+isBlank  KEYWORD2
 isBlinking  KEYWORD2
 isWaiting   KEYWORD2
 noBlink     KEYWORD2
@@ -33,7 +36,6 @@ print	    KEYWORD2
 resetBlinkMask KEYWORD2
 setBlinkMask   KEYWORD2
 setBlinkRate    KEYWORD2
-setDigitsOrder KEYWORD2
 setWaitChar KEYWORD2
 setWaitRate KEYWORD2
 wait    KEYWORD2
@@ -49,7 +51,13 @@ getHwDspDigitsQty KEYWORD2
 ntfyUpdDsply   KEYWORD2
 setDigitsOrder KEYWORD2
 setDspBuffPtr  KEYWORD2
-
+#####################
+#SevenSegTM163X class
+#####################
+getBrghtnssLvl KEYWORD2
+getBrghtnssMaxLvl KEYWORD2
+getBrghtnssMinLvl KEYWORD2
+setBrghtnssLvl KEYWORD2
 ###############################################
 # Constants (LITERAL1)
 ###############################################

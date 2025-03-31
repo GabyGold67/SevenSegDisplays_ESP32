@@ -1,5 +1,5 @@
 var class_seven_seg_dyn_h_c595 =
 [
-    [ "begin", "class_seven_seg_dyn_h_c595.html#af991be072c31c268dcbdf5afec83b268", null ],
-    [ "stop", "class_seven_seg_dyn_h_c595.html#a651503e904924c45b19c829c2e02a7db", null ]
+    [ "begin", "class_seven_seg_dyn_h_c595.html#acae65548bebc819a38ce07c07c140ef2", null ],
+    [ "end", "class_seven_seg_dyn_h_c595.html#add611b927a735ea74809379a0ecb8533", null ]
 ];

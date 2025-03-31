@@ -1,11 +1,13 @@
 <map id="C:/Users/DevPadawan/Documents/My Projects/Training Projects/LibsDev_ESP32/lib/SevenSegDisplays_ESP32/src/SevenSegDisplays.h" name="C:/Users/DevPadawan/Documents/My Projects/Training Projects/LibsDev_ESP32/lib/SevenSegDisplays_ESP32/src/SevenSegDisplays.h">
-<area shape="rect" id="Node000001" title="Header file for the SevenSegDisplays_ESP32 library." alt="" coords="5,5,223,96"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="25,219,102,245"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="66,98,48,120,35,145,32,160,35,175,47,205,43,207,29,177,27,160,30,143,44,117,61,95"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="131,219,196,245"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="167,95,184,117,198,143,201,160,198,177,185,207,180,205,193,176,195,160,193,145,180,120,162,98"/>
-<area shape="rect" id="Node000004" href="$seven_seg_disp_hw_8h.html" title="Header file for the SevenSegDisplays_ESP32 library, SevenSegDispHw class and subclasses." alt="" coords="45,144,183,171"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="117,96,117,128,111,128,111,96"/>
-<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="107,173,83,208,78,205,103,170"/>
-<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="125,170,148,204,144,207,120,173"/>
+<area shape="rect" id="Node000001" title="Header file for the SevenSegDisplays_ESP32 library." alt="" coords="79,5,296,96"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,219,82,245"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="149,98,108,146,63,207,59,204,104,142,144,95"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="294,219,358,245"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="231,95,271,142,313,204,309,207,267,146,227,98"/>
+<area shape="rect" id="Node000004" href="$seven_seg_disp_hw_8h.html" title="Header file for the SevenSegDisplays_ESP32 library, SevenSegDispHw class and subclasses." alt="" coords="118,144,257,171"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="190,96,190,128,185,128,185,96"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="164,174,84,214,81,209,161,169"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="213,169,290,209,287,213,210,174"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="105,219,270,245"/>
+<area shape="poly" id="edge6_Node000004_Node000005" title=" " alt="" coords="190,171,190,203,185,203,185,171"/>
 </map>

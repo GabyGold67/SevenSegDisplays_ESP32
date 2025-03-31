@@ -7,7 +7,7 @@
  * @version 3.0.0
  * 
  * @date First release: 20/12/2023 
- *       Last update:   25/03/2025 11:20 (GMT+0200)
+ *       Last update:   31/03/2025 18:10 (GMT+0200) DST
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -70,13 +70,13 @@ public:
     * @brief Sets up the hardware display to work.  
     * 
     * Depending on the display technology and the resources it needs to start working, this method takes care of those preparation. That means that each specific subclass of display will have to provide it's version of `begin()` that will take care of:  
-    * - Configuring timmers or interrupts.  
+    * - Configuring timers or interrupts.  
     * - Setup tasks and unblocking procedures to get new contents from the SevenSegDisplays object
     * - Setup communications parameters.  
     * - Establish communications with the display.  
     * - Other specific services configuration and starting.  
     * 
-    * @retval true The specific configurations and startups could be successfuly made
+    * @retval true The specific configurations and startups could be successfully made
     * @return false One or more of the specific configurations or startups failed.  
     */
     virtual bool begin(uint32_t updtLps = 0);
@@ -86,12 +86,13 @@ public:
      * 
      * The SevenSegDisplays instantiated objects will compose the values corresponding to each character it can display according to the SevenSegDispHw attribute _commAnode. Each SevenSegDispHw instantiable subclass will have that constant attribute set by the subclass developer to correspond to the technical specifications of the display hardware. 
      * 
-     * @retval true The display is built with Common Annode seven segment display modules
+     * @retval true The display is built with Common Anode seven segment display modules
      * @retval false The display is built with Common Cathode seven segment display modules
      */
     bool getCommAnode();
     uint8_t* getDspBuffPtr();
     uint8_t getHwDspDigitsQty();
+    virtual void ntfyUpdDsply();
     bool setDigitsOrder(uint8_t* newOrderPtr);
     /**
      * @brief Returns the pointer to the Display Buffer
@@ -105,7 +106,6 @@ public:
      * @warning Setting the display buffer pointer to an address not coinciding with the one configured in the SevenSegDisplays will **disable** the possibility for it to get new generated content displayed!! Handle with extreme care!!
      */
     void setDspBuffPtr(uint8_t* newDspBuffPtr);
-    virtual void ntfyUpdDsply();
 };
 
 //============================================================> Class declarations separator
@@ -134,9 +134,9 @@ public:
     * @brief Sets up the hardware display to work.  
     * 
     * Depending on the display technology and the resources it needs to start working, this method takes care of those preparation. That means that each specific subclass of display will have to provide it's version of `begin()`.  
-    * The SevenSegDynamic abstract class and it's subclasses model displays that need regular refreshing of its contents, and for this to happen their `begin()` method must implement and start timers and/or periodic interrupts to handle it's refreshing rutines.  
+    * The SevenSegDynamic abstract class and it's subclasses model displays that need regular refreshing of its contents, and for this to happen their `begin()` method must implement and start timers and/or periodic interrupts to handle it's refreshing routines.  
     *   
-    * @retval true The specific configurations and startups could be successfuly made
+    * @retval true The specific configurations and startups could be successfully made
     * @return false One or more of the specific configurations or startups failed.  
     * 
     * @note For each SevenSegDynamic instantiable subclass a short description of their respective `begin()` actions will be added if they are relevant to the developer using the library.  
@@ -150,7 +150,7 @@ public:
 /**
  * @class SevenSegDynHC595
  * 
- * @brief Models seven segmentd displays driven by two 74HC595 shift registers
+ * @brief Models seven segment displays driven by two 74HC595 shift registers
  * 
  * The display is wired so that one shift register holds the active segments of the display digit, so it is connected in parallel to every digit segment, to the activation pin of the same segment in each one, and the second shift register holds the active digit enabled, so it's pins are connected independently to each digit, selecting which will be active at any given moment.
  * As detailed in the **SevenSegDynamic** class, this wiring arrange requires the display to be refreshed to generate a cinematic effect or animation showing the full contents of all the digits at the same time, while the hardware is capable of liting one at a time. This cinematic effect is also managed by the library.  
@@ -170,7 +170,6 @@ private:
     uint8_t _rclk {};
     uint8_t _dio {};
 protected:
-    // static TimerHandle_t _dynHC595DspRfrshTmrHndl;  //FFDR if the timerhandle is static there's only one for all the displays of this type!!
     TimerHandle_t _dynHC595DspRfrshTmrHndl{NULL};  
 
     void refresh();

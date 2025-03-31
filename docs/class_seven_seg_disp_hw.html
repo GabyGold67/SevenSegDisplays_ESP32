@@ -116,17 +116,17 @@ Inheritance diagram for SevenSegDispHw:</div>
 <area shape="rect" title="Base abstract class models a generic Seven Segment display hardware." alt="" coords="14,5,143,32"/>
 <area shape="rect" href="class_seven_seg_dynamic.html" title="Abstract class models a generic dynamically updated Seven Segment display hardware." alt="" coords="12,80,145,107"/>
 <area shape="poly" title=" " alt="" coords="81,48,81,80,76,80,76,48"/>
-<area shape="rect" href="class_seven_seg_dyn_h_c595.html" title="Models seven segmentd displays driven by two 74HC595 shift registers." alt="" coords="5,155,152,181"/>
+<area shape="rect" href="class_seven_seg_dyn_h_c595.html" title="Models seven segment displays driven by two 74HC595 shift registers." alt="" coords="5,155,152,181"/>
 <area shape="poly" title=" " alt="" coords="81,122,81,154,76,154,76,122"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a69ba4b02a73a4c6f1596a8eec10a4126" id="r_a69ba4b02a73a4c6f1596a8eec10a4126"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a69ba4b02a73a4c6f1596a8eec10a4126">begin</a> ()</td></tr>
-<tr class="memdesc:a69ba4b02a73a4c6f1596a8eec10a4126"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the hardware display to work. <br  />
+<tr class="memitem:a5f3a59bcc54ddd20445e049359753ab6" id="r_a5f3a59bcc54ddd20445e049359753ab6"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5f3a59bcc54ddd20445e049359753ab6">begin</a> (uint32_t updtLps=0)</td></tr>
+<tr class="memdesc:a5f3a59bcc54ddd20445e049359753ab6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the hardware display to work. <br  />
   <br /></td></tr>
-<tr class="separator:a69ba4b02a73a4c6f1596a8eec10a4126"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a5f3a59bcc54ddd20445e049359753ab6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b9379b7b6ca6946813fd643d28d74f4" id="r_a5b9379b7b6ca6946813fd643d28d74f4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b9379b7b6ca6946813fd643d28d74f4">getCommAnode</a> ()</td></tr>
 <tr class="memdesc:a5b9379b7b6ca6946813fd643d28d74f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a value indicating if the hardware has the led display wired as common anode or common cathode.  <br /></td></tr>
 <tr class="separator:a5b9379b7b6ca6946813fd643d28d74f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -137,8 +137,8 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base abstract class models a generic Seven Segment display hardware. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a69ba4b02a73a4c6f1596a8eec10a4126" name="a69ba4b02a73a4c6f1596a8eec10a4126"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a69ba4b02a73a4c6f1596a8eec10a4126">&#9670;&#160;</a></span>begin()</h2>
+<a id="a5f3a59bcc54ddd20445e049359753ab6" name="a5f3a59bcc54ddd20445e049359753ab6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f3a59bcc54ddd20445e049359753ab6">&#9670;&#160;</a></span>begin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -149,7 +149,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">bool SevenSegDispHw::begin </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>updtLps</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -162,9 +162,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Sets up the hardware display to work. <br  />
  </p>
-<p>Depending on the display technology and the resources it needs to start working, this method takes care of those preparation. That means that each specific subclass of display will have to provide it's version of <code><a class="el" href="#a69ba4b02a73a4c6f1596a8eec10a4126" title="Sets up the hardware display to work.">begin()</a></code> that will take care of: <br  />
+<p>Depending on the display technology and the resources it needs to start working, this method takes care of those preparation. That means that each specific subclass of display will have to provide it's version of <code><a class="el" href="#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work.">begin()</a></code> that will take care of: <br  />
 </p><ul>
-<li>Configuring timmers or interrupts. <br  />
+<li>Configuring timers or interrupts. <br  />
 </li>
 <li>Setup tasks and unblocking procedures to get new contents from the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object</li>
 <li>Setup communications parameters. <br  />
@@ -176,14 +176,14 @@ Public Member Functions</h2></td></tr>
 </ul>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>The specific configurations and startups could be successfuly made </td></tr>
+    <tr><td class="paramname">true</td><td>The specific configurations and startups could be successfully made </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>false One or more of the specific configurations or startups failed. <br  />
  </dd></dl>
 
-<p>Reimplemented in <a class="el" href="class_seven_seg_dynamic.html#acefdc5480351334aec2d43bdd6c3682c">SevenSegDynamic</a>, and <a class="el" href="class_seven_seg_dyn_h_c595.html#af991be072c31c268dcbdf5afec83b268">SevenSegDynHC595</a>.</p>
+<p>Reimplemented in <a class="el" href="class_seven_seg_dynamic.html#a1184cb8662e12921f635c13b19a9df7b">SevenSegDynamic</a>, and <a class="el" href="class_seven_seg_dyn_h_c595.html#acae65548bebc819a38ce07c07c140ef2">SevenSegDynHC595</a>.</p>
 
 </div>
 </div>
@@ -206,7 +206,7 @@ Public Member Functions</h2></td></tr>
 <p>The <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> instantiated objects will compose the values corresponding to each character it can display according to the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> attribute _commAnode. Each <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> instantiable subclass will have that constant attribute set by the subclass developer to correspond to the technical specifications of the display hardware.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>The display is built with Common Annode seven segment display modules </td></tr>
+    <tr><td class="paramname">true</td><td>The display is built with Common Anode seven segment display modules </td></tr>
     <tr><td class="paramname">false</td><td>The display is built with Common Cathode seven segment display modules </td></tr>
   </table>
   </dd>

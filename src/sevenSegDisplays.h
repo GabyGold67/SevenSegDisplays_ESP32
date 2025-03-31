@@ -15,7 +15,7 @@
  * @version 3.0.0
  * 
  * @date First release: 20/12/2023 
- *       Last update:   25/03/2025 11:20 (GMT+0200)
+ *       Last update:   31/03/2025 18:10 (GMT+0200) DST
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -76,7 +76,7 @@ protected:
    uint8_t _dspDigitsQty{};
    SevenSegDispHw* _dspUndrlHwPtr{};
    SevenSegDisplays* _dspInstance{nullptr};
-   uint16_t _dspInstNbr{0};
+   uint16_t _dspSerialNbr{0};
    int32_t _dspValMax{};
    int32_t _dspValMin{};
    bool _dspUndrlHwCommAnode{};
@@ -215,8 +215,8 @@ public:
     * The blinking rate can be changed by using the **`setBlinkRate(const unsigned long, const unsigned long)`** method. After changing the blinking rate, the new blinking rate will be kept after a **`noBlink()`** call is done, until it is modified with a new **`setBlinkRate(const unsigned long, const unsigned long)`** call, or it is restarted by a **`blink(const unsigned long, const unsigned long)`** with parameters.  
     * @note To restart the blinking with a **`blink()`** or a **`blink(const unsigned long, const unsigned long)`** the service must first be stopped, as the method call makes no changes if the blinking service was already running.  
     * 
-    * @retval true: If the display was not already set to blink (so now the blinking was started)
-    * @retval false: The display was already set to blink
+    * @retval true: If the display blinking process started ok, or was already set to blink
+    * @retval false: The display blinking failed to start.  
     * 
     * Use example:  
     * @code {.cpp}
@@ -235,8 +235,8 @@ public:
    * @param onRate Value indicating the time (in milliseconds) the display must stay on, the value must be in the range _minBlinkRate <= onRate <= _maxBlinkRate. Those preset values can be known by the use of the **`getMinBlinkRate()`** and the **`getMaxBlinkRate()`** methods.
    * @param offRate Optional value indicating the time (in milliseconds) the display must stay off, the value must be in the range _minBlinkRate <= offRate <= _maxBlinkRate. Those preset values might be known by the use of the **`getMinBlinkRate()`** and the **`getMaxBlinkRate()`** methods. If no offRate value is provided the method will assume it's a symmetric blink call and use a value for offRate equal to the value passed for onRate. 
    * 
-   * @retval true If the display was not already set to blink (so now the blinking was started).  
-   * @retval false The display was already set to blink, and/or one or more of the parameters passed were out of range.  
+   * @retval true If the display was already set to blink, or was not blinking and the blinking started with the provided parameters. If the display was already blinking no change will be made to the blinking rate.  
+   * @retval false One or more of the parameters passed were out of range.  
    * 
    * Use examples:  
    * @code {.cpp}
@@ -392,11 +392,17 @@ public:
     * Use example:  
     * 
     * @code {.cpp}
-    * uint8_t portsQty = myLedDisp.getDigistsQty(); // Saves in the portsQty variable the number of display ports (digits) of the display
+    * uint8_t portsQty = myLedDisp.getDigitsQty(); // Saves in the portsQty variable the number of display ports (digits) of the display
     * @endcode
     * 
     */
    uint8_t getDigitsQty();
+   /**
+    * @brief Returns the quantity of instantiated SevenSegDisplays class objects at invocation moment.  
+    * 
+    * @return The quantity of instantiated displays.  
+    */
+   uint8_t getDspCount();
    /**
     * @brief Returns a pointer to the underlying hardware display object
     * 
@@ -440,24 +446,6 @@ public:
     */
    int32_t getDspValMin();
    /**
-    * @brief Returns a unique numeric identification of the object
-    * 
-    * The Returned unsigned integer value identifies the object. Each time the class is instantiated the created object receives a serial instantiation number that can be used in order to identify each object in case of need.
-    * 
-    * @return The unsigned number indicating the identification Instance Number. 
-    * 
-    * @note As SevenSegDisplays objects might be constructed and destructed at need, the largest Instance number is not necessarily coincidental with the quantity of objects instantiated at any given moment, as the numeric identification of the object is an always increasing value incremented every time a new object is instantiated, but never decremented due to destructions.  
-    * 
-    * @attention Not to be confused with a pointer to the object or other internal unique identification mechanism results  
-    * 
-    * Use example:  
-    * 
-    * @code {.cpp}
-    * uint8_t dspNmbr = myLedDisp.getInstanceNbr();
-    * @endcode
-    */
-   uint16_t getInstanceNbr();
-   /**
     * @brief Returns the maximum rate the display can be configured to blink at. 
     * 
     * The maximum rate the display can be configured to blink at helps keeping the blinkRate setters inside the accepted range. At least two aspects of the blinking process are involved in the determination if this value.  
@@ -493,6 +481,24 @@ public:
     * @endcode
     */
    uint32_t getMinBlinkRate();
+   /**
+    * @brief Returns a unique numeric identification of the object
+    * 
+    * The Returned unsigned integer value identifies the object. Each time the class is instantiated the created object receives a serial instantiation number that can be used in order to identify each object in case of need.
+    * 
+    * @return The unsigned number indicating the identification Instance Number. 
+    * 
+    * @note As SevenSegDisplays objects might be constructed and destructed at need, the largest Instance number is not necessarily coincidental with the quantity of objects instantiated at any given moment, as the numeric identification of the object is an always increasing value incremented every time a new object is instantiated, but never decremented due to destructions. To know the quantity of instantiated displays at any given moment see uint8_t getDspCount()  
+    * 
+    * @attention Not to be confused with a pointer to the object or other internal unique identification mechanism results  
+    * 
+    * Use example:  
+    * 
+    * @code {.cpp}
+    * uint8_t dspNmbr = myLedDisp.getSerialNbr();
+    * @endcode
+    */
+   uint16_t getSerialNbr();
    /**
     * @brief Returns a value indicating if the display is blank. 
     * 
@@ -742,7 +748,7 @@ public:
     * @return true The display was not already set to wait (so now the "Waiting state" was started).  
     * @return false The display was already set to wait, and/or the parameter passed was out of range. 
     * 
-    * @attention The **Waiting state** is considereda transitory state (or situation), as in most systems a "progression bar" is used it's main target is to show the system is not stalled or crashed, it's just waiting for a process to end. As a transitory state, the value displayed before entering the "Waiting state" will be saved, and will be restored automaticaly when the "Waiting state" is ended by the use of the `noWait()` method.  
+    * @attention The **Waiting state** is considered transitory state (or situation), as in most systems a "progression bar" is used it's main target is to show the system is not stalled or crashed, it's just waiting for a process to end. As a transitory state, the value displayed before entering the "Waiting state" will be saved, and will be restored automaticaly when the "Waiting state" is ended by the use of the `noWait()` method.  
     * 
     * Code example  
     * 
@@ -763,7 +769,7 @@ public:
     * @return true The display was not already set to wait (so now the "Waiting state" was started).  
     * @return false The display was already set to wait, and/or the parameter passed was out of range.  
     * 
-    * @attention The **Waiting state** is considereda transitory state (or situation), as in most systems a "progression bar" is used it's main target is to show the system is not stalled or crashed, it's just waiting for a process to end. As a transitory state, the value displayed before entering the "Waiting state" will be saved, and will be restored automaticaly when the "Waiting state" is ended by the use of the `noWait()` method. 
+    * @attention The **Waiting state** is considered transitory state (or situation), as in most systems a "progression bar" is used it's main target is to show the system is not stalled or crashed, it's just waiting for a process to end. As a transitory state, the value displayed before entering the "Waiting state" will be saved, and will be restored automaticaly when the "Waiting state" is ended by the use of the `noWait()` method. 
     */
    bool wait(const uint32_t &newWaitRate);
    /**
