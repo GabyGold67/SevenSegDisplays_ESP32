@@ -328,10 +328,10 @@ protected:
  };
  
  //============================================================> Class declarations separator
- class SevenSegTM1637NDPnC: public SevenSegTM163X{
+ class SevenSegTM1637_v01: public SevenSegTM163X{
 public:
-    SevenSegTM1637NDPnC(uint8_t* ioPins, uint8_t dspDigits);
-    ~SevenSegTM1637NDPnC(); 
+SevenSegTM1637_v01(uint8_t* ioPins, uint8_t dspDigits);
+    ~SevenSegTM1637_v01(); 
  };
 
  //============================================================> Class declarations separator

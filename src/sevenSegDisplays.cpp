@@ -43,12 +43,36 @@ SevenSegDisplays::SevenSegDisplays(SevenSegDispHw* dspUndrlHwPtr)
 }
 
 SevenSegDisplays::~SevenSegDisplays(){
+   BaseType_t tmrModResult;
+
    if(_isBlinking)
       noBlink();  // Stops the blinking, frees the _dspAuxBuffPtr pointed memory, Stops the timer attached to the process
+   if(_blinkTmrHndl){   
+      if(xTimerIsTimerActive(_blinkTmrHndl)){ //if the timer still exists and is running, stop and delete
+         tmrModResult = xTimerStop(_blinkTmrHndl, portMAX_DELAY);
+         if(tmrModResult == pdPASS)
+            tmrModResult = xTimerDelete(_blinkTmrHndl, portMAX_DELAY);
+         if(tmrModResult == pdPASS)
+            _blinkTmrHndl = NULL;   
+      }
+   }
+
    if(_isWaiting)
       noWait();   // Stops the waiting, frees the _dspAuxBuffPtr pointed memory, Stops the timer attached to the process    
-   if(_dspAuxBuffPtr)
-      delete [] _dspAuxBuffPtr;   // Free the resources of the auxiliary display digits buffer (to keep a copy of the dspBuffer contents for blinking, waiting, etc.)
+   if(_waitTmrHndl){   //if the timer still exists and is running, stop and delete
+      if(xTimerIsTimerActive(_waitTmrHndl)){ //if the timer still exists and is running, stop and delete
+         tmrModResult = xTimerStop(_waitTmrHndl, portMAX_DELAY);
+      if(tmrModResult == pdPASS)
+         tmrModResult = xTimerDelete(_waitTmrHndl, portMAX_DELAY);
+      if(tmrModResult == pdPASS)
+         _waitTmrHndl = NULL;
+      }
+   }
+
+   if(_dspAuxBuffPtr != nullptr){
+      delete [] _dspAuxBuffPtr;
+     _dspAuxBuffPtr = nullptr;
+   }
    delete [] _blinkMaskPtr;    // Free the resources of the blink mask buffer
    delete [] _dspBuffPtr;  // Free the resources of the display digits buffer
    _popSsd(_ssdInstancesLstPtr, _dspInstance);
@@ -56,56 +80,58 @@ SevenSegDisplays::~SevenSegDisplays(){
 }
 
 bool SevenSegDisplays::blink(){
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
-   if(!_isWaiting){   // If the display is waiting the blinking option is blocked out as they are mutually excluyent, as both simultaneous states has no logical use!
-      if (!_isBlinking){
+   if(_isWaiting)   // If the display is waiting stop, as the waiting and the blinking options are mutually excluyent, as both simultaneous states has no logical use!
+      noWait();
+   if (!_isBlinking){
+      taskENTER_CRITICAL(&mux);         
+      if (!_blinkTmrHndl){
          String blnkTmrName{""}; // Create a valid unique Name for identifying the timer created
          String dspSerialNumStr {"000" + String(_dspSerialNbr)};
          dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length());
          blnkTmrName = "Disp" + dspSerialNumStr + "blnk_tmr";
-
-         taskENTER_CRITICAL(&mux);         
-         if (!_blinkTmrHndl){
-            _blinkTmrHndl = xTimerCreate(
-               blnkTmrName.c_str(),  // Timer name
-               pdMS_TO_TICKS(_blinkRatesGCD),
-               pdTRUE,  // Autoreload
-               _dspInstance,   // TimerID, data to be passed to the callback function: a pointer to this display  
-               tmrCbBlink  // Callback function
-            );
-         }
-         if(_blinkTmrHndl){
-            if(!xTimerIsTimerActive(_blinkTmrHndl)){ // The timer was created, but it wasn't started. Start the timer  
-               tmrModResult = xTimerStart(_blinkTmrHndl, portMAX_DELAY);
-               if (tmrModResult == pdPASS)
-                  result = true;
-            }
-            else{
+         
+         _blinkTmrHndl = xTimerCreate(
+            blnkTmrName.c_str(),  // Timer name
+            pdMS_TO_TICKS(_blinkRatesGCD),
+            pdTRUE,  // Autoreload
+            _dspInstance,   // TimerID, data to be passed to the callback function: a pointer to this display  
+            tmrCbBlink  // Callback function
+         );
+      }
+      if(_blinkTmrHndl){
+         if(!xTimerIsTimerActive(_blinkTmrHndl)){ // The timer was created, but it wasn't running. Start the timer  
+            tmrModResult = xTimerStart(_blinkTmrHndl, portMAX_DELAY);
+            if (tmrModResult == pdPASS){
                result = true;
             }
          }
-
-         if(result){
-            if(_dspAuxBuffPtr == nullptr)
-               _dspAuxBuffPtr = new uint8_t[_dspDigitsQty];
-            if(_dspAuxBuffPtr){
-               _saveDspBuff();
-               _blinkShowOn = false;
-               _isBlinking = true;
-               _blinkTimer = 0;  //Start the blinking pace timer...      
-            }
-            else{
-               result = false;
-            }
+         else{
+            result = true;
          }
-         taskEXIT_CRITICAL(&mux);
       }
-      else{
-         result = true;
+
+      if(result){
+         if(_dspAuxBuffPtr == nullptr){
+            _dspAuxBuffPtr = new uint8_t[_dspDigitsQty];
+         }
+         if(_dspAuxBuffPtr){
+            // _saveDspBuff();   // Unneeded, first thing done by the blink cb rutine
+            _blinkShowOn = false;
+            _isBlinking = true;
+            _blinkTimer = 0;  //Start the blinking pace timer...      
+         }
+         else{
+            result = false;
+         }
       }
+      taskEXIT_CRITICAL(&mux);
+   }
+   else{
+      result = true;
    }
 
    return result;
@@ -358,6 +384,7 @@ bool SevenSegDisplays::noBlink(){
    if(_isBlinking){
       taskENTER_CRITICAL(&mux);
       _isBlinking = false;
+      /*
       if(_blinkTmrHndl){   //if the timer still exists and is running, stop and delete
          tmrModResult = xTimerStop(_blinkTmrHndl, portMAX_DELAY);
          if(tmrModResult == pdPASS)
@@ -365,11 +392,44 @@ bool SevenSegDisplays::noBlink(){
          if(tmrModResult == pdPASS)
             _blinkTmrHndl = NULL;
       }
+      */
       _restoreDspBuff();   // This method calls _setDspBuffChng() if it suits
+      /*
       delete [] _dspAuxBuffPtr;
       _dspAuxBuffPtr = nullptr;
+      */
       _blinkTimer = 0;
       _blinkShowOn = true;
+      result = true;
+      taskEXIT_CRITICAL(&mux);
+   }
+
+   return result;
+}
+
+bool SevenSegDisplays::noWait(){
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+   bool result {false};
+   BaseType_t tmrModResult {pdFAIL};
+
+   if (_isWaiting){
+      taskENTER_CRITICAL(&mux);
+      _isWaiting = false;
+      /*
+      if(_waitTmrHndl){   //if the timer still exists and is running, stop and delete
+         tmrModResult = xTimerStop(_waitTmrHndl, portMAX_DELAY);
+         if(tmrModResult == pdPASS)
+            tmrModResult = xTimerDelete(_waitTmrHndl, portMAX_DELAY);
+         if(tmrModResult == pdPASS)
+            _waitTmrHndl = NULL;
+      }
+      */
+      _restoreDspBuff();   // This method calls _setDspBuffChng() if it suits
+      /*
+      delete [] _dspAuxBuffPtr;
+      _dspAuxBuffPtr = nullptr;
+      */
+      _waitTimer = 0;
       result = true;
       taskEXIT_CRITICAL(&mux);
    }
@@ -381,30 +441,6 @@ void SevenSegDisplays::_ntfyToHwBuffChng(){
    _dspUndrlHwPtr->ntfyUpdDsply();
 
    return;
-}
-
-bool SevenSegDisplays::noWait(){
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
-   bool result {false};
-   BaseType_t tmrModResult {pdFAIL};
-
-   if (_isWaiting){
-      _isWaiting = false;
-      if(_waitTmrHndl){   //if the timer still exists and is running, stop and delete
-         tmrModResult = xTimerStop(_waitTmrHndl, portMAX_DELAY);
-         if(tmrModResult == pdPASS)
-            tmrModResult = xTimerDelete(_waitTmrHndl, portMAX_DELAY);
-         if(tmrModResult == pdPASS)
-            _waitTmrHndl = NULL;
-      }
-      _restoreDspBuff();   // This method calls _setDspBuffChng() if it suits
-      delete [] _dspAuxBuffPtr;
-      _dspAuxBuffPtr = nullptr;
-      _waitTimer = 0;
-      result = true;
-   }
-
-   return result;
 }
 
 void SevenSegDisplays::_popSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDisplays* ssdToPop){
@@ -644,10 +680,10 @@ void SevenSegDisplays::_restoreDspBuff(){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
    taskENTER_CRITICAL(&mux);
-   if(memcmp(_dspBuffPtr, _dspAuxBuffPtr, _dspDigitsQty) > 0){
+   // if(memcmp(_dspBuffPtr, _dspAuxBuffPtr, _dspDigitsQty) > 0){
       memcpy(_dspBuffPtr, _dspAuxBuffPtr, _dspDigitsQty);   // destPtr, srcPtr, size
       _setDspBuffChng();
-   }
+   // }
    taskEXIT_CRITICAL(&mux);
 
    return;
@@ -845,9 +881,9 @@ void SevenSegDisplays::_updBlinkState(){
             _blinkShowOn = false;
          }
       }
-      if(mainBuffChng){
-         _setDspBuffChng();   //Signal for the hardware refresh mechanism
-      }
+   }
+   if(mainBuffChng){
+      _setDspBuffChng();   //Signal for the hardware refresh mechanism
    }
 
    return;
@@ -874,39 +910,57 @@ void SevenSegDisplays::_updWaitState(){
 }
 
 bool SevenSegDisplays::wait(){
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
+   if (_isBlinking)
+      noBlink();
    if(!_isWaiting){   //If the display is waiting the blinking option is blocked out as they are mutually excluyent, as both simultaneous has no logical use!
-      //Create a valid unique Name for identifying the Wait timer created
-      String waitTmrName{""};
-      String dspSerialNumStr {"000" + String(_dspSerialNbr)};
-      dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length());
-      waitTmrName = "Disp" + dspSerialNumStr + "wait_tmr";
+      taskENTER_CRITICAL(&mux);
+      if (!_waitTmrHndl){         
+         String waitTmrName{""}; //Create a valid unique Name for identifying the Wait timer created
+         String dspSerialNumStr {"000" + String(_dspSerialNbr)};
+         dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length());
+         waitTmrName = "Disp" + dspSerialNumStr + "wait_tmr";
 
-      if (!_waitTmrHndl){
          _waitTmrHndl = xTimerCreate(
             waitTmrName.c_str(),  // Timer name
             pdMS_TO_TICKS(_waitRate),
-            pdTRUE,  //Autoreload
-            _dspInstance,   //TimerID, data to be passed to the callback function
-            tmrCbWait  //Callback function
+            pdTRUE,  // Autoreload
+            _dspInstance,   // TimerID, data to be passed to the callback function
+            tmrCbWait  // Callback function
          );
       }
-      if(_waitTmrHndl && (!xTimerIsTimerActive(_waitTmrHndl))){   // The timer was created, but it wasn't started. Start the timer            
-         tmrModResult = xTimerStart(_waitTmrHndl, portMAX_DELAY);
-         if (tmrModResult == pdPASS)
+      if(_waitTmrHndl){   // The timer was created,check it wasn't started. Start the timer            
+         if((!xTimerIsTimerActive(_waitTmrHndl))){  // The timer was created, but it wasn't running. Start the timer  
+            tmrModResult = xTimerStart(_waitTmrHndl, portMAX_DELAY);
+            if (tmrModResult == pdPASS){
+               result = true;
+            }
+         }
+         else{
             result = true;
+         }
       }
 
-      if (_isBlinking)
-         noBlink();
-      if(_dspAuxBuffPtr == nullptr)   
-         _dspAuxBuffPtr = new uint8_t[_dspDigitsQty];
-      _saveDspBuff();
-      _waitCount = 0;
-      _waitTimer = 0;  //Start the blinking pace timer...
-      _isWaiting = true;
+      if(result){
+         if(_dspAuxBuffPtr == nullptr){
+            _dspAuxBuffPtr = new uint8_t[_dspDigitsQty];
+         }
+         if(_dspAuxBuffPtr){
+            _saveDspBuff();
+            _waitCount = 0;
+            _waitTimer = 0;  //Start the waiting pace timer...
+            _isWaiting = true;
+         }
+         else{
+            result = false;
+         }
+      }
+      taskEXIT_CRITICAL(&mux);
+   }
+   else{
       result = true;
    }
 

@@ -709,8 +709,8 @@ void SevenSegTM163X::_updDsplyCntnt(){
 
 //============================================================> Class methods separator
 
-SevenSegTM1637NDPnC::SevenSegTM1637NDPnC(uint8_t* ioPins, uint8_t dspDigits){}
-SevenSegTM1637NDPnC::~SevenSegTM1637NDPnC(){}
+SevenSegTM1637_v01::SevenSegTM1637_v01(uint8_t* ioPins, uint8_t dspDigits){}
+SevenSegTM1637_v01::~SevenSegTM1637_v01(){}
 
 //============================================================> Class methods separator
 
