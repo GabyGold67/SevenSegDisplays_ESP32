@@ -318,10 +318,8 @@ bool SevenSegDynDummy::begin(uint32_t updtLps){
    Serial.begin(9600);
    Serial.println("Seven Segment Dynamic Dummy Display Begin");
    Serial.println("================================================");
-   Serial.println("For testing purposes the 'display' will be refreshed once every 2 seconds or 0.5Hz");
-   Serial.println("================================================");
 
-   //FFDR Grab the begin() code from the SevenSegDynHC595 and adapt it here
+   //FFDR Grab the begin() code from the SevenSegDynHC595 and adapt it here to set the "refresh rate"
 
    _firstRefreshed = 0;
    //Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)

@@ -680,10 +680,10 @@ void SevenSegDisplays::_restoreDspBuff(){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
    taskENTER_CRITICAL(&mux);
-   // if(memcmp(_dspBuffPtr, _dspAuxBuffPtr, _dspDigitsQty) > 0){
+   if(memcmp(_dspBuffPtr, _dspAuxBuffPtr, _dspDigitsQty) != 0){
       memcpy(_dspBuffPtr, _dspAuxBuffPtr, _dspDigitsQty);   // destPtr, srcPtr, size
       _setDspBuffChng();
-   // }
+   }
    taskEXIT_CRITICAL(&mux);
 
    return;
@@ -892,6 +892,7 @@ void SevenSegDisplays::_updBlinkState(){
 void SevenSegDisplays::_updWaitState(){
    if (_isWaiting == true){
       if (_waitTimer == 0){
+         _saveDspBuff();            
          clear();
          _waitTimer = xTaskGetTickCount()/portTICK_RATE_MS;
       }
@@ -949,7 +950,7 @@ bool SevenSegDisplays::wait(){
             _dspAuxBuffPtr = new uint8_t[_dspDigitsQty];
          }
          if(_dspAuxBuffPtr){
-            _saveDspBuff();
+            // _saveDspBuff();
             _waitCount = 0;
             _waitTimer = 0;  //Start the waiting pace timer...
             _isWaiting = true;
