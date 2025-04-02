@@ -1,13 +1,23 @@
 /**
+ ******************************************************************************
  * @file SevenSegDispHw.cpp
  * @brief Code file for the SevenSegDisplays_ESP32 library, SevenSegDispHw class and subclasses 
  * 
- * @author Gabriel D. Goldman
+ * @details  
  * 
- * @version 3.0.0
+ * Repository: https://github.com/GabyGold67/SevenSegDisplays_ESP32  
  * 
- * @date First release: 20/12/2023 
- *       Last update:   25/03/2025 11:20 (GMT+0200)
+ * Framework: Arduino  
+ * Platform: ESP32  
+ * 
+ * @author Gabriel D. Goldman  
+ * mail <gdgoldman67@hotmail.com>  
+ * Github <https://github.com/GabyGold67>  
+ * 
+ * @version 3.0.0  
+ * 
+ * @date First release: 20/12/2023  
+ *       Last update:   25/03/2025 11:20 (GMT+0200)  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -243,6 +253,11 @@ bool SevenSegDynHC595::begin(uint32_t updtLps){
     return result;
 }
 
+void SevenSegDynHC595::_unAbstract() {
+
+   return;
+}
+
 void SevenSegDynHC595::refresh(){
    bool tmpLogic {true};
    uint8_t tmpDigToSend{0};
@@ -310,6 +325,11 @@ SevenSegDynDummy::SevenSegDynDummy(uint8_t dspDigits, bool commAnode)
 }
 
 SevenSegDynDummy::~SevenSegDynDummy(){}
+
+void SevenSegDynDummy::_unAbstract(){
+
+   return;
+}
 
 bool SevenSegDynDummy::begin(uint32_t updtLps){
    bool result {false};
@@ -443,6 +463,11 @@ SevenSegStatHC595::SevenSegStatHC595(uint8_t *ioPins, uint8_t dspDigits, bool co
 }
 
 SevenSegStatHC595::~SevenSegStatHC595() {}
+
+void SevenSegStatHC595::_unAbstract(){
+
+   return;
+}
 
 void SevenSegStatHC595::ntfyUpdDsply(){
    _updDsplyCntnt();
@@ -623,9 +648,10 @@ bool SevenSegTM163X::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
    return result;
 }
 
+//FFDR complete method code and test
 void SevenSegTM163X::_turnOff(uint8_t brghtnss){
    // _txStart();
-   // _txWrByte(0x80|brghtnss);  // Open display, maximum brightness
+   // _txWrByte(0x80|brghtnss);  // Close display, minimum brightness
    // _txAsk();
    // _txStop();
 
@@ -707,8 +733,20 @@ void SevenSegTM163X::_updDsplyCntnt(){
 
 //============================================================> Class methods separator
 
-SevenSegTM1637_v01::SevenSegTM1637_v01(uint8_t* ioPins, uint8_t dspDigits){}
+SevenSegTM1637_v01::SevenSegTM1637_v01(uint8_t* ioPins, uint8_t dspDigits)
+:SevenSegTM163X(ioPins, dspDigits)
+{
+   Serial.println("\nSevenSegTM1637_v01 constructor"); //FTPO
+   Serial.println("================================"); //FTPO
+}
+
 SevenSegTM1637_v01::~SevenSegTM1637_v01(){}
+
+void SevenSegTM1637_v01::_unAbstract(){
+
+   return;
+}
+
 
 //============================================================> Class methods separator
 

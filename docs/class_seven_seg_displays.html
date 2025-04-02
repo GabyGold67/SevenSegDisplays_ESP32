@@ -266,9 +266,9 @@ Public Member Functions</h2></td></tr>
  </p><div class="fragment"><div class="line"><a class="code hl_class" href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a> myLedDispHw(myDispIOPins, 4, <span class="keyword">true</span>);  <span class="comment">// Instantiation of the underlying hardware object</span></div>
 <div class="line"><a class="code hl_class" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a>* myLedDispHwPtr = &amp;myLedDispHw;        <span class="comment">// Creation of a pointer to the instantiated hardware object</span></div>
 <div class="line"><a class="code hl_class" href="class_seven_seg_displays.html">SevenSegDisplays</a> myLedDisp(myLedDispHwPtr);           <span class="comment">// Instantiation of the SevenSegDisplays object using the pointer created</span></div>
-<div class="ttc" id="aclass_seven_seg_disp_hw_html"><div class="ttname"><a href="class_seven_seg_disp_hw.html">SevenSegDispHw</a></div><div class="ttdoc">Base abstract class models a generic Seven Segment display hardware.</div><div class="ttdef"><b>Definition</b> sevenSegDispHw.h:53</div></div>
-<div class="ttc" id="aclass_seven_seg_displays_html"><div class="ttname"><a href="class_seven_seg_displays.html">SevenSegDisplays</a></div><div class="ttdoc">Default constructor.</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.h:51</div></div>
-<div class="ttc" id="aclass_seven_seg_dyn_h_c595_html"><div class="ttname"><a href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a></div><div class="ttdoc">Models seven segment displays driven by two 74HC595 shift registers.</div><div class="ttdef"><b>Definition</b> sevenSegDispHw.h:159</div></div>
+<div class="ttc" id="aclass_seven_seg_disp_hw_html"><div class="ttname"><a href="class_seven_seg_disp_hw.html">SevenSegDispHw</a></div><div class="ttdoc">Base abstract class models a generic Seven Segment display hardware.</div><div class="ttdef"><b>Definition</b> sevenSegDispHw.h:60</div></div>
+<div class="ttc" id="aclass_seven_seg_displays_html"><div class="ttname"><a href="class_seven_seg_displays.html">SevenSegDisplays</a></div><div class="ttdoc">Default constructor.</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.h:58</div></div>
+<div class="ttc" id="aclass_seven_seg_dyn_h_c595_html"><div class="ttname"><a href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a></div><div class="ttdoc">Models seven segment displays driven by two 74HC595 shift registers.</div><div class="ttdef"><b>Definition</b> sevenSegDispHw.h:167</div></div>
 </div><!-- fragment --><p>A two lines example using the &amp; operand to pass the pointer to the constructor </p><div class="fragment"><div class="line"><a class="code hl_class" href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a> myLedDispHw(myDispIOPins, 4, <span class="keyword">true</span>);  <span class="comment">// Instantiation of the underlying hardware object</span></div>
 <div class="line"><a class="code hl_class" href="class_seven_seg_displays.html">SevenSegDisplays</a> myLedDisp(&amp;myLedDispHw);             <span class="comment">// Instantiation of the SevenSegDisplays object using the &amp; operand over the hardware object created</span></div>
 </div><!-- fragment --><p>A two lines example using a sub-class pointer to a dynamic instantiated object </p><div class="fragment"><div class="line"><a class="code hl_class" href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a>* myLedDispPtr {<span class="keyword">new</span> <a class="code hl_class" href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a> (myDispIOPins, 4, <span class="keyword">true</span>)};   <span class="comment">// Dynamic instantiation of the underlying hardware object, pointed by a subclass pointer</span></div>
@@ -327,6 +327,16 @@ Here is the call graph for this function:</div>
 <p>Use example: <br  />
  </p><div class="fragment"><div class="line">myLedDisp.blink(); <span class="comment">// Begin blinking at the already set rate</span></div>
 </div><!-- fragment --> <div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_displays_a576676d89b46d8d3752fc8d36fbcac2c_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_a576676d89b46d8d3752fc8d36fbcac2c_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_displays_a576676d89b46d8d3752fc8d36fbcac2c_cgraph" id="aclass_seven_seg_displays_a576676d89b46d8d3752fc8d36fbcac2c_cgraph">
+<area shape="rect" title="Makes the display blink the contents it is showing." alt="" coords="5,5,173,32"/>
+<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="221,5,401,32"/>
+<area shape="poly" title=" " alt="" coords="173,16,205,16,205,21,173,21"/>
+</map>
+</div>
+<div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_a576676d89b46d8d3752fc8d36fbcac2c_icgraph.png" border="0" usemap="#aclass_seven_seg_displays_a576676d89b46d8d3752fc8d36fbcac2c_icgraph" alt=""/></div>
@@ -410,6 +420,8 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="173,32,229,26,230,32,173,38"/>
 <area shape="rect" href="class_seven_seg_displays.html#aa96b5cde05602ba58624b103c852ad71" title="Changes the time parameters to use for the display blinking of the contents it shows." alt="" coords="221,56,436,83"/>
 <area shape="poly" title=" " alt="" coords="173,50,205,54,205,59,173,56"/>
+<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="484,5,664,32"/>
+<area shape="poly" title=" " alt="" coords="412,16,469,16,469,21,412,21"/>
 </map>
 </div>
 
@@ -532,10 +544,11 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="184,52,218,55,217,61,184,57"/>
 <area shape="rect" href="class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing." alt="" coords="456,5,623,32"/>
 <area shape="poly" title=" " alt="" coords="378,53,462,33,463,39,379,58"/>
-<area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="448,56,631,83"/>
-<area shape="poly" title=" " alt="" coords="399,67,432,67,432,72,399,72"/>
-<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="450,107,630,133"/>
+<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="679,31,860,57"/>
+<area shape="poly" title=" " alt="" coords="399,62,664,47,664,53,399,67"/>
+<area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="448,107,631,133"/>
 <area shape="poly" title=" " alt="" coords="379,81,463,100,462,105,378,86"/>
+<area shape="poly" title=" " alt="" coords="624,25,664,30,663,35,623,31"/>
 </map>
 </div>
 
@@ -603,10 +616,11 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="404,67,438,67,438,72,404,72"/>
 <area shape="rect" href="class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing." alt="" coords="676,5,844,32"/>
 <area shape="poly" title=" " alt="" coords="598,53,682,33,684,39,599,58"/>
-<area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="668,56,852,83"/>
-<area shape="poly" title=" " alt="" coords="619,67,653,67,653,72,619,72"/>
-<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="670,107,850,133"/>
+<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="900,31,1080,57"/>
+<area shape="poly" title=" " alt="" coords="619,62,884,47,884,53,619,67"/>
+<area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="668,107,852,133"/>
 <area shape="poly" title=" " alt="" coords="599,81,684,100,682,105,598,86"/>
+<area shape="poly" title=" " alt="" coords="844,25,884,30,884,35,844,31"/>
 </map>
 </div>
 
@@ -651,7 +665,7 @@ false Otherwise, being that the <b>level</b> parameter was out of range and/or t
 </div><!-- fragment --><div class="fragment"><div class="line">`myLedDisp.gauge(3);`   <span class="comment">// Displays a gauge with a blank space as label and the next three positions with their respective levels indicators</span></div>
 </div><!-- fragment --><div class="fragment"><div class="line">`myLedDisp.gauge(1, <span class="charliteral">&#39;F&#39;</span>);` <span class="comment">// Displays a gauge with a **F** as label in it&#39;s leftmost position, and the next position holding the second level indicator</span></div>
 </div><!-- fragment --><div class="fragment"><div class="line">`myLedDisp.**<a class="code hl_function" href="#aa00c8c2fbca4a0068590ef62de28f198">gauge</a>(4, <span class="charliteral">&#39;d&#39;</span>);`  <span class="comment">// Error, the value 4 is outside valid range, the method will return **false** and the display will be cleared.  </span></div>
-<div class="ttc" id="aclass_seven_seg_displays_html_aa00c8c2fbca4a0068590ef62de28f198"><div class="ttname"><a href="#aa00c8c2fbca4a0068590ef62de28f198">SevenSegDisplays::gauge</a></div><div class="ttdeci">bool gauge(const int &amp;level, char label=' ')</div><div class="ttdoc">Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ...</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.cpp:242</div></div>
+<div class="ttc" id="aclass_seven_seg_displays_html_aa00c8c2fbca4a0068590ef62de28f198"><div class="ttname"><a href="#aa00c8c2fbca4a0068590ef62de28f198">SevenSegDisplays::gauge</a></div><div class="ttdeci">bool gauge(const int &amp;level, char label=' ')</div><div class="ttdoc">Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ...</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.cpp:276</div></div>
 </div><!-- fragment --><div class="fragment"><div class="line">`myLedDisp.gauge(3, <span class="charliteral">&#39;X&#39;</span>);` <span class="comment">// Error, **X** is not a displayable character, the method will return **false** and the display will be cleared</span></div>
 </div><!-- fragment --> <div class="dynheader">
 Here is the call graph for this function:</div>
@@ -665,10 +679,11 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="181,51,215,55,214,61,180,57"/>
 <area shape="rect" href="class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing." alt="" coords="453,5,620,32"/>
 <area shape="poly" title=" " alt="" coords="375,53,459,33,460,39,376,58"/>
-<area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="445,56,628,83"/>
-<area shape="poly" title=" " alt="" coords="396,67,429,67,429,72,396,72"/>
-<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="446,107,627,133"/>
+<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="676,31,857,57"/>
+<area shape="poly" title=" " alt="" coords="396,62,661,47,661,53,396,67"/>
+<area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="445,107,628,133"/>
 <area shape="poly" title=" " alt="" coords="376,81,460,100,459,105,375,86"/>
+<area shape="poly" title=" " alt="" coords="621,25,661,30,660,35,620,31"/>
 </map>
 </div>
 <div class="dynheader">
@@ -1092,21 +1107,30 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_a2e6d2565f90dc6acf546934dde557471_icgraph.png" border="0" usemap="#aclass_seven_seg_displays_a2e6d2565f90dc6acf546934dde557471_icgraph" alt=""/></div>
 <map name="aclass_seven_seg_displays_a2e6d2565f90dc6acf546934dde557471_icgraph" id="aclass_seven_seg_displays_a2e6d2565f90dc6acf546934dde557471_icgraph">
-<area shape="rect" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="668,68,849,95"/>
-<area shape="rect" href="class_seven_seg_displays.html#aad6eac4fa55968318f6d0c1e4e80cb8e" title="Class destructor." alt="" coords="468,31,608,73"/>
-<area shape="poly" title=" " alt="" coords="652,70,608,64,609,59,653,65"/>
-<area shape="rect" href="class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string." alt="" coords="455,97,620,124"/>
-<area shape="poly" title=" " alt="" coords="653,98,621,102,621,97,652,93"/>
-<area shape="rect" href="class_seven_seg_displays.html#aa74bbf6a2436ea01c170459ef1da5fbe" title="Displays a basic graphical representation of the level of fulfillment or completeness of two segmente..." alt="" coords="229,5,407,48"/>
-<area shape="poly" title=" " alt="" coords="471,94,454,88,406,62,379,51,381,46,408,58,456,83,473,89"/>
-<area shape="rect" href="class_seven_seg_displays.html#aa00c8c2fbca4a0068590ef62de28f198" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ..." alt="" coords="230,72,406,99"/>
-<area shape="poly" title=" " alt="" coords="439,102,406,98,406,93,440,97"/>
-<area shape="rect" href="class_seven_seg_displays.html#a57d180fb4339fe2359cc864660a765ac" title="Displays a floating point value." alt="" coords="235,123,400,149"/>
-<area shape="poly" title=" " alt="" coords="440,125,401,129,401,124,440,119"/>
-<area shape="rect" href="class_seven_seg_displays.html#a4858a1c2efaf8a7d0e67297948937d7c" title="Displays an integer value as long as the length representation fits the available space of the displa..." alt="" coords="235,173,400,200"/>
-<area shape="poly" title=" " alt="" coords="490,133,408,164,371,175,370,170,406,159,488,128"/>
-<area shape="rect" href="class_seven_seg_displays.html#a6fea06785902000457c1105c78d85093" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ..." alt="" coords="5,72,181,99"/>
-<area shape="poly" title=" " alt="" coords="215,88,181,88,181,83,215,83"/>
+<area shape="rect" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="887,72,1067,99"/>
+<area shape="rect" href="class_seven_seg_displays.html#aad6eac4fa55968318f6d0c1e4e80cb8e" title="Class destructor." alt="" coords="685,5,825,48"/>
+<area shape="poly" title=" " alt="" coords="908,70,825,48,826,43,910,65"/>
+<area shape="rect" href="class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing." alt="" coords="671,72,839,99"/>
+<area shape="poly" title=" " alt="" coords="871,88,839,88,839,83,871,83"/>
+<area shape="rect" href="class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string." alt="" coords="456,123,622,149"/>
+<area shape="poly" title=" " alt="" coords="893,105,839,113,726,126,623,134,622,129,725,120,838,108,892,99"/>
+<area shape="rect" href="class_seven_seg_displays.html#a13e2b854efd3d0c923e933c9fd875af1" title="Makes the display blink the contents it is showing." alt="" coords="456,72,623,99"/>
+<area shape="poly" title=" " alt="" coords="656,88,623,88,623,83,656,83"/>
+<area shape="poly" title=" " alt="" coords="681,105,600,125,599,119,679,100"/>
+<area shape="rect" href="class_seven_seg_displays.html#ab1c77aee430974cc460d259e600668ba" title="Prints one character to the display, at a designated position (digit or port), without affecting the ..." alt="" coords="455,13,623,40"/>
+<area shape="poly" title=" " alt="" coords="688,70,590,43,592,38,689,65"/>
+<area shape="rect" href="class_seven_seg_displays.html#aa74bbf6a2436ea01c170459ef1da5fbe" title="Displays a basic graphical representation of the level of fulfillment or completeness of two segmente..." alt="" coords="229,56,407,99"/>
+<area shape="poly" title=" " alt="" coords="471,121,400,102,402,97,473,116"/>
+<area shape="rect" href="class_seven_seg_displays.html#aa00c8c2fbca4a0068590ef62de28f198" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ..." alt="" coords="230,123,406,149"/>
+<area shape="poly" title=" " alt="" coords="441,139,406,139,406,133,441,133"/>
+<area shape="rect" href="class_seven_seg_displays.html#a57d180fb4339fe2359cc864660a765ac" title="Displays a floating point value." alt="" coords="235,173,400,200"/>
+<area shape="poly" title=" " alt="" coords="463,156,380,175,379,170,462,151"/>
+<area shape="rect" href="class_seven_seg_displays.html#a4858a1c2efaf8a7d0e67297948937d7c" title="Displays an integer value as long as the length representation fits the available space of the displa..." alt="" coords="235,224,400,251"/>
+<area shape="poly" title=" " alt="" coords="506,160,461,188,408,214,376,226,374,221,406,210,458,183,504,156"/>
+<area shape="rect" href="class_seven_seg_displays.html#a6fea06785902000457c1105c78d85093" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ..." alt="" coords="5,123,181,149"/>
+<area shape="poly" title=" " alt="" coords="215,139,181,139,181,133,215,133"/>
+<area shape="rect" href="class_seven_seg_displays.html#ac1b3ec1b047588cf8743bef6bf6bd565" title="Prints one character to the display, at a designated position (digit or port), without affecting the ..." alt="" coords="234,5,402,32"/>
+<area shape="poly" title=" " alt="" coords="440,26,402,24,403,19,440,20"/>
 </map>
 </div>
 
@@ -1187,10 +1211,11 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="171,51,205,55,204,60,170,56"/>
 <area shape="rect" href="class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing." alt="" coords="443,5,610,32"/>
 <area shape="poly" title=" " alt="" coords="365,53,449,33,450,39,366,58"/>
-<area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="435,56,618,83"/>
-<area shape="poly" title=" " alt="" coords="386,67,419,67,419,72,386,72"/>
-<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="436,107,617,133"/>
+<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="666,31,847,57"/>
+<area shape="poly" title=" " alt="" coords="386,62,651,47,651,53,386,67"/>
+<area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="435,107,618,133"/>
 <area shape="poly" title=" " alt="" coords="366,81,450,100,449,105,365,86"/>
+<area shape="poly" title=" " alt="" coords="611,25,651,30,650,35,610,31"/>
 </map>
 </div>
 
@@ -1257,10 +1282,11 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="171,51,205,55,204,60,170,56"/>
 <area shape="rect" href="class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing." alt="" coords="443,5,610,32"/>
 <area shape="poly" title=" " alt="" coords="365,53,449,33,450,39,366,58"/>
-<area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="435,56,618,83"/>
-<area shape="poly" title=" " alt="" coords="386,67,419,67,419,72,386,72"/>
-<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="436,107,617,133"/>
+<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="666,31,847,57"/>
+<area shape="poly" title=" " alt="" coords="386,62,651,47,651,53,386,67"/>
+<area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="435,107,618,133"/>
 <area shape="poly" title=" " alt="" coords="366,81,450,100,449,105,365,86"/>
+<area shape="poly" title=" " alt="" coords="611,25,651,30,650,35,610,31"/>
 </map>
 </div>
 
@@ -1319,10 +1345,11 @@ Here is the call graph for this function:</div>
 <area shape="rect" title="Displays a text string." alt="" coords="5,56,171,83"/>
 <area shape="rect" href="class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing." alt="" coords="227,5,394,32"/>
 <area shape="poly" title=" " alt="" coords="149,53,233,33,234,39,151,58"/>
-<area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="219,56,402,83"/>
-<area shape="poly" title=" " alt="" coords="171,67,203,67,203,72,171,72"/>
-<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="220,107,400,133"/>
+<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="450,31,630,57"/>
+<area shape="poly" title=" " alt="" coords="171,62,434,47,434,53,171,67"/>
+<area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="219,107,402,133"/>
 <area shape="poly" title=" " alt="" coords="151,81,234,100,233,105,149,86"/>
+<area shape="poly" title=" " alt="" coords="395,25,435,30,434,35,394,31"/>
 </map>
 </div>
 <div class="dynheader">
@@ -1576,7 +1603,7 @@ false The display was already set to wait, and/or the parameter passed was out o
 <div class="fragment"><div class="line">myLedDisp.wait(); <span class="comment">//Returns true and shows advancement animation to the already set value.  </span></div>
 <div class="line">myLedDisp.wait(800); <span class="comment">//Returns true and sets the advancement animation rate to 800 millisecs.  </span></div>
 <div class="line">myLedDisp.wait(<a class="code hl_function" href="#acacba9047c40769b42a11268df302f9c">getMaxBlinkRate</a>() + 10);   <span class="comment">//Returns false and the display stays without change.  </span></div>
-<div class="ttc" id="aclass_seven_seg_displays_html_acacba9047c40769b42a11268df302f9c"><div class="ttname"><a href="#acacba9047c40769b42a11268df302f9c">SevenSegDisplays::getMaxBlinkRate</a></div><div class="ttdeci">uint32_t getMaxBlinkRate()</div><div class="ttdoc">Returns the maximum rate the display can be configured to blink at.</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.cpp:320</div></div>
+<div class="ttc" id="aclass_seven_seg_displays_html_acacba9047c40769b42a11268df302f9c"><div class="ttname"><a href="#acacba9047c40769b42a11268df302f9c">SevenSegDisplays::getMaxBlinkRate</a></div><div class="ttdeci">uint32_t getMaxBlinkRate()</div><div class="ttdoc">Returns the maximum rate the display can be configured to blink at.</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.cpp:354</div></div>
 </div><!-- fragment --> <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1698,6 +1725,8 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="390,32,430,27,431,33,390,37"/>
 <area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="438,56,621,83"/>
 <area shape="poly" title=" " alt="" coords="390,51,423,55,422,60,390,56"/>
+<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="669,5,850,32"/>
+<area shape="poly" title=" " alt="" coords="614,16,654,16,654,21,614,21"/>
 </map>
 </div>
 
@@ -1753,6 +1782,8 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="174,32,214,27,215,33,174,37"/>
 <area shape="rect" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="222,56,405,83"/>
 <area shape="poly" title=" " alt="" coords="174,51,206,55,206,60,174,56"/>
+<area shape="rect" href="class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="453,5,633,32"/>
+<area shape="poly" title=" " alt="" coords="397,16,437,16,437,21,397,21"/>
 </map>
 </div>
 <div class="dynheader">

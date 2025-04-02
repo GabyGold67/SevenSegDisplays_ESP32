@@ -1,13 +1,21 @@
 /**
+ ******************************************************************************
  * @file SevenSegDispHw.h
  * @brief Header file for the SevenSegDisplays_ESP32 library, SevenSegDispHw class and subclasses 
  * 
- * @author Gabriel D. Goldman
+ * Repository: https://github.com/GabyGold67/SevenSegDisplays_ESP32  
+ * 
+ * Framework: Arduino  
+ * Platform: ESP32  
+ * 
+ * @author Gabriel D. Goldman  
+ * mail <gdgoldman67@hotmail.com>  
+ * Github <https://github.com/GabyGold67>  
  * 
  * @version 3.0.0
  * 
- * @date First release: 20/12/2023 
- *       Last update:   31/03/2025 18:10 (GMT+0200) DST
+ * @date First release: 20/12/2023  
+ *       Last update:   31/03/2025 18:10 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -23,24 +31,23 @@
   * @warning **Use of this library is under your own responsibility**
   * 
   * @warning The use of this library falls in the category described by The Alan 
-  * Parsons Project (c) 1980 Games People play:   
-  * "Games people play, you take it or you leave it
-  * Things that they say aren't alright
-  * If I promised you the moon and the stars, would you believe it?"
+  * Parsons Project (c) 1980 Games People play disclaimer:   
+  * Games people play, you take it or you leave it  
+  * Things that they say aren't alright  
+  * If I promised you the moon and the stars, would you believe it?  
  *******************************************************************************
  */
-#ifndef sevenSegDispHw_H
-#define sevenSegDispHw_H
+#ifndef sevenSegDispHw_ESP32_H
+#define sevenSegDispHw_ESP32_H
 
 #include "Arduino.h"
 #include <stdint.h>
 #include <ShiftRegGPIOXpander.h>
 
-//------- Gen Func proto BEGIN
+//------- Generic Functions prototypes BEGIN
 template<typename T>
 void pushElmnt(T* &elmntLstPtr, T ssdToPush, uint8_t &elmntQty);
-//------- Gen Func proto BEGIN
-
+//--------- Generic Functions prototypes END
 
 //============================================================> Class declarations separator
 
@@ -60,6 +67,7 @@ protected:
     uint8_t _dspHwInstNbr{0};
     uint8_t* _ioPins{};
 
+    virtual void _unAbstract() = 0;
     virtual void send(uint8_t* digitsBuffer);
     virtual void send(const uint8_t &segments, const uint8_t &port);
 public:
@@ -141,7 +149,7 @@ public:
     * 
     * @note For each SevenSegDynamic instantiable subclass a short description of their respective `begin()` actions will be added if they are relevant to the developer using the library.  
     */
-    virtual bool begin(uint32_t updtLps = 0);
+    virtual bool begin(uint32_t updtLps=0);
     virtual bool end();
 };
 
@@ -169,6 +177,8 @@ private:
     uint8_t _sclk {};
     uint8_t _rclk {};
     uint8_t _dio {};
+    virtual void _unAbstract();
+
 protected:
     TimerHandle_t _dynHC595DspRfrshTmrHndl{NULL};  
 
@@ -194,7 +204,7 @@ public:
      * @endcode
      * 
      */
-    bool begin(uint32_t updtLps = 0);
+    virtual bool begin(uint32_t updtLps = 0);
     /**
      * @brief Stops the active display updating.  
      * 
@@ -221,6 +231,7 @@ protected:
     // static TimerHandle_t _dynDummyDspRfrshTmrHndl;
     TimerHandle_t _dynDummyDspRfrshTmrHndl{NULL};
 
+    virtual void _unAbstract();
     void refresh();
     void send(const uint8_t &segments, const uint8_t &port);
 public:
@@ -255,6 +266,7 @@ private:
     uint8_t _rclk {};
     uint8_t _dio {};
 
+    virtual void _unAbstract();
     void _updDsplyCntnt();
 public:
     SevenSegStatHC595();
@@ -266,9 +278,9 @@ public:
 //============================================================> Class declarations separator
 
 /**
- * @brief Implements specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series chips
+ * @brief Models specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series chips
  *
- * As TM163X series chips have some differences among them, this class implements the base common characteristics, de differences are implemented in corresponding subclasses.
+ * As TM163X series chips have some differences among them, this class implements the base common characteristics, the differences are implemented in corresponding subclasses.
  *
  * Common attributes include:
  * - Communications protocol (a non standard variation of the I2C protocol).
@@ -279,8 +291,13 @@ public:
  *
  * Different attributes include:
  * - Maximum number of ports addressable.
+ * - Keyscanning services
  *
  * @note As the communications protocol does't comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet **Maximum clock frequency** stated as 500KHz to a less demanding 100KHz time slices, managed by a timer interrupt set at 100KHz, enabling the timer interrupt service only while transmitting data, and disabling it while idle. The transmission protocol will implement the data sheet requirements, part of it being the use of a 0.5 long CLK multiples for signaling, so **TWO** 100 KHz periods will be set as the CLK width standard.
+ * 
+ * @warning While the TM1637, TM1638, TM1639 (at least these, maybe all of the members of this "family") are stable and well documented devices, the parts sold as **"TM1637 Display Modules"**, **"TM1638 Display Modules"** etc, breakboards that include the TM163X display driver, supporting electronics and one or several 7 segments display modules are not all created equal. Having the TM1637 modules the hability to drive 6 display ports, some breakboards present 4 display ports and a center colon, as is standard to time displaying modules. 
+ * The big issue is that not all displays have the same disposition, not all of them are internally wired the same, and that not all the manufacturers wire the TM1637 modules to the 7 segments display modules in the same way. For example, some will attach the colon to the DP (decimal point) segment of the third port (RtL), some will attach them to ALL the DP segment, some will attach each of the dots of the colon independently, one to the 5th display port, the other to the 6th display port, and then some other manufacturer in some other way. 
+ * Whenever is possible to get a specific module for testing, a SevenSegTM163X subclass will be added to manage it correctly, please read the subclasses' description for correct class identification.  
  *
  * @class SevenSegTM163X
  */
@@ -289,7 +306,7 @@ class SevenSegTM163X: public SevenSegStatic{
 private:
     const uint8_t _clkIndx {0};
     const uint8_t _dioIndx {1};
-    const uint8_t _dspDigitsQtyMax{6}; // Maximum display size in digits for TM1637, is 16 for TM1639
+    const uint8_t _dspDigitsQtyMax{}; // Maximum display size in digits: 6 for TM1637, is 16 for TM1639
     const uint8_t _hwBrghtnssLvlMax{0x07};
     const uint8_t _hwBrghtnssLvlMin{0x00};
 
@@ -330,8 +347,10 @@ protected:
  //============================================================> Class declarations separator
  class SevenSegTM1637_v01: public SevenSegTM163X{
 public:
-SevenSegTM1637_v01(uint8_t* ioPins, uint8_t dspDigits);
+    SevenSegTM1637_v01(uint8_t* ioPins, uint8_t dspDigits);
     ~SevenSegTM1637_v01(); 
+    virtual void _unAbstract();
+
  };
 
  //============================================================> Class declarations separator

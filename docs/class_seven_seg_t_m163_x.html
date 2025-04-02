@@ -103,13 +103,13 @@ $(function(){initNavTree('class_seven_seg_t_m163_x.html',''); initResizable(true
 </div><!--header-->
 <div class="contents">
 
-<p>Implements specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series chips.  
+<p>Models specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series chips.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="seven_seg_disp_hw_8h_source.html">sevenSegDispHw.h</a>&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Implements specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series chips. </p>
-<p>As TM163X series chips have some differences among them, this class implements the base common characteristics, de differences are implemented in corresponding subclasses.</p>
+<div class="textblock"><p>Models specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series chips. </p>
+<p>As TM163X series chips have some differences among them, this class implements the base common characteristics, the differences are implemented in corresponding subclasses.</p>
 <p>Common attributes include:</p><ul>
 <li>Communications protocol (a non standard variation of the I2C protocol).</li>
 <li>Commands structure.</li>
@@ -119,8 +119,11 @@ $(function(){initNavTree('class_seven_seg_t_m163_x.html',''); initResizable(true
 </ul>
 <p>Different attributes include:</p><ul>
 <li>Maximum number of ports addressable.</li>
+<li>Keyscanning services</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>As the communications protocol does't comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet <b>Maximum clock frequency</b> stated as 500KHz to a less demanding 100KHz time slices, managed by a timer interrupt set at 100KHz, enabling the timer interrupt service only while transmitting data, and disabling it while idle. The transmission protocol will implement the data sheet requirements, part of it being the use of a 0.5 long CLK multiples for signaling, so <b>TWO</b> 100 KHz periods will be set as the CLK width standard. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>As the communications protocol does't comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet <b>Maximum clock frequency</b> stated as 500KHz to a less demanding 100KHz time slices, managed by a timer interrupt set at 100KHz, enabling the timer interrupt service only while transmitting data, and disabling it while idle. The transmission protocol will implement the data sheet requirements, part of it being the use of a 0.5 long CLK multiples for signaling, so <b>TWO</b> 100 KHz periods will be set as the CLK width standard.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>While the TM1637, TM1638, TM1639 (at least these, maybe all of the members of this "family") are stable and well documented devices, the parts sold as <b>"TM1637 Display Modules"</b>, <b>"TM1638 Display Modules"</b> etc, breakboards that include the TM163X display driver, supporting electronics and one or several 7 segments display modules are not all created equal. Having the TM1637 modules the hability to drive 6 display ports, some breakboards present 4 display ports and a center colon, as is standard to time displaying modules. The big issue is that not all displays have the same disposition, not all of them are internally wired the same, and that not all the manufacturers wire the TM1637 modules to the 7 segments display modules in the same way. For example, some will attach the colon to the DP (decimal point) segment of the third port (RtL), some will attach them to ALL the DP segment, some will attach each of the dots of the colon independently, one to the 5th display port, the other to the 6th display port, and then some other manufacturer in some other way. Whenever is possible to get a specific module for testing, a <a class="el" href="class_seven_seg_t_m163_x.html" title="Models specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series chips...">SevenSegTM163X</a> subclass will be added to manage it correctly, please read the subclasses' description for correct class identification. <br  />
+ </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

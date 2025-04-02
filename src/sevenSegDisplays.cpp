@@ -1,15 +1,23 @@
 /**
+ ******************************************************************************
  * @file SevenSegDisplays.cpp
  * @brief Code file for the SevenSegDisplays_ESP32 library 
  * 
  * @details The library provides a common API and tools to generate and manage contents formatting for seven segments displays.
  * 
- * @author Gabriel D. Goldman
+ * Repository: https://github.com/GabyGold67/SevenSegDisplays_ESP32  
+ * 
+ * Framework: Arduino  
+ * Platform: ESP32  
+ * 
+ * @author Gabriel D. Goldman  
+ * mail <gdgoldman67@hotmail.com>  
+ * Github <https://github.com/GabyGold67>  
  * 
  * @version 3.0.0
  * 
- * @date First release: 20/12/2023 
- *       Last update:   31/03/2025 15:40 (GMT+0200) DST
+ * @date First release: 20/12/2023  
+ *       Last update:   31/03/2025 15:40 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
