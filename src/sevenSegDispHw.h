@@ -65,6 +65,7 @@ protected:
     uint8_t* _dspBuffPtr{nullptr};  
     uint8_t _dspDigitsQty{}; // Display size in digits    
     uint8_t _dspHwInstNbr{0};
+    SevenSegDispHw* _dspHwInstance{nullptr};
     uint8_t* _ioPins{};
 
     virtual void _unAbstract() = 0;
@@ -73,7 +74,7 @@ protected:
 public:
     SevenSegDispHw();
     SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
-    ~SevenSegDispHw();    
+    virtual ~SevenSegDispHw();    
    /**
     * @brief Sets up the hardware display to work.  
     * 
@@ -114,6 +115,12 @@ public:
      * @warning Setting the display buffer pointer to an address not coinciding with the one configured in the SevenSegDisplays will **disable** the possibility for it to get new generated content displayed!! Handle with extreme care!!
      */
     void setDspBuffPtr(uint8_t* newDspBuffPtr);
+
+    virtual bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl){return true;}; 
+    virtual void turnOff(){};
+    virtual void turnOn(){};
+    virtual void turnOn(const uint8_t &newBrghtnssLvl){};
+
 };
 
 //============================================================> Class declarations separator
@@ -316,14 +323,12 @@ private:
 
     void _updDsplyCntnt();
 protected:
-    uint8_t _brghtnss{};
+    uint8_t _brghtnssLvl{};
     uint8_t _brghtnssLvlMax{};
     uint8_t _brghtnssLvlMin{};
+    bool _isOn{false};
     uint8_t* _msgBffrPtr{nullptr};
     uint8_t _mssgBffrLngth{0};
- 
-    void _turnOff(uint8_t brghtnss = 0x07);
-    void _turnOn(uint8_t brghtnss = 0x07);
  
     void _txStart();
     void _txAsk();
@@ -341,17 +346,20 @@ protected:
     uint8_t getBrghtnssMaxLvl();
     uint8_t getBrghtnssMinLvl();
     virtual void ntfyUpdDsply();
-    bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl); 
- };
+    virtual bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl); 
+    virtual void turnOff();
+    virtual void turnOn();
+    virtual void turnOn(const uint8_t &newBrghtnssLvl);
+};
  
  //============================================================> Class declarations separator
- class SevenSegTM1637_v01: public SevenSegTM163X{
+class SevenSegTM1637_v01: public SevenSegTM163X{
+private:
+    virtual void _unAbstract();
 public:
     SevenSegTM1637_v01(uint8_t* ioPins, uint8_t dspDigits);
-    ~SevenSegTM1637_v01(); 
-    virtual void _unAbstract();
-
- };
+    ~SevenSegTM1637_v01();
+};
 
  //============================================================> Class declarations separator
  /*
@@ -376,7 +384,7 @@ public:
 
 //============================================================> Class declarations separator
 
-// Classes for the TM1638, Max7219, HT16K33 under implementation need analysis
+// Classes for the TM1638, Max7219, HT16K33, direct pin connection, under implementation need analysis
 
 
 #endif

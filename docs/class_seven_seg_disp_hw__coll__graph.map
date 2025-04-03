@@ -1,0 +1,4 @@
+<map id="SevenSegDispHw" name="SevenSegDispHw">
+<area shape="rect" id="Node000001" title="Base abstract class models a generic Seven Segment display hardware." alt="" coords="5,5,134,32"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="150,13,160,19,152,24,134,26,134,21,150,19,155,19,148,18"/>
+</map>

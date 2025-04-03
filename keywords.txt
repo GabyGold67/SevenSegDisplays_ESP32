@@ -40,9 +40,9 @@ setWaitChar KEYWORD2
 setWaitRate KEYWORD2
 wait    KEYWORD2
 write   KEYWORD2
-#######################
-#SevenSegDispHw class
-#######################
+##########################
+#SevenSegDispHw subclasses
+##########################
 begin KEYWORD2
 end  KEYWORD2
 getCommAnode   KEYWORD2
@@ -51,13 +51,15 @@ getHwDspDigitsQty KEYWORD2
 ntfyUpdDsply   KEYWORD2
 setDigitsOrder KEYWORD2
 setDspBuffPtr  KEYWORD2
-#####################
-#SevenSegTM163X class
-#####################
+##########################
+#SevenSegTM163X subclasses
+##########################
 getBrghtnssLvl KEYWORD2
 getBrghtnssMaxLvl KEYWORD2
 getBrghtnssMinLvl KEYWORD2
 setBrghtnssLvl KEYWORD2
+turnOff  KEYWORD2
+turnOn  KEYWORD2
 ###############################################
 # Constants (LITERAL1)
 ###############################################

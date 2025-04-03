@@ -48,6 +48,7 @@ SevenSegDispHw::SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits, bool commAnod
    Serial.println("=========================="); //FTPO
     
    _dspHwInstNbr = _dspHwSerialNum++;
+   _dspHwInstance = this;
    for (uint8_t i{0}; i < _dspDigitsQty; i++){
       *(_digitPosPtr + i) = i;
    }    
@@ -507,7 +508,7 @@ SevenSegTM163X::SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits)
 
    _brghtnssLvlMax = _hwBrghtnssLvlMax;
    _brghtnssLvlMin = _hwBrghtnssLvlMin;
-   _brghtnss = _brghtnssLvlMax;
+   _brghtnssLvl = _brghtnssLvlMax;
 
    _lclDspBuffPtr = new uint8_t[_dspDigitsQty];
    begin();
@@ -515,23 +516,24 @@ SevenSegTM163X::SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits)
 
 SevenSegTM163X::~SevenSegTM163X()
 {
+   end();
 }
 
 bool SevenSegTM163X::begin(){
-   _turnOn();
+   turnOn();
 
 	return true;
 }
 
 bool SevenSegTM163X::end(){
-   _turnOff();
+   turnOff();
 
 	return true;
 }
 
 uint8_t SevenSegTM163X::getBrghtnssLvl(){
 
-   return _brghtnss;
+   return _brghtnssLvl;
 }
 
 uint8_t SevenSegTM163X::getBrghtnssMaxLvl(){
@@ -595,25 +597,6 @@ void SevenSegTM163X::_sendBffr(){
 	 *                              0b1000XXXX -> 0x8F Display On, maximum brightness
 	 */
 
-
-   //===============================================================
-   // Compose new message to send the new contents to the display
-   // 1. generate the corresponding command bytes and enqueue them and increment the queue count
-   // 2. generate the data bytes for ports displaying and enqueue them and increment the queue count
-   // 3. generate the ending command bytes and enqueue them and increment the queue count
-   //===============================================================
-   // 4. Send the new complete contents to the display
-   //===============================================================
-   // 5. Send extra-digits data to the display
-   //    - Brightness level
-   //    - Colons
-   //    - Others specific to the display
-   //===============================================================
-   // 6. Send the extra-digits data to the display
-   //===============================================================
-   // 7. Close transmition
-   //===============================================================
-   
    _txStart();
    _txWrByte(0x40);  // TM1637_COMM1: 40H -> address is automatically incremented by 1 mode (44H -> fixed address mode)
    _txAsk();
@@ -641,28 +624,50 @@ bool SevenSegTM163X::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
    bool result{false};
 
    if((newBrghtnssLvl >=_brghtnssLvlMin)&&(newBrghtnssLvl<=_brghtnssLvlMax)){
-      _brghtnss = newBrghtnssLvl;
+      if(newBrghtnssLvl != _brghtnssLvl){
+         _txStart();
+         _txWrByte((_isOn?0x88:0x80) | newBrghtnssLvl);  // Keep display on/of state, set new brightness
+         _txAsk();
+         _txStop();
+         _brghtnssLvl = newBrghtnssLvl;
+      }
       result = true;
    }
 
    return result;
 }
 
-//FFDR complete method code and test
-void SevenSegTM163X::_turnOff(uint8_t brghtnss){
-   // _txStart();
-   // _txWrByte(0x80|brghtnss);  // Close display, minimum brightness
-   // _txAsk();
-   // _txStop();
+void SevenSegTM163X::turnOff(){
+   if(_isOn){
+      _txStart();
+      _txWrByte(0b10000000 | _brghtnssLvl);  // Close display(0x80), keep brightness
+      _txAsk();
+      _txStop();
+      _isOn = false;
+   }
 
    return;
 }
 
-void SevenSegTM163X::_turnOn(uint8_t brghtnss){
-   _txStart();
-   _txWrByte(0x88|brghtnss);  // Open display, maximum brightness
-   _txAsk();
-   _txStop();
+void SevenSegTM163X::turnOn(){
+   if(!_isOn){
+      _txStart();
+      _txWrByte(0b10001000 | _brghtnssLvl);  // Open display(0x88), keep brightness
+      _txAsk();
+      _txStop();
+      _isOn = true;
+   }
+
+   return;
+}
+
+void SevenSegTM163X::turnOn(const uint8_t &newBrghtnssLvl){
+   if(!_isOn){
+      if(newBrghtnssLvl != _brghtnssLvl){
+         setBrghtnssLvl(newBrghtnssLvl);
+      }
+      turnOn();
+   }
 
    return;
 }

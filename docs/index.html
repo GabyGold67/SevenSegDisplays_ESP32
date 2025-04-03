@@ -101,9 +101,16 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md__c_1_2_users_2_dev_padawan_2_documents_2_my_01_projects_2_training_01_projects_2_libs_dev___e_s_p32_2lib_2_seven_seg_displays___e_s_p32_2_r_e_a_d_m_e"></a></p>
-<p><b>The ultimate goal: Any seven segment display. Every driving technology. A single library.</b> <br  />
+<h1>"One library to rule them all..."</h1>
+<p><b>(Or at least as many as I could find to test them)</b> <br  />
 </p>
-<h1><a href="https://gabygold67.github.io/SevenSegDisplays_ESP32/">Complete SevenSegDisplays_ESP32 library documentation</a></h1>
+<p>The library goal is to provide a common consistent API to display data on <b>seven segments LED displays</b> independently of the hardware used: the display modules and the driving electronics. <br  />
+</p>
+<p>With a very long time in the market, <b>many</b> different techniques and technologies have been developed to display information in seven segment displays, but like any other technical resource, massification contributed to the development of specific standard hardware, both for the display and the display driving sides. <br  />
+</p>
+<p>This library is oriented to the management of the most usual combinations of those components, <b>even providing management for displays with one of the components missing</b> (see the "dummy" and "noDriver" SevenSegHw classes). <br  />
+</p>
+<h2><a href="https://gabygold67.github.io/SevenSegDisplays_ESP32/">Complete SevenSegDisplays_ESP32 library documentation HERE!</a></h2>
 <p>Originally developed to easily display numeric and text data in unattended manner on the cheap and popular "4-Bits LED Digital Tube Module", <b>a 7-segment 4 digits led display dynamically driven by two 74HC595 shift register</b>, the main focus was set on: <br  />
 </p><ul>
 <li>Ease of use. <br  />
@@ -111,7 +118,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <li>Flexibility.</li>
 <li>Basic prevention of 'misrepresentation' errors.</li>
 </ul>
-<p>As the library grew in services and benefits to manage and easily display data it became obvious that other models and technical driving solutions for seven segments displays could make use of the same services, but most important, it would make transparent to the developer the technology behind the display he's required to use, the API and amenities would be the same. <br  />
+<p>As the library grew in services and amenities to manage and easily display data it became obvious that other models and technical driving solutions for seven segments displays could make use of the same benefits, but most important, it would make transparent to the developer the technology behind the display he's required to use, the API and amenities would be the same. <br  />
 </p>
 <p>So the original <a href="https://github.com/GabyGold67/FourBitLedDigitalTube">4-Bit Led Digital Tube</a> library started an evolution process, including: <br  />
 </p><ul>
@@ -125,6 +132,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 </li>
 <li>Dedicated chip drivers displays. <br  />
 </li>
+<li>No driver displays (direct pin connection).</li>
 </ul>
 </li>
 </ul>
@@ -144,20 +152,32 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 </p>
 <h2>Trustworthy representation basic checking:</h2>
 <p>The representation of different types of data in this kind of displays is limited, and many implementations of the libraries to drive them take arbitrary or personally biased decisions on how to handle the problem. <br  />
- The danger of misrepresenting values in the display are usually ignored so when a value can't be faithfully represented by the display, the data is rounded, floored, ceiled, sliced, characters are replaced by others or whatever criteria the developer defined. When trying to display the value <b>"90153"</b> through a 4 digits module, displaying <b>"9015"</b> is no better, nor worse, than displaying <b>"0153"</b>, those are <b>misrepresentations</b>. This library returns a boolean value indicating if it was able to display a trustworthy representation of the value, as long as it is able to. If a trustworthy representation was not possible it will return a <b>false</b> value and blank the display. <br  />
+ The danger of misrepresenting values in the display are usually ignored so when a value can't be faithfully represented by the display, the data is rounded, floored, ceiled, sliced, characters are replaced by others or whatever criteria the developer defined. When trying to display the value <b>"90153"</b> through a 4 digits module, displaying <b>"9015"</b> is no better, nor worse, than displaying <b>"0153"</b>, those are <b>misrepresentations</b>. This library returns a boolean value indicating if it was able to display a trustworthy representation of the value, as long as it is able to. If a trustworthy representation is not possible it will return a <b>false</b> value and blank the display. <br  />
 </p>
 <h2>Unattended display update and refreshing:</h2>
-<p>Some of the displays technologies need to be periodically refreshed, as they can actively turn on only one digit at a time, so to keep all de digits visible the user must activate periodically each digit one by one independently to generate a "cinematic effect". The library documentation will refer to them as <b>Dynamic Displays</b>, as is the case of the original <b>4-Bit Led Digital Tube</b> with two 74HC595 shift registers. Other technologies have the same shift registers set up in a different pattern so that they can hold the display active without refreshing constantly, assigning one shift register per digit. The library documentation will refer to them as <b>Static Dumb Displays</b>. <br  />
- Finally, being the seven segments displays so popular and usually used, specially for industrial and heavy duty uses, several chips have been developed to receive the data to exhibit and behavior commands through a standard communication protocols (I2C and SPI being the most popular choices), and keep the displays updated with the information received. The library documentation will refer to them as <b>Smart Displays</b>. <br  />
+<p>Some of the displays technologies need to be periodically refreshed, as they can actively turn on only one digit at a time, so to keep all de digits visible the user must activate periodically each digit one by one independently to generate a "cinematic effect". The library documentation will refer to them as <b>Dynamic Displays</b>, as is the case of the original <b>4-Bit Led Digital Tube</b> with two 74HC595 shift registers or the case of the <b>direct pin connection</b> displays. <br  />
+ Other technologies have the same shift registers set up in a different pattern so that they can hold the display active without constant refreshing, assigning one shift register per digit. The library documentation will refer to them as <b>Static Dumb Displays</b>. <br  />
+ Finally, being the seven segments displays so popular and usually used, specially for industrial and heavy duty equipment, several chips have been developed to receive the data to exhibit and behavior commands through communication protocols (standard I2C and SPI being the most popular choices, but non-standard protocols are used too), and keep the displays updated with the information received. The library documentation will refer to them as <b>Smart Displays</b>. <br  />
 </p>
-<p>The library takes care of this, and offers two solutions to do so. <br  />
-</p><ul>
-<li>The first is to attach the refreshing methods to a timer interrupt service (ISR) of the microcontroller, or to a Software Timer Service provided by the O.S., in this case the FreeRTOS timer daemon. <br  />
-</li>
-<li>The second is through methods that the user can call periodically from the main code. <br  />
+<h2>The library is modeled in two layers:</h2>
+<ul>
+<li>The <b>Seven Segment Display Hardware</b> "lower" level, modeled in the <b><a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a></b> class and subclasses</li>
+<li>The <b>Seven Segment Display API</b> "upper" level, modeled in the <b><a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a></b> class. <br  />
 </li>
 </ul>
-<p>The first mechanism frees the user from the load of calling the refreshing methods periodically, specially considering that long looping times (when executing <b><code>for</code></b>, <b><code>while</code></b> and <b><code>do</code></b> loops included), or the use of <b><code>delay()</code></b> type of commands could make the display flicker or simply stop until next refresh. The second option is given for the development of special display schemes. In any case the library is capable of working in any platform, using one way when possible, or the other always. <br  />
+<p>The relation between classes is a <em><b>Composition</b></em>. <br  />
+ The standard procedure to instantiate a working display in quite simple:</p><ul>
+<li>Instantiate a <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> class object. <br  />
+</li>
+<li>Invoke any required method to configure the instantiated object <b>ONLY IF NEEDED</b> before it might be used. <br  />
+</li>
+<li>Instantiate a <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object using a pointer to the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> class object as unique parameter. <br  />
+</li>
+<li>Start sending data to the display. <br  />
+</li>
+</ul>
+<p>If no modification of the hardware object is needed this becomes a single line command such as: <br  />
+ <code><a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));</code> // Easy to understand reading from right to left, as usual!! <br  />
 </p>
 <h1><b>Included Methods for <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> class</b></h1>
 <table class="markdownTable">
