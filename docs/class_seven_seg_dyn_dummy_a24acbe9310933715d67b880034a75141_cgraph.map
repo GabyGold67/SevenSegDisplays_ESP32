@@ -1,0 +1,5 @@
+<map id="SevenSegDynDummy::SevenSegDynDummy" name="SevenSegDynDummy::SevenSegDynDummy">
+<area shape="rect" id="Node000001" title="Class constructor, instantiates a SevenSegDynDummy object." alt="" coords="5,5,225,48"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_dyn_dummy.html#ac0f6ac50ac26d402d96e2a689eb724d7" title="Sets up the required resources for the &quot;dummy hardware display&quot; to work." alt="" coords="273,13,463,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="225,24,257,24,257,29,225,29"/>
+</map>

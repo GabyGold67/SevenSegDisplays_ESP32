@@ -1,0 +1,5 @@
+<map id="SevenSegDynHC595::begin" name="SevenSegDynHC595::begin">
+<area shape="rect" id="Node000001" title="Sets up the required resources for the hardware display to work." alt="" coords="268,13,453,40"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_dyn_h_c595.html#a3fc30faf73816ce59fb459de3dacebae" title="Class constructor." alt="" coords="5,5,220,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="252,29,220,29,220,24,252,24"/>
+</map>

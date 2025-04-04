@@ -98,6 +98,7 @@ $(function(){initNavTree('class_seven_seg_t_m163_x.html',''); initResizable(true
 
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="class_seven_seg_t_m163_x-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">SevenSegTM163X Class Reference</div></div>
 </div><!--header-->
@@ -107,6 +108,17 @@ $(function(){initNavTree('class_seven_seg_t_m163_x.html',''); initResizable(true
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="seven_seg_disp_hw_8h_source.html">sevenSegDispHw.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a6f511a29dcacfa8be9d2a8778dc2d05d" id="r_a6f511a29dcacfa8be9d2a8778dc2d05d"><td class="memItemLeft" align="right" valign="top"><a id="a6f511a29dcacfa8be9d2a8778dc2d05d" name="a6f511a29dcacfa8be9d2a8778dc2d05d"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>SevenSegTM163X</b> ()</td></tr>
+<tr class="memdesc:a6f511a29dcacfa8be9d2a8778dc2d05d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default class constructor. <br /></td></tr>
+<tr class="separator:a6f511a29dcacfa8be9d2a8778dc2d05d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9557500df89b9364a4baff8f2b0e8e1b" id="r_a9557500df89b9364a4baff8f2b0e8e1b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9557500df89b9364a4baff8f2b0e8e1b">SevenSegTM163X</a> (uint8_t *ioPins, uint8_t dspDigits)</td></tr>
+<tr class="memdesc:a9557500df89b9364a4baff8f2b0e8e1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor.  <br /></td></tr>
+<tr class="separator:a9557500df89b9364a4baff8f2b0e8e1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Models specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series chips. </p>
 <p>As TM163X series chips have some differences among them, this class implements the base common characteristics, the differences are implemented in corresponding subclasses.</p>
@@ -121,10 +133,41 @@ $(function(){initNavTree('class_seven_seg_t_m163_x.html',''); initResizable(true
 <li>Maximum number of ports addressable.</li>
 <li>Keyscanning services</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>As the communications protocol does't comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet <b>Maximum clock frequency</b> stated as 500KHz to a less demanding 100KHz time slices, managed by a timer interrupt set at 100KHz, enabling the timer interrupt service only while transmitting data, and disabling it while idle. The transmission protocol will implement the data sheet requirements, part of it being the use of a 0.5 long CLK multiples for signaling, so <b>TWO</b> 100 KHz periods will be set as the CLK width standard.</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>While the TM1637, TM1638, TM1639 (at least these, maybe all of the members of this "family") are stable and well documented devices, the parts sold as <b>"TM1637 Display Modules"</b>, <b>"TM1638 Display Modules"</b> etc, breakboards that include the TM163X display driver, supporting electronics and one or several 7 segments display modules are not all created equal. Having the TM1637 modules the hability to drive 6 display ports, some breakboards present 4 display ports and a center colon, as is standard to time displaying modules. The big issue is that not all displays have the same disposition, not all of them are internally wired the same, and that not all the manufacturers wire the TM1637 modules to the 7 segments display modules in the same way. For example, some will attach the colon to the DP (decimal point) segment of the third port (RtL), some will attach them to ALL the DP segment, some will attach each of the dots of the colon independently, one to the 5th display port, the other to the 6th display port, and then some other manufacturer in some other way. Whenever is possible to get a specific module for testing, a <a class="el" href="class_seven_seg_t_m163_x.html" title="Models specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series chips...">SevenSegTM163X</a> subclass will be added to manage it correctly, please read the subclasses' description for correct class identification. <br  />
+<dl class="section note"><dt>Note</dt><dd>As the communications protocol does't comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet <b>Maximum clock frequency</b> stated as 500KHz to a less demanding 100KHz(10 microseconds) time slices, managed by <code>delayMicroseconds()</code> function keyword, or a timer interrupt set at 100KHz, enabling the timer interrupt service only while transmitting data, and disabling it while idle.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>While the TM1637, TM1638, TM1639 (at least these are our known members of this "family") are stable and well documented devices, the parts sold as <b>"TM1637 Display Modules"</b>, <b>"TM1638 Display Modules"</b> etc, breakboards that include the TM163X display driver, supporting electronics and one or several 7 segments display modules are not all created equal. Having the TM1637 modules the hability to drive 6 display ports, some breakboards present 4 display ports and a center colon, as is standard to time displaying modules. The <b>big issue</b> is the lack of a standard for those display modules, not all displays have the same disposition, not all of them are internally wired the same, and that not all the manufacturers wire the TM1637 modules to the 7 segments display modules in the same way. For example, some will attach the colon to the DP (decimal point) segment of the third port (RtL), some will attach them to ALL the DP segment, some will attach each of the dots of the colon independently, one to the 5th display port, the other to the 6th display port, and then some other manufacturer in some other way. Whenever is possible to get a specific module for testing, a <a class="el" href="class_seven_seg_t_m163_x.html" title="Models specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series chips...">SevenSegTM163X</a> subclass will be added to manage it correctly, please read the subclasses' description for correct display module oriented class identification. <br  />
  </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a9557500df89b9364a4baff8f2b0e8e1b" name="a9557500df89b9364a4baff8f2b0e8e1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9557500df89b9364a4baff8f2b0e8e1b">&#9670;&#160;</a></span>SevenSegTM163X()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SevenSegTM163X::SevenSegTM163X </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>ioPins</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>dspDigits</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Class constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ioPins</td><td>A pointer to an array holding the identifieres for the 2 GPIO pins required to send the data to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0-&gt;clk, 1-&gt;dio </td></tr>
+    <tr><td class="paramname">dspDigits</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

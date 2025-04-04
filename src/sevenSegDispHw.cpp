@@ -163,7 +163,7 @@ bool SevenSegDynamic::begin(uint32_t updtLps){
    return result;
 }
 
-void SevenSegDynamic::refresh(){
+void SevenSegDynamic::_refresh(){
    bool tmpLogic {true};
    uint8_t tmpDigToSend{0};
 
@@ -215,13 +215,18 @@ SevenSegDynHC595::SevenSegDynHC595(uint8_t* ioPins, uint8_t dspDigits, bool comm
    _rclk = *(ioPins + _rclkIndx);
    _dio = *(ioPins + _dioIndx);
     
-    _drvrShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, 2, nullptr);
-    _drvrShftRegSndPtr = new uint8_t[2];
+   _drvrShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, 2, nullptr);
+   _drvrShftRegSndPtr = new uint8_t[2];
 
-    begin();
+   begin();
 }
 
-SevenSegDynHC595::~SevenSegDynHC595(){}
+SevenSegDynHC595::~SevenSegDynHC595(){
+   if(_dynHC595DspRfrshTmrHndl)
+      end();
+   delete _drvrShftRegPtr;
+   delete _drvrShftRegSndPtr;
+}
 
 bool SevenSegDynHC595::begin(uint32_t updtLps){
    bool result {false};
@@ -230,36 +235,66 @@ bool SevenSegDynHC595::begin(uint32_t updtLps){
    _firstRefreshed = 0;
    //Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)
    if (!_dynHC595DspRfrshTmrHndl){
-        //Create a valid unique Name for identifying the timer created
-         String rfrshTmrName{""};
-         String dspSerialNumStr {"000" + String(_dspHwInstNbr)};
-         dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length());
-         rfrshTmrName = "DynHC595Dsp" + dspSerialNumStr + "rfrsh_tmr";
+      //Create a valid unique Name for identifying the timer created
+      String rfrshTmrName{""};
+      String dspSerialNumStr {"000" + String(_dspHwInstNbr)};
+      dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length());
+      rfrshTmrName = "DynHC595Dsp" + dspSerialNumStr + "rfrsh_tmr";
 
-        //Initialize the Display refresh timer. Considering each digit to be refreshed at 30 Hz in turn, the freq might be (Qty of digits * 30Hz)
-        _dynHC595DspRfrshTmrHndl = xTimerCreate(
-            rfrshTmrName.c_str(),   // Timer human readable name
-            pdMS_TO_TICKS((int)(1000/(30 * _dspDigitsQty))),
-            pdTRUE,  // Autoreload
-            this,   // TimerID, data to be passed to the callback function
-            tmrCbRfrshDynHC595  //Callback function
-        );
-        if((_dynHC595DspRfrshTmrHndl != NULL) && (!xTimerIsTimerActive(_dynHC595DspRfrshTmrHndl))){
-            tmrModResult = xTimerStart(_dynHC595DspRfrshTmrHndl, portMAX_DELAY);
-            if (tmrModResult == pdPASS)
-                result = true;
-        }
-    }
+      //Initialize the Display refresh timer. Considering each digit to be refreshed at 30 Hz in turn, the freq might be (Qty of digits * 30Hz)
+      _dynHC595DspRfrshTmrHndl = xTimerCreate(
+         rfrshTmrName.c_str(),   // Timer human readable name
+         pdMS_TO_TICKS((updtLps > 0)?updtLps:((int)(1000/(30 * _dspDigitsQty)))),
+         pdTRUE,  // Autoreload
+         this,   // TimerID, data to be passed to the callback function
+         tmrCbRfrshDynHC595  //Callback function
+      );
+      if((_dynHC595DspRfrshTmrHndl != NULL) && (!xTimerIsTimerActive(_dynHC595DspRfrshTmrHndl))){
+         tmrModResult = xTimerStart(_dynHC595DspRfrshTmrHndl, portMAX_DELAY);
+         if (tmrModResult == pdPASS)
+            result = true;
+      }
+   }
 
     return result;
 }
 
-void SevenSegDynHC595::_unAbstract() {
+//FFDR Split this end() as the noWait(): 1)Check if the timer is running and just stop it. 2) Place the end() call at the destructor, and delete the timer if existed. Before that ensure the begin checks for existance and status before creating new timer.
 
-   return;
+/**
+ * @brief Stops the active display updating.  
+ * 
+ * Stops the display Timer Service which takes care of refreshing the display regularly. The method will not destroy the timer nor the timerHandle to work faster if a begin(uint32_t) is invoked again.
+ * 
+ * @return true The instance of the display was found and it's timer stopped.  
+ * @return false The instance of the display wasn't found attached to a running software timer, no action was carried out as it wasn't needed.  
+ * 
+ * Use example
+ * 
+ * @code {.cpp}
+ * myLedDisp.end();
+ * @endcode
+ * 
+ */
+bool SevenSegDynHC595::end() {
+   bool result {false};
+   BaseType_t tmrModResult {pdFAIL};
+   
+   if(_dynHC595DspRfrshTmrHndl){   //if the timer still exists and is running, stop and delete
+      tmrModResult = xTimerStop(_dynHC595DspRfrshTmrHndl, portMAX_DELAY);
+      if(tmrModResult == pdPASS){
+         tmrModResult = xTimerDelete(_dynHC595DspRfrshTmrHndl, portMAX_DELAY);
+         if(tmrModResult == pdPASS){
+            _dynHC595DspRfrshTmrHndl = NULL;
+            result = true;
+         }
+      }   
+   }
+
+   return result;
 }
 
-void SevenSegDynHC595::refresh(){
+void SevenSegDynHC595::_refresh(){
    bool tmpLogic {true};
    uint8_t tmpDigToSend{0};
 
@@ -279,42 +314,27 @@ void SevenSegDynHC595::refresh(){
    return;
 }
 
-void SevenSegDynHC595::send(uint8_t content){
+// void SevenSegDynHC595::send(uint8_t content){
 
-   return;
-}
+//    return;
+// }
 
-void SevenSegDynHC595::send(const uint8_t &segments, const uint8_t &port){
+// void SevenSegDynHC595::send(const uint8_t &segments, const uint8_t &port){
 
-   return;
-}
-
-bool SevenSegDynHC595::end() {
-   bool result {false};
-   BaseType_t tmrModResult {pdFAIL};
-   
-   //FFDR Check for the blink and the WAIT (specially the wait) timers to stop them if they are running to avoid funny combinations
-   if(_dynHC595DspRfrshTmrHndl){   //if the timer still exists and is running, stop and delete
-      tmrModResult = xTimerStop(_dynHC595DspRfrshTmrHndl, portMAX_DELAY);
-      if(tmrModResult){
-         tmrModResult = xTimerDelete(_dynHC595DspRfrshTmrHndl, portMAX_DELAY);
-         if(tmrModResult){
-            _dynHC595DspRfrshTmrHndl = NULL;
-            result = true;
-         }
-      }   
-   }
-
-   return result;
-}
+//    return;
+// }
 
 void SevenSegDynHC595::tmrCbRfrshDynHC595(TimerHandle_t rfrshTmrCbArg){
-    SevenSegDynHC595* SevenSegUndrlHC595 = (SevenSegDynHC595*) pvTimerGetTimerID(rfrshTmrCbArg);
-    //Timer Callback to keep the display lit by calling this display's refresh() method
-    
-    SevenSegUndrlHC595->refresh();
+   //Timer Callback to keep the display lit by calling this display's refresh() method
+   SevenSegDynHC595* SevenSegUndrlHC595 = (SevenSegDynHC595*) pvTimerGetTimerID(rfrshTmrCbArg);
+   SevenSegUndrlHC595->_refresh();
 
-    return;
+   return;
+}
+
+void SevenSegDynHC595::_unAbstract() {
+
+   return;
 }
 
 //============================================================> Class methods separator
@@ -325,11 +345,10 @@ SevenSegDynDummy::SevenSegDynDummy(uint8_t dspDigits, bool commAnode)
    begin();
 }
 
-SevenSegDynDummy::~SevenSegDynDummy(){}
+SevenSegDynDummy::~SevenSegDynDummy(){
+   if(_dynDummyDspRfrshTmrHndl)
+      end();
 
-void SevenSegDynDummy::_unAbstract(){
-
-   return;
 }
 
 bool SevenSegDynDummy::begin(uint32_t updtLps){
@@ -339,8 +358,6 @@ bool SevenSegDynDummy::begin(uint32_t updtLps){
    Serial.begin(9600);
    Serial.println("Seven Segment Dynamic Dummy Display Begin");
    Serial.println("================================================");
-
-   //FFDR Grab the begin() code from the SevenSegDynHC595 and adapt it here to set the "refresh rate"
 
    _firstRefreshed = 0;
    //Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)
@@ -354,7 +371,7 @@ bool SevenSegDynDummy::begin(uint32_t updtLps){
       //Initialize the Display refresh timer. Considering each digit to be refreshed at 30 Hz in turn, the freq might be (Qty of digits * 30Hz)
       _dynDummyDspRfrshTmrHndl = xTimerCreate(
          rfrshTmrName.c_str(),   // Timer human readable name
-         pdMS_TO_TICKS(2000),
+         pdMS_TO_TICKS((updtLps > 0)?updtLps:2000),
          pdTRUE,  // Autoreload
          this,   // TimerID, data to be passed to the callback function
          tmrCbRfrshDynDummy  //Callback function
@@ -371,33 +388,38 @@ bool SevenSegDynDummy::begin(uint32_t updtLps){
 
 bool SevenSegDynDummy::end(){
    bool result {false};
-   //FFDR Check for the blink and the WAIT (specially the wait) timers to stop them if they are running to avoid funny combinations
+   BaseType_t tmrModResult {pdFAIL};
 
    if(_dynDummyDspRfrshTmrHndl){   //if the timer still exists and is running, stop and delete
-      xTimerStop(_dynDummyDspRfrshTmrHndl, portMAX_DELAY);
-      xTimerDelete(_dynDummyDspRfrshTmrHndl, portMAX_DELAY);
-      _dynDummyDspRfrshTmrHndl = NULL;
+      tmrModResult = xTimerStop(_dynDummyDspRfrshTmrHndl, portMAX_DELAY);
+      if(tmrModResult == pdPASS){
+         tmrModResult = xTimerDelete(_dynDummyDspRfrshTmrHndl, portMAX_DELAY);
+         if(tmrModResult == pdPASS){
+            _dynDummyDspRfrshTmrHndl = NULL;
+            result = true;
+         }
+      }   
    }
-
-
-   Serial.println("=======================================");
-   Serial.println("Seven Segment Dynamic Dummy Display End");
-   Serial.end();
+   if(result){
+      Serial.println("=======================================");
+      Serial.println("Seven Segment Dynamic Dummy Display End");
+      Serial.end();   
+   }
 
    return result;
 }
 
-void SevenSegDynDummy::refresh(){
+void SevenSegDynDummy::_refresh(){
    bool tmpLogic {true};
    uint8_t tmpDigToSend{0};
 
-   Serial.print("\nDynamic Dumb Display refreshing. Timestamp: ");
+   Serial.print("\nDynamic Dummy Display refreshing. Timestamp: ");
    Serial.println(millis(), DEC);
    Serial.println("--------------------------------------------------------");
 
    for (int i {0}; i < _dspDigitsQty; i++){
       tmpDigToSend = *(_dspBuffPtr + ((i + _firstRefreshed) % _dspDigitsQty));
-      send(tmpDigToSend, /*uint8_t(1) <<*/ *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty)));
+      send(tmpDigToSend, *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty)));
 
    }
    Serial.println("\n\rRefreshing complete.");
@@ -420,10 +442,14 @@ void SevenSegDynDummy::send(const uint8_t &segments, const uint8_t &port){
 }
 
 void SevenSegDynDummy::tmrCbRfrshDynDummy(TimerHandle_t rfrshTmrCbArg){
+   //Timer Callback to keep the dynamic display lit by calling this display's refresh() method
    SevenSegDynDummy* SevenSegUndrlDummy = (SevenSegDynDummy*) pvTimerGetTimerID(rfrshTmrCbArg);
-   //Timer Callback to keep the display lit by calling this display's refresh() method
-   
-   SevenSegUndrlDummy->refresh();
+   SevenSegUndrlDummy->_refresh();
+
+   return;
+}
+
+void SevenSegDynDummy::_unAbstract(){
 
    return;
 }
@@ -445,6 +471,7 @@ void SevenSegStatic::ntfyUpdDsply(){
 
    return;
 }
+
 //============================================================> Class methods separator
 
 SevenSegStatHC595::SevenSegStatHC595(){}
@@ -465,13 +492,13 @@ SevenSegStatHC595::SevenSegStatHC595(uint8_t *ioPins, uint8_t dspDigits, bool co
 
 SevenSegStatHC595::~SevenSegStatHC595() {}
 
-void SevenSegStatHC595::_unAbstract(){
+void SevenSegStatHC595::ntfyUpdDsply(){
+   _updDsplyCntnt();
 
    return;
 }
 
-void SevenSegStatHC595::ntfyUpdDsply(){
-   _updDsplyCntnt();
+void SevenSegStatHC595::_unAbstract(){
 
    return;
 }
@@ -676,11 +703,11 @@ void SevenSegTM163X::_txAsk(){   // void I2Cask (void)
    pinMode(_dio, INPUT);
 
    digitalWrite(_clk, LOW);
-   delayMicroseconds(5);
+   delayMicroseconds(5*_txClkTckTm);
    while (digitalRead(_dio)){
    }
    digitalWrite(_clk, HIGH);
-   delayMicroseconds(2);
+   delayMicroseconds(2*_txClkTckTm);
    digitalWrite(_clk, LOW);
    
    pinMode(_dio, OUTPUT);
@@ -691,7 +718,7 @@ void SevenSegTM163X::_txAsk(){   // void I2Cask (void)
 void SevenSegTM163X::_txStart(){ // void I2CStart(void)
    digitalWrite(_clk, HIGH);
    digitalWrite(_dio, HIGH);
-   delayMicroseconds(2);
+   delayMicroseconds(2*_txClkTckTm);
    digitalWrite(_dio, LOW);
 
 	return;
@@ -699,13 +726,13 @@ void SevenSegTM163X::_txStart(){ // void I2CStart(void)
 
 void SevenSegTM163X::_txStop(){  // void I2CStop (void)
    digitalWrite(_clk, LOW);
-   delayMicroseconds(2);
+   delayMicroseconds(2*_txClkTckTm);
    digitalWrite(_dio, LOW);
-   delayMicroseconds(2);
+   delayMicroseconds(2*_txClkTckTm);
    digitalWrite(_clk, HIGH);
-   delayMicroseconds(2);
+   delayMicroseconds(2*_txClkTckTm);
    digitalWrite(_dio, HIGH);
-
+   
 	return;
 }
 
@@ -713,10 +740,10 @@ void SevenSegTM163X::_txWrByte(uint8_t data){   // void I2CWrByte (unsigned char
    for(uint8_t i{0}; i < 8; i++){
       digitalWrite(_clk, LOW);
       digitalWrite(_dio, (data &0x01)?HIGH:LOW); //Equivalent single line ternary operation
-      delayMicroseconds(3);
+      delayMicroseconds(3*_txClkTckTm);
       data = data >> 1;
       digitalWrite(_clk, HIGH);
-      delayMicroseconds(3);
+      delayMicroseconds(3*_txClkTckTm);
    }
    
 	return;

@@ -136,6 +136,13 @@ Collaboration diagram for SevenSegDynHC595:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a3fc30faf73816ce59fb459de3dacebae" id="r_a3fc30faf73816ce59fb459de3dacebae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3fc30faf73816ce59fb459de3dacebae">SevenSegDynHC595</a> (uint8_t *ioPins, uint8_t dspDigits, bool commAnode)</td></tr>
+<tr class="memdesc:a3fc30faf73816ce59fb459de3dacebae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor.  <br /></td></tr>
+<tr class="separator:a3fc30faf73816ce59fb459de3dacebae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cba0a6a5ecb438a8b633167c119e4bc" id="r_a7cba0a6a5ecb438a8b633167c119e4bc"><td class="memItemLeft" align="right" valign="top"><a id="a7cba0a6a5ecb438a8b633167c119e4bc" name="a7cba0a6a5ecb438a8b633167c119e4bc"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDynHC595</b> ()</td></tr>
+<tr class="memdesc:a7cba0a6a5ecb438a8b633167c119e4bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class default destructor. <br /></td></tr>
+<tr class="separator:a7cba0a6a5ecb438a8b633167c119e4bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acae65548bebc819a38ce07c07c140ef2" id="r_acae65548bebc819a38ce07c07c140ef2"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acae65548bebc819a38ce07c07c140ef2">begin</a> (uint32_t updtLps=0)</td></tr>
 <tr class="memdesc:acae65548bebc819a38ce07c07c140ef2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the required resources for the hardware display to work.  <br /></td></tr>
 <tr class="separator:acae65548bebc819a38ce07c07c140ef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -156,7 +163,56 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Models seven segment displays driven by two 74HC595 shift registers. </p>
 <p>The display is wired so that one shift register holds the active segments of the display digit, so it is connected in parallel to every digit segment, to the activation pin of the same segment in each one, and the second shift register holds the active digit enabled, so it's pins are connected independently to each digit, selecting which will be active at any given moment. As detailed in the <b><a class="el" href="class_seven_seg_dynamic.html" title="Abstract class models a generic dynamically updated Seven Segment display hardware.">SevenSegDynamic</a></b> class, this wiring arrange requires the display to be refreshed to generate a cinematic effect or animation showing the full contents of all the digits at the same time, while the hardware is capable of liting one at a time. This cinematic effect is also managed by the library. <br  />
  </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a3fc30faf73816ce59fb459de3dacebae" name="a3fc30faf73816ce59fb459de3dacebae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fc30faf73816ce59fb459de3dacebae">&#9670;&#160;</a></span>SevenSegDynHC595()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SevenSegDynHC595::SevenSegDynHC595 </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>ioPins</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>dspDigits</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>commAnode</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Class constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ioPins</td><td>A pointer to an array holding the identifieres for the 3 GPIO pins required to send the data to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0-&gt;sclk, 1-&gt;rclk, 2-&gt;dio </td></tr>
+    <tr><td class="paramname">dspDigits</td><td>Quantity of digits/ports of the display. This class supports the wiring scheme allowing a maximum of 8 digits. <br  />
+ </td></tr>
+    <tr><td class="paramname">commAnode</td><td>Boolean indicating if the hardware uses a display/s module/s wired as common anode (true) or common cathode (false). <br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_dyn_h_c595_a3fc30faf73816ce59fb459de3dacebae_cgraph.png" border="0" usemap="#aclass_seven_seg_dyn_h_c595_a3fc30faf73816ce59fb459de3dacebae_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_dyn_h_c595_a3fc30faf73816ce59fb459de3dacebae_cgraph" id="aclass_seven_seg_dyn_h_c595_a3fc30faf73816ce59fb459de3dacebae_cgraph">
+<area shape="rect" title="Class constructor." alt="" coords="5,5,220,48"/>
+<area shape="rect" href="class_seven_seg_dyn_h_c595.html#acae65548bebc819a38ce07c07c140ef2" title="Sets up the required resources for the hardware display to work." alt="" coords="268,13,453,40"/>
+<area shape="poly" title=" " alt="" coords="220,24,252,24,252,29,220,29"/>
+</map>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="acae65548bebc819a38ce07c07c140ef2" name="acae65548bebc819a38ce07c07c140ef2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acae65548bebc819a38ce07c07c140ef2">&#9670;&#160;</a></span>begin()</h2>
 
@@ -185,17 +241,28 @@ Public Member Functions</h2></td></tr>
 </p>
 <p>Attaches the display to the O.S. software timer service, which takes care of refreshing the display regularly. An unlimited amount of displays might be attached to the timer theoretically, as long as there's enough resources available for them, but in practice the refreshing work takes time, and the time taken is proportional to the quantity of displays attached. And as Timers consume time for other tasks done by the microcontroller, the time taken by the timers must be kept to minimal or the stability of the whole system will be compromised. As the time available to execute the refreshing time without risking the stability of the system depends on various factors, the number of supported displays has to be tested in each development environment at development time. </p><dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>he display could be attached to the software timer service, or if the display was already attached to it. This not ensures system stability. <br  />
+    <tr><td class="paramname">true</td><td>The display could be attached to the software timer service, or if the display was already attached to it. This not ensures system stability. <br  />
  </td></tr>
+    <tr><td class="paramname">false</td><td>the display couldn't be attached to the software timer service, due to O.S. failure. <br  />
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>false the display couldn't be attached to the software timer service, due to O.S. failure. <br  />
-</dd></dl>
-<p>Use example</p>
+<p>Use example: <br  />
+</p>
 <div class="fragment"><div class="line">myLedDisp.begin();</div>
 </div><!-- fragment --> 
 <p>Reimplemented from <a class="el" href="class_seven_seg_dynamic.html#a1184cb8662e12921f635c13b19a9df7b">SevenSegDynamic</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_dyn_h_c595_acae65548bebc819a38ce07c07c140ef2_icgraph.png" border="0" usemap="#aclass_seven_seg_dyn_h_c595_acae65548bebc819a38ce07c07c140ef2_icgraph" alt=""/></div>
+<map name="aclass_seven_seg_dyn_h_c595_acae65548bebc819a38ce07c07c140ef2_icgraph" id="aclass_seven_seg_dyn_h_c595_acae65548bebc819a38ce07c07c140ef2_icgraph">
+<area shape="rect" title="Sets up the required resources for the hardware display to work." alt="" coords="268,13,453,40"/>
+<area shape="rect" href="class_seven_seg_dyn_h_c595.html#a3fc30faf73816ce59fb459de3dacebae" title="Class constructor." alt="" coords="5,5,220,48"/>
+<area shape="poly" title=" " alt="" coords="252,29,220,29,220,24,252,24"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -233,8 +300,26 @@ false The instance of the display wasn't found attached to the STS, no detach wa
 </dd></dl>
 <p>Use example</p>
 <div class="fragment"><div class="line">myLedDisp.end();</div>
+</div><!-- fragment --><p>Stops the display Timer Service which takes care of refreshing the display regularly. The method will not destroy the timer nor the timerHandle to work faster if a <a class="el" href="#acae65548bebc819a38ce07c07c140ef2" title="Sets up the required resources for the hardware display to work.">begin(uint32_t)</a> is invoked again.</p>
+<dl class="section return"><dt>Returns</dt><dd>true The instance of the display was found and it's timer stopped. <br  />
+ </dd>
+<dd>
+false The instance of the display wasn't found attached to a running software timer, no action was carried out as it wasn't needed. <br  />
+</dd></dl>
+<p>Use example</p>
+<div class="fragment"><div class="line">myLedDisp.end();</div>
 </div><!-- fragment --> 
 <p>Reimplemented from <a class="el" href="class_seven_seg_dynamic.html">SevenSegDynamic</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_dyn_h_c595_add611b927a735ea74809379a0ecb8533_icgraph.png" border="0" usemap="#aclass_seven_seg_dyn_h_c595_add611b927a735ea74809379a0ecb8533_icgraph" alt=""/></div>
+<map name="aclass_seven_seg_dyn_h_c595_add611b927a735ea74809379a0ecb8533_icgraph" id="aclass_seven_seg_dyn_h_c595_add611b927a735ea74809379a0ecb8533_icgraph">
+<area shape="rect" title="Stops the active display updating." alt="" coords="208,13,383,40"/>
+<area shape="rect" href="class_seven_seg_dyn_h_c595.html#a7cba0a6a5ecb438a8b633167c119e4bc" title="Class default destructor." alt="" coords="5,5,160,48"/>
+<area shape="poly" title=" " alt="" coords="192,29,160,29,160,24,192,24"/>
+</map>
+</div>
 
 </div>
 </div>

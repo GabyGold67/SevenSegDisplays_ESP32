@@ -137,7 +137,7 @@ protected:
     // static TimerHandle_t _dynDspRfrshTmrHndl;
     TimerHandle_t _dynDspRfrshTmrHndl{NULL};
     uint8_t _firstRefreshed{0};
-    void refresh();
+    void _refresh();
     virtual void send(uint8_t content);
     virtual void send(const uint8_t &segments, const uint8_t &port);
     TimerHandle_t _svnSgDynTmrHndl{NULL};
@@ -189,11 +189,22 @@ private:
 protected:
     TimerHandle_t _dynHC595DspRfrshTmrHndl{NULL};  
 
-    void refresh();
-    void send(uint8_t content);
-    void send(const uint8_t &segments, const uint8_t &port);
+    void _refresh();
+    void send(uint8_t content){};
+    void send(const uint8_t &segments, const uint8_t &port){};
 public:
+    /**
+     * @brief Class constructor
+     * 
+     * @param ioPins A pointer to an array holding the identifieres for the 3 GPIO pins required to send the data to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->sclk, 1->rclk, 2->dio
+     * @param dspDigits Quantity of digits/ports of the display. This class supports the wiring scheme allowing a maximum of 8 digits.  
+     * @param commAnode Boolean indicating if the hardware uses a display/s module/s wired as common anode (true) or common cathode (false).  
+     */
     SevenSegDynHC595(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
+    /**
+     * @brief Class default destructor
+     * 
+     */
     ~SevenSegDynHC595();
     /**
      * @brief Sets up the required resources for the hardware display to work
@@ -201,15 +212,14 @@ public:
      * For the Seven Segments Dynamic 74HC595 displays to work several procedures must be completed by this method.  
      * 
      * Attaches the display to the O.S. software timer service, which takes care of refreshing the display regularly. An unlimited amount of displays might be attached to the timer theoretically, as long as there's enough resources available for them, but in practice the refreshing work takes time, and the time taken is proportional to the quantity of displays attached. And as Timers consume time for other tasks done by the microcontroller, the time taken by the timers must be kept to minimal or the stability of the whole system will be compromised. As the time available to execute the refreshing time without risking the stability of the system depends on various factors, the number of supported displays has to be tested in each development environment at development time.
-     * @retval true he display could be attached to the software timer service, or if the display was already attached to it. This not ensures system stability.  
-     * @return false the display couldn't be attached to the software timer service, due to O.S. failure.  
+     * @retval true The display could be attached to the software timer service, or if the display was already attached to it. This not ensures system stability.  
+     * @retval false the display couldn't be attached to the software timer service, due to O.S. failure.  
      * 
-     * Use example
+     * Use example:  
      * 
      * @code {.cpp}
      * myLedDisp.begin();
      * @endcode
-     * 
      */
     virtual bool begin(uint32_t updtLps = 0);
     /**
@@ -232,18 +242,54 @@ public:
 
 //============================================================> Class declarations separator
 
+/**
+ * @class SevenSegDynDummy
+ * 
+ * @brief Models a dynamic display with no screen, for tests or remote display of the data.  
+ * 
+ * The objects instantiated are usefull to development of code expecting to use a dynamic display while the precise hardware to be used in production is not defined. This is done by sending the data through the MCU UART port, making possible the implementation without depending of a physical display. The refresh rate is a parameter of the `begin(uint32_t)` method, so that it can be adjusted to a reasonable speed, either to reading it in real-time, either to send it to storage.  
+ * For each periodic "display refresh" event a message will be transmited through the UART, including: 
+ * - A time stamp
+ * - The content of each port indicating:  
+ *      - The port position as a **decimal**  
+ *      - The content for that position as a **hexadecimal** value.  
+ */
 class SevenSegDynDummy: public SevenSegDynamic{
     static void tmrCbRfrshDynDummy(TimerHandle_t rfrshTmrCbArg);
+    
 protected:
     // static TimerHandle_t _dynDummyDspRfrshTmrHndl;
     TimerHandle_t _dynDummyDspRfrshTmrHndl{NULL};
 
     virtual void _unAbstract();
-    void refresh();
+    void _refresh();
     void send(const uint8_t &segments, const uint8_t &port);
 public:
+    /**
+     * @brief Class constructor, instantiates a SevenSegDynDummy object
+     * 
+     * @param dspDigits Quantity of digits/ports of the display. As this is a software only "display" the value is just limited by the parameter type to 256 digits.  
+     * @param commAnode Boolean indicating if the hardware display/s module/s being simulated are supposed to be wired as common anode (true) or common cathode (false).  
+     */
     SevenSegDynDummy(uint8_t dspDigits = 4, bool commAnode = true);
+    /**
+     * @brief Class destructor  
+     */
     ~SevenSegDynDummy();
+    /**
+     * @brief Sets up the required resources for the "dummy hardware display" to work
+     * 
+     * For the Seven Segments Dynamic Dummy displays to work several procedures must be completed by this method, specially to ensure a behaviour as close to a hardware dynamic display.  
+     * 
+     * Attaches the display to the O.S. software timer service, which takes care of refreshing the display regularly. An unlimited amount of displays might be attached to the timer theoretically, as long as there's enough resources available for them, but in practice the refreshing work takes time, and the time taken is proportional to the quantity of displays attached. And as Timers consume time for other tasks done by the microcontroller, the time taken by the timers must be kept to minimal or the stability of the whole system will be compromised. As the time available to execute the refreshing time without risking the stability of the system depends on various factors, the number of supported displays has to be tested in each development environment at development time.
+     * @retval true The display could be attached to the software timer service, or if the display was already attached to it. This not ensures system stability.  
+     * @retval false the display couldn't be attached to the software timer service, due to O.S. failure.  
+     * 
+     * @param updtLps (Optional) Time lapse given in milliseconds for the "display refresh" task to be executed. If no value is provided a time of 2000 milliseconds (2 seconds) will be used. 
+     * 
+     * @return true 
+     * @return false 
+     */
     bool begin(uint32_t updtLps = 0);
     bool end();
 };
@@ -300,11 +346,11 @@ public:
  * - Maximum number of ports addressable.
  * - Keyscanning services
  *
- * @note As the communications protocol does't comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet **Maximum clock frequency** stated as 500KHz to a less demanding 100KHz time slices, managed by a timer interrupt set at 100KHz, enabling the timer interrupt service only while transmitting data, and disabling it while idle. The transmission protocol will implement the data sheet requirements, part of it being the use of a 0.5 long CLK multiples for signaling, so **TWO** 100 KHz periods will be set as the CLK width standard.
+ * @note As the communications protocol does't comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet **Maximum clock frequency** stated as 500KHz to a less demanding 100KHz(10 microseconds) time slices, managed by `delayMicroseconds()` function keyword, or a timer interrupt set at 100KHz, enabling the timer interrupt service only while transmitting data, and disabling it while idle. 
  * 
- * @warning While the TM1637, TM1638, TM1639 (at least these, maybe all of the members of this "family") are stable and well documented devices, the parts sold as **"TM1637 Display Modules"**, **"TM1638 Display Modules"** etc, breakboards that include the TM163X display driver, supporting electronics and one or several 7 segments display modules are not all created equal. Having the TM1637 modules the hability to drive 6 display ports, some breakboards present 4 display ports and a center colon, as is standard to time displaying modules. 
- * The big issue is that not all displays have the same disposition, not all of them are internally wired the same, and that not all the manufacturers wire the TM1637 modules to the 7 segments display modules in the same way. For example, some will attach the colon to the DP (decimal point) segment of the third port (RtL), some will attach them to ALL the DP segment, some will attach each of the dots of the colon independently, one to the 5th display port, the other to the 6th display port, and then some other manufacturer in some other way. 
- * Whenever is possible to get a specific module for testing, a SevenSegTM163X subclass will be added to manage it correctly, please read the subclasses' description for correct class identification.  
+ * @warning While the TM1637, TM1638, TM1639 (at least these are our known members of this "family") are stable and well documented devices, the parts sold as **"TM1637 Display Modules"**, **"TM1638 Display Modules"** etc, breakboards that include the TM163X display driver, supporting electronics and one or several 7 segments display modules are not all created equal. Having the TM1637 modules the hability to drive 6 display ports, some breakboards present 4 display ports and a center colon, as is standard to time displaying modules. 
+ * The **big issue** is the lack of a standard for those display modules, not all displays have the same disposition, not all of them are internally wired the same, and that not all the manufacturers wire the TM1637 modules to the 7 segments display modules in the same way. For example, some will attach the colon to the DP (decimal point) segment of the third port (RtL), some will attach them to ALL the DP segment, some will attach each of the dots of the colon independently, one to the 5th display port, the other to the 6th display port, and then some other manufacturer in some other way. 
+ * Whenever is possible to get a specific module for testing, a SevenSegTM163X subclass will be added to manage it correctly, please read the subclasses' description for correct display module oriented class identification.  
  *
  * @class SevenSegTM163X
  */
@@ -313,9 +359,10 @@ class SevenSegTM163X: public SevenSegStatic{
 private:
     const uint8_t _clkIndx {0};
     const uint8_t _dioIndx {1};
-    const uint8_t _dspDigitsQtyMax{}; // Maximum display size in digits: 6 for TM1637, is 16 for TM1639
+    const uint8_t _dspDigitsQtyMax{}; // Maximum display size in digits: 6 for TM1637, 16 for TM1639
     const uint8_t _hwBrghtnssLvlMax{0x07};
     const uint8_t _hwBrghtnssLvlMin{0x00};
+    uint32_t _txClkTckTm{2};
 
     uint8_t _clk {};
     uint8_t _dio {}; 
@@ -337,7 +384,17 @@ protected:
     virtual void _sendBffr();
  
  public:
+    /**
+     * @brief Default class constructor
+     * 
+     */
     SevenSegTM163X();
+    /**
+     * @brief Class constructor
+     * 
+     * @param ioPins A pointer to an array holding the identifieres for the 2 GPIO pins required to send the data to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->dio
+     * @param dspDigits 
+     */
     SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits);
     ~SevenSegTM163X();
     bool begin();
@@ -384,7 +441,7 @@ public:
 
 //============================================================> Class declarations separator
 
-// Classes for the TM1638, Max7219, HT16K33, direct pin connection, under implementation need analysis
+// Classes for the TM1638, Max7219, HT16K33, direct MPU pin connection, under implementation need analysis
 
 
 #endif
