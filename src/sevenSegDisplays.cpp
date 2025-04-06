@@ -386,20 +386,7 @@ bool SevenSegDisplays::noBlink(){
    if(_isBlinking){
       taskENTER_CRITICAL(&mux);
       _isBlinking = false;
-      /*
-      if(_blinkTmrHndl){   //if the timer still exists and is running, stop and delete
-         tmrModResult = xTimerStop(_blinkTmrHndl, portMAX_DELAY);
-         if(tmrModResult == pdPASS)
-            tmrModResult = xTimerDelete(_blinkTmrHndl, portMAX_DELAY);
-         if(tmrModResult == pdPASS)
-            _blinkTmrHndl = NULL;
-      }
-      */
       _restoreDspBuff();   // This method calls _setDspBuffChng() if it suits
-      /*
-      delete [] _dspAuxBuffPtr;
-      _dspAuxBuffPtr = nullptr;
-      */
       _blinkTimer = 0;
       _blinkShowOn = true;
       result = true;
@@ -420,12 +407,12 @@ bool SevenSegDisplays::noWait(){
       if(_waitTmrHndl){   //if the timer still exists and is running, stop and delete
          tmrModResult = xTimerStop(_waitTmrHndl, portMAX_DELAY);
       }
-      // if(tmrModResult == pdPASS){
-      _restoreDspBuff();   // This method calls _setDspBuffChng() if it suits
-      _waitTimer = 0;
-      _isWaiting = false;
-      result = true;
-      // }
+      if(tmrModResult == pdPASS){
+         _restoreDspBuff();   // This method calls _setDspBuffChng() if it suits
+         _waitTimer = 0;
+         _isWaiting = false;
+         result = true;
+      }
       taskEXIT_CRITICAL(&mux);
    }
    else

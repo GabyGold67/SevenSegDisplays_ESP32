@@ -1,0 +1,8 @@
+<map id="SevenSegTM163X" name="SevenSegTM163X">
+<area shape="rect" id="Node000001" title="Models specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series chips..." alt="" coords="5,157,136,184"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_static.html" title="Abstract class that models displays that don&#39;t need permanent MCU data updating to keep the data corr..." alt="" coords="13,81,128,108"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="73,123,73,157,68,157,68,123"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware." alt="" coords="6,5,135,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="73,47,73,81,68,81,68,47"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="151,11,161,19,153,26,135,28,135,23,151,21,156,19,149,16"/>
+</map>

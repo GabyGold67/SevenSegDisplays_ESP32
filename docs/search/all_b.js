@@ -17,7 +17,9 @@ var searchData=
   ['sevensegdynamic_14',['SevenSegDynamic',['../class_seven_seg_dynamic.html',1,'']]],
   ['sevensegdyndummy_15',['SevenSegDynDummy',['../class_seven_seg_dyn_dummy.html',1,'SevenSegDynDummy'],['../class_seven_seg_dyn_dummy.html#a24acbe9310933715d67b880034a75141',1,'SevenSegDynDummy::SevenSegDynDummy()']]],
   ['sevensegdynhc595_16',['SevenSegDynHC595',['../class_seven_seg_dyn_h_c595.html',1,'SevenSegDynHC595'],['../class_seven_seg_dyn_h_c595.html#a3fc30faf73816ce59fb459de3dacebae',1,'SevenSegDynHC595::SevenSegDynHC595()']]],
-  ['sevensegtm163x_17',['SevenSegTM163X',['../class_seven_seg_t_m163_x.html',1,'SevenSegTM163X'],['../class_seven_seg_t_m163_x.html#a6f511a29dcacfa8be9d2a8778dc2d05d',1,'SevenSegTM163X::SevenSegTM163X()'],['../class_seven_seg_t_m163_x.html#a9557500df89b9364a4baff8f2b0e8e1b',1,'SevenSegTM163X::SevenSegTM163X(uint8_t *ioPins, uint8_t dspDigits)']]],
-  ['strong_18',['&lt;strong&gt;SevenSegDisplays_ESP32: A Seven Segments displays easy to use library&lt;/strong&gt;',['../index.html',1,'']]],
-  ['strong_20sevensegdisplays_5fesp32_3a_20a_20seven_20segments_20displays_20easy_20to_20use_20library_20strong_19',['&lt;strong&gt;SevenSegDisplays_ESP32: A Seven Segments displays easy to use library&lt;/strong&gt;',['../index.html',1,'']]]
+  ['sevensegstathc595_17',['SevenSegStatHC595',['../class_seven_seg_stat_h_c595.html',1,'']]],
+  ['sevensegstatic_18',['SevenSegStatic',['../class_seven_seg_static.html',1,'']]],
+  ['sevensegtm163x_19',['SevenSegTM163X',['../class_seven_seg_t_m163_x.html',1,'SevenSegTM163X'],['../class_seven_seg_t_m163_x.html#a6f511a29dcacfa8be9d2a8778dc2d05d',1,'SevenSegTM163X::SevenSegTM163X()'],['../class_seven_seg_t_m163_x.html#a9557500df89b9364a4baff8f2b0e8e1b',1,'SevenSegTM163X::SevenSegTM163X(uint8_t *ioPins, uint8_t dspDigits)']]],
+  ['strong_20',['&lt;strong&gt;SevenSegDisplays_ESP32: A Seven Segments displays easy to use library&lt;/strong&gt;',['../index.html',1,'']]],
+  ['strong_20sevensegdisplays_5fesp32_3a_20a_20seven_20segments_20displays_20easy_20to_20use_20library_20strong_21',['&lt;strong&gt;SevenSegDisplays_ESP32: A Seven Segments displays easy to use library&lt;/strong&gt;',['../index.html',1,'']]]
 ];

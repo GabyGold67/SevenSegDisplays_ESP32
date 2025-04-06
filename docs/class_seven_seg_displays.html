@@ -666,7 +666,7 @@ false Otherwise, being that the <b>level</b> parameter was out of range and/or t
 </div><!-- fragment --><div class="fragment"><div class="line">`myLedDisp.gauge(3);`   <span class="comment">// Displays a gauge with a blank space as label and the next three positions with their respective levels indicators</span></div>
 </div><!-- fragment --><div class="fragment"><div class="line">`myLedDisp.gauge(1, <span class="charliteral">&#39;F&#39;</span>);` <span class="comment">// Displays a gauge with a **F** as label in it&#39;s leftmost position, and the next position holding the second level indicator</span></div>
 </div><!-- fragment --><div class="fragment"><div class="line">`myLedDisp.**<a class="code hl_function" href="#aa00c8c2fbca4a0068590ef62de28f198">gauge</a>(4, <span class="charliteral">&#39;d&#39;</span>);`  <span class="comment">// Error, the value 4 is outside valid range, the method will return **false** and the display will be cleared.  </span></div>
-<div class="ttc" id="aclass_seven_seg_displays_html_aa00c8c2fbca4a0068590ef62de28f198"><div class="ttname"><a href="#aa00c8c2fbca4a0068590ef62de28f198">SevenSegDisplays::gauge</a></div><div class="ttdeci">bool gauge(const int &amp;level, char label=' ')</div><div class="ttdoc">Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ...</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.cpp:276</div></div>
+<div class="ttc" id="aclass_seven_seg_displays_html_aa00c8c2fbca4a0068590ef62de28f198"><div class="ttname"><a href="#aa00c8c2fbca4a0068590ef62de28f198">SevenSegDisplays::gauge</a></div><div class="ttdeci">bool gauge(const int &amp;level, char label=' ')</div><div class="ttdoc">Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ...</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.cpp:270</div></div>
 </div><!-- fragment --><div class="fragment"><div class="line">`myLedDisp.gauge(3, <span class="charliteral">&#39;X&#39;</span>);` <span class="comment">// Error, **X** is not a displayable character, the method will return **false** and the display will be cleared</span></div>
 </div><!-- fragment --> <div class="dynheader">
 Here is the call graph for this function:</div>
@@ -1031,9 +1031,9 @@ false If the display is not set to <b>Waiting mode</b>. <br  />
 </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>If the display was set to blink, the blinking is stopped. <br  />
+    <tr><td class="paramname">true</td><td>The display was set to not blinking, either becauseIf display was set to blink and was stopped, either the display was not set to blink. <br  />
  </td></tr>
-    <tr><td class="paramname">false</td><td>If the display was not set to blink, no changes will be done. <br  />
+    <tr><td class="paramname">false</td><td>The display was set to blink, and the blink stopping failed. <br  />
 </td></tr>
   </table>
   </dd>
@@ -1604,7 +1604,7 @@ false The display was already set to wait, and/or the parameter passed was out o
 <div class="fragment"><div class="line">myLedDisp.wait(); <span class="comment">//Returns true and shows advancement animation to the already set value.  </span></div>
 <div class="line">myLedDisp.wait(800); <span class="comment">//Returns true and sets the advancement animation rate to 800 millisecs.  </span></div>
 <div class="line">myLedDisp.wait(<a class="code hl_function" href="#acacba9047c40769b42a11268df302f9c">getMaxBlinkRate</a>() + 10);   <span class="comment">//Returns false and the display stays without change.  </span></div>
-<div class="ttc" id="aclass_seven_seg_displays_html_acacba9047c40769b42a11268df302f9c"><div class="ttname"><a href="#acacba9047c40769b42a11268df302f9c">SevenSegDisplays::getMaxBlinkRate</a></div><div class="ttdeci">uint32_t getMaxBlinkRate()</div><div class="ttdoc">Returns the maximum rate the display can be configured to blink at.</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.cpp:354</div></div>
+<div class="ttc" id="aclass_seven_seg_displays_html_acacba9047c40769b42a11268df302f9c"><div class="ttname"><a href="#acacba9047c40769b42a11268df302f9c">SevenSegDisplays::getMaxBlinkRate</a></div><div class="ttdeci">uint32_t getMaxBlinkRate()</div><div class="ttdoc">Returns the maximum rate the display can be configured to blink at.</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.cpp:348</div></div>
 </div><!-- fragment --> <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">

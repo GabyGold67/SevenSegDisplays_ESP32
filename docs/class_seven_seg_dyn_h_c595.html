@@ -291,7 +291,7 @@ Here is the caller graph for this function:</div>
 
 <p>Stops the active display updating. <br  />
  </p>
-<p>Detaches the display from the Software Timer Service which takes care of refreshing the display regularly. The method then checks the array (list) of active serviced displays, if none is left in that array, the timer service is stopped and deleted, and the array is deleted from the heap to free the allocated resources. This last actions are reversed when a new <a class="el" href="#acae65548bebc819a38ce07c07c140ef2" title="Sets up the required resources for the hardware display to work.">begin()</a> method is executed in any display. <br  />
+<p>Detaches the display from the Software Timer Service which takes care of refreshing the display regularly. To restart de display update timer a new <a class="el" href="#acae65548bebc819a38ce07c07c140ef2" title="Sets up the required resources for the hardware display to work.">begin()</a> method must be executed. <br  />
 </p>
 <dl class="section return"><dt>Returns</dt><dd>true The instance of the display was found and detached from the STS. <br  />
  </dd>

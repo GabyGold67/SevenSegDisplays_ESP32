@@ -7,7 +7,7 @@ The library goal is to provide a common consistent API to display data on **seve
 
 With a very long time in the market, **many** different techniques and technologies have been developed to display information in seven segment displays, but like any other technical resource, massification contributed to the development of specific standard hardware, both for the display and the display driving sides.  
 
-This library is oriented to the management of the most usual combinations of those components, **even providing management for displays with one of the components missing** (see the "dummy" and "noDriver" SevenSegHw classes).  
+This library is oriented to the management of the most usual combinations of those components, **even providing management for displays with one of the components missing** (see the "dummy" and "PinDrv" SevenSegHw subclasses).  
 
 ## [Complete SevenSegDisplays_ESP32 library documentation HERE!](https://gabygold67.github.io/SevenSegDisplays_ESP32/)
 

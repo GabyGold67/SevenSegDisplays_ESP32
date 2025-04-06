@@ -1,9 +1,15 @@
 <map id="SevenSegDispHw" name="SevenSegDispHw">
-<area shape="rect" id="Node000001" title="Base abstract class models a generic Seven Segment display hardware." alt="" coords="104,5,232,32"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_dynamic.html" title="Abstract class models a generic dynamically updated Seven Segment display hardware." alt="" coords="101,80,234,107"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,48,170,80,165,80,165,48"/>
+<area shape="rect" id="Node000001" title="Base abstract class models a generic Seven Segment display hardware." alt="" coords="276,5,404,32"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_dynamic.html" title="Abstract class models a generic dynamically updated Seven Segment display hardware." alt="" coords="188,80,321,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="315,44,271,82,267,78,312,40"/>
+<area shape="rect" id="Node000005" href="$class_seven_seg_static.html" title="Abstract class that models displays that don&#39;t need permanent MCU data updating to keep the data corr..." alt="" coords="367,80,483,107"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="368,40,412,78,409,82,364,44"/>
 <area shape="rect" id="Node000003" href="$class_seven_seg_dyn_dummy.html" title="Models a dynamic display with no screen, for tests or remote display of the data." alt="" coords="5,155,157,181"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="143,119,98,156,94,152,139,115"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="211,115,112,156,110,152,209,111"/>
 <area shape="rect" id="Node000004" href="$class_seven_seg_dyn_h_c595.html" title="Models seven segment displays driven by two 74HC595 shift registers." alt="" coords="181,155,328,181"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="196,115,241,152,238,156,193,119"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="257,122,257,154,252,154,252,122"/>
+<area shape="rect" id="Node000006" href="$class_seven_seg_stat_h_c595.html" title="Models displays driven by 74HC595 or similar shift registers, one shift register per display port,..." alt="" coords="352,155,498,181"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="428,122,428,154,422,154,422,122"/>
+<area shape="rect" id="Node000007" href="$class_seven_seg_t_m163_x.html" title="Models specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series chips..." alt="" coords="522,155,653,181"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="468,111,560,152,558,156,466,116"/>
 </map>

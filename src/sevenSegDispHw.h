@@ -225,7 +225,7 @@ public:
     /**
      * @brief Stops the active display updating.  
      * 
-     * Detaches the display from the Software Timer Service which takes care of refreshing the display regularly. The method then checks the array (list) of active serviced displays, if none is left in that array, the timer service is stopped and deleted, and the array is deleted from the heap to free the allocated resources. This last actions are reversed when a new begin() method is executed in any display.  
+     * Detaches the display from the Software Timer Service which takes care of refreshing the display regularly. To restart de display update timer a new begin() method must be executed.  
      * 
      * @return true The instance of the display was found and detached from the STS.  
      * @return false The instance of the display wasn't found attached to the STS, no detach was carried as it wasn't needed.  
@@ -247,7 +247,7 @@ public:
  * 
  * @brief Models a dynamic display with no screen, for tests or remote display of the data.  
  * 
- * The objects instantiated are usefull to development of code expecting to use a dynamic display while the precise hardware to be used in production is not defined. This is done by sending the data through the MCU UART port, making possible the implementation without depending of a physical display. The refresh rate is a parameter of the `begin(uint32_t)` method, so that it can be adjusted to a reasonable speed, either to reading it in real-time, either to send it to storage.  
+ * The objects instantiated are usefull for development of code expecting to use a dynamic display while the precise hardware to be used in production is not defined. This is done by sending the data through the MCU UART port, making possible the implementation without depending of a physical display. The refresh rate is a parameter of the `begin(uint32_t)` method, so that it can be adjusted to a reasonable speed, either to reading it in real-time, either to send it to storage.  
  * For each periodic "display refresh" event a message will be transmited through the UART, including: 
  * - A time stamp
  * - The content of each port indicating:  
@@ -291,11 +291,34 @@ public:
      * @return false 
      */
     bool begin(uint32_t updtLps = 0);
+    /**
+     * @brief Stops the active display updating.  
+     * 
+     * See SevenSegDynHC595::end() for details.  
+     */
     bool end();
 };
 
 //============================================================> Class declarations separator
 
+/**
+ * @class SevenSegStatic
+ * 
+ * @brief Abstract class that models displays that don't need permanent MCU data updating to keep the data correctly displayed. 
+ * 
+ * The lack of need of periodic intervention from the MCU implies that a "display driver" chip (or chipset) takes care of the display update and refreshing. So this is a base class for display through those display drivers. The MCU sends the data to be displayed and the chip required commands through diverse channels and protocols depending on the specific chip.  
+ * The chip then connects to the display module through their output pins. The hardware developer might decide to implement the chip/display module wiring according to the project requirements, but all the chips modeled by this class and it's subclasses share the same characteristics:  
+ * - They provide 8 pins for the seven segments + DP ports.  
+ * - They provide 1 pin per digit/port supported by the specific chip.  
+ * 
+ * @note **NONE** of the drivers chip modeled by the SevenSegStatic subclasses include **colon**, **icons** or any other amenity some hardware display modules include. The activation of those **colons** and **icons** is provided by the use of some of the existing described chip pins in a display module propietary exclusive way, and are described in those displays datasheets. Some of those mechanisms are:  
+ * - Have less display ports than the maximum supported by the chip, and use one or more segments of the exceeding ports wired to the colon, colons or icons of the display.  
+ * - Use an external source to activate the colon, colons or icons independently from the driving chip.  
+ * - Wire one or more of the display ports DP segments to the colon, colons or icons of the display.  
+ * 
+ * @warning Using displays that implement the colon, colons and/or icons through the DP segments of the active ports make the display unfit to display decimal non integer values, as no DP might be used. Verify the display module characteristics to setup the corresponding class with the right parameters.  
+ * 
+ */
 class SevenSegStatic: public SevenSegDispHw{
     
 public:
@@ -307,6 +330,14 @@ public:
 
 //============================================================> Class declarations separator
 
+/**
+ * @class SevenSegStatHC595
+ * 
+ * @brief Models displays driven by 74HC595 or similar shift registers, one shift register per display port, wired so that the eight output pins of each shift register is connected to the 8 segment pins of the display module.  
+ * 
+ * For more than one digit displays, the shift registers driving each port is connected to the next in the traditional **daisy-chain** fashion.
+ * 
+ */
 class SevenSegStatHC595: public SevenSegStatic{
 private:
     const uint8_t _sclkIndx {0};

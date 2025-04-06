@@ -148,6 +148,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac0f6ac50ac26d402d96e2a689eb724d7" id="r_ac0f6ac50ac26d402d96e2a689eb724d7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0f6ac50ac26d402d96e2a689eb724d7">begin</a> (uint32_t updtLps=0)</td></tr>
 <tr class="memdesc:ac0f6ac50ac26d402d96e2a689eb724d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the required resources for the "dummy hardware display" to work.  <br /></td></tr>
 <tr class="separator:ac0f6ac50ac26d402d96e2a689eb724d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ca50c8a0dd4ff2d52caa0332119ce05" id="r_a2ca50c8a0dd4ff2d52caa0332119ce05"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2ca50c8a0dd4ff2d52caa0332119ce05">end</a> ()</td></tr>
+<tr class="memdesc:a2ca50c8a0dd4ff2d52caa0332119ce05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the active display updating. <br  />
+  <br /></td></tr>
+<tr class="separator:a2ca50c8a0dd4ff2d52caa0332119ce05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_seven_seg_dynamic"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_seven_seg_dynamic')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_seven_seg_dynamic.html">SevenSegDynamic</a></td></tr>
 <tr class="inherit_header pub_methods_class_seven_seg_disp_hw"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_seven_seg_disp_hw')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a></td></tr>
 <tr class="memitem:a5b9379b7b6ca6946813fd643d28d74f4 inherit pub_methods_class_seven_seg_disp_hw" id="r_a5b9379b7b6ca6946813fd643d28d74f4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a5b9379b7b6ca6946813fd643d28d74f4">getCommAnode</a> ()</td></tr>
@@ -160,7 +164,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Models a dynamic display with no screen, for tests or remote display of the data. <br  />
  </p>
-<p>The objects instantiated are usefull to development of code expecting to use a dynamic display while the precise hardware to be used in production is not defined. This is done by sending the data through the MCU UART port, making possible the implementation without depending of a physical display. The refresh rate is a parameter of the <code><a class="el" href="#ac0f6ac50ac26d402d96e2a689eb724d7" title="Sets up the required resources for the &quot;dummy hardware display&quot; to work.">begin(uint32_t)</a></code> method, so that it can be adjusted to a reasonable speed, either to reading it in real-time, either to send it to storage. <br  />
+<p>The objects instantiated are usefull for development of code expecting to use a dynamic display while the precise hardware to be used in production is not defined. This is done by sending the data through the MCU UART port, making possible the implementation without depending of a physical display. The refresh rate is a parameter of the <code><a class="el" href="#ac0f6ac50ac26d402d96e2a689eb724d7" title="Sets up the required resources for the &quot;dummy hardware display&quot; to work.">begin(uint32_t)</a></code> method, so that it can be adjusted to a reasonable speed, either to reading it in real-time, either to send it to storage. <br  />
  For each periodic "display refresh" event a message will be transmited through the UART, including:</p><ul>
 <li>A time stamp</li>
 <li>The content of each port indicating: <br  />
@@ -270,6 +274,48 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Sets up the required resources for the &quot;dummy hardware display&quot; to work." alt="" coords="273,13,463,40"/>
 <area shape="rect" href="class_seven_seg_dyn_dummy.html#a24acbe9310933715d67b880034a75141" title="Class constructor, instantiates a SevenSegDynDummy object." alt="" coords="5,5,225,48"/>
 <area shape="poly" title=" " alt="" coords="257,29,225,29,225,24,257,24"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a2ca50c8a0dd4ff2d52caa0332119ce05" name="a2ca50c8a0dd4ff2d52caa0332119ce05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ca50c8a0dd4ff2d52caa0332119ce05">&#9670;&#160;</a></span>end()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDynDummy::end </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stops the active display updating. <br  />
+ </p>
+<p>See <a class="el" href="class_seven_seg_dyn_h_c595.html#add611b927a735ea74809379a0ecb8533" title="Stops the active display updating.">SevenSegDynHC595::end()</a> for details. <br  />
+ </p>
+
+<p>Reimplemented from <a class="el" href="class_seven_seg_dynamic.html">SevenSegDynamic</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_dyn_dummy_a2ca50c8a0dd4ff2d52caa0332119ce05_icgraph.png" border="0" usemap="#aclass_seven_seg_dyn_dummy_a2ca50c8a0dd4ff2d52caa0332119ce05_icgraph" alt=""/></div>
+<map name="aclass_seven_seg_dyn_dummy_a2ca50c8a0dd4ff2d52caa0332119ce05_icgraph" id="aclass_seven_seg_dyn_dummy_a2ca50c8a0dd4ff2d52caa0332119ce05_icgraph">
+<area shape="rect" title="Stops the active display updating." alt="" coords="213,13,393,40"/>
+<area shape="rect" href="class_seven_seg_dyn_dummy.html#a2d54447341e43fa346a42ee50121c078" title="Class destructor" alt="" coords="5,5,165,48"/>
+<area shape="poly" title=" " alt="" coords="197,29,165,29,165,24,197,24"/>
 </map>
 </div>
 
