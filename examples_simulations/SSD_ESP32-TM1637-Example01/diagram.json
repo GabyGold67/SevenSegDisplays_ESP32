@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "author": "Gaby Goldman",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 9.6, "left": 350.44, "attrs": {} },
+    { "type": "wokwi-junction", "id": "j8", "top": 158.4, "left": 350.4, "attrs": {} },
+    { "type": "wokwi-junction", "id": "j9", "top": 110.4, "left": 292.8, "attrs": {} },
+    { "type": "wokwi-junction", "id": "j10", "top": 100.8, "left": 283.2, "attrs": {} },
+    { "type": "wokwi-vcc", "id": "vcc1", "top": 29.56, "left": 259.2, "attrs": {} },
+    {
+      "type": "wokwi-tm1637-7segment",
+      "id": "sevseg2",
+      "top": 76.76,
+      "left": 74.23,
+      "attrs": { "color": "red" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text1",
+      "top": 115.2,
+      "left": 307.2,
+      "attrs": { "text": "DIO" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text2",
+      "top": 76.8,
+      "left": 307.2,
+      "attrs": { "text": "CLK" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "j10:J", "esp:33", "violet", [ "v0" ] ],
+    [ "j9:J", "esp:25", "orange", [ "h28.8", "v-9.6" ] ],
+    [ "j8:J", "esp:GND.1", "black", [ "v0", "h9.6", "v28.8" ] ],
+    [ "esp:GND.1", "sevseg2:GND", "black", [ "h-86.25", "v-28.8" ] ],
+    [ "vcc1:VCC", "sevseg2:VCC", "red", [ "v67.2" ] ],
+    [ "j10:J", "sevseg2:CLK", "violet", [ "v0" ] ],
+    [ "j9:J", "sevseg2:DIO", "orange", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}

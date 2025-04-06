@@ -1,7 +1,8 @@
 /**
  ******************************************************************************
- * @file	: overviewExampleDynHC595.ino
- * @brief  : Example file to demonstrate SevenSegDisplays_ESP32 class use with SevenSegDispHw::SevenSegDynHC595 class composition
+ * @file ssd_ESP32-DynHC595-Example00-GenOV.ino
+ * 
+ * @brief Example file to demonstrate SevenSegDisplays_ESP32 class use with SevenSegDispHw::SevenSegDynHC595 class composition
  *
  * Framework: Arduino
  * Platform: ESP32
@@ -9,7 +10,7 @@
  * @author	: Gabriel D. Goldman
  *
  * @date First release: 15/05/2023 
- *       Last update:   03/03/2025 00:10 GMT+0200
+ *       Last update:   26/03/2025 14:50 GMT+0200
  ******************************************************************************
  * @attention
  * 
@@ -20,7 +21,7 @@
 #include <SevenSegDisplays.h>
 //==============================================>> General use definitions BEGIN
 #define LoopDlyTtlTm 1500 // Time between task unblocking, time taken from the start of the task execution to the next execution 
-#define MainCtrlTskPrrtyLvl 5 // Task priority level
+#define MainCtrlTskPrrtyLvl 4 // Task priority level
 
 static BaseType_t xReturned; /*!<Static variable to keep returning result value from Tasks and Timers executions*/
 static BaseType_t errorFlag {pdFALSE};
@@ -42,6 +43,7 @@ TaskHandle_t mainCtrlTskHndl {NULL};
 //=============================================>> Tasks Handles declarations END
 
 void setup() { 
+   delay(10);  //FTPO Part of the WOKWI simulator additions, for simulation startup needs
 
    Serial.begin(9600); //FTPO
    Serial.println("\n\n\nTest started"); //FTPO
@@ -307,12 +309,12 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
       }
 
       {         
-         myLedDisp.write("3", 2);
+         myLedDisp.write(0xAD, 2);
          vTaskDelay(testTime);
       }
 
       {         
-         myLedDisp.write("4", 2);
+         myLedDisp.write(0x81, 2);
          vTaskDelay(testTime);
       }
 
@@ -349,6 +351,7 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
          myLedDisp.write("4", 3);
          vTaskDelay(testTime);
       }
+
       {
          myLedDisp.resetBlinkMask();
          vTaskDelay(testTime*2);
@@ -400,11 +403,11 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
       }
 
       {
-         myLedDisp.getDspUndrlHwPtr()->stop();
+         myLedDisp.getDspUndrlHwPtr()->end();
          Serial.println("Service stopped");
          vTaskDelay(testTime);
       }
-
+   
       {
          // vTaskDelay(testTime);
       }

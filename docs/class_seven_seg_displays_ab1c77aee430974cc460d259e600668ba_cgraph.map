@@ -2,6 +2,8 @@
 <area shape="rect" id="Node000001" title="Prints one character to the display, at a designated position (digit or port), without affecting the ..." alt="" coords="5,31,174,57"/>
 <area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing." alt="" coords="230,5,397,32"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,32,214,27,215,33,174,37"/>
-<area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="222,56,405,83"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="174,51,206,55,206,60,174,56"/>
+<area shape="rect" id="Node000004" href="$class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="222,56,405,83"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="174,51,206,55,206,60,174,56"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471" title="Stops the Waiting mode, if it was doing so, leaving the display turned on." alt="" coords="453,5,633,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="397,16,437,16,437,21,397,21"/>
 </map>

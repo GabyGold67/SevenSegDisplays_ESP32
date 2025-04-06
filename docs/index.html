@@ -101,53 +101,83 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md__c_1_2_users_2_dev_padawan_2_documents_2_my_01_projects_2_training_01_projects_2_libs_dev___e_s_p32_2lib_2_seven_seg_displays___e_s_p32_2_r_e_a_d_m_e"></a></p>
-<h1><b>Any display. Every driving technology. A single API</b></h1>
-<h1><a href="https://gabygold67.github.io/SevenSegDisplays_ESP32/">Complete SevenSegDisplays_ESP32 library documentation</a></h1>
-<p>Originally developed to easily display numeric and text data in unatended manner on the cheap and popular "4-Bits LED Digital Tube Module", <b>a 7-segment 4 digits led display dynamically driven by two 74HC595 shift register</b>, the main focus was set on: <br  />
+<h1>"One library to rule them all..."</h1>
+<p><b>(Or at least as many as I could find to test them)</b> <br  />
+</p>
+<p>The library goal is to provide a common consistent API to display data on <b>seven segments LED displays</b> independently of the hardware used: the display modules and the driving electronics. <br  />
+</p>
+<p>With a very long time in the market, <b>many</b> different techniques and technologies have been developed to display information in seven segment displays, but like any other technical resource, massification contributed to the development of specific standard hardware, both for the display and the display driving sides. <br  />
+</p>
+<p>This library is oriented to the management of the most usual combinations of those components, <b>even providing management for displays with one of the components missing</b> (see the "dummy" and "PinDrv" SevenSegHw subclasses). <br  />
+</p>
+<h2><a href="https://gabygold67.github.io/SevenSegDisplays_ESP32/">Complete SevenSegDisplays_ESP32 library documentation HERE!</a></h2>
+<p>Originally developed to easily display numeric and text data in unattended manner on the cheap and popular "4-Bits LED Digital Tube Module", <b>a 7-segment 4 digits led display dynamically driven by two 74HC595 shift register</b>, the main focus was set on: <br  />
 </p><ul>
 <li>Ease of use. <br  />
 </li>
 <li>Flexibility.</li>
 <li>Basic prevention of 'misrepresentation' errors.</li>
 </ul>
-<p>As the library grew in services and benefits to manage and easily display data it became obvious that other models and technical driving solutions for seven segments displays could make use of the same services, but most important, it would make transparent to the developer the technology behind the display he's required to use, the API and ammenities will be the same. <br  />
+<p>As the library grew in services and amenities to manage and easily display data it became obvious that other models and technical driving solutions for seven segments displays could make use of the same benefits, but most important, it would make transparent to the developer the technology behind the display he's required to use, the API and amenities would be the same. <br  />
 </p>
-<p>So the original <a href="https://github.com/GabyGold67/FourBitLedDigitalTube">4-Bit Led Digital Tube</a> library started a evolution process, including: <br  />
+<p>So the original <a href="https://github.com/GabyGold67/FourBitLedDigitalTube">4-Bit Led Digital Tube</a> library started an evolution process, including: <br  />
 </p><ul>
-<li>Extending the number of digits handled to 8 (the maximum known managing capabilities of a <b>two</b> 74HC595 display module).</li>
+<li>Extending the number of digits handled to 8 (the maximum known managing capabilities of a <b>two</b> 74HC595 dynamic driven display module).</li>
 <li>Extending the quantity of displays to be managed simultaneously.</li>
 <li>Adding a redirection level for the different hardware implementations, as different displays wire each individual digit to a different shift register pins, mixing the output display. <br  />
 </li>
+<li>Adding other driving technologies: <br  />
+<ul>
+<li>Static shift registers displays. <br  />
+</li>
+<li>Dedicated chip drivers displays. <br  />
+</li>
+<li>No driver displays (direct pin connection).</li>
 </ul>
-<h1>But the main objetives remain the same:</h1>
+</li>
+</ul>
+<h1>But the main objectives remain the same:</h1>
 <h2>Ease of use:</h2>
 <ul>
-<li>Instance the class passing as little parameters as required: connection pins, display digits quantity, type of seven segment display connection (common anode, common cathode) <br  />
+<li>Instance the hardware class passing as little parameters as required: connection pins, display digits quantity, type of seven segment display connection (common anode, common cathode) <br  />
 </li>
-<li>Notify the object and it's ready to go. <br  />
+<li>Instance the managing class using just the instantiated hardware class as parameter. <br  />
 </li>
 <li>start <code>.print()</code>ing the data to the display. <br  />
  There's no need of even setting the pin modes. <br  />
 </li>
 </ul>
 <h2>Flexibility:</h2>
-<p>Integers, floating point or strings they'll show as long as the display is capable of doing so in a trustworthy way. If you need to represent a percentage or level of completeness a <code>.gauge()</code> and a <code>.doubleGauge()</code> methods are included to represent them in a "Old Motorola brick cell phones' style". The library is capable of managing a correct representation even in differently wired displays by letting configure the order in wich the digits are connected to the registers. <br  />
+<p>Integers, floating point or strings they'll show as long as the display is capable of doing so in a trustworthy way. If you need to represent a percentage or level of completeness a <code>.gauge()</code> and a <code>.doubleGauge()</code> methods are included to represent them in a "Old Motorola brick cell phones' style". The library is capable of managing a correct representation even in differently wired displays by letting configure the order in which the digits are connected to the registers. <br  />
 </p>
 <h2>Trustworthy representation basic checking:</h2>
-<p>The representation of different types of data in this kind of displays is limited, and many implementations of the libraries to drive them take arbitrary or personally biased decisions on how to handle the problem. The danger of misrepresenting values in the display are usually ignored so when a value can't be faithfully represented by the display, the data is rounded, floored, ceiled, sliced, characters are replaced by others or whatever criteria the developer defined. When trying to display the value <b>"90153"</b> through a 4 digits module, displaying <b>"9015"</b> is no better, nor worse, than displaying <b>"0153"</b>, those are <b>misrepresentations</b>. This library returns a boolean value indicating if it was able to display a trustworthy representation of the value, as long as it is able to. If a trustworthy representation was not possible it will return a <b>false</b> value and blank the display. <br  />
+<p>The representation of different types of data in this kind of displays is limited, and many implementations of the libraries to drive them take arbitrary or personally biased decisions on how to handle the problem. <br  />
+ The danger of misrepresenting values in the display are usually ignored so when a value can't be faithfully represented by the display, the data is rounded, floored, ceiled, sliced, characters are replaced by others or whatever criteria the developer defined. When trying to display the value <b>"90153"</b> through a 4 digits module, displaying <b>"9015"</b> is no better, nor worse, than displaying <b>"0153"</b>, those are <b>misrepresentations</b>. This library returns a boolean value indicating if it was able to display a trustworthy representation of the value, as long as it is able to. If a trustworthy representation is not possible it will return a <b>false</b> value and blank the display. <br  />
 </p>
 <h2>Unattended display update and refreshing:</h2>
-<p>Some of the displays technologies need to be periodically refreshed, as they can actively turn on only one digit at a time, so to keep all de digits visible the user must activate periodically each digit one by one independently to generate a "cinematic effect". The library documentation will refer to them as <b>Dynamic Displays</b>, as is the case of the original <b>4-Bit Led Digital Tube</b> with two 74HC595 shift registers. Other technologies have the same shift registers set up in a different pattern so that they can hold the display active without refreshing constantly, assigning one shift register per digit. The library documentation will refer to them as <b>Static Dumb Displays</b>. <br  />
- Finally, being the seven segments displays so popular and usually used, specially for industrial and heavy duty uses, several chips have been developed to receive the data to exhibit and behavior commands through a standard communication protocols (I2C and SPI being the most popular choices), and keep the displays updated with the information received. The library documentation will refer to them as <b>Smart Displays</b>. <br  />
+<p>Some of the displays technologies need to be periodically refreshed, as they can actively turn on only one digit at a time, so to keep all de digits visible the user must activate periodically each digit one by one independently to generate a "cinematic effect". The library documentation will refer to them as <b>Dynamic Displays</b>, as is the case of the original <b>4-Bit Led Digital Tube</b> with two 74HC595 shift registers or the case of the <b>direct pin connection</b> displays. <br  />
+ Other technologies have the same shift registers set up in a different pattern so that they can hold the display active without constant refreshing, assigning one shift register per digit. The library documentation will refer to them as <b>Static Dumb Displays</b>. <br  />
+ Finally, being the seven segments displays so popular and usually used, specially for industrial and heavy duty equipment, several chips have been developed to receive the data to exhibit and behavior commands through communication protocols (standard I2C and SPI being the most popular choices, but non-standard protocols are used too), and keep the displays updated with the information received. The library documentation will refer to them as <b>Smart Displays</b>. <br  />
 </p>
-<p>The library takes care of this, and offers two solutions to do so. <br  />
-</p><ul>
-<li>The first is to attach the refreshing methods to a timer interrupt service (ISR) of the microcontroller, or to a Software Timer Service provided by the O.S., in this case the FreeRTOS timer daemon. <br  />
-</li>
-<li>The second is through methods that the user can call periodically from the main code. <br  />
+<h2>The library is modeled in two layers:</h2>
+<ul>
+<li>The <b>Seven Segment Display Hardware</b> "lower" level, modeled in the <b><a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a></b> class and subclasses</li>
+<li>The <b>Seven Segment Display API</b> "upper" level, modeled in the <b><a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a></b> class. <br  />
 </li>
 </ul>
-<p>The first mechanism frees the user from the load of calling the refreshing methods periodically, specially considering that long looping times (when executing <b><code>for</code></b>, <b><code>while</code></b> and <b><code>do</code></b> loops included), or the use of <b><code>delay()</code></b> type of commands could make the display flicker or simply stop until next refresh. The second option is given for the develpment of special display schemes. In any case the library is capable of working in any platform, using one way when possible, or the other always. <br  />
+<p>The relation between classes is a <em><b>Composition</b></em>. <br  />
+ The standard procedure to instantiate a working display in quite simple:</p><ul>
+<li>Instantiate a <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> class object. <br  />
+</li>
+<li>Invoke any required method to configure the instantiated object <b>ONLY IF NEEDED</b> before it might be used. <br  />
+</li>
+<li>Instantiate a <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object using a pointer to the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> class object as unique parameter. <br  />
+</li>
+<li>Start sending data to the display. <br  />
+</li>
+</ul>
+<p>If no modification of the hardware object is needed this becomes a single line command such as: <br  />
+ <code><a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));</code> // Easy to understand reading from right to left, as usual!! <br  />
 </p>
 <h1><b>Included Methods for <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> class</b></h1>
 <table class="markdownTable">
@@ -170,6 +200,10 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>getDigitsQty()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
 <tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>getDspCount()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>getDspUndrlHwPtr()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>getDspValMax()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>getDspValMin()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
@@ -179,6 +213,10 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <td class="markdownTableBodyNone"><b>getMaxBlinkRate()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>getMinBlinkRate()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>getSerialNbr()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>isBlank()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>isBlinking()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
 <tr class="markdownTableRowOdd">
@@ -211,96 +249,43 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">String <b>character</b>, uint8_t <b>port</b>   </td></tr>
 </table>
 <hr  />
-<h1><b>Included Methods for <a class="el" href="class_seven_seg_dynamic.html" title="Abstract class models a generic dynamically updated Seven Segment display hardware.">SevenSegDynamic</a> class</b></h1>
+<h1><b>Included Methods for <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> subclasses</b></h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Method   </th><th class="markdownTableHeadNone">Parameters    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">**_SevenSegDynamic_**   </td><td class="markdownTableBodyNone">uint8_t* <b>ioPins</b>, uint8_t <b>dspDigits</b>, bool <b>commAnode</b>    </td></tr>
-<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>begin()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>fastRefresh()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>fastSend()</b>   </td><td class="markdownTableBodyNone">uint8_t <b>segments</b>, uint8_t <b>port</b>    </td></tr>
+<td class="markdownTableBodyNone"><b>end()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>refresh()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<td class="markdownTableBodyNone"><b>getCommAnode()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>send()</b>   </td><td class="markdownTableBodyNone">uint8_t <b>segments</b>, uint8_t <b>port</b>    </td></tr>
+<td class="markdownTableBodyNone"><b>getDspBuffPtr()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>getHwDspDigitsQty()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>ntfyUpdDsply()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>setDigitsOrder()</b>   </td><td class="markdownTableBodyNone">uint8_t* <b>newOrder</b>, uint8_t <b>newOrderSize</b>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>stop()</b>   </td><td class="markdownTableBodyNone">None   </td></tr>
+<td class="markdownTableBodyNone"><b>setDspBuffPtr()</b>   </td><td class="markdownTableBodyNone">uint8_t* <b>newDspBuffPtr</b>   </td></tr>
 </table>
 <hr  />
-<h1><b>Included Methods for <a class="el" href="class_seven_seg_dyn_h_c595.html" title="Models seven segmentd displays driven by two 74HC595 shift registers.">SevenSegDynHC595</a> class</b></h1>
+<h1><b>Included Methods for <a class="el" href="class_seven_seg_t_m163_x.html" title="Models specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series chips...">SevenSegTM163X</a> subclasses</b></h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Method   </th><th class="markdownTableHeadNone">Parameters    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">**_SevenSegDynHC595_**   </td><td class="markdownTableBodyNone">uint8_t* <b>ioPins</b>, uint8_t <b>dspDigits</b>, bool <b>commAnode</b>   </td></tr>
+<td class="markdownTableBodyNone"><b>getBrghtnssLvl()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>getBrghtnssMaxLvl()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>getBrghtnssMinLvl()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>setBrghtnssLvl()</b>   </td><td class="markdownTableBodyNone">uint8_t <b>newBrghtnssLvl</b>   </td></tr>
 </table>
-<hr  />
-<h2><b>Methods definition and use description</b></h2>
-<hr  />
-<h3><b>refresh</b>();</h3>
-<h3>Description:</h3>
-<p>Refreshes the display, <b>only one digit per call</b>, the method takes care of registering which digit was redrawn last and move to the next until the last is reached and then restart from the first, and uses direct pin handling instead of using pre-built <code>shiftOut()</code> kind of methods. This working criteria has two consequences:</p><ul>
-<li>The method works faster than redrawing all the digits each time and using the call to <code>shiftOut()</code> methods, so it is less time consuming and so is the most appropriate to be used within an , or software timer.</li>
-<li>When used by the developer to refresh the display from the code it must be called more frequently (starting with time needed to refresh each one of all the digits of the display, and then doing those calls periodically) to keep the display's cinematic effect. Failing to do so will be seen as display flickering, or some of the digits displayed more brighter than others. <br  />
- <h3>Use example:</h3>
-</li>
-</ul>
-<p><b><code>myLedDisp.fastRefresh();</code></b></p>
-<hr  />
-<h3><b>send</b>(uint8_t <b>segments</b>, uint8_t <b>port</b>);</h3>
-<h3>Description:</h3>
-<p>Sends one character to the display, using direct pin handling instead of using pre-built <code>shiftOut()</code> kind of methods. The parameters indicate which character and to which digit will be sent. This is the method used by fastRefresh() to send the digit when it has to be refreshed. **_Keep in mind_** that sending a character directly to the display has no connection to keep it displayed as it must be resent periodically to keep the cinematic effect. Also the refresh() and fastRefresh() methods will overwrite the character sent, explicitly called or by the ISR service if started by the <b><code>begin()</code></b> method. If the display is being kept by the provided timer (after a <code>.begin()</code>), the characters sent by this methods will be overwritten in the next ISR callback. <br  />
- </p><h3>Parameters:</h3>
-<p><b>segments:</b> An unsigned short integer value representing which segments to turn on and which off to get the graphic representation of a character in the seven segment display, the corresponding value can be looked up in the **_charLeds[]** array definition in the header file of the library. In the case of a common cathode display the values there listed must be complemented. <br  />
- <b>port:</b> An unsigned short integer value representing the digit where the character will be sent, being the range of valid values 0 &lt;= port &lt;= dspDigits, the 0 value is the rightmost digit, the 1 value the second from the right and so on. </p><h3>Return value:</h3>
-<p>None <br  />
- </p><h3>Use example:</h3>
-<p><b><code>myLedDisp.fastSend(0x88, 1);</code></b> // Sends a capital A to the second digit from right to left.</p>
-<hr  />
-<h3><b>refresh</b>();</h3>
-<h3>Description:</h3>
-<p>Refreshes the display, <b>all available digits per call</b>, the method takes care of registering which digit was redrawn first and each call starts from the next until the last is reached and then restart from the first, to minimize ghosting and keep all the digits brightness even, and uses pre-built <b><code>shiftOut()</code></b> kind of methods. This working criteria has two consequences:</p><ul>
-<li>The method works slower than the <b><code>fastRefresh()</code></b>, so it will take more time to execute. <br  />
-</li>
-<li>When used by the developer to refresh the display from the code it will avoid ghosting or blinking effects being called less frequently to keep the display's cinematic effect. <br  />
- <h3>Parameters:</h3>
-</li>
-</ul>
-<p><b>None</b> <br  />
- </p><h3>Return value:</h3>
-<p><b>None</b> <br  />
- </p><h3>Use example:</h3>
-<p><b><code>myLedDisp.refresh();</code></b> <br  />
-</p>
-<hr  />
-<h3><b>send</b>(uint8_t <b>segments</b>, uint8_t <b>port</b>);</h3>
-<h3>Description:</h3>
-<p>Sends one character to the display, using pre-built <code>shiftOut()</code> kind of methods, which takes unknown time to complete depending on the implementation of the framework used to develop. The parameters indicate which character and to which digit will be sent. This is the method used by refresh() to send the digit when it has to be refreshed. **_Keep in mind_** that sending a character directly to the display has no connection to keep it displayed as it must be resent periodically to keep the cinematic effect. Also the refresh() and fastRefresh() methods will overwrite the character sent, explicitly called or by the Software Timer Service if started by the <b><code>begin()</code></b> method. </p><h3>Parameters:</h3>
-<p><b>segments:</b> An unsigned short integer value representing which segments to turn on and which off to get the graphic representation of a character in the seven segment display, the corresponding value can be looked up in the **_charLeds[]** array definition in the header file of the library. Any other uint8_t (char or unsigned short int are equivalent terms here) value is admissible, but the displayed result might not be easily recognized as a known ASCII character. In the case of a common cathode display the values there listed must be complemented to calculate the value to send. <br  />
- <b>port:</b> An unsigned short integer value representing the digit where the character will be sent, being the range of valid values 0 &lt;= port &lt;= (dspDigits-1), the 0 value is the rightmost digit, the 1 value the second from the right and so on. </p><h3>Return value:</h3>
-<p>None <br  />
- </p><h3>Use example:</h3>
-<p><b><code>myLedDisp.send(0x91, 2);</code></b> // Sends a Y to the third digit from right to left.</p>
-<hr  />
-<h3><b>setDigitsOrder</b>(uint8_t* <b>newOrderPtr</b>);</h3>
-<h3>Description:</h3>
-<p>As different 7 segments dynamic displays based on two 74HC595 are differently wired, some implement the leftmost display port as the LSb of the shift register driving the port selection, some implement it as the MSb. When more than one display modules are used it adds a new level of hardware implementation that differs from one supplier to the other. The library implements a mechanism to provide the instantiated object to relate the positions of the display ports to the bits of the selection byte through an array. The array has the size of the display instantiated, and each array elment is meant to hold the number of the bit that selects the corresponding port, being the first element of the array (array[0]) the corresponding to the leftmost display digit, array[1], the next to it's right and so on. The array is default defined in the constructor as (0, 1, 2,...) that is the most usual implementation found. If the order needs to be changed the <code>.setDigitsOrder()</code> method is the way to set a new mapping. </p><h3>Parameters:</h3>
-<p><b>newOrderPtr</b>: pointer to an uint8_t array of **_dspDigits** lenght containing the position of the bit corresponding to each display port. Each value will be checked against the _dspDigits value to ensure that they are all in the range acceptable, 0 &lt;= value &lt;= _dspDigits - 1. If one of the values is out of the valid range no change will be done. Please note that no checking will be done to ensure all of the array values are different. A repeated value will be accepted. <br  />
- </p><h3>Return value:</h3>
-<p>true: All of the elements of the array were in the accepted range. The change was performed <br  />
- false: At least one of the values of the array passed were out of range. The change wasn't performed. <br  />
- </p><h3>Use example:</h3>
-<p><b><code>uint8_t diyMore8Bits[8] {3, 2, 1, 0, 7, 6, 5, 4};</code></b> //Builds an array with the port order of the "DIY MORE 8-bit LED Display". <br  />
- <b><code>myLedDisp.setDigitsOrder(diyMore8Bits);</code></b> //Changes the display bit to port mapping according to the display characteristics. <br  />
-</p>
-<hr  />
- </div></div><!-- PageDoc -->
+<h1><b>Included Methods for <a class="el" href="class_seven_seg_dyn_h_c595.html" title="Models seven segment displays driven by two 74HC595 shift registers.">SevenSegDynHC595</a> class</b></h1>
+</div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
 </div><!-- contents -->
 </div><!-- doc-content -->
