@@ -556,8 +556,8 @@ public:
     * 
     * Stoping the blinking process includes retrieving the original contents from the _dspAuxPtr pointed memory (the Auxiliary Buffer), freeing the Auxiliary Buffer memory, stoping the timer attached to the process and cleaning the blinking state related flags  
     * 
-    * @retval true If the display was set to blink, the blinking is stopped.  
-    * @retval false If the display was not set to blink, no changes will be done.  
+    * @retval true The display was set to not blinking, either becauseIf display was set to blink and was stopped, either the display was not set to blink.  
+    * @retval false The display was set to blink, and the blink stopping failed.  
     * 
     * Code example:  
     * 

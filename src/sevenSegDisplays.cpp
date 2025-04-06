@@ -1,6 +1,7 @@
 /**
  ******************************************************************************
  * @file SevenSegDisplays.cpp
+ * 
  * @brief Code file for the SevenSegDisplays_ESP32 library 
  * 
  * @details The library provides a common API and tools to generate and manage contents formatting for seven segments displays.
@@ -56,25 +57,23 @@ SevenSegDisplays::~SevenSegDisplays(){
    if(_isBlinking)
       noBlink();  // Stops the blinking, frees the _dspAuxBuffPtr pointed memory, Stops the timer attached to the process
    if(_blinkTmrHndl){   
-      if(xTimerIsTimerActive(_blinkTmrHndl)){ //if the timer still exists and is running, stop and delete
+      if(xTimerIsTimerActive(_blinkTmrHndl)) //if the timer still exists and is running, stop and delete
          tmrModResult = xTimerStop(_blinkTmrHndl, portMAX_DELAY);
-         if(tmrModResult == pdPASS)
-            tmrModResult = xTimerDelete(_blinkTmrHndl, portMAX_DELAY);
-         if(tmrModResult == pdPASS)
-            _blinkTmrHndl = NULL;   
-      }
+      // if(tmrModResult == pdPASS)
+      tmrModResult = xTimerDelete(_blinkTmrHndl, portMAX_DELAY);
+      // if(tmrModResult == pdPASS)
+      _blinkTmrHndl = NULL;         
    }
 
    if(_isWaiting)
       noWait();   // Stops the waiting, frees the _dspAuxBuffPtr pointed memory, Stops the timer attached to the process    
    if(_waitTmrHndl){   //if the timer still exists and is running, stop and delete
-      if(xTimerIsTimerActive(_waitTmrHndl)){ //if the timer still exists and is running, stop and delete
+      if(xTimerIsTimerActive(_waitTmrHndl)) //if the timer still exists and is running, stop and delete
          tmrModResult = xTimerStop(_waitTmrHndl, portMAX_DELAY);
-      if(tmrModResult == pdPASS)
-         tmrModResult = xTimerDelete(_waitTmrHndl, portMAX_DELAY);
-      if(tmrModResult == pdPASS)
-         _waitTmrHndl = NULL;
-      }
+      // if(tmrModResult == pdPASS)
+      tmrModResult = xTimerDelete(_waitTmrHndl, portMAX_DELAY);
+      // if(tmrModResult == pdPASS)
+      _waitTmrHndl = NULL;
    }
 
    if(_dspAuxBuffPtr != nullptr){
@@ -112,6 +111,7 @@ bool SevenSegDisplays::blink(){
       }
       if(_blinkTmrHndl){
          if(!xTimerIsTimerActive(_blinkTmrHndl)){ // The timer was created, but it wasn't running. Start the timer  
+            Serial.println("The blink() method is starting the blink timer!!");
             tmrModResult = xTimerStart(_blinkTmrHndl, portMAX_DELAY);
             if (tmrModResult == pdPASS){
                result = true;
@@ -138,9 +138,6 @@ bool SevenSegDisplays::blink(){
       }
       taskEXIT_CRITICAL(&mux);
    }
-   else{
-      result = true;
-   }
 
    return result;
 }
@@ -148,19 +145,16 @@ bool SevenSegDisplays::blink(){
 bool SevenSegDisplays::blink(const uint32_t &onRate, const uint32_t &offRate){
    bool result {false};
 
-   if(!_isWaiting){
-      if (!_isBlinking){
-         if (offRate == 0)
-            result = setBlinkRate(onRate, onRate);
-         else
-            result = setBlinkRate(onRate, offRate);        
-         if (result)
-            result = blink();
-      }
-      else{
-         result = true;
-      }
+   if (!_isBlinking){
+      if (offRate == 0)
+         result = setBlinkRate(onRate, onRate);
+      else
+         result = setBlinkRate(onRate, offRate);        
+      if (result)
+         result = blink();
    }
+   else
+      result = true;
 
    return result;
 }
@@ -383,7 +377,7 @@ bool SevenSegDisplays::isWaiting(){
 
    return _isWaiting;
 }
-//FFDR Gaby checked up to here
+
 bool SevenSegDisplays::noBlink(){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool result {false};
@@ -410,7 +404,8 @@ bool SevenSegDisplays::noBlink(){
       _blinkShowOn = true;
       result = true;
       taskEXIT_CRITICAL(&mux);
-   }
+      }
+   
 
    return result;
 }
@@ -422,29 +417,23 @@ bool SevenSegDisplays::noWait(){
 
    if (_isWaiting){
       taskENTER_CRITICAL(&mux);
-      _isWaiting = false;
-      /*
       if(_waitTmrHndl){   //if the timer still exists and is running, stop and delete
          tmrModResult = xTimerStop(_waitTmrHndl, portMAX_DELAY);
-         if(tmrModResult == pdPASS)
-            tmrModResult = xTimerDelete(_waitTmrHndl, portMAX_DELAY);
-         if(tmrModResult == pdPASS)
-            _waitTmrHndl = NULL;
       }
-      */
+      // if(tmrModResult == pdPASS){
       _restoreDspBuff();   // This method calls _setDspBuffChng() if it suits
-      /*
-      delete [] _dspAuxBuffPtr;
-      _dspAuxBuffPtr = nullptr;
-      */
       _waitTimer = 0;
+      _isWaiting = false;
       result = true;
+      // }
       taskEXIT_CRITICAL(&mux);
    }
+   else
+      result = true;
 
    return result;
 }
-
+//FFDR Gaby checked up to here
 void SevenSegDisplays::_ntfyToHwBuffChng(){
    _dspUndrlHwPtr->ntfyUpdDsply();
 
@@ -701,7 +690,7 @@ void SevenSegDisplays::_saveDspBuff(){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
    taskENTER_CRITICAL(&mux);
-   memcpy(_dspAuxBuffPtr, _dspBuffPtr, _dspDigitsQty);   // destPtr, srcPtr, size
+   memcpy(_dspAuxBuffPtr, _dspBuffPtr, _dspDigitsQty);
    taskEXIT_CRITICAL(&mux);
 
    return;
@@ -732,10 +721,8 @@ void SevenSegDisplays::_setAttrbts(){
       _waitChar = ~_waitChar;
       _space = ~_space;
       _dot = ~_dot;
-      for (int i{0}; i < (int)_charSet.length(); i++){
+      for (int i{0}; i < (int)_charSet.length(); i++)
          _charLeds[i] = ~(_charLeds[i]);
-      }
-
    }
 
    return;
@@ -857,6 +844,7 @@ void SevenSegDisplays::tmrCbWait(TimerHandle_t waitTmrCbArg){
 
 void SevenSegDisplays::_updBlinkState(){
    bool mainBuffChng{false};
+   BaseType_t tmrModResult{};
 
    //The use of a xTimer that keeps flip-floping the _blinkShowOn value is better suited for symmetrical blinking, but not for asymmetrical cases.
    if (_isBlinking == true){
@@ -889,6 +877,9 @@ void SevenSegDisplays::_updBlinkState(){
             _blinkShowOn = false;
          }
       }
+   }
+   else{ 
+      tmrModResult = xTimerStop(_blinkTmrHndl, portMAX_DELAY);
    }
    if(mainBuffChng){
       _setDspBuffChng();   //Signal for the hardware refresh mechanism
