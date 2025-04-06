@@ -519,8 +519,8 @@ void SevenSegStatHC595::_updDsplyCntnt(){
 SevenSegTM163X::SevenSegTM163X()
 {}
 
-SevenSegTM163X::SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits)
-:SevenSegStatic(ioPins, dspDigits, false)
+SevenSegTM163X::SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
+:SevenSegStatic(ioPins, dspDigits, commAnode)
 {
    Serial.println("\nSevenSegTM163X constructor"); //FTPO
    Serial.println("==========================="); //FTPO
@@ -765,16 +765,16 @@ void SevenSegTM163X::_updDsplyCntnt(){
 
 //============================================================> Class methods separator
 
-SevenSegTM1637_v01::SevenSegTM1637_v01(uint8_t* ioPins, uint8_t dspDigits)
-:SevenSegTM163X(ioPins, dspDigits)
+SevenSegTM1637::SevenSegTM1637(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
+:SevenSegTM163X(ioPins, dspDigits, commAnode)
 {
-   Serial.println("\nSevenSegTM1637_v01 constructor"); //FTPO
+   Serial.println("\nSevenSegTM1637 constructor"); //FTPO
    Serial.println("================================"); //FTPO
 }
 
-SevenSegTM1637_v01::~SevenSegTM1637_v01(){}
+SevenSegTM1637::~SevenSegTM1637(){}
 
-void SevenSegTM1637_v01::_unAbstract(){
+void SevenSegTM1637::_unAbstract(){
 
    return;
 }

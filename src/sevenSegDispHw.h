@@ -311,13 +311,12 @@ public:
  * - They provide 8 pins for the seven segments + DP ports.  
  * - They provide 1 pin per digit/port supported by the specific chip.  
  * 
- * @note **NONE** of the drivers chip modeled by the SevenSegStatic subclasses include **colon**, **icons** or any other amenity some hardware display modules include. The activation of those **colons** and **icons** is provided by the use of some of the existing described chip pins in a display module propietary exclusive way, and are described in those displays datasheets. Some of those mechanisms are:  
- * - Have less display ports than the maximum supported by the chip, and use one or more segments of the exceeding ports wired to the colon, colons or icons of the display.  
- * - Use an external source to activate the colon, colons or icons independently from the driving chip.  
- * - Wire one or more of the display ports DP segments to the colon, colons or icons of the display.  
+ * @note **NONE** of the **driver chips** controlling the displays modeled by the SevenSegStatic subclasses includes **COLONS**, **ICONS** or any other amenity some hardware display modules include. The activation of those **colons** and/or **icons** is provided by the use of some of the existing described chip pins in a display module propietary exclusive way, and are described in those display modules' datasheets. Some of those mechanisms are:  
+ * - Have less display ports than the maximum supported by the chip, and use one or more segments of the exceeding ports wired to the colon/s or icon/s of the display.  
+ * - Use an external source to activate the colon/s or icon/s independently from the driving chip.  
+ * - Wire **one or more** of the visible display ports DP segments to the colon/s or icon/s of the display.  
  * 
- * @warning Using displays that implement the colon, colons and/or icons through the DP segments of the active ports make the display unfit to display decimal non integer values, as no DP might be used. Verify the display module characteristics to setup the corresponding class with the right parameters.  
- * 
+ * @warning Using displays that implement the colon/s and/or icon/s through the DP segments of the active ports make the display unfit to display decimal non integer values, as no DP might be used. Verify the display module characteristics to setup the corresponding class with the right parameters.  
  */
 class SevenSegStatic: public SevenSegDispHw{
     
@@ -335,8 +334,7 @@ public:
  * 
  * @brief Models displays driven by 74HC595 or similar shift registers, one shift register per display port, wired so that the eight output pins of each shift register is connected to the 8 segment pins of the display module.  
  * 
- * For more than one digit displays, the shift registers driving each port is connected to the next in the traditional **daisy-chain** fashion.
- * 
+ * For more than one digit displays, the shift registers driving each port is connected to the next in the traditional **daisy-chain** fashion, using the cascading pins to connect the shift register to the next in the chain.  
  */
 class SevenSegStatHC595: public SevenSegStatic{
 private:
@@ -353,16 +351,34 @@ private:
     virtual void _unAbstract();
     void _updDsplyCntnt();
 public:
+    /**
+     * @brief Class default constructor.  
+     */
     SevenSegStatHC595();
+    /**
+     * @brief Class constructor.  
+     * 
+     * @param ioPins A pointer to an array holding the identifieres for the 3 GPIO pins required to send the data to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->sclk, 1->rclk, 2->dio
+     * @param dspDigits Quantity of digits/ports of the display. This class supports the wiring scheme allowing a maximum of 8 digits.  
+     * @param commAnode Boolean indicating if the hardware uses a display/s module/s wired as common anode (true) or common cathode (false).  
+     */
     SevenSegStatHC595(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
+    /**
+     * @brief Class destructor
+     */
     ~SevenSegStatHC595();
+    /**
+     * @brief Notifies the object of a new change of content, it must update the display.  
+     * 
+     * The data displayed by the static displays remains constant until it's data buffer or registers are loaded with new data. This method notifies the display that the data source has changed and it must reload the contents of it's registers or buffers to display the new information.  
+     */
     virtual void ntfyUpdDsply();
 };
 
 //============================================================> Class declarations separator
 
 /**
- * @brief Models specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series chips
+ * @brief Models Seven Segments LEDs static displays hardware controlled by Titan Micro TM163X series chips
  *
  * As TM163X series chips have some differences among them, this class implements the base common characteristics, the differences are implemented in corresponding subclasses.
  *
@@ -379,7 +395,7 @@ public:
  *
  * @note As the communications protocol does't comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet **Maximum clock frequency** stated as 500KHz to a less demanding 100KHz(10 microseconds) time slices, managed by `delayMicroseconds()` function keyword, or a timer interrupt set at 100KHz, enabling the timer interrupt service only while transmitting data, and disabling it while idle. 
  * 
- * @warning While the TM1637, TM1638, TM1639 (at least these are our known members of this "family") are stable and well documented devices, the parts sold as **"TM1637 Display Modules"**, **"TM1638 Display Modules"** etc, breakboards that include the TM163X display driver, supporting electronics and one or several 7 segments display modules are not all created equal. Having the TM1637 modules the hability to drive 6 display ports, some breakboards present 4 display ports and a center colon, as is standard to time displaying modules. 
+ * @warning While the TM1636, TM1637, TM1638, TM1639 (at least these are our known members of this "family") are stable and well documented devices, the parts sold as **"TM1637 Display Modules"**, **"TM1638 Display Modules"** etc, breakboards that include the TM163X display driver, supporting electronics and one or several 7 segments display modules are not all created equal. Having the TM1637 modules the hability to drive 6 display ports, some breakboards present 4 display ports and a center colon, as is standard to time displaying modules. 
  * The **big issue** is the lack of a standard for those display modules, not all displays have the same disposition, not all of them are internally wired the same, and that not all the manufacturers wire the TM1637 modules to the 7 segments display modules in the same way. For example, some will attach the colon to the DP (decimal point) segment of the third port (RtL), some will attach them to ALL the DP segment, some will attach each of the dots of the colon independently, one to the 5th display port, the other to the 6th display port, and then some other manufacturer in some other way. 
  * Whenever is possible to get a specific module for testing, a SevenSegTM163X subclass will be added to manage it correctly, please read the subclasses' description for correct display module oriented class identification.  
  *
@@ -417,7 +433,6 @@ protected:
  public:
     /**
      * @brief Default class constructor
-     * 
      */
     SevenSegTM163X();
     /**
@@ -426,7 +441,7 @@ protected:
      * @param ioPins A pointer to an array holding the identifieres for the 2 GPIO pins required to send the data to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->dio
      * @param dspDigits 
      */
-    SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits);
+    SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
     ~SevenSegTM163X();
     bool begin();
     bool end();
@@ -441,12 +456,12 @@ protected:
 };
  
  //============================================================> Class declarations separator
-class SevenSegTM1637_v01: public SevenSegTM163X{
+class SevenSegTM1637: public SevenSegTM163X{
 private:
     virtual void _unAbstract();
 public:
-    SevenSegTM1637_v01(uint8_t* ioPins, uint8_t dspDigits);
-    ~SevenSegTM1637_v01();
+    SevenSegTM1637(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
+    ~SevenSegTM1637();
 };
 
  //============================================================> Class declarations separator

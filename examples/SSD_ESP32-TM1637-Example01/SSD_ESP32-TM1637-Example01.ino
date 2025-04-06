@@ -125,11 +125,11 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
 
    uint8_t theNewOrder [4] {3, 2, 1, 0};
 
-   SevenSegDispHw* myLedDispPtr {new SevenSegTM1637_v01 (myDispIOPins, 4)};
+   SevenSegDispHw* myLedDispPtr {new SevenSegTM1637 (myDispIOPins, 4, false)};
    myLedDispPtr -> setDigitsOrder(theNewOrder);
    SevenSegDisplays myLedDisp(myLedDispPtr);
 
-   // SevenSegDisplays myLedDisp(new SevenSegTM163X (myDispIOPins, 4));
+   // SevenSegDisplays myLedDisp(new SevenSegTM1637 (myDispIOPins, 4, false));
 
    for(;;){
       {
