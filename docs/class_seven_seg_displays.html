@@ -269,7 +269,7 @@ Public Member Functions</h2></td></tr>
 <div class="line"><a class="code hl_class" href="class_seven_seg_displays.html">SevenSegDisplays</a> myLedDisp(myLedDispHwPtr);           <span class="comment">// Instantiation of the SevenSegDisplays object using the pointer created</span></div>
 <div class="ttc" id="aclass_seven_seg_disp_hw_html"><div class="ttname"><a href="class_seven_seg_disp_hw.html">SevenSegDispHw</a></div><div class="ttdoc">Base abstract class models a generic Seven Segment display hardware.</div><div class="ttdef"><b>Definition</b> sevenSegDispHw.h:60</div></div>
 <div class="ttc" id="aclass_seven_seg_displays_html"><div class="ttname"><a href="class_seven_seg_displays.html">SevenSegDisplays</a></div><div class="ttdoc">Default constructor.</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.h:58</div></div>
-<div class="ttc" id="aclass_seven_seg_dyn_h_c595_html"><div class="ttname"><a href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a></div><div class="ttdoc">Models seven segment displays driven by two 74HC595 shift registers.</div><div class="ttdef"><b>Definition</b> sevenSegDispHw.h:174</div></div>
+<div class="ttc" id="aclass_seven_seg_dyn_h_c595_html"><div class="ttname"><a href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a></div><div class="ttdoc">Models seven segment displays driven by two 74HC595 shift registers.</div><div class="ttdef"><b>Definition</b> sevenSegDispHw.h:204</div></div>
 </div><!-- fragment --><p>A two lines example using the &amp; operand to pass the pointer to the constructor </p><div class="fragment"><div class="line"><a class="code hl_class" href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a> myLedDispHw(myDispIOPins, 4, <span class="keyword">true</span>);  <span class="comment">// Instantiation of the underlying hardware object</span></div>
 <div class="line"><a class="code hl_class" href="class_seven_seg_displays.html">SevenSegDisplays</a> myLedDisp(&amp;myLedDispHw);             <span class="comment">// Instantiation of the SevenSegDisplays object using the &amp; operand over the hardware object created</span></div>
 </div><!-- fragment --><p>A two lines example using a sub-class pointer to a dynamic instantiated object </p><div class="fragment"><div class="line"><a class="code hl_class" href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a>* myLedDispPtr {<span class="keyword">new</span> <a class="code hl_class" href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a> (myDispIOPins, 4, <span class="keyword">true</span>)};   <span class="comment">// Dynamic instantiation of the underlying hardware object, pointed by a subclass pointer</span></div>
@@ -284,11 +284,13 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays_ada6d89fb083fd8a5a2ce603b3b1f5e43_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_ada6d89fb083fd8a5a2ce603b3b1f5e43_cgraph" alt=""/></div>
 <map name="aclass_seven_seg_displays_ada6d89fb083fd8a5a2ce603b3b1f5e43_cgraph" id="aclass_seven_seg_displays_ada6d89fb083fd8a5a2ce603b3b1f5e43_cgraph">
-<area shape="rect" title="Class constructor." alt="" coords="5,23,206,65"/>
+<area shape="rect" title="Class constructor." alt="" coords="5,56,206,99"/>
 <area shape="rect" href="class_seven_seg_displays.html#a67a533e8239853768391bfe513fc318e" title="Clears the display, turning off all the segments and dots." alt="" coords="279,5,447,32"/>
-<area shape="poly" title=" " alt="" coords="206,31,263,26,264,31,206,37"/>
-<area shape="rect" href="class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff" title="Returns the pointer to the Display Buffer." alt="" coords="254,56,472,83"/>
-<area shape="poly" title=" " alt="" coords="206,51,238,54,238,60,206,57"/>
+<area shape="poly" title=" " alt="" coords="201,53,285,33,287,39,203,58"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#ac6544795ed8c9b44211424c8b5ef216f" title="Returns the quantity of digits of the display module." alt="" coords="264,56,462,99"/>
+<area shape="poly" title=" " alt="" coords="206,75,248,75,248,80,206,80"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff" title="Returns the pointer to the Display Buffer." alt="" coords="254,123,472,149"/>
+<area shape="poly" title=" " alt="" coords="203,97,287,116,285,121,201,102"/>
 </map>
 </div>
 

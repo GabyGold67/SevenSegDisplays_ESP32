@@ -544,9 +544,11 @@ SevenSegTM163X::SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnod
 SevenSegTM163X::~SevenSegTM163X()
 {
    end();
+   delete [] _lclDspBuffPtr;
 }
 
-bool SevenSegTM163X::begin(){
+bool SevenSegTM163X::begin()
+{
    turnOn();
 
 	return true;

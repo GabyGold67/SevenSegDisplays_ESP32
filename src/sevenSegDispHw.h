@@ -42,7 +42,7 @@
 
 #include "Arduino.h"
 #include <stdint.h>
-#include <ShiftRegGPIOXpander.h>
+#include <ShiftRegGPIOXpander_ESP32.h>
 
 //------- Generic Functions prototypes BEGIN
 template<typename T>
@@ -73,6 +73,17 @@ protected:
     virtual void send(const uint8_t &segments, const uint8_t &port);
 public:
     SevenSegDispHw();
+    /**
+     * @brief Class constructor
+     * 
+     * 
+     * 
+     * @param ioPins 
+     * @param dspDigits 
+     * @param commAnode 
+     *      
+     * @attention The dspDigits parameter indicating the quantity of digits of the display module is a **basic fundamental** parameter passed at instantiation time. This information provides the value to be used to generate the data buffer, the digits order table, auxiliar buffers and even the required information to generate a valid left or right aligned display. Obviously the quantity is bigger than 0, and must be less than or equal to the hardware maximum display digits capability.  
+     */
     SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
     virtual ~SevenSegDispHw();    
    /**
@@ -93,14 +104,33 @@ public:
     /**
      * @brief Returns a value indicating if the hardware has the led display wired as common anode or common cathode
      * 
-     * The SevenSegDisplays instantiated objects will compose the values corresponding to each character it can display according to the SevenSegDispHw attribute _commAnode. Each SevenSegDispHw instantiable subclass will have that constant attribute set by the subclass developer to correspond to the technical specifications of the display hardware. 
+     * The SevenSegDisplays instantiated objects will compose the values corresponding to each character it can display according to the SevenSegDispHw attribute _commAnode. Each SevenSegDispHw instantiable subclass will have that constant attribute set by the subclass developer to correspond to the technical specifications of the display module hardware. 
      * 
      * @retval true The display is built with Common Anode seven segment display modules
      * @retval false The display is built with Common Cathode seven segment display modules
      */
     bool getCommAnode();
+    /**
+     * @brief Returns a pointer to the display buffer.  
+     * 
+     * The display buffer is a memory area set by the SevenSegDisplays class object instantiated to hold the data to be displayed, and so it's shared by that object and the SevenSegDispHw subclass object component. When the SevenSegDisplays object is constructed it sets the SevenSegDispHw subclass object buffer pointer to the memory area it set for that purpose. This method retrieves that memory pointer.  
+     * 
+     * @return uint8_t* The pointer to the buffer area used by the SevenSegDispHw to get the data to display.  
+     */
     uint8_t* getDspBuffPtr();
+    /**
+     * @brief Returns the quantity of digits of the display module.  
+     * 
+     * The value returned correspond to the dspDigits parameter passed at instantiation time.  
+     * 
+     * @return uint8_t The display module digits quantity.  
+     */
     uint8_t getHwDspDigitsQty();
+    /**
+     * @brief Notifies the object of a new change of content, it must update the display.  
+     * 
+     * The data displayed by the static displays remains constant until it's data buffer or registers are loaded with new data. This method notifies the display that the data source has changed and it must reload the contents of it's registers or buffers to display the new information.  
+     */
     virtual void ntfyUpdDsply();
     bool setDigitsOrder(uint8_t* newOrderPtr);
     /**
@@ -368,9 +398,7 @@ public:
      */
     ~SevenSegStatHC595();
     /**
-     * @brief Notifies the object of a new change of content, it must update the display.  
-     * 
-     * The data displayed by the static displays remains constant until it's data buffer or registers are loaded with new data. This method notifies the display that the data source has changed and it must reload the contents of it's registers or buffers to display the new information.  
+     * @brief See SevenSegDispHw::ntfyUpdDsply() for description
      */
     virtual void ntfyUpdDsply();
 };
@@ -393,11 +421,10 @@ public:
  * - Maximum number of ports addressable.
  * - Keyscanning services
  *
- * @note As the communications protocol does't comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet **Maximum clock frequency** stated as 500KHz to a less demanding 100KHz(10 microseconds) time slices, managed by `delayMicroseconds()` function keyword, or a timer interrupt set at 100KHz, enabling the timer interrupt service only while transmitting data, and disabling it while idle. 
+ * @note As the communications protocol doesn't completely comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet **Maximum clock frequency** stated as 500KHz to a less demanding 100KHz(10 microseconds) time slices, managed by `delayMicroseconds()` function keyword, or a timer interrupt set at 100KHz, enabling the timer interrupt service only while transmitting data, and disabling it while idle. 
  * 
- * @warning While the TM1636, TM1637, TM1638, TM1639 (at least these are our known members of this "family") are stable and well documented devices, the parts sold as **"TM1637 Display Modules"**, **"TM1638 Display Modules"** etc, breakboards that include the TM163X display driver, supporting electronics and one or several 7 segments display modules are not all created equal. Having the TM1637 modules the hability to drive 6 display ports, some breakboards present 4 display ports and a center colon, as is standard to time displaying modules. 
- * The **big issue** is the lack of a standard for those display modules, not all displays have the same disposition, not all of them are internally wired the same, and that not all the manufacturers wire the TM1637 modules to the 7 segments display modules in the same way. For example, some will attach the colon to the DP (decimal point) segment of the third port (RtL), some will attach them to ALL the DP segment, some will attach each of the dots of the colon independently, one to the 5th display port, the other to the 6th display port, and then some other manufacturer in some other way. 
- * Whenever is possible to get a specific module for testing, a SevenSegTM163X subclass will be added to manage it correctly, please read the subclasses' description for correct display module oriented class identification.  
+ * @warning While the TM1636, TM1637, TM1638, TM1639 (at least these are our most known members of this "family") are stable and well documented devices, the parts sold as **"TM1637 Display Modules"**, **"TM1638 Display Modules"** etc, breakboards that include the TM163X display driver, supporting electronics and one or several 7 segments display modules are not all created equal. A well known example: having the TM1637 modules the hability to drive 6 display ports, some breakboards present 4 display ports and a **center colon**, as is standard to time displaying modules. The **big issue** is the lack of a standard for those display modules, not all displays have the same disposition, not all of them are internally wired the same, and that not all the manufacturers wire the TM1637 modules to the 7 segments display modules in the same way. For example, some will attach the colon to the DP (decimal point) segment of the third port (RtL), some will attach them to ALL the DP segment, some will attach each of the dots of the colon independently, one to the 5th display port, the other to the 6th display port, and then some other manufacturer in some other way.  
+ * Whenever is possible to get a specific module for testing, a SevenSegTM163X subclass might be added to manage it correctly, please read the subclasses' description for correct display module oriented class identification.  
  *
  * @class SevenSegTM163X
  */
@@ -406,7 +433,7 @@ class SevenSegTM163X: public SevenSegStatic{
 private:
     const uint8_t _clkIndx {0};
     const uint8_t _dioIndx {1};
-    const uint8_t _dspDigitsQtyMax{}; // Maximum display size in digits: 6 for TM1637, 16 for TM1639
+    const uint8_t _dspDigitsQtyMax{}; // Maximum display size in digits: 4 for TM1636, 6 for TM1637, 16 for TM1639
     const uint8_t _hwBrghtnssLvlMax{0x07};
     const uint8_t _hwBrghtnssLvlMin{0x00};
     uint32_t _txClkTckTm{2};
@@ -442,16 +469,80 @@ protected:
      * @param dspDigits 
      */
     SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
+    /**
+     * @brief Class destructor
+     */
     ~SevenSegTM163X();
+    /**
+     * @brief Turns On the display to be ready to receive data.  
+     * 
+     * Turning on a TM163X display implies sending a command to the display and saving in an object attribute the isOn state, as the display controller does not provide any means to read it's state. 
+     * 
+     * @return true Always  
+     */
     bool begin();
+    /**
+     * @brief Turns Off the display and registers the new state in the correspondig object's attribute.  
+     * 
+     * @return true Always  
+     */
     bool end();
+    /**
+     * @brief Returns the current brightness level setting for the display module.  
+     * 
+     * The TM163X series display drivers have the capability of changing the led display brightness level by using PWM on it's output. The resulting brightness levels are not percieved as linear, and the minimum and maximum brightness values don't reach the levels of totaly turning the display off, neither turning the display to it's maximum possible brightness.
+     * 
+     * @note The SevenSegTM163X abstract class is instrumented so that any subclass must incorporate the minimum and maximum values for that specific display subclass. All the members of the TM163X family I could check at this point share the minimum and the maximum brightness values: 0 for the minimum, 7 for the maximum, resulting in 8 brightness levels. But is not taken for granted. See setBrghtnssLvl(const uint8_t &) for more details.  
+     * 
+     * @return The current brightness level setting.  
+     */
     uint8_t getBrghtnssLvl();
+    /**
+     * @brief Returns the maximum brightness level for the instantiated object.  
+     * 
+     * The value returned is the maximum brightness level for the object's class.  
+     * 
+     * @return The uint8_t value of the maximum brightness setting available for the object's class.  
+     */
     uint8_t getBrghtnssMaxLvl();
+    /**
+     * @brief Returns the minimum brightness level for the instantiated object.  
+     * 
+     * The value returned is the minimum brightness level for the object's class.  
+     * 
+     * @return The uint8_t value of the minimum brightness setting available for the object's class.  
+     */
     uint8_t getBrghtnssMinLvl();
+    /**
+     * @brief See SevenSegDispHw::ntfyUpdDsply() for description
+     */
     virtual void ntfyUpdDsply();
+    /**
+     * @brief Sets the Brghtness level of the display.  
+     * 
+     * @param newBrghtnssLvl The new brightness level for the display. The value must be in the range **getBrghtnssMinLvl() <= newBrghtnssLvl <= getBrghtnssMaxLvl()**
+     * 
+     * @return true The parameter was in the acceptable range, the display will be set to the new brightness level (or keep it's brightness level if the parameter passed is equal to the current brightness level) 
+     * @return false The parameter was outside the acceptable range, no brightness level changes will be done.  
+     */
     virtual bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl); 
+    /**
+     * @brief Turns the display module off.  
+     * 
+     * The display module will be cleared and will keep that status until a turnOn(), or turnOn(const uint8_t &) is invoked. 
+     */
     virtual void turnOff();
+    /**
+     * @brief Turns the display module on.  
+     * 
+     * The display module will be cleared and will keep that status until a turnOff() is invoked.  
+     */
     virtual void turnOn();
+    /**
+     * @brief Turns the display module on.  
+     * 
+     * The display module will be cleared and will keep that status until a turnOff() is invoked.  
+     */
     virtual void turnOn(const uint8_t &newBrghtnssLvl);
 };
  

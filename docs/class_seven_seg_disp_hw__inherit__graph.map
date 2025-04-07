@@ -10,6 +10,6 @@
 <area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="257,122,257,154,252,154,252,122"/>
 <area shape="rect" id="Node000006" href="$class_seven_seg_stat_h_c595.html" title="Models displays driven by 74HC595 or similar shift registers, one shift register per display port,..." alt="" coords="352,155,498,181"/>
 <area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="428,122,428,154,422,154,422,122"/>
-<area shape="rect" id="Node000007" href="$class_seven_seg_t_m163_x.html" title="Models specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series chips..." alt="" coords="522,155,653,181"/>
+<area shape="rect" id="Node000007" href="$class_seven_seg_t_m163_x.html" title="Models Seven Segments LEDs static displays hardware controlled by Titan Micro TM163X series chips." alt="" coords="522,155,653,181"/>
 <area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="468,111,560,152,558,156,466,116"/>
 </map>

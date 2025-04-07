@@ -1,0 +1,5 @@
+<map id="SevenSegDispHw::getHwDspDigitsQty" name="SevenSegDispHw::getHwDspDigitsQty">
+<area shape="rect" id="Node000001" title="Returns the quantity of digits of the display module." alt="" coords="254,5,452,48"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#ada6d89fb083fd8a5a2ce603b3b1f5e43" title="Class constructor." alt="" coords="5,5,206,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="238,29,206,29,206,24,238,24"/>
+</map>

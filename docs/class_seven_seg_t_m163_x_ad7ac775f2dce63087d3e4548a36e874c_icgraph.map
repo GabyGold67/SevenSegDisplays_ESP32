@@ -1,0 +1,5 @@
+<map id="SevenSegTM163X::begin" name="SevenSegTM163X::begin">
+<area shape="rect" id="Node000001" title="Turns On the display to be ready to receive data." alt="" coords="252,13,421,40"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_t_m163_x.html#a5eb5d7d7c1c0c2d776d80d71c9253d85" title="Class constructor." alt="" coords="5,5,204,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="237,29,204,29,204,24,237,24"/>
+</map>

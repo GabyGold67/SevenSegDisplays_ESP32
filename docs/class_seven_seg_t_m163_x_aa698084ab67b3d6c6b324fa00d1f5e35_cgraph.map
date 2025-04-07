@@ -1,0 +1,5 @@
+<map id="SevenSegTM163X::end" name="SevenSegTM163X::end">
+<area shape="rect" id="Node000001" title="Turns Off the display and registers the new state in the correspondig object&#39;s attribute." alt="" coords="5,5,165,32"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_t_m163_x.html#acd8804278138008c6f94996ee44b8afd" title="Turns the display module off." alt="" coords="213,5,390,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="165,16,197,16,197,21,165,21"/>
+</map>

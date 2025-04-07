@@ -1,0 +1,9 @@
+<map id="SevenSegTM163X::turnOn" name="SevenSegTM163X::turnOn">
+<area shape="rect" id="Node000001" title="Turns the display module on." alt="" coords="477,39,654,65"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_t_m163_x.html#ad7ac775f2dce63087d3e4548a36e874c" title="Turns On the display to be ready to receive data." alt="" coords="256,13,425,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="461,43,425,39,426,34,462,38"/>
+<area shape="rect" id="Node000004" href="$class_seven_seg_t_m163_x.html#a820e93c70fe532132b1d1117c84af7e6" title="Turns the display module on." alt="" coords="252,64,429,91"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="462,66,430,70,429,65,462,61"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_t_m163_x.html#a5eb5d7d7c1c0c2d776d80d71c9253d85" title="Class constructor." alt="" coords="5,5,204,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="240,29,204,29,204,24,240,24"/>
+</map>

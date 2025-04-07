@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['_7esevensegdisplays_0',['~SevenSegDisplays',['../class_seven_seg_displays.html#aad6eac4fa55968318f6d0c1e4e80cb8e',1,'SevenSegDisplays']]],
-  ['_7esevensegdyndummy_1',['~SevenSegDynDummy',['../class_seven_seg_dyn_dummy.html#a2d54447341e43fa346a42ee50121c078',1,'SevenSegDynDummy']]],
-  ['_7esevensegdynhc595_2',['~SevenSegDynHC595',['../class_seven_seg_dyn_h_c595.html#a7cba0a6a5ecb438a8b633167c119e4bc',1,'SevenSegDynHC595']]]
+  ['wait_0',['wait',['../class_seven_seg_displays.html#ae00a0275a3fa0c1858e475d3e2f1272d',1,'SevenSegDisplays::wait()'],['../class_seven_seg_displays.html#afc4ce2af2fc02b2c7cba62a13b55599c',1,'SevenSegDisplays::wait(const uint32_t &amp;newWaitRate)']]],
+  ['write_1',['write',['../class_seven_seg_displays.html#ab1c77aee430974cc460d259e600668ba',1,'SevenSegDisplays::write(const uint8_t &amp;segments, const uint8_t &amp;port)'],['../class_seven_seg_displays.html#ac1b3ec1b047588cf8743bef6bf6bd565',1,'SevenSegDisplays::write(const String &amp;character, const uint8_t &amp;port)']]]
 ];

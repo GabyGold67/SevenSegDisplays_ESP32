@@ -1,0 +1,5 @@
+<map id="SevenSegTM163X::begin" name="SevenSegTM163X::begin">
+<area shape="rect" id="Node000001" title="Turns On the display to be ready to receive data." alt="" coords="5,5,175,32"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_t_m163_x.html#a0469f1b57c14141db8a290e8ce7bb35a" title="Turns the display module on." alt="" coords="223,5,400,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="175,16,207,16,207,21,175,21"/>
+</map>
