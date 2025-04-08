@@ -116,7 +116,7 @@ Inheritance diagram for SevenSegStatic:</div>
 <area shape="rect" title="Abstract class that models displays that don&#39;t need permanent MCU data updating to keep the data corr..." alt="" coords="102,80,218,107"/>
 <area shape="rect" href="class_seven_seg_stat_h_c595.html" title="Models displays driven by 74HC595 or similar shift registers, one shift register per display port,..." alt="" coords="5,155,152,181"/>
 <area shape="poly" title=" " alt="" coords="136,119,94,156,91,152,133,115"/>
-<area shape="rect" href="class_seven_seg_t_m163_x.html" title="Models Seven Segments LEDs static displays hardware controlled by Titan Micro TM163X series chips." alt="" coords="176,155,306,181"/>
+<area shape="rect" href="class_seven_seg_t_m163_x.html" title="Abstract class that models Seven Segments LEDs static displays hardware using Titan Micro TM163X seri..." alt="" coords="176,155,306,181"/>
 <area shape="poly" title=" " alt="" coords="187,115,229,152,225,156,183,119"/>
 <area shape="rect" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware." alt="" coords="96,5,224,32"/>
 <area shape="poly" title=" " alt="" coords="162,48,162,80,157,80,157,48"/>
@@ -182,15 +182,15 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract class that models displays that don't need permanent MCU data updating to keep the data correctly displayed. </p>
-<p>The lack of need of periodic intervention from the MCU implies that a "display driver" chip (or chipset) takes care of the display update and refreshing. So this is a base class for display through those display drivers. The MCU sends the data to be displayed and the chip required commands through diverse channels and protocols depending on the specific chip. <br  />
- The chip then connects to the display module through their output pins. The hardware developer might decide to implement the chip/display module wiring according to the project requirements, but all the chips modeled by this class and it's subclasses share the same characteristics: <br  />
+<p>The lack of need of periodic intervention from the MCU implies that the <b>display controller component</b> includes a "display driver" chip (or chipset) that takes care of the display update and refreshing. So this is a base class for Seven <b>Segment display hardware</b> based on different <b>display controller component</b> chips. The MCU sends the data to be displayed and the chip required commands through diverse channels and protocols depending on the specific chip. <br  />
+ The chip then connects to the <b>display module component</b> through their output pins. The hardware developer might decide to implement the <b>display module component</b> wiring according to the project requirements, but all the chips modeled by this class and it's subclasses share the same characteristics: <br  />
 </p><ul>
 <li>They provide 8 pins for the seven segments + DP ports. <br  />
 </li>
 <li>They provide 1 pin per digit/port supported by the specific chip. <br  />
 </li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd><b>NONE</b> of the <b>driver chips</b> controlling the displays modeled by the <a class="el" href="class_seven_seg_static.html" title="Abstract class that models displays that don&#39;t need permanent MCU data updating to keep the data corr...">SevenSegStatic</a> subclasses includes <b>COLONS</b>, <b>ICONS</b> or any other amenity some hardware display modules include. The activation of those <b>colons</b> and/or <b>icons</b> is provided by the use of some of the existing described chip pins in a display module propietary exclusive way, and are described in those display modules' datasheets. Some of those mechanisms are: <br  />
+<dl class="section note"><dt>Note</dt><dd><b>NONE</b> of the <b>driver chips</b> controlling the displays modeled by the <a class="el" href="class_seven_seg_static.html" title="Abstract class that models displays that don&#39;t need permanent MCU data updating to keep the data corr...">SevenSegStatic</a> subclasses includes <b>COLONS</b>, <b>ICONS</b> or any other amenity some <b>display module component</b> includes, this class and it's subclasses model generic use chip drivers for seven segment display modules. For these chips the activation of those <b>colons</b> and/or <b>icons</b> is provided by the use of some of the existing described chip pins in a display module propietary exclusive way, and are described in those display modules' datasheets. Some of those mechanisms are: <br  />
 <ul>
 <li>Have less display ports than the maximum supported by the chip, and use one or more segments of the exceeding ports wired to the colon/s or icon/s of the display. <br  />
 </li>

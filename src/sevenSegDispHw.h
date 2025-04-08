@@ -376,12 +376,13 @@ public:
  * 
  * @brief Abstract class that models displays that don't need permanent MCU data updating to keep the data correctly displayed. 
  * 
- * The lack of need of periodic intervention from the MCU implies that a "display driver" chip (or chipset) takes care of the display update and refreshing. So this is a base class for display through those display drivers. The MCU sends the data to be displayed and the chip required commands through diverse channels and protocols depending on the specific chip.  
- * The chip then connects to the display module through their output pins. The hardware developer might decide to implement the chip/display module wiring according to the project requirements, but all the chips modeled by this class and it's subclasses share the same characteristics:  
+ * The lack of need of periodic intervention from the MCU implies that the **display controller component** includes a "display driver" chip (or chipset) that takes care of the display update and refreshing. So this is a base class for Seven **Segment display hardware** based on different **display controller component** chips. 
+ * The MCU sends the data to be displayed and the chip required commands through diverse channels and protocols depending on the specific chip.  
+ * The chip then connects to the **display module component** through their output pins. The hardware developer might decide to implement the **display module component** wiring according to the project requirements, but all the chips modeled by this class and it's subclasses share the same characteristics:  
  * - They provide 8 pins for the seven segments + DP ports.  
  * - They provide 1 pin per digit/port supported by the specific chip.  
  * 
- * @note **NONE** of the **driver chips** controlling the displays modeled by the SevenSegStatic subclasses includes **COLONS**, **ICONS** or any other amenity some hardware display modules include. The activation of those **colons** and/or **icons** is provided by the use of some of the existing described chip pins in a display module propietary exclusive way, and are described in those display modules' datasheets. Some of those mechanisms are:  
+ * @note **NONE** of the **driver chips** controlling the displays modeled by the SevenSegStatic subclasses includes **COLONS**, **ICONS** or any other amenity some **display module component** includes, this class and it's subclasses model generic use chip drivers for seven segment display modules. For these chips the activation of those **colons** and/or **icons** is provided by the use of some of the existing described chip pins in a display module propietary exclusive way, and are described in those display modules' datasheets. Some of those mechanisms are:  
  * - Have less display ports than the maximum supported by the chip, and use one or more segments of the exceeding ports wired to the colon/s or icon/s of the display.  
  * - Use an external source to activate the colon/s or icon/s independently from the driving chip.  
  * - Wire **one or more** of the visible display ports DP segments to the colon/s or icon/s of the display.  
@@ -402,9 +403,11 @@ public:
 /**
  * @class SevenSegStatHC595
  * 
- * @brief Models displays driven by 74HC595 or similar shift registers, one shift register per display port, wired so that the eight output pins of each shift register is connected to the 8 segment pins of the display module.  
+ * @brief Models displays driven by 74HC595 or similar shift registers, one shift register per display port, wired so that the eight output pins of each shift register is connected to the 8 segment pins of the corresponding display module.  
  * 
  * For more than one digit displays, the shift registers driving each port is connected to the next in the traditional **daisy-chain** fashion, using the cascading pins to connect the shift register to the next in the chain.  
+ * 
+ * @note This class uses ShiftRegGPIOXpander objects defined in the ShiftRegGPIOXpander_ESP32 library available from the Arduino Library Manager. You can find the last version and extensive documentation at it's Github repository https://github.com/GabyGold67/ShiftRegGPIOXpander_ESP32 .  
  */
 class SevenSegStatHC595: public SevenSegStatic{
 private:
@@ -428,9 +431,9 @@ public:
     /**
      * @brief Class constructor.  
      * 
-     * @param ioPins A pointer to an array holding the identifieres for the 3 GPIO pins required to send the data to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->sclk, 1->rclk, 2->dio
-     * @param dspDigits Quantity of digits/ports of the display. This class supports the wiring scheme allowing a maximum of 8 digits.  
-     * @param commAnode Boolean indicating if the hardware uses a display/s module/s wired as common anode (true) or common cathode (false).  
+     * @param ioPins A pointer to an array holding the identifieres for the 3 GPIO pins required to send the data to be displayed to the **display controller component**. The correlation between the array positions and the pin function is given as in-class defined constants: 0->sclk, 1->rclk, 2->dio
+     * @param dspDigits Quantity of digits/ports of the display. This class supports the wiring scheme allowing a maximum of 8 digits per shift register composing the **display controller component**, up to the 256 limit imposed by the parameter data type **uint8_t**.  
+     * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).  
      */
     SevenSegStatHC595(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
     /**
@@ -446,7 +449,7 @@ public:
 //============================================================> Class declarations separator
 
 /**
- * @brief Models Seven Segments LEDs static displays hardware controlled by Titan Micro TM163X series chips
+ * @brief Abstract class that models Seven Segments LEDs static displays hardware using Titan Micro TM163X series chips as **display controller component**
  *
  * As TM163X series chips have some differences among them, this class implements the base common characteristics, the differences are implemented in corresponding subclasses.
  *
@@ -461,9 +464,9 @@ public:
  * - Maximum number of ports addressable.
  * - Keyscanning services
  *
- * @note As the communications protocol doesn't completely comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet **Maximum clock frequency** stated as 500KHz to a less demanding 100KHz(10 microseconds) time slices, managed by `delayMicroseconds()` function keyword, or a timer interrupt set at 100KHz, enabling the timer interrupt service only while transmitting data, and disabling it while idle. 
+ * @note As the communications protocol doesn't completely comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet **Maximum clock frequency** stated as 500KHz to a less demanding time slices, managed by `delayMicroseconds()` function keyword, (or a timer interrupt set at 100KHz for other implementatins, enabling the timer interrupt service only while transmitting data, and disabling it while idle).  
  * 
- * @warning While the TM1636, TM1637, TM1638, TM1639 (at least these are our most known members of this "family") are stable and well documented devices, the parts sold as **"TM1637 Display Modules"**, **"TM1638 Display Modules"** etc, breakboards that include the TM163X display driver, supporting electronics and one or several 7 segments display modules are not all created equal. A well known example: having the TM1637 modules the hability to drive 6 display ports, some breakboards present 4 display ports and a **center colon**, as is standard to time displaying modules. The **big issue** is the lack of a standard for those display modules, not all displays have the same disposition, not all of them are internally wired the same, and that not all the manufacturers wire the TM1637 modules to the 7 segments display modules in the same way. For example, some will attach the colon to the DP (decimal point) segment of the third port (RtL), some will attach them to ALL the DP segment, some will attach each of the dots of the colon independently, one to the 5th display port, the other to the 6th display port, and then some other manufacturer in some other way.  
+ * @warning While the TM1636, TM1637, TM1639 (at least these are our most known members of this "family") are stable and well documented devices, the parts sold as **"TM1637 Display Modules"**, **"TM1638 Display Modules"** etc, breakboards that include the TM163X display driver, supporting electronics and one or several 7 segments display modules are not all created equal. A well known example: having the TM1637 modules the hability to drive 6 display ports, some breakboards present 4 display ports and a **center colon**, as is standard to time displaying modules. The **big issue** is the lack of a standard for those display modules, not all displays have the same disposition, not all of them are internally wired the same, and that not all the manufacturers wire the TM1637 modules to the 7 segments display modules in the same way. For example, some will attach the colon to the DP (decimal point) segment of the third port (RtL), some will attach them to ALL the DP segment, some will attach each of the dots of the colon independently, one to the 5th display port, the other to the 6th display port, and then some other manufacturer in some other way.  
  * Whenever is possible to get a specific module for testing, a SevenSegTM163X subclass might be added to manage it correctly, please read the subclasses' description for correct display module oriented class identification.  
  *
  * @class SevenSegTM163X
@@ -474,13 +477,12 @@ private:
     const uint8_t _clkIndx {0};
     const uint8_t _dioIndx {1};
     const uint8_t _dspDigitsQtyMax{}; // Maximum display size in digits: 4 for TM1636, 6 for TM1637, 16 for TM1639
-    const uint8_t _hwBrghtnssLvlMax{0x07};
+   const uint8_t _hwBrghtnssLvlMax{0x07};
     const uint8_t _hwBrghtnssLvlMin{0x00};
     uint32_t _txClkTckTm{2};
 
     uint8_t _clk {};
     uint8_t _dio {}; 
-    uint8_t* _lclDspBuffPtr{nullptr};
 
     void _updDsplyCntnt();
 protected:
@@ -488,8 +490,11 @@ protected:
     uint8_t _brghtnssLvlMax{};
     uint8_t _brghtnssLvlMin{};
     bool _isOn{false};
+    uint8_t* _lclDspBuffPtr{nullptr};
     uint8_t* _msgBffrPtr{nullptr};
     uint8_t _mssgBffrLngth{0};
+    uint8_t* _xcdDspBuffPtr{nullptr};
+    uint8_t _xcdDspDigitsQty{};  // Number of unused available display ports, its the difference  (_dspDigitsQtyMax  - _dspDigitsQty)
  
     void _txStart();
     void _txAsk();
@@ -505,9 +510,10 @@ protected:
     /**
      * @brief Class constructor
      * 
-     * @param ioPins A pointer to an array holding the identifieres for the 2 GPIO pins required to send the data to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->dio
-     * @param dspDigits 
-     */
+     * @param ioPins A pointer to an array holding the identifieres for the 2 GPIO pins required to send the data to the **Seven Segment display hardware** to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->dio
+     * @param dspDigits Quantity of digits/ports of the display. This parameter acceptable value is directly related to the TM163X family specific member.  
+     * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).
+    */
     SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
     /**
      * @brief Class destructor
@@ -519,10 +525,12 @@ protected:
      * Turning on a TM163X display implies sending a command to the display and saving in an object attribute the isOn state, as the display controller does not provide any means to read it's state. 
      * 
      * @return true Always  
+     * 
+     * @note The class constructor invokes the begin() method as it's last statement, the begin() method is kept for ease of modifications to developers interested in modifying the class.  
      */
     bool begin();
     /**
-     * @brief Turns Off the display and registers the new state in the correspondig object's attribute.  
+     * @brief Turns Off the display.  
      * 
      * @return true Always  
      */
@@ -530,9 +538,9 @@ protected:
     /**
      * @brief Returns the current brightness level setting for the display module.  
      * 
-     * The TM163X series display drivers have the capability of changing the led display brightness level by using PWM on it's output. The resulting brightness levels are not percieved as linear, and the minimum and maximum brightness values don't reach the levels of totaly turning the display off, neither turning the display to it's maximum possible brightness.
+     * The TM163X series display drivers have the capability of changing the led display brightness level by using PWM on it's output pins. The resulting brightness levels are not percieved as linear, and the minimum and maximum brightness values don't reach the levels of totaly turning the display off, neither turning the display to it's maximum possible brightness.
      * 
-     * @note The SevenSegTM163X abstract class is instrumented so that any subclass must incorporate the minimum and maximum values for that specific display subclass. All the members of the TM163X family I could check at this point share the minimum and the maximum brightness values: 0 for the minimum, 7 for the maximum, resulting in 8 brightness levels. But is not taken for granted. See setBrghtnssLvl(const uint8_t &) for more details.  
+     * @note The SevenSegTM163X abstract class is instrumented so that any subclass must incorporate the minimum and maximum values for that specific display subclass. All the members of the TM163X family I could check at this point share the minimum and the maximum brightness values: 0 for the minimum, 7 for the maximum, resulting in 8 brightness levels. But this is not taken for granted. See setBrghtnssLvl(const uint8_t &) for more details.  
      * 
      * @return The current brightness level setting.  
      */
@@ -540,7 +548,7 @@ protected:
     /**
      * @brief Returns the maximum brightness level for the instantiated object.  
      * 
-     * The value returned is the maximum brightness level for the object's class.  
+     * The value returned is the maximum brightness level setting available for the object's class.  
      * 
      * @return The uint8_t value of the maximum brightness setting available for the object's class.  
      */
@@ -548,7 +556,7 @@ protected:
     /**
      * @brief Returns the minimum brightness level for the instantiated object.  
      * 
-     * The value returned is the minimum brightness level for the object's class.  
+     * The value returned is the minimum brightness level setting available for the object's class.  
      * 
      * @return The uint8_t value of the minimum brightness setting available for the object's class.  
      */
@@ -578,31 +586,56 @@ protected:
      * The display module will be turned on and it's content displayed, and will keep that status until a turnOff() is invoked.  
      */
     virtual void turnOn();
-    
+    /**
+     * @brief Turns the display module on.  
+     * 
+     * The display module will be turned on, it's brightness level set to the requested level, it's content displayed, and will keep that status until a turnOff() is invoked. 
+     * 
+     * @param newBrghtnssLvl The new brightness level for the display. The value must be in the range **getBrghtnssMinLvl() <= newBrghtnssLvl <= getBrghtnssMaxLvl()**
+     */
     virtual void turnOn(const uint8_t &newBrghtnssLvl);
 };
  
  //============================================================> Class declarations separator
 class SevenSegTM1637: public SevenSegTM163X{
 private:
-    virtual void _unAbstract();
+const uint8_t _dspDigitsQtyMax{6}; // Maximum display size in digits: 4 for TM1636, 6 for TM1637, 16 for TM1639
+   const uint8_t _hwBrghtnssLvlMax{0x07};    
+   const uint8_t _hwBrghtnssLvlMin{0x00};
+   virtual void _unAbstract();
+
 public:
     SevenSegTM1637(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
     ~SevenSegTM1637();
 };
 
  //============================================================> Class declarations separator
- /*
+ class SevenSegTM1636: public SevenSegTM163X{
+   private:
+   const uint8_t _dspDigitsQtyMax{4}; // Maximum display size in digits: 4 for TM1636, 6 for TM1637, 16 for TM1639
+      const uint8_t _hwBrghtnssLvlMax{0x07};    
+      const uint8_t _hwBrghtnssLvlMin{0x00};
+      virtual void _unAbstract();
+   
+   public:
+       SevenSegTM1636(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
+       ~SevenSegTM1636();
+   };
+   
+ //============================================================> Class declarations separator
  class SevenSegTM1639: public SevenSegTM163X{
- protected:
-     const uint8_t _dspDigitsQtyMax{16}; // Maximum display size in digits, hardware dependent
- public:
-     SevenSegTM1639(gpioPinId_t* ioPins, uint8_t dspDigits);
-     ~SevenSegTM1639();
- 
- };
- */
-//============================================================> Class declarations separator
+   private:
+   const uint8_t _dspDigitsQtyMax{8}; // Maximum display size in digits: 4 for TM1636, 6 for TM1637, 16 for TM1639
+      const uint8_t _hwBrghtnssLvlMax{0x07};    
+      const uint8_t _hwBrghtnssLvlMin{0x00};
+      virtual void _unAbstract();
+   
+   public:
+       SevenSegTM1639(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
+       ~SevenSegTM1639();
+   };
+
+   //============================================================> Class declarations separator
 
 /*
 class SevenSegStatDummy: public SevenSegStatic{
@@ -614,7 +647,7 @@ public:
 
 //============================================================> Class declarations separator
 
-// Classes for the TM1638, Max7219, HT16K33, direct MPU pin connection, under implementation need analysis
+// Classes for the Max7219, HT16K33, direct MPU pin connection, under implementation need analysis
 
 
 #endif

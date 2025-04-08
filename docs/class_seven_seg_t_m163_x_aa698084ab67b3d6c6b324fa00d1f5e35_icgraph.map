@@ -1,5 +1,5 @@
 <map id="SevenSegTM163X::end" name="SevenSegTM163X::end">
-<area shape="rect" id="Node000001" title="Turns Off the display and registers the new state in the correspondig object&#39;s attribute." alt="" coords="260,13,419,40"/>
+<area shape="rect" id="Node000001" title="Turns Off the display." alt="" coords="260,13,419,40"/>
 <area shape="rect" id="Node000002" href="$class_seven_seg_t_m163_x.html#a15cd5793c8ad4dd0c5207874d4fc2de4" title="Class destructor." alt="" coords="5,5,212,48"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="244,29,212,29,212,24,244,24"/>
 </map>

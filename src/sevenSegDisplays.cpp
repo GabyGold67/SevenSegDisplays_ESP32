@@ -386,6 +386,12 @@ bool SevenSegDisplays::noBlink(){
    if(_isBlinking){
       taskENTER_CRITICAL(&mux);
       _isBlinking = false;
+
+      // tmrModResult = xTimerStop(_blinkTmrHndl, portMAX_DELAY); //FFDR The method fails when stopping the timer as it retrieves the buffer nos correctly modified for a write while blinkin. Check for the axuiliary buffer being modified if a write is executed while blinking!!!
+      // if (tmrModResult == pdPASS){
+      //    result = true;
+      // }
+
       _restoreDspBuff();   // This method calls _setDspBuffChng() if it suits
       _blinkTimer = 0;
       _blinkShowOn = true;

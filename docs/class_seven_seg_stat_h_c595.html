@@ -104,7 +104,7 @@ $(function(){initNavTree('class_seven_seg_stat_h_c595.html',''); initResizable(t
 </div><!--header-->
 <div class="contents">
 
-<p>Models displays driven by 74HC595 or similar shift registers, one shift register per display port, wired so that the eight output pins of each shift register is connected to the 8 segment pins of the display module. <br  />
+<p>Models displays driven by 74HC595 or similar shift registers, one shift register per display port, wired so that the eight output pins of each shift register is connected to the 8 segment pins of the corresponding display module. <br  />
   
  <a href="#details">More...</a></p>
 
@@ -196,10 +196,12 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 <tr class="separator:afc7402bad588be4ea2c7aedaf870f9ff inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Models displays driven by 74HC595 or similar shift registers, one shift register per display port, wired so that the eight output pins of each shift register is connected to the 8 segment pins of the display module. <br  />
+<div class="textblock"><p>Models displays driven by 74HC595 or similar shift registers, one shift register per display port, wired so that the eight output pins of each shift register is connected to the 8 segment pins of the corresponding display module. <br  />
  </p>
 <p>For more than one digit displays, the shift registers driving each port is connected to the next in the traditional <b>daisy-chain</b> fashion, using the cascading pins to connect the shift register to the next in the chain. <br  />
- </p>
+</p>
+<dl class="section note"><dt>Note</dt><dd>This class uses ShiftRegGPIOXpander objects defined in the ShiftRegGPIOXpander_ESP32 library available from the Arduino Library Manager. You can find the last version and extensive documentation at it's Github repository <a href="https://github.com/GabyGold67/ShiftRegGPIOXpander_ESP32">https://github.com/GabyGold67/ShiftRegGPIOXpander_ESP32</a> . <br  />
+ </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a28fafae6c4fa1083042e6dbe91f0face" name="a28fafae6c4fa1083042e6dbe91f0face"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a28fafae6c4fa1083042e6dbe91f0face">&#9670;&#160;</a></span>SevenSegStatHC595()</h2>
@@ -229,10 +231,10 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
  </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ioPins</td><td>A pointer to an array holding the identifieres for the 3 GPIO pins required to send the data to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0-&gt;sclk, 1-&gt;rclk, 2-&gt;dio </td></tr>
-    <tr><td class="paramname">dspDigits</td><td>Quantity of digits/ports of the display. This class supports the wiring scheme allowing a maximum of 8 digits. <br  />
+    <tr><td class="paramname">ioPins</td><td>A pointer to an array holding the identifieres for the 3 GPIO pins required to send the data to be displayed to the <b>display controller component</b>. The correlation between the array positions and the pin function is given as in-class defined constants: 0-&gt;sclk, 1-&gt;rclk, 2-&gt;dio </td></tr>
+    <tr><td class="paramname">dspDigits</td><td>Quantity of digits/ports of the display. This class supports the wiring scheme allowing a maximum of 8 digits per shift register composing the <b>display controller component</b>, up to the 256 limit imposed by the parameter data type <b>uint8_t</b>. <br  />
  </td></tr>
-    <tr><td class="paramname">commAnode</td><td>Boolean indicating if the hardware uses a display/s module/s wired as common anode (true) or common cathode (false). <br  />
+    <tr><td class="paramname">commAnode</td><td>Boolean indicating if the hardware uses a <b>display module component</b> wired as common anode (true) or common cathode (false). <br  />
  </td></tr>
   </table>
   </dd>

@@ -1,7 +1,7 @@
 <map id="SevenSegTM163X::turnOn" name="SevenSegTM163X::turnOn">
-<area shape="rect" id="Node000001" title="Turns the display module on." alt="" coords="469,13,646,40"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_t_m163_x.html#ad7ac775f2dce63087d3e4548a36e874c" title="Turns On the display to be ready to receive data." alt="" coords="252,13,421,40"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="454,29,421,29,421,24,454,24"/>
-<area shape="rect" id="Node000003" href="$class_seven_seg_t_m163_x.html#a5eb5d7d7c1c0c2d776d80d71c9253d85" title="Class constructor." alt="" coords="5,5,204,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="237,29,204,29,204,24,237,24"/>
+<area shape="rect" id="Node000001" title="Turns the display module on." alt="" coords="231,31,408,57"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_t_m163_x.html#ad7ac775f2dce63087d3e4548a36e874c" title="Turns On the display to be ready to receive data." alt="" coords="9,5,179,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="215,35,179,31,179,26,216,30"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_t_m163_x.html#a820e93c70fe532132b1d1117c84af7e6" title="Turns the display module on." alt="" coords="5,56,183,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="216,58,183,62,183,57,215,53"/>
 </map>

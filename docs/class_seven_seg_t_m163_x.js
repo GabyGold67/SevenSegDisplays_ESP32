@@ -11,5 +11,6 @@ var class_seven_seg_t_m163_x =
     [ "ntfyUpdDsply", "class_seven_seg_t_m163_x.html#ae45f5f1772b93dca12ccaef3e652d7b0", null ],
     [ "setBrghtnssLvl", "class_seven_seg_t_m163_x.html#a4e74de34810a89ff8409e277e962e09f", null ],
     [ "turnOff", "class_seven_seg_t_m163_x.html#acd8804278138008c6f94996ee44b8afd", null ],
-    [ "turnOn", "class_seven_seg_t_m163_x.html#a0469f1b57c14141db8a290e8ce7bb35a", null ]
+    [ "turnOn", "class_seven_seg_t_m163_x.html#a0469f1b57c14141db8a290e8ce7bb35a", null ],
+    [ "turnOn", "class_seven_seg_t_m163_x.html#a820e93c70fe532132b1d1117c84af7e6", null ]
 ];
