@@ -17,7 +17,7 @@
  * @version 3.0.0  
  * 
  * @date First release: 20/12/2023  
- *       Last update:   25/03/2025 11:20 (GMT+0200)  
+ *       Last update:   08/04/2025 09:00 (GMT+0200)  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -49,9 +49,8 @@ SevenSegDispHw::SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits, bool commAnod
     
    _dspHwInstNbr = _dspHwSerialNum++;
    _dspHwInstance = this;
-   for (uint8_t i{0}; i < _dspDigitsQty; i++){
+   for (uint8_t i{0}; i < _dspDigitsQty; i++)
       *(_digitPosPtr + i) = i;
-   }    
 }
 
 SevenSegDispHw::~SevenSegDispHw() {
@@ -59,6 +58,11 @@ SevenSegDispHw::~SevenSegDispHw() {
 }
 
 bool SevenSegDispHw::begin(uint32_t updtLps){
+   
+   return true;
+}
+
+bool SevenSegDispHw::end(){
    
    return true;
 }
@@ -114,13 +118,7 @@ void SevenSegDispHw::ntfyUpdDsply(){
    return;
 }
 
-bool SevenSegDispHw::end(){
-   
-   return true;
-}
-
 //============================================================> Class methods separator
-//FFDR Start revision from here Gaby
 SevenSegDynamic::SevenSegDynamic(){}
 
 SevenSegDynamic::SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)

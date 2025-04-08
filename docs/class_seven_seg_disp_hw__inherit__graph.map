@@ -1,6 +1,6 @@
 <map id="SevenSegDispHw" name="SevenSegDispHw">
 <area shape="rect" id="Node000001" title="Base abstract class models a generic Seven Segment display hardware." alt="" coords="276,5,404,32"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_dynamic.html" title="Abstract class models a generic dynamically updated Seven Segment display hardware." alt="" coords="188,80,321,107"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_dynamic.html" title="Abstract class models a generic dynamically updated Seven Segment display hardware" alt="" coords="188,80,321,107"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="315,44,271,82,267,78,312,40"/>
 <area shape="rect" id="Node000005" href="$class_seven_seg_static.html" title="Abstract class that models displays that don&#39;t need permanent MCU data updating to keep the data corr..." alt="" coords="367,80,483,107"/>
 <area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="368,40,412,78,409,82,364,44"/>

@@ -1,6 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
 <area shape="rect" id="Node000000" href="$class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware." alt="" coords="5,81,134,108"/>
-<area shape="rect" id="Node000001" href="$class_seven_seg_dynamic.html" title="Abstract class models a generic dynamically updated Seven Segment display hardware." alt="" coords="182,56,315,83"/>
+<area shape="rect" id="Node000001" href="$class_seven_seg_dynamic.html" title="Abstract class models a generic dynamically updated Seven Segment display hardware" alt="" coords="182,56,315,83"/>
 <area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="149,81,181,76,182,81,149,86"/>
 <area shape="rect" id="Node000004" href="$class_seven_seg_static.html" title="Abstract class that models displays that don&#39;t need permanent MCU data updating to keep the data corr..." alt="" coords="191,107,306,133"/>
 <area shape="poly" id="edge4_Node000000_Node000004" title=" " alt="" coords="149,103,191,109,190,114,148,109"/>

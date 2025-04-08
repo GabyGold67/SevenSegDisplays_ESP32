@@ -15,7 +15,7 @@
  * @version 3.0.0
  * 
  * @date First release: 20/12/2023  
- *       Last update:   31/03/2025 18:10 (GMT+0200) DST  
+ *       Last update:   08/04/2025 09:00 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -56,6 +56,11 @@ void pushElmnt(T* &elmntLstPtr, T ssdToPush, uint8_t &elmntQty);
  * 
  * @brief Base abstract class models a generic Seven Segment display hardware
  * 
+ * @note This library, from it's base class to the last of it's subclasses, adhere to the following concepts: 
+ * **Seven Segment display hardware**: is a hardware construction capable of receiving data in 8-bits units, each unit corresponding to a segment or decimal point of a seven segment display digit, as it is already normalized across the electronic industry. The Seven Segment display is composed of two basic elements:  
+ * - The **display controller component**: Is conformed by the electronics receiving the data to be displayed and send the needed signals to turn on the corresponding segments to show the data at the display module. The display controller component might be as autonomous and complex as a specific "display controller chip", as simple as a "SIPO Shift Register" or as "non physical existent" as a "cable connector to the MCU", so that the MCU will have to take care of the data update and display logic, making the MCU the "display controller component". 
+ * - The **display module component**: Is conformed by the seven segments led display unit or units if more than one is required. This units include the leds to be lit as segments and decimal point, and some include colons to represent time values, or special icons in very specific use models. Each display module component will have it's internal wiring, the seven segment part pretty standard, the other components wired differently. As for this library the only display module characteristic considered essential is if the digit leds are connected in common anode or common cathode way. This required information is provided by each display module datasheet, the corresponding display module code is usually found printed in one side or at the bottom of the module.  
+ * 
  */
 class SevenSegDispHw{
     static uint8_t _dspHwSerialNum;
@@ -68,46 +73,59 @@ protected:
     SevenSegDispHw* _dspHwInstance{nullptr};
     uint8_t* _ioPins{};
 
-    virtual void _unAbstract() = 0;
+    virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
     virtual void send(uint8_t* digitsBuffer);
     virtual void send(const uint8_t &segments, const uint8_t &port);
 public:
+    /**
+     * @brief Default class constructor
+     * 
+     */
     SevenSegDispHw();
     /**
      * @brief Class constructor
      * 
-     * 
-     * 
-     * @param ioPins 
-     * @param dspDigits 
-     * @param commAnode 
+     * @param ioPins A pointer to an array holding the identifieres for the MCU GPIO pins required to send the data to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants for each subclass.  
+     * @param dspDigits Quantity of digits/ports of the display. This value is directly related to the **display module component** quantity of ports and characteristics.  
+     * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).  
      *      
      * @attention The dspDigits parameter indicating the quantity of digits of the display module is a **basic fundamental** parameter passed at instantiation time. This information provides the value to be used to generate the data buffer, the digits order table, auxiliar buffers and even the required information to generate a valid left or right aligned display. Obviously the quantity is bigger than 0, and must be less than or equal to the hardware maximum display digits capability.  
      */
     SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
+    /**
+     * @brief Class destructor
+     */
     virtual ~SevenSegDispHw();    
    /**
-    * @brief Sets up the hardware display to work.  
+    * @brief Sets up the hardware display to work, and starts the display activities.  
     * 
-    * Depending on the display technology and the resources it needs to start working, this method takes care of those preparation. That means that each specific subclass of display will have to provide it's version of `begin()` that will take care of:  
+    * Depending on the display technology and the resources it needs to work with, this method takes care of those preparations. That means that each specific subclass of display will provide it's own version of `begin()` that will take care of:  
     * - Configuring timers or interrupts.  
-    * - Setup tasks and unblocking procedures to get new contents from the SevenSegDisplays object
+    * - Setup tasks and unblocking procedures to get new contents from the SevenSegDisplays object.  
     * - Setup communications parameters.  
     * - Establish communications with the display.  
     * - Other specific services configuration and starting.  
     * 
-    * @retval true The specific configurations and startups could be successfully made
+    * @param updtLps Time lapse between updating activities required, specially by dynamic subclasses. The parameter will be used according to each subclass needs, which will be described in each class begin() method.  
+    * 
+    * @retval true The specific configurations and startups could be successfully completed.  
     * @return false One or more of the specific configurations or startups failed.  
     */
     virtual bool begin(uint32_t updtLps = 0);
+    /**
+     * @brief Reverts the begin(uint32_t) actions, stopping the display activities and freeing the resources used by the Seven Segment display hardware object.  
+     * 
+     * @return true The display activities could be stopped and resources freed with no problems.  
+     * @return false The display activities couldn't be stopped. The method failed.  
+     */
     virtual bool end();
     /**
-     * @brief Returns a value indicating if the hardware has the led display wired as common anode or common cathode
+     * @brief Returns a value indicating if the display module component uses a common anode or a common cathode led wiring.  
      * 
-     * The SevenSegDisplays instantiated objects will compose the values corresponding to each character it can display according to the SevenSegDispHw attribute _commAnode. Each SevenSegDispHw instantiable subclass will have that constant attribute set by the subclass developer to correspond to the technical specifications of the display module hardware. 
+     * The SevenSegDisplays instantiated objects will compose the values corresponding to each character it can display according to the SevenSegDispHw _commAnode attribute. Each SevenSegDispHw instantiable subclass will have that constant attribute set by the subclass developer to correspond to the technical specifications of the display module component. 
      * 
-     * @retval true The display is built with Common Anode seven segment display modules
-     * @retval false The display is built with Common Cathode seven segment display modules
+     * @retval true The display is built with a Common Anode display module component.  
+     * @retval false The display is built with a Common Cathode  display module component.  
      */
     bool getCommAnode();
     /**
@@ -116,6 +134,8 @@ public:
      * The display buffer is a memory area set by the SevenSegDisplays class object instantiated to hold the data to be displayed, and so it's shared by that object and the SevenSegDispHw subclass object component. When the SevenSegDisplays object is constructed it sets the SevenSegDispHw subclass object buffer pointer to the memory area it set for that purpose. This method retrieves that memory pointer.  
      * 
      * @return uint8_t* The pointer to the buffer area used by the SevenSegDispHw to get the data to display.  
+     * 
+     * @warning If getDspBuffPtr() returns a nullptr it means the setDspBuffPtr(uint8_t*) invoked by the SevenSegDisplays constructor failed and the SevenSegDispHw object has no source for the data to be displayed.  
      */
     uint8_t* getDspBuffPtr();
     /**
@@ -123,15 +143,31 @@ public:
      * 
      * The value returned correspond to the dspDigits parameter passed at instantiation time.  
      * 
-     * @return uint8_t The display module digits quantity.  
+     * @return uint8_t The **display module component** digits quantity.  
      */
     uint8_t getHwDspDigitsQty();
     /**
-     * @brief Notifies the object of a new change of content, it must update the display.  
+     * @brief Notifies the object of a change of content available in the display buffer, the object must update the display.  
      * 
-     * The data displayed by the static displays remains constant until it's data buffer or registers are loaded with new data. This method notifies the display that the data source has changed and it must reload the contents of it's registers or buffers to display the new information.  
+     * While the dynamic displays must periodically refresh the data displayed, and so they get the most updated content from the display buffer without the need to send them any notification, the data displayed by the static displays remains constant even if it's data buffer or registers are loaded with new data. This method notifies the display that the data buffer content has changed and it must load the new contents of it's registers or buffers to display the new information.  
      */
-    virtual void ntfyUpdDsply();
+   virtual void ntfyUpdDsply();
+   virtual bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl){return true;}; 
+   /**
+    * @brief Sets a mapping to relate the display buffer positions to the display port asigned to exhibit it's contents.  
+    * 
+     * As different **Seven Segment display hardware** implement different wiring schemes between the **display controller component** and the **display module component**, some implement the leftmost display port as it's lowest memory position of it's buffer, while some implement the rightmost position to it. When more than one **display module components** are used, it adds a new level of hardware implementation that differs from one supplier to the other. The library implements a mechanism to provide the instantiated object to relate the positions of the display ports to the display buffer positions through an array. The array has the size of the display buffer, and each array elment is meant to hold the number of the corresponding port that is wired to display the data in that display buffer position The array is default defined in the constructor as (0, 1, 2,...) that is the most usual implementation found. If the order needs to be changed the setDigitsOrder() method is the way to set a new mapping.  
+     * 
+     * @param newOrderPtr Pointer to an uint8_t array of _dspDigits lenght containing the position of the port in the **display module components** wired to display that buffer position content. Each value will be checked against the _dspDigits value to ensure that they are all in the range acceptable, 0 <= value <= _dspDigits - 1. If one of the values is out of the valid range no change will be done. Please note that no checking will be done to ensure all of the array values are different. A repeated value will be accepted, ending in an undetermined non-critic, display behavior.  
+     * @return true All of the elements of the array were in the accepted range. The change was performed.  
+     * @return false At least one of the values of the array passed were out of range. The change wasn't performed.  
+     * 
+   * Use example:  
+   * @code {.cpp}
+   * uint8_t diyMore8Bits[8] {3, 2, 1, 0, 7, 6, 5, 4}; //Builds an array with the port order of the "DIY MORE 8-bit LED Display".
+   * myLedDisp.setDigitsOrder(diyMore8Bits); //Changes the display bit to port mapping according to the display characteristics.  
+   * @endcode
+*/
     bool setDigitsOrder(uint8_t* newOrderPtr);
     /**
      * @brief Returns the pointer to the Display Buffer
@@ -142,15 +178,14 @@ public:
      * 
      * @attention Using this method is a resource to generate "animations" by changing the memory area from with the hardware displays takes it's contents, to some other area with ready to display information
      * 
-     * @warning Setting the display buffer pointer to an address not coinciding with the one configured in the SevenSegDisplays will **disable** the possibility for it to get new generated content displayed!! Handle with extreme care!!
+     * @note The dspBuffPtr attribute might be changed to use a temporary different source of data to be displayed. 
+     * 
+     * @warning Setting the display buffer pointer to an address not coinciding with the one configured in the SevenSegDisplays will **disable** the possibility for it to get new SevenSegDisplays generated content displayed!! Handle with extreme care, first saving the original provided pointer, changing it as needed, and reseting the _dspBuffPtr to the saved value!!
      */
     void setDspBuffPtr(uint8_t* newDspBuffPtr);
-
-    virtual bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl){return true;}; 
     virtual void turnOff(){};
     virtual void turnOn(){};
     virtual void turnOn(const uint8_t &newBrghtnssLvl){};
-
 };
 
 //============================================================> Class declarations separator
@@ -158,7 +193,7 @@ public:
 /**
  * @class SevenSegDynamic
  * 
- * @brief Abstract class models a generic dynamically updated Seven Segment display hardware
+ * @brief Abstract class models a generic dynamically updated **Seven Segment display hardware**
  */
 class SevenSegDynamic: public SevenSegDispHw{    
     static void tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg);
@@ -187,6 +222,12 @@ public:
     * @note For each SevenSegDynamic instantiable subclass a short description of their respective `begin()` actions will be added if they are relevant to the developer using the library.  
     */
     virtual bool begin(uint32_t updtLps=0);
+    /**
+     * @brief Reverts the begin(uint32_t) actions, stopping the display activities, stopping and deleting the timer created for periodic refreshing and freeing the resources used by the Seven Segment display hardware object.  
+     * 
+     * @return true The display activities could be stopped and resources freed with no problems.  
+     * @return false The display activities couldn't be stopped. The method failed.  
+     */
     virtual bool end();
 };
 
@@ -198,8 +239,7 @@ public:
  * @brief Models seven segment displays driven by two 74HC595 shift registers
  * 
  * The display is wired so that one shift register holds the active segments of the display digit, so it is connected in parallel to every digit segment, to the activation pin of the same segment in each one, and the second shift register holds the active digit enabled, so it's pins are connected independently to each digit, selecting which will be active at any given moment.
- * As detailed in the **SevenSegDynamic** class, this wiring arrange requires the display to be refreshed to generate a cinematic effect or animation showing the full contents of all the digits at the same time, while the hardware is capable of liting one at a time. This cinematic effect is also managed by the library.  
- * 
+ * As detailed in the **SevenSegDynamic** abstract class, this wiring arrange requires the display to be refreshed periodically to generate a cinematic effect or animation showing the full contents of all the digits at the same time, while the hardware is capable of lightning on just one at a time. This cinematic effect is also managed by the library.  
  */
 class SevenSegDynHC595: public SevenSegDynamic{
     static void tmrCbRfrshDynHC595(TimerHandle_t rfrshTmrCbArg);
@@ -228,11 +268,11 @@ public:
      * 
      * @param ioPins A pointer to an array holding the identifieres for the 3 GPIO pins required to send the data to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->sclk, 1->rclk, 2->dio
      * @param dspDigits Quantity of digits/ports of the display. This class supports the wiring scheme allowing a maximum of 8 digits.  
-     * @param commAnode Boolean indicating if the hardware uses a display/s module/s wired as common anode (true) or common cathode (false).  
+     * @param commAnode Boolean indicating if the hardware uses **display module component** wired as common anode (true) or common cathode (false).  
      */
     SevenSegDynHC595(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
     /**
-     * @brief Class default destructor
+     * @brief Class destructor
      * 
      */
     ~SevenSegDynHC595();
@@ -535,14 +575,10 @@ protected:
     /**
      * @brief Turns the display module on.  
      * 
-     * The display module will be cleared and will keep that status until a turnOff() is invoked.  
+     * The display module will be turned on and it's content displayed, and will keep that status until a turnOff() is invoked.  
      */
     virtual void turnOn();
-    /**
-     * @brief Turns the display module on.  
-     * 
-     * The display module will be cleared and will keep that status until a turnOff() is invoked.  
-     */
+    
     virtual void turnOn(const uint8_t &newBrghtnssLvl);
 };
  
