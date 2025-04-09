@@ -466,7 +466,7 @@ public:
  *
  * @note As the communications protocol doesn't completely comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet **Maximum clock frequency** stated as 500KHz to a less demanding time slices, managed by `delayMicroseconds()` function keyword, (or a timer interrupt set at 100KHz for other implementatins, enabling the timer interrupt service only while transmitting data, and disabling it while idle).  
  * 
- * @warning While the TM1636, TM1637, TM1639 (at least these are our most known members of this "family") are stable and well documented devices, the parts sold as **"TM1637 Display Modules"**, **"TM1638 Display Modules"** etc, breakboards that include the TM163X display driver, supporting electronics and one or several 7 segments display modules are not all created equal. A well known example: having the TM1637 modules the hability to drive 6 display ports, some breakboards present 4 display ports and a **center colon**, as is standard to time displaying modules. The **big issue** is the lack of a standard for those display modules, not all displays have the same disposition, not all of them are internally wired the same, and that not all the manufacturers wire the TM1637 modules to the 7 segments display modules in the same way. For example, some will attach the colon to the DP (decimal point) segment of the third port (RtL), some will attach them to ALL the DP segment, some will attach each of the dots of the colon independently, one to the 5th display port, the other to the 6th display port, and then some other manufacturer in some other way.  
+ * @warning While the TM1636, TM1637, TM1639 (at least these are our most known members of this "family" that includes other chips) are stable and well documented devices, the parts sold as **"TM1637 Display Modules"**, **"TM1638 Display Modules"** etc, breakboards that include the TM163X display driver, supporting electronics and one or several 7 segments display modules are not all created equal. A well known example: having the TM1637 modules the hability to drive 6 display ports, some breakboards present 4 display ports and a **center colon**, as is standard to time displaying modules. The **big issue** is the lack of a standard for those display modules, not all displays have the same disposition, not all of them are internally wired the same, and that not all the manufacturers wire the TM1637 modules to the 7 segments display modules in the same way. For example, some will attach the colon to the DP (decimal point) segment of the third port (RtL), some will attach them to ALL the DP segment, some will attach each of the dots of the colon independently, one to the 5th display port, the other to the 6th display port, and then some other manufacturer in some other way.  
  * Whenever is possible to get a specific module for testing, a SevenSegTM163X subclass might be added to manage it correctly, please read the subclasses' description for correct display module oriented class identification.  
  *
  * @class SevenSegTM163X
@@ -476,7 +476,7 @@ class SevenSegTM163X: public SevenSegStatic{
 private:
    const uint8_t _clkIndx {0};
    const uint8_t _dioIndx {1};
-   const uint8_t _dspDigitsQtyMax{}; // Maximum display size in digits: 4 for TM1636, 6 for TM1637, 16 for TM1639
+   const uint8_t _dspDigitsQtyMax{}; // Maximum display size in digits: 4 for TM1636, 6 for TM1637, 8 for TM1639
    const uint8_t _hwBrghtnssLvlMax{0x07};
    const uint8_t _hwBrghtnssLvlMin{0x00};
    uint32_t _txClkTckTm{2};
@@ -511,10 +511,11 @@ protected:
     * @brief Class constructor
     * 
     * @param ioPins A pointer to an array holding the identifieres for the 2 GPIO pins required to send the data to the **Seven Segment display hardware** to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->dio
-    * @param dspDigits Quantity of digits/ports of the display. This parameter acceptable value is directly related to the TM163X family specific member.  
+    * @param dspDigits Quantity of digits/ports of the **display module component**. This parameter acceptable values are directly related to the TM163X family specific member.  
     * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).
+    * @param dspContMaxDigits Maximum quantity of digits/ports the **display controller component** can handle, is a value that in this case depends on the TM163X family module member selected.
  */
-   SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
+   SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspContMaxDigits);
    /**
     * @brief Class destructor
     */
@@ -597,6 +598,41 @@ protected:
 };
  
 //============================================================> Class declarations separator
+
+/**
+ * @class SevenSegTM1636
+ * 
+ * @brief Models a Seven Segment display hardware controlled by a TM1636 display controller component.  
+ * 
+ * The TM1636 is a Titan Micro TM163X family member, whose differencial characteristics from other members of this family (related to this library incumbent attributes) are:  
+ * - Maximum number of display ports: 4
+ */
+class SevenSegTM1636: public SevenSegTM163X{
+    private:
+       const uint8_t _dspDigitsQtyMax{4}; // Maximum display size in digits
+       virtual void _unAbstract();
+    
+    public:
+       /**
+        * @brief Default constructor
+        */
+       SevenSegTM1636();
+       /**
+        * @brief Class constructor
+        * 
+        * @param ioPins A pointer to an array holding the identifieres for the 2 GPIO pins required to send the data to the **Seven Segment display hardware** to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->dio
+        * @param dspDigits Quantity of digits/ports of the display. This parameter for this subclass must be in the range 1 <= dspDigits <= 4.  
+        * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).
+      */
+     SevenSegTM1636(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
+       /**
+        * @brief Default destructor
+        */
+       ~SevenSegTM1636();
+    };
+       
+//============================================================> Class declarations separator
+
 /**
  * @class SevenSegTM1637
  * 
@@ -604,14 +640,10 @@ protected:
  * 
  * The TM1637 is a very popular Titan Micro TM163X family member, whose differencial characteristics from other members of this family (related to this library incumbent attributes) are:  
  * - Maximum number of display ports: 6
- * _ Brightness levels: 8 (0X00 to 0X07)
- * 
  */
 class SevenSegTM1637: public SevenSegTM163X{
 private:
    const uint8_t _dspDigitsQtyMax{6}; // Maximum display size in digits
-   const uint8_t _hwBrghtnssLvlMax{0x07};    
-   const uint8_t _hwBrghtnssLvlMin{0x00};
    virtual void _unAbstract();
 
 public:
@@ -636,56 +668,16 @@ public:
 //============================================================> Class declarations separator
 
 /**
- * @class SevenSegTM1636
- * 
- * @brief Models a Seven Segment display hardware controlled by a TM1636 display controller component.  
- * 
- * The TM1636 is a Titan Micro TM163X family member, whose differencial characteristics from other members of this family (related to this library incumbent attributes) are:  
- * - Maximum number of display ports: 4
- * _ Brightness levels: 8 (0X00 to 0X07)
- * 
- */
-class SevenSegTM1636: public SevenSegTM163X{
-private:
-   const uint8_t _dspDigitsQtyMax{4}; // Maximum display size in digits
-   const uint8_t _hwBrghtnssLvlMax{0x07};    
-   const uint8_t _hwBrghtnssLvlMin{0x00};
-   virtual void _unAbstract();
-
-public:
-   /**
-    * @brief Default constructor
-    */
-   SevenSegTM1636();
-   /**
-    * @brief Class constructor
-    * 
-    * @param ioPins A pointer to an array holding the identifieres for the 2 GPIO pins required to send the data to the **Seven Segment display hardware** to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->dio
-    * @param dspDigits Quantity of digits/ports of the display. This parameter for this subclass must be in the range 1 <= dspDigits <= 4.  
-    * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).
-  */
- SevenSegTM1636(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
-   /**
-    * @brief Default destructor
-    */
-   ~SevenSegTM1636();
-};
-   
-//============================================================> Class declarations separator
-/**
  * @class SevenSegTM1639
  * 
  * @brief Models a Seven Segment display hardware controlled by a TM1639 display controller component.  
  * 
  * The TM1639 is a Titan Micro TM1639 family member, whose differencial characteristics from other members of this family (related to this library incumbent attributes) are:  
  * - Maximum number of display ports: 8  
- * _ Brightness levels: 8 (0X00 to 0X07)  
  */
 class SevenSegTM1639: public SevenSegTM163X{
 private:
    const uint8_t _dspDigitsQtyMax{8}; // Maximum display size in digits
-   const uint8_t _hwBrghtnssLvlMax{0x07};    
-   const uint8_t _hwBrghtnssLvlMin{0x00};
    virtual void _unAbstract();
 
 public:
@@ -708,18 +700,5 @@ public:
 };
 
 //============================================================> Class declarations separator
-
-/*
-class SevenSegStatDummy: public SevenSegStatic{
-public:
-    SevenSegStatDummy(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
-    ~SevenSegStatDummy();
-};
-*/
-
-//============================================================> Class declarations separator
-
-// Classes for the Max7219, HT16K33, direct MPU pin connection, under implementation need analysis
-
 
 #endif
