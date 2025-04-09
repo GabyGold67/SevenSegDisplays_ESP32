@@ -12,4 +12,10 @@
 <area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="322,117,365,117,365,123,322,123"/>
 <area shape="rect" id="Node000006" href="$class_seven_seg_t_m163_x.html" title="Abstract class that models Seven Segments LEDs static displays hardware using Titan Micro TM163X seri..." alt="" coords="374,157,504,184"/>
 <area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="317,135,386,154,385,159,315,141"/>
+<area shape="rect" id="Node000007" href="$class_seven_seg_t_m1636.html" title="Models a Seven Segment display hardware controlled by a TM1636 display controller component." alt="" coords="562,107,691,133"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="505,150,574,131,575,137,506,155"/>
+<area shape="rect" id="Node000008" href="$class_seven_seg_t_m1637.html" title="Models a Seven Segment display hardware controlled by a TM1637 display controller component." alt="" coords="562,157,691,184"/>
+<area shape="poly" id="edge8_Node000006_Node000008" title=" " alt="" coords="520,168,562,168,562,173,520,173"/>
+<area shape="rect" id="Node000009" href="$class_seven_seg_t_m1639.html" title="Models a Seven Segment display hardware controlled by a TM1639 display controller component." alt="" coords="562,208,691,235"/>
+<area shape="poly" id="edge9_Node000006_Node000009" title=" " alt="" coords="506,186,575,205,574,210,505,191"/>
 </map>

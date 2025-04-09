@@ -472,170 +472,242 @@ public:
  * @class SevenSegTM163X
  */
 class SevenSegTM163X: public SevenSegStatic{
-    static uint8_t _usTmrUsrs;
+   static uint8_t _usTmrUsrs;
 private:
-    const uint8_t _clkIndx {0};
-    const uint8_t _dioIndx {1};
-    const uint8_t _dspDigitsQtyMax{}; // Maximum display size in digits: 4 for TM1636, 6 for TM1637, 16 for TM1639
+   const uint8_t _clkIndx {0};
+   const uint8_t _dioIndx {1};
+   const uint8_t _dspDigitsQtyMax{}; // Maximum display size in digits: 4 for TM1636, 6 for TM1637, 16 for TM1639
    const uint8_t _hwBrghtnssLvlMax{0x07};
-    const uint8_t _hwBrghtnssLvlMin{0x00};
-    uint32_t _txClkTckTm{2};
+   const uint8_t _hwBrghtnssLvlMin{0x00};
+   uint32_t _txClkTckTm{2};
 
-    uint8_t _clk {};
-    uint8_t _dio {}; 
+   uint8_t _clk {};
+   uint8_t _dio {}; 
 
-    void _updDsplyCntnt();
+   void _updDsplyCntnt();
 protected:
-    uint8_t _brghtnssLvl{};
-    uint8_t _brghtnssLvlMax{};
-    uint8_t _brghtnssLvlMin{};
-    bool _isOn{false};
-    uint8_t* _lclDspBuffPtr{nullptr};
-    uint8_t* _msgBffrPtr{nullptr};
-    uint8_t _mssgBffrLngth{0};
-    uint8_t* _xcdDspBuffPtr{nullptr};
-    uint8_t _xcdDspDigitsQty{};  // Number of unused available display ports, its the difference  (_dspDigitsQtyMax  - _dspDigitsQty)
- 
-    void _txStart();
-    void _txAsk();
-    void _txStop();
-    void _txWrByte(uint8_t data);
-    virtual void _sendBffr();
+   uint8_t _brghtnssLvl{};
+   uint8_t _brghtnssLvlMax{};
+   uint8_t _brghtnssLvlMin{};
+   bool _isOn{false};
+   uint8_t* _lclDspBuffPtr{nullptr};
+   uint8_t* _msgBffrPtr{nullptr};
+   uint8_t _mssgBffrLngth{0};
+   uint8_t* _xcdDspBuffPtr{nullptr};
+   uint8_t _xcdDspDigitsQty{};  // Number of unused available display ports, its the difference  (_dspDigitsQtyMax  - _dspDigitsQty)
+
+   void _txStart();
+   void _txAsk();
+   void _txStop();
+   void _txWrByte(uint8_t data);
+   virtual void _sendBffr();
  
  public:
-    /**
-     * @brief Default class constructor
-     */
-    SevenSegTM163X();
-    /**
-     * @brief Class constructor
-     * 
-     * @param ioPins A pointer to an array holding the identifieres for the 2 GPIO pins required to send the data to the **Seven Segment display hardware** to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->dio
-     * @param dspDigits Quantity of digits/ports of the display. This parameter acceptable value is directly related to the TM163X family specific member.  
-     * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).
+   /**
+    * @brief Default class constructor
     */
-    SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
-    /**
-     * @brief Class destructor
-     */
-    ~SevenSegTM163X();
-    /**
-     * @brief Turns On the display to be ready to receive data.  
-     * 
-     * Turning on a TM163X display implies sending a command to the display and saving in an object attribute the isOn state, as the display controller does not provide any means to read it's state. 
-     * 
-     * @return true Always  
-     * 
-     * @note The class constructor invokes the begin() method as it's last statement, the begin() method is kept for ease of modifications to developers interested in modifying the class.  
-     */
-    bool begin();
-    /**
-     * @brief Turns Off the display.  
-     * 
-     * @return true Always  
-     */
-    bool end();
-    /**
-     * @brief Returns the current brightness level setting for the display module.  
-     * 
-     * The TM163X series display drivers have the capability of changing the led display brightness level by using PWM on it's output pins. The resulting brightness levels are not percieved as linear, and the minimum and maximum brightness values don't reach the levels of totaly turning the display off, neither turning the display to it's maximum possible brightness.
-     * 
-     * @note The SevenSegTM163X abstract class is instrumented so that any subclass must incorporate the minimum and maximum values for that specific display subclass. All the members of the TM163X family I could check at this point share the minimum and the maximum brightness values: 0 for the minimum, 7 for the maximum, resulting in 8 brightness levels. But this is not taken for granted. See setBrghtnssLvl(const uint8_t &) for more details.  
-     * 
-     * @return The current brightness level setting.  
-     */
-    uint8_t getBrghtnssLvl();
-    /**
-     * @brief Returns the maximum brightness level for the instantiated object.  
-     * 
-     * The value returned is the maximum brightness level setting available for the object's class.  
-     * 
-     * @return The uint8_t value of the maximum brightness setting available for the object's class.  
-     */
-    uint8_t getBrghtnssMaxLvl();
-    /**
-     * @brief Returns the minimum brightness level for the instantiated object.  
-     * 
-     * The value returned is the minimum brightness level setting available for the object's class.  
-     * 
-     * @return The uint8_t value of the minimum brightness setting available for the object's class.  
-     */
-    uint8_t getBrghtnssMinLvl();
-    /**
-     * @brief See SevenSegDispHw::ntfyUpdDsply() for description
-     */
-    virtual void ntfyUpdDsply();
-    /**
-     * @brief Sets the Brghtness level of the display.  
-     * 
-     * @param newBrghtnssLvl The new brightness level for the display. The value must be in the range **getBrghtnssMinLvl() <= newBrghtnssLvl <= getBrghtnssMaxLvl()**
-     * 
-     * @return true The parameter was in the acceptable range, the display will be set to the new brightness level (or keep it's brightness level if the parameter passed is equal to the current brightness level) 
-     * @return false The parameter was outside the acceptable range, no brightness level changes will be done.  
-     */
-    virtual bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl); 
-    /**
-     * @brief Turns the display module off.  
-     * 
-     * The display module will be cleared and will keep that status until a turnOn(), or turnOn(const uint8_t &) is invoked. 
-     */
-    virtual void turnOff();
-    /**
-     * @brief Turns the display module on.  
-     * 
-     * The display module will be turned on and it's content displayed, and will keep that status until a turnOff() is invoked.  
-     */
-    virtual void turnOn();
-    /**
-     * @brief Turns the display module on.  
-     * 
-     * The display module will be turned on, it's brightness level set to the requested level, it's content displayed, and will keep that status until a turnOff() is invoked. 
-     * 
-     * @param newBrghtnssLvl The new brightness level for the display. The value must be in the range **getBrghtnssMinLvl() <= newBrghtnssLvl <= getBrghtnssMaxLvl()**
-     */
-    virtual void turnOn(const uint8_t &newBrghtnssLvl);
+   SevenSegTM163X();
+   /**
+    * @brief Class constructor
+    * 
+    * @param ioPins A pointer to an array holding the identifieres for the 2 GPIO pins required to send the data to the **Seven Segment display hardware** to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->dio
+    * @param dspDigits Quantity of digits/ports of the display. This parameter acceptable value is directly related to the TM163X family specific member.  
+    * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).
+ */
+   SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
+   /**
+    * @brief Class destructor
+    */
+   ~SevenSegTM163X();
+   /**
+    * @brief Turns On the display to be ready to receive data.  
+    * 
+    * Turning on a TM163X display implies sending a command to the display and saving in an object attribute the isOn state, as the display controller does not provide any means to read it's state. 
+    * 
+    * @return true Always  
+    * 
+    * @note The class constructor invokes the begin() method as it's last statement, the begin() method is kept for ease of modifications to developers interested in modifying the class.  
+    */
+   bool begin();
+   /**
+    * @brief Turns Off the display.  
+    * 
+    * @return true Always  
+    */
+   bool end();
+   /**
+    * @brief Returns the current brightness level setting for the display module.  
+    * 
+    * The TM163X series display drivers have the capability of changing the led display brightness level by using PWM on it's output pins. The resulting brightness levels are not percieved as linear, and the minimum and maximum brightness values don't reach the levels of totaly turning the display off, neither turning the display to it's maximum possible brightness.
+    * 
+    * @note The SevenSegTM163X abstract class is instrumented so that any subclass must incorporate the minimum and maximum values for that specific display subclass. All the members of the TM163X family I could check at this point share the minimum and the maximum brightness values: 0 for the minimum, 7 for the maximum, resulting in 8 brightness levels. But this is not taken for granted. See setBrghtnssLvl(const uint8_t &) for more details.  
+    * 
+    * @return The current brightness level setting.  
+    */
+   uint8_t getBrghtnssLvl();
+   /**
+    * @brief Returns the maximum brightness level for the instantiated object.  
+    * 
+    * The value returned is the maximum brightness level setting available for the object's class.  
+    * 
+    * @return The uint8_t value of the maximum brightness setting available for the object's class.  
+    */
+   uint8_t getBrghtnssMaxLvl();
+   /**
+    * @brief Returns the minimum brightness level for the instantiated object.  
+    * 
+    * The value returned is the minimum brightness level setting available for the object's class.  
+    * 
+    * @return The uint8_t value of the minimum brightness setting available for the object's class.  
+    */
+   uint8_t getBrghtnssMinLvl();
+   /**
+    * @brief See SevenSegDispHw::ntfyUpdDsply() for description
+    */
+   virtual void ntfyUpdDsply();
+   /**
+    * @brief Sets the Brghtness level of the display.  
+    * 
+    * @param newBrghtnssLvl The new brightness level for the display. The value must be in the range **getBrghtnssMinLvl() <= newBrghtnssLvl <= getBrghtnssMaxLvl()**
+    * 
+    * @return true The parameter was in the acceptable range, the display will be set to the new brightness level (or keep it's brightness level if the parameter passed is equal to the current brightness level) 
+    * @return false The parameter was outside the acceptable range, no brightness level changes will be done.  
+    */
+   virtual bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl); 
+   /**
+    * @brief Turns the display module off.  
+    * 
+    * The display module will be cleared and will keep that status until a turnOn(), or turnOn(const uint8_t &) is invoked. 
+    */
+   virtual void turnOff();
+   /**
+    * @brief Turns the display module on.  
+    * 
+    * The display module will be turned on and it's content displayed, and will keep that status until a turnOff() is invoked.  
+    */
+   virtual void turnOn();
+   /**
+    * @brief Turns the display module on.  
+    * 
+    * The display module will be turned on, it's brightness level set to the requested level, it's content displayed, and will keep that status until a turnOff() is invoked. 
+    * 
+    * @param newBrghtnssLvl The new brightness level for the display. The value must be in the range **getBrghtnssMinLvl() <= newBrghtnssLvl <= getBrghtnssMaxLvl()**
+    */
+   virtual void turnOn(const uint8_t &newBrghtnssLvl);
 };
  
- //============================================================> Class declarations separator
+//============================================================> Class declarations separator
+/**
+ * @class SevenSegTM1637
+ * 
+ * @brief Models a Seven Segment display hardware controlled by a TM1637 display controller component.  
+ * 
+ * The TM1637 is a very popular Titan Micro TM163X family member, whose differencial characteristics from other members of this family (related to this library incumbent attributes) are:  
+ * - Maximum number of display ports: 6
+ * _ Brightness levels: 8 (0X00 to 0X07)
+ * 
+ */
 class SevenSegTM1637: public SevenSegTM163X{
 private:
-const uint8_t _dspDigitsQtyMax{6}; // Maximum display size in digits: 4 for TM1636, 6 for TM1637, 16 for TM1639
+   const uint8_t _dspDigitsQtyMax{6}; // Maximum display size in digits
    const uint8_t _hwBrghtnssLvlMax{0x07};    
    const uint8_t _hwBrghtnssLvlMin{0x00};
    virtual void _unAbstract();
 
 public:
-    SevenSegTM1637(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
-    ~SevenSegTM1637();
+   /**
+    * @brief Default constructor
+    */
+   SevenSegTM1637();
+   /**
+    * @brief Class constructor
+    * 
+    * @param ioPins A pointer to an array holding the identifieres for the 2 GPIO pins required to send the data to the **Seven Segment display hardware** to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->dio
+    * @param dspDigits Quantity of digits/ports of the display. This parameter for this subclass must be in the range 1 <= dspDigits <= 6.  
+    * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).
+  */
+   SevenSegTM1637(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
+   /**
+    * @brief Default destructor
+    */
+   ~SevenSegTM1637();
 };
 
- //============================================================> Class declarations separator
- class SevenSegTM1636: public SevenSegTM163X{
-   private:
-   const uint8_t _dspDigitsQtyMax{4}; // Maximum display size in digits: 4 for TM1636, 6 for TM1637, 16 for TM1639
-      const uint8_t _hwBrghtnssLvlMax{0x07};    
-      const uint8_t _hwBrghtnssLvlMin{0x00};
-      virtual void _unAbstract();
-   
-   public:
-       SevenSegTM1636(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
-       ~SevenSegTM1636();
-   };
-   
- //============================================================> Class declarations separator
- class SevenSegTM1639: public SevenSegTM163X{
-   private:
-   const uint8_t _dspDigitsQtyMax{8}; // Maximum display size in digits: 4 for TM1636, 6 for TM1637, 16 for TM1639
-      const uint8_t _hwBrghtnssLvlMax{0x07};    
-      const uint8_t _hwBrghtnssLvlMin{0x00};
-      virtual void _unAbstract();
-   
-   public:
-       SevenSegTM1639(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
-       ~SevenSegTM1639();
-   };
+//============================================================> Class declarations separator
 
-   //============================================================> Class declarations separator
+/**
+ * @class SevenSegTM1636
+ * 
+ * @brief Models a Seven Segment display hardware controlled by a TM1636 display controller component.  
+ * 
+ * The TM1636 is a Titan Micro TM163X family member, whose differencial characteristics from other members of this family (related to this library incumbent attributes) are:  
+ * - Maximum number of display ports: 4
+ * _ Brightness levels: 8 (0X00 to 0X07)
+ * 
+ */
+class SevenSegTM1636: public SevenSegTM163X{
+private:
+   const uint8_t _dspDigitsQtyMax{4}; // Maximum display size in digits
+   const uint8_t _hwBrghtnssLvlMax{0x07};    
+   const uint8_t _hwBrghtnssLvlMin{0x00};
+   virtual void _unAbstract();
+
+public:
+   /**
+    * @brief Default constructor
+    */
+   SevenSegTM1636();
+   /**
+    * @brief Class constructor
+    * 
+    * @param ioPins A pointer to an array holding the identifieres for the 2 GPIO pins required to send the data to the **Seven Segment display hardware** to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->dio
+    * @param dspDigits Quantity of digits/ports of the display. This parameter for this subclass must be in the range 1 <= dspDigits <= 4.  
+    * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).
+  */
+ SevenSegTM1636(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
+   /**
+    * @brief Default destructor
+    */
+   ~SevenSegTM1636();
+};
+   
+//============================================================> Class declarations separator
+/**
+ * @class SevenSegTM1639
+ * 
+ * @brief Models a Seven Segment display hardware controlled by a TM1639 display controller component.  
+ * 
+ * The TM1639 is a Titan Micro TM1639 family member, whose differencial characteristics from other members of this family (related to this library incumbent attributes) are:  
+ * - Maximum number of display ports: 8  
+ * _ Brightness levels: 8 (0X00 to 0X07)  
+ */
+class SevenSegTM1639: public SevenSegTM163X{
+private:
+   const uint8_t _dspDigitsQtyMax{8}; // Maximum display size in digits
+   const uint8_t _hwBrghtnssLvlMax{0x07};    
+   const uint8_t _hwBrghtnssLvlMin{0x00};
+   virtual void _unAbstract();
+
+public:
+   /**
+    * @brief Default constructor
+    */
+   SevenSegTM1639();
+   /**
+    * @brief Class constructor
+    * 
+    * @param ioPins A pointer to an array holding the identifieres for the 2 GPIO pins required to send the data to the **Seven Segment display hardware** to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->dio
+    * @param dspDigits Quantity of digits/ports of the display. This parameter for this subclass must be in the range 1 <= dspDigits <= 8.  
+    * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).
+  */
+   SevenSegTM1639(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
+   /**
+    * @brief Default destructor
+    */
+   ~SevenSegTM1639();
+};
+
+//============================================================> Class declarations separator
 
 /*
 class SevenSegStatDummy: public SevenSegStatic{

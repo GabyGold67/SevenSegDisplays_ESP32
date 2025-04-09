@@ -1,5 +1,9 @@
 <map id="SevenSegTM163X::begin" name="SevenSegTM163X::begin">
-<area shape="rect" id="Node000001" title="Turns On the display to be ready to receive data." alt="" coords="252,13,421,40"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_t_m163_x.html#a5eb5d7d7c1c0c2d776d80d71c9253d85" title="Class constructor." alt="" coords="5,5,204,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="237,29,204,29,204,24,237,24"/>
+<area shape="rect" id="Node000001" title="Turns On the display to be ready to receive data." alt="" coords="250,80,419,107"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_t_m1636.html#a157ea30fa804573b8fbedfca16b65ee6" title="Class constructor." alt="" coords="5,5,202,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="270,78,179,51,181,46,271,73"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_t_m1637.html#a0df4df18dd6e69963a5ff6abada18786" title="Class constructor." alt="" coords="5,72,202,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="234,96,202,96,202,91,234,91"/>
+<area shape="rect" id="Node000004" href="$class_seven_seg_t_m1639.html#a01088a4cf7a6cd4260c91f45e947083a" title="Class constructor." alt="" coords="5,139,202,181"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="271,114,181,141,179,135,270,109"/>
 </map>

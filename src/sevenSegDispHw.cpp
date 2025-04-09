@@ -750,6 +750,8 @@ void SevenSegTM163X::_updDsplyCntnt(){
 
 //============================================================> Class methods separator
 
+SevenSegTM1637::SevenSegTM1637(){};
+
 SevenSegTM1637::SevenSegTM1637(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
 :SevenSegTM163X(ioPins, dspDigits, commAnode)
 {
@@ -789,6 +791,8 @@ void SevenSegTM1637::_unAbstract(){
 
 //============================================================> Class methods separator
 
+SevenSegTM1636::SevenSegTM1636(){}
+
 SevenSegTM1636::SevenSegTM1636(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
 :SevenSegTM163X(ioPins, dspDigits, commAnode)
 {
@@ -827,6 +831,8 @@ void SevenSegTM1636::_unAbstract(){
 }
 
 //============================================================> Class methods separator
+
+SevenSegTM1639::SevenSegTM1639(){}
 
 SevenSegTM1639::SevenSegTM1639(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
 :SevenSegTM163X(ioPins, dspDigits, commAnode)
