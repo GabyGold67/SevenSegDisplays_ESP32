@@ -1,10 +1,12 @@
 /**
  ******************************************************************************
- * @file SSD_ESP32-TM1637_v01.ino
+ * @file SSD_ESP32-StatHC595x4.ino
  * 
- * @brief Code example file to demonstrate SevenSegDisplays_ESP32 library use with SevenSegDispHw::SevenSegTM1637_v01 class composition
+ * @brief Code example file to demonstrate SevenSegDisplays_ESP32 library use with SevenSegDispHw::SevenSegStatHC595 class
+ * 
+ * @details 
  *
- * Repository: https://github.com/GabyGold67/ShiftRegGPIOXpander_ESP32  
+ * Repository: https://github.com/GabyGold67/SevenSegDisplays_ESP32  
  * 
  * Framework: Arduino
  * Platform: ESP32
@@ -16,16 +18,17 @@
  * @date First release: 15/05/2023  
  *       Last update:   02/04/2025 21:00 GMT+0200 DST  
  ******************************************************************************
-  * @warning **Use of this library is under your own responsibility**
-  * 
-  * @warning The use of this library falls in the category described by The Alan 
-  * Parsons Project (c) 1980 "Games People play" disclaimer:
-  * 
-  * Games people play, you take it or you leave it
-  * Things that they say aren't alright
-  * If I promised you the moon and the stars, would you believe it?
-  * 
-  * Released into the public domain in accordance with "GPL-3.0-or-later" license terms.
+ * @warning **Use of this library is under your own responsibility**
+ * 
+ * @warning The use of this library falls in the category described by The Alan 
+ * Parsons Project (c) 1980 "Games People play" disclaimer:
+ * 
+ * Games people play, you take it or you leave it
+ * Things that they say aren't alright
+ * If I promised you the moon and the stars, would you believe it?
+ * 
+ ******************************************************************************
+ * Released into the public domain in accordance with "GPL-3.0-or-later" license terms.
  ******************************************************************************
 */
 #include <Arduino.h>
@@ -91,10 +94,11 @@ void mainCtrlTsk(void *pvParameters){
    const long testTime{2000};
    bool myBlinkMask[4] {true, true, true, true};
 
-   const uint8_t dio {GPIO_NUM_25};  // Pin connected to DIO of TM1637
-   const uint8_t clk {GPIO_NUM_33}; // Pin connected to CLK of TM1637
+   const uint8_t dio {GPIO_NUM_33};  // Pin connected to DS of 74HC595 AKA DIO  
+   const uint8_t rclk {GPIO_NUM_25}; // Pin connected to ST_CP of 74HC595 AKA RCLK  
+   const uint8_t sclk {GPIO_NUM_26}; // Pin connected to SH_CP of 74HC595 AKA SCLK
    
-   static uint8_t myDispIOPins[2] {clk, dio}; // Pins set as an array as required by hw constructor
+   static uint8_t myDispIOPins[3] {sclk, rclk, dio}; // Pins set as an array as required by hw constructor
 
 
 /* Instantiation examples, different possibilities for use according to developer preferences*/
@@ -122,14 +126,13 @@ SevenSegDisplays myLedDisp(myLedDispPtr);
 /* A one liner example using as argument the pointer returned from dynamic instantiated object
 SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
 */
-
    uint8_t theNewOrder [4] {3, 2, 1, 0};
 
-   SevenSegDispHw* myLedDispPtr {new SevenSegTM1637 (myDispIOPins, 4, false)};
+   SevenSegDispHw* myLedDispPtr {new SevenSegStatHC595 (myDispIOPins, 4, true)};
    myLedDispPtr -> setDigitsOrder(theNewOrder);
    SevenSegDisplays myLedDisp(myLedDispPtr);
 
-   // SevenSegDisplays myLedDisp(new SevenSegTM1637 (myDispIOPins, 4, false));
+   // SevenSegDisplays myLedDisp(new SevenSegStatHC595 (myDispIOPins, 4, true));
 
    for(;;){
       {
@@ -139,16 +142,11 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
       }
 
       {
-         myLedDisp.clear();
-         vTaskDelay(testTime);
+      //print() with a string argument, two characters long, all characters included in the representable characters list
+      testResult = myLedDisp.print("On");
+      vTaskDelay(testTime);
       }
-      
-      {
-         //print() with a string argument, two characters long, all characters included in the representable characters list
-         testResult = myLedDisp.print("On");
-         vTaskDelay(testTime);
-      }
-   
+
       {
          //print() with a string argument, four characters long, all characters included in the representable characters list
          testResult = myLedDisp.print("Strt");
@@ -330,14 +328,12 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
       }
 
       {         
-         // myLedDisp.write(0xAD, 2);
-         myLedDisp.write("3", 2);
+         myLedDisp.write(0xAD, 2);
          vTaskDelay(testTime);
       }
 
       {         
-         // myLedDisp.write(0x81, 2);
-         myLedDisp.write("4", 2);
+         myLedDisp.write(0x81, 2);
          vTaskDelay(testTime);
       }
 
@@ -412,16 +408,11 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
          myLedDisp.noWait();
          myLedDisp.setWaitRate(250);
          myLedDisp.setWaitChar('-');
-         vTaskDelay(testTime*2);
-      }
-
-      {
-         myLedDisp.print("OFF");
          vTaskDelay(testTime);
       }
 
       {
-         myLedDisp.print("End");
+         myLedDisp.print("OFF");
          vTaskDelay(testTime);
       }
 

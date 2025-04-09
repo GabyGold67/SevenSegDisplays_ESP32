@@ -1,19 +1,33 @@
 /**
  ******************************************************************************
- * @file ssd_ESP32-DynHC595-Example00-GenOV.ino
+ * @file SSD_ESP32-StatHC595x3.ino
  * 
- * @brief Example file to demonstrate SevenSegDisplays_ESP32 class use with SevenSegDispHw::SevenSegDynHC595 class composition
+ * @brief Code example file to demonstrate SevenSegDisplays_ESP32 library use with SevenSegDispHw::SevenSegStatHC595 class
+ * 
+ * @details This example uses a 3 digits static 74HC595 **display module component**
  *
+ * Repository: https://github.com/GabyGold67/SevenSegDisplays_ESP32  
+ * 
  * Framework: Arduino
  * Platform: ESP32
  * 
  * @author	: Gabriel D. Goldman
+ * mail <gdgoldman67@hotmail.com>
+ * Github <https://github.com/GabyGold67>
  *
- * @date First release: 15/05/2023 
- *       Last update:   26/03/2025 14:50 GMT+0200
+ * @date First release: 15/05/2023  
+ *       Last update:   09/04/2025 18:50 GMT+0200 DST  
  ******************************************************************************
- * @attention
+ * @warning **Use of this library is under your own responsibility**
  * 
+ * @warning The use of this library falls in the category described by The Alan 
+ * Parsons Project (c) 1980 "Games People play" disclaimer:
+ * 
+ * Games people play, you take it or you leave it
+ * Things that they say aren't alright
+ * If I promised you the moon and the stars, would you believe it?
+ * 
+ *****************************************************************************
  * Released into the public domain in accordance with "GPL-3.0-or-later" license terms.
  ******************************************************************************
 */
@@ -78,48 +92,32 @@ void mainCtrlTsk(void *pvParameters){
    //Set of variables and constants needed for the tests
    bool testResult{};
    const long testTime{2000};
-   bool myBlinkMask[4] {true, true, true, true};
+   bool myBlinkMask[3] {true, true, true};
 
-   const uint8_t dio {GPIO_NUM_33};  // Pin connected to DS of 74HC595 AKA DIO  
-   const uint8_t rclk {GPIO_NUM_25}; // Pin connected to ST_CP of 74HC595 AKA RCLK  
+   const uint8_t dio {GPIO_NUM_33};  // Pin connected to DS of 74HC595 AKA DIO AKA SDI
+   const uint8_t rclk {GPIO_NUM_25}; // Pin connected to ST_CP of 74HC595 AKA RCLK AKA LOAD
    const uint8_t sclk {GPIO_NUM_26}; // Pin connected to SH_CP of 74HC595 AKA SCLK
    
    static uint8_t myDispIOPins[3] {sclk, rclk, dio}; // Pins set as an array as required by hw constructor
 
 
-/* Instantiation examples, different possibilities for use according to developer preferences*/
-/* A three lines step by step code example:  
-SevenSegDynHC595 myLedDispHw(myDispIOPins, 4, true);
-SevenSegDispHw* myLedDispHwPtr = &myLedDispHw;
-SevenSegDisplays myLedDisp(myLedDispHwPtr);
-*/
+   uint8_t theNewOrder [3] {2, 1, 0};
 
-/* A two lines example using the & operand to pass the pointer
-SevenSegDynHC595 myLedDispHw(myDispIOPins, 4, true);
-SevenSegDisplays myLedDisp(&myLedDispHw);
-*/
+   SevenSegDispHw* myLedDispPtr {new SevenSegStatHC595 (myDispIOPins, 3, true)};
+   myLedDispPtr -> setDigitsOrder(theNewOrder);
+   SevenSegDisplays myLedDisp(myLedDispPtr);
 
-/* A two lines example using a sub-class pointer to a dynamic instantiated object
-SevenSegDynHC595* myLedDispPtr {new SevenSegDynHC595 (myDispIOPins, 4, true)};
-SevenSegDisplays myLedDisp(myLedDispPtr);
-*/
-
-/* A two lines example using a base class pointer to a dynamic instantiated object
-SevenSegDispHw* myLedDispPtr {new SevenSegDynHC595 (myDispIOPins, 4, true)};
-SevenSegDisplays myLedDisp(myLedDispPtr);
-*/
-
-/* A one liner example using as argument the pointer returned from dynamic instantiated object
-SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
-*/
-
-   SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
 
    for(;;){
       {
          myLedDisp.getDspUndrlHwPtr()->begin();
          Serial.println("Service Started");
          vTaskDelay(250);
+      }
+
+      {
+         myLedDisp.clear();
+         vTaskDelay(testTime);
       }
 
       {
@@ -130,7 +128,7 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
 
       {
          //print() with a string argument, four characters long, all characters included in the representable characters list
-         testResult = myLedDisp.print("Strt");
+         testResult = myLedDisp.print("oah");
          vTaskDelay(testTime);
       }
 
@@ -138,30 +136,36 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
          //print() with a string argument, fails to represent as it is 5 chars long (enough to fail), AND has a non-representable char included (!)
          testResult = myLedDisp.print("Hello!");
          if(!testResult)
-            testResult = myLedDisp.print("FAIL");
+            testResult = myLedDisp.print("Err");
          vTaskDelay(testTime);
       }
 
       {
-         testResult = myLedDisp.print("thiS");
+         testResult = myLedDisp.print("You");
          vTaskDelay(testTime);
       }
 
       {
-         testResult = myLedDisp.print("teSt");
+         testResult = myLedDisp.print("are");
          vTaskDelay(testTime);
       }
 
       {
          //print() with a string argument, four characters long AND usable dots, all characters included in the representable characters list
          //Each valid character might be followed by a "." if needed, without being counted as a character, even spaces and special chars
-         testResult = myLedDisp.print("I.F.Y.I.");
+         testResult = myLedDisp.print("F.u.n.");
          vTaskDelay(testTime);
       }
 
       {
          //print() with a floating point argument, one decimal digit argument, ONE decimal digit place to display, no alignment specified
          testResult = myLedDisp.print(2.3, 1);
+         vTaskDelay(testTime);
+      }
+
+      {
+         //print() with a floating point argument, one decimal digit argument, ONE decimal digit place to display, right alignment specified
+         testResult = myLedDisp.print(2.3, 1, true);
          vTaskDelay(testTime);
       }
 
@@ -186,6 +190,8 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
       {
          //print() with a negative floating point argument, one decimal digit argument, TWO decimal digit places to display, no alignment specified
          testResult = myLedDisp.print(-2.3, 2);
+         if(!testResult)
+            testResult = myLedDisp.print("Err");
          vTaskDelay(testTime);
       }
 
@@ -196,72 +202,7 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
       }
 
       {
-         //gauge() with a floating point argument, 0 <= value <= 1.0, representing a percentage, the four ranges are:
-         // 0 <= 1st range <0.25
-         //0.25 <= 2nd range < 0.50
-         //0.50 <= 3rd range < 0.75
-         //0.75 <= 4rd range <= 1.0
-         //A character to show ahead of the value is an option, 
-         //if not specified will be a blank space, in this case 'b', or any other representable char, for example:
-         //b for battery, F for fuel, t for temperature, r for remaining...
-         testResult = myLedDisp.gauge(1.0, 'b');
-         vTaskDelay(testTime);
-      }
-
-      {
-         //gauge() with a floating point argument, 3rd range
-         testResult = myLedDisp.gauge(0.74, 'b');
-         vTaskDelay(testTime);
-      }
-
-      {
-         //gauge() with an integer argument, 2nd range, start blinking to show low level
-         testResult = myLedDisp.gauge(1, 'b');
-         myLedDisp.blink();
-         vTaskDelay(testTime*2);
-      }
-
-      {
-         //gauge() with an integer argument, 1st range, blinks faster
-         myLedDisp.setBlinkRate(350);
-         testResult = myLedDisp.gauge(0, 'b');
-         vTaskDelay(testTime*2);
-      }
-      
-      {
-         //gauge() with an integer argument, 1st range, blinks faster
-         myLedDisp.setBlinkRate(150, 300);
-         vTaskDelay(testTime*2);
-         testResult = myLedDisp.noBlink();
-      }
-      
-      {
-         testResult = myLedDisp.print("You");
-         vTaskDelay(testTime);
-      }
-
-      {
-         testResult = myLedDisp.print("ran");
-         vTaskDelay(testTime);
-      }
-
-      {
-         testResult = myLedDisp.print("out");
-         vTaskDelay(testTime);
-      }
-
-      {
-         testResult = myLedDisp.print("oF");
-         vTaskDelay(testTime);
-      }
-
-      {
-         testResult = myLedDisp.print("batt.");
-         vTaskDelay(testTime);
-      }
-
-      {
-         testResult = myLedDisp.print("0246");
+         testResult = myLedDisp.print("024");
          vTaskDelay(testTime);
       }
 
@@ -269,24 +210,37 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
          myBlinkMask[0] = true;
          myBlinkMask[1] = false;
          myBlinkMask[2] = false;
-         myBlinkMask[3] = false;
          myLedDisp.setBlinkMask(myBlinkMask);
          myLedDisp.blink(250);
          vTaskDelay(testTime*2);
       }
 
       {         
-         myLedDisp.write("7", 0);
+         myLedDisp.write("5", 0);
          vTaskDelay(testTime);
       }
 
+      {         
+         myLedDisp.write("6", 0);
+         vTaskDelay(testTime);
+      }
+      
       {
          myBlinkMask[0] = false;
          myBlinkMask[1] = true;
          myBlinkMask[2] = false;
-         myBlinkMask[3] = false;
          myLedDisp.setBlinkMask(myBlinkMask);
          vTaskDelay(testTime*2);
+      }
+
+      {         
+         myLedDisp.write(0xAD, 1);  //Random non ASCII character
+         vTaskDelay(testTime);
+      }
+
+      {         
+         myLedDisp.write(0x81, 1);  //Random non ASCII character
+         vTaskDelay(testTime);
       }
 
       {         
@@ -294,61 +248,31 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
          vTaskDelay(testTime);
       }
 
-      {         
-         myLedDisp.write("6", 1);
-         vTaskDelay(testTime);
-      }
-
       {
          myBlinkMask[0] = false;
          myBlinkMask[1] = false;
          myBlinkMask[2] = true;
-         myBlinkMask[3] = false;
          myLedDisp.setBlinkMask(myBlinkMask);
          vTaskDelay(testTime*2);
       }
 
       {         
-         myLedDisp.write(0xAD, 2);
+         myLedDisp.write("1", 2);
          vTaskDelay(testTime);
       }
 
       {         
-         myLedDisp.write(0x81, 2);
+         myLedDisp.write("2", 2);
          vTaskDelay(testTime);
       }
 
       {         
-         myLedDisp.write("5", 2);
-         vTaskDelay(testTime);
-      }
-
-      {
-         myBlinkMask[0] = false;
-         myBlinkMask[1] = false;
-         myBlinkMask[2] = false;
-         myBlinkMask[3] = true;
-         myLedDisp.setBlinkMask(myBlinkMask);
-         vTaskDelay(testTime*2);
-      }
-
-      {         
-         myLedDisp.write("1", 3);
+         myLedDisp.write("3", 2);
          vTaskDelay(testTime);
       }
 
       {         
-         myLedDisp.write("2", 3);
-         vTaskDelay(testTime);
-      }
-
-      {         
-         myLedDisp.write("3", 3);
-         vTaskDelay(testTime);
-      }
-
-      {         
-         myLedDisp.write("4", 3);
+         myLedDisp.write("4", 2);
          vTaskDelay(testTime);
       }
 
@@ -391,7 +315,7 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
          myLedDisp.setWaitChar('-');
          vTaskDelay(testTime);
       }
-
+      
       {
          myLedDisp.print("OFF");
          vTaskDelay(testTime);
