@@ -1,5 +1,5 @@
 <map id="SevenSegDynamic" name="SevenSegDynamic">
-<area shape="rect" id="Node000001" title="Abstract class models a generic dynamically updated Seven Segment display hardware." alt="" coords="101,80,234,107"/>
+<area shape="rect" id="Node000001" title="Abstract class models a generic dynamically updated Seven Segment display hardware" alt="" coords="101,80,234,107"/>
 <area shape="rect" id="Node000003" href="$class_seven_seg_dyn_dummy.html" title="Models a dynamic display with no screen, for tests or remote display of the data." alt="" coords="5,155,157,181"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="143,119,98,156,94,152,139,115"/>
 <area shape="rect" id="Node000004" href="$class_seven_seg_dyn_h_c595.html" title="Models seven segment displays driven by two 74HC595 shift registers." alt="" coords="181,155,328,181"/>

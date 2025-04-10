@@ -7,5 +7,8 @@ var searchData=
   ['sevensegdynhc595_4',['SevenSegDynHC595',['../class_seven_seg_dyn_h_c595.html',1,'']]],
   ['sevensegstathc595_5',['SevenSegStatHC595',['../class_seven_seg_stat_h_c595.html',1,'']]],
   ['sevensegstatic_6',['SevenSegStatic',['../class_seven_seg_static.html',1,'']]],
-  ['sevensegtm163x_7',['SevenSegTM163X',['../class_seven_seg_t_m163_x.html',1,'']]]
+  ['sevensegtm1636_7',['SevenSegTM1636',['../class_seven_seg_t_m1636.html',1,'']]],
+  ['sevensegtm1637_8',['SevenSegTM1637',['../class_seven_seg_t_m1637.html',1,'']]],
+  ['sevensegtm1639_9',['SevenSegTM1639',['../class_seven_seg_t_m1639.html',1,'']]],
+  ['sevensegtm163x_10',['SevenSegTM163X',['../class_seven_seg_t_m163_x.html',1,'']]]
 ];

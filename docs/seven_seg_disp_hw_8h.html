@@ -107,19 +107,19 @@ $(function(){initNavTree('seven_seg_disp_hw_8h.html',''); initResizable(true); }
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;Arduino.h&quot;</code><br />
 <code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &lt;ShiftRegGPIOXpander.h&gt;</code><br />
+<code>#include &lt;ShiftRegGPIOXpander_ESP32.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for sevenSegDispHw.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="seven_seg_disp_hw_8h__incl.png" border="0" usemap="#a_c_1_2_users_2_dev_padawan_2_documents_2_my_01_projects_2_training_01_projects_2_libs_dev___e_s_p32_2lib_2_seven_seg_displays___e_s_p32_2src_2seven_seg_disp_hw_8h" alt=""/></div>
 <map name="a_c_1_2_users_2_dev_padawan_2_documents_2_my_01_projects_2_training_01_projects_2_libs_dev___e_s_p32_2lib_2_seven_seg_displays___e_s_p32_2src_2seven_seg_disp_hw_8h" id="a_c_1_2_users_2_dev_padawan_2_documents_2_my_01_projects_2_training_01_projects_2_libs_dev___e_s_p32_2lib_2_seven_seg_displays___e_s_p32_2src_2seven_seg_disp_hw_8h">
 <area shape="rect" title="Header file for the SevenSegDisplays_ESP32 library, SevenSegDispHw class and subclasses." alt="" coords="33,5,243,96"/>
-<area shape="rect" title=" " alt="" coords="5,144,82,171"/>
-<area shape="poly" title=" " alt="" coords="100,98,67,134,63,131,96,94"/>
-<area shape="rect" title=" " alt="" coords="106,144,170,171"/>
-<area shape="poly" title=" " alt="" coords="141,96,141,128,136,128,136,96"/>
-<area shape="rect" title=" " alt="" coords="195,144,359,171"/>
-<area shape="poly" title=" " alt="" coords="199,94,250,133,247,137,196,99"/>
+<area shape="rect" title=" " alt="" coords="5,152,82,179"/>
+<area shape="poly" title=" " alt="" coords="103,98,66,142,61,139,99,95"/>
+<area shape="rect" title=" " alt="" coords="106,152,170,179"/>
+<area shape="poly" title=" " alt="" coords="141,96,141,137,136,137,136,96"/>
+<area shape="rect" title=" " alt="" coords="195,144,348,187"/>
+<area shape="poly" title=" " alt="" coords="193,95,237,132,234,136,190,99"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -145,7 +145,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base abstract class models a generic Seven Segment display hardware.  <a href="class_seven_seg_disp_hw.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_dynamic.html">SevenSegDynamic</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract class models a generic dynamically updated Seven Segment display hardware.  <a href="class_seven_seg_dynamic.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract class models a generic dynamically updated <b>Seven Segment display hardware</b>  <a href="class_seven_seg_dynamic.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Models seven segment displays driven by two 74HC595 shift registers.  <a href="class_seven_seg_dyn_h_c595.html#details">More...</a><br /></td></tr>
@@ -158,11 +158,23 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract class that models displays that don't need permanent MCU data updating to keep the data correctly displayed.  <a href="class_seven_seg_static.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_stat_h_c595.html">SevenSegStatHC595</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Models displays driven by 74HC595 or similar shift registers, one shift register per display port, wired so that the eight output pins of each shift register is connected to the 8 segment pins of the display module. <br  />
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Models displays driven by 74HC595 or similar shift registers, one shift register per display port, wired so that the eight output pins of each shift register is connected to the 8 segment pins of the corresponding display module. <br  />
   <a href="class_seven_seg_stat_h_c595.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_t_m163_x.html">SevenSegTM163X</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Models specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series chips.  <a href="class_seven_seg_t_m163_x.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract class that models Seven Segments LEDs static displays hardware using Titan Micro TM163X series chips as <b>display controller component</b>  <a href="class_seven_seg_t_m163_x.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_t_m1637.html">SevenSegTM1637</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Models a Seven Segment display hardware controlled by a TM1637 display controller component. <br  />
+  <a href="class_seven_seg_t_m1637.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_t_m1636.html">SevenSegTM1636</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Models a Seven Segment display hardware controlled by a TM1636 display controller component. <br  />
+  <a href="class_seven_seg_t_m1636.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_t_m1639.html">SevenSegTM1639</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Models a Seven Segment display hardware controlled by a TM1639 display controller component. <br  />
+  <a href="class_seven_seg_t_m1639.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -178,7 +190,7 @@ Classes</h2></td></tr>
 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>3.0.0</dd></dl>
 <dl class="section date"><dt>Date</dt><dd>First release: 20/12/2023 <br  />
- Last update: 31/03/2025 18:10 (GMT+0200) DST <br  />
+ Last update: 08/04/2025 09:00 (GMT+0200) DST <br  />
 </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2025 GPL-3.0 license</dd></dl>
 <dl class="section attention"><dt>Attention</dt><dd>This library was originally developed as part of the refactoring process for an industrial machines security enforcement and productivity control (hardware &amp; firmware update). As such every class included complies <b>AT LEAST</b> with the provision of the attributes and methods to make the hardware &amp; firmware replacement transparent to the controlled machines. Generic use attributes and methods were added to extend the usability to other projects and application environments, but no fitness nor completeness of those are given but for the intended refactoring project, and for the author's projects requirements. <br  />

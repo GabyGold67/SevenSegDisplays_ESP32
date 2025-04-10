@@ -2,8 +2,14 @@
 <area shape="rect" id="Node000001" title="Abstract class that models displays that don&#39;t need permanent MCU data updating to keep the data corr..." alt="" coords="102,80,218,107"/>
 <area shape="rect" id="Node000003" href="$class_seven_seg_stat_h_c595.html" title="Models displays driven by 74HC595 or similar shift registers, one shift register per display port,..." alt="" coords="5,155,152,181"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="136,119,94,156,91,152,133,115"/>
-<area shape="rect" id="Node000004" href="$class_seven_seg_t_m163_x.html" title="Models specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series chips..." alt="" coords="176,155,306,181"/>
+<area shape="rect" id="Node000004" href="$class_seven_seg_t_m163_x.html" title="Abstract class that models Seven Segments LEDs static displays hardware using Titan Micro TM163X seri..." alt="" coords="176,155,306,181"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="187,115,229,152,225,156,183,119"/>
 <area shape="rect" id="Node000002" href="$class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware." alt="" coords="96,5,224,32"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="162,48,162,80,157,80,157,48"/>
+<area shape="rect" id="Node000005" href="$class_seven_seg_t_m1636.html" title="Models a Seven Segment display hardware controlled by a TM1636 display controller component." alt="" coords="25,229,153,256"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="202,191,117,231,115,226,200,186"/>
+<area shape="rect" id="Node000006" href="$class_seven_seg_t_m1637.html" title="Models a Seven Segment display hardware controlled by a TM1637 display controller component." alt="" coords="177,229,305,256"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="244,197,244,229,238,229,238,197"/>
+<area shape="rect" id="Node000007" href="$class_seven_seg_t_m1639.html" title="Models a Seven Segment display hardware controlled by a TM1639 display controller component." alt="" coords="329,229,457,256"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="282,186,368,226,365,231,280,191"/>
 </map>

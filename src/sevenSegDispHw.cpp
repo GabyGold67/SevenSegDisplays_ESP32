@@ -17,7 +17,7 @@
  * @version 3.0.0  
  * 
  * @date First release: 20/12/2023  
- *       Last update:   25/03/2025 11:20 (GMT+0200)  
+ *       Last update:   08/04/2025 09:00 (GMT+0200)  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -49,9 +49,8 @@ SevenSegDispHw::SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits, bool commAnod
     
    _dspHwInstNbr = _dspHwSerialNum++;
    _dspHwInstance = this;
-   for (uint8_t i{0}; i < _dspDigitsQty; i++){
+   for (uint8_t i{0}; i < _dspDigitsQty; i++)
       *(_digitPosPtr + i) = i;
-   }    
 }
 
 SevenSegDispHw::~SevenSegDispHw() {
@@ -59,6 +58,11 @@ SevenSegDispHw::~SevenSegDispHw() {
 }
 
 bool SevenSegDispHw::begin(uint32_t updtLps){
+   
+   return true;
+}
+
+bool SevenSegDispHw::end(){
    
    return true;
 }
@@ -114,13 +118,7 @@ void SevenSegDispHw::ntfyUpdDsply(){
    return;
 }
 
-bool SevenSegDispHw::end(){
-   
-   return true;
-}
-
 //============================================================> Class methods separator
-//FFDR Start revision from here Gaby
 SevenSegDynamic::SevenSegDynamic(){}
 
 SevenSegDynamic::SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
@@ -313,16 +311,6 @@ void SevenSegDynHC595::_refresh(){
 
    return;
 }
-
-// void SevenSegDynHC595::send(uint8_t content){
-
-//    return;
-// }
-
-// void SevenSegDynHC595::send(const uint8_t &segments, const uint8_t &port){
-
-//    return;
-// }
 
 void SevenSegDynHC595::tmrCbRfrshDynHC595(TimerHandle_t rfrshTmrCbArg){
    //Timer Callback to keep the display lit by calling this display's refresh() method
@@ -519,34 +507,42 @@ void SevenSegStatHC595::_updDsplyCntnt(){
 SevenSegTM163X::SevenSegTM163X()
 {}
 
-SevenSegTM163X::SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
-:SevenSegStatic(ioPins, dspDigits, commAnode)
+SevenSegTM163X::SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspContMaxDigits)
+:SevenSegStatic(ioPins, dspDigits, commAnode), _dspDigitsQtyMax{dspContMaxDigits}
 {
-   Serial.println("\nSevenSegTM163X constructor"); //FTPO
-   Serial.println("==========================="); //FTPO
+   _brghtnssLvlMax = _hwBrghtnssLvlMax;
+   _brghtnssLvlMin = _hwBrghtnssLvlMin;
+   _brghtnssLvl = _brghtnssLvlMax;
 
-    _clk = *(ioPins + _clkIndx);
-	 _dio = *(ioPins + _dioIndx);
+   if(_dspDigitsQty > _dspDigitsQtyMax)
+      _dspDigitsQty = _dspDigitsQtyMax;
+   _lclDspBuffPtr = new uint8_t[_dspDigitsQty];
+   _xcdDspDigitsQty = _dspDigitsQtyMax  - _dspDigitsQty;
+
+   if(_xcdDspDigitsQty > 0){
+      _xcdDspBuffPtr = new uint8_t[_xcdDspDigitsQty];
+      memset(_xcdDspBuffPtr, 0X00, _xcdDspDigitsQty);
+   }
+
+   _clk = *(ioPins + _clkIndx);
+   _dio = *(ioPins + _dioIndx);
 
    digitalWrite(_clk, LOW);
    digitalWrite(_dio, LOW);
    pinMode(_clk, OUTPUT);
    pinMode(_dio, OUTPUT);
-
-   _brghtnssLvlMax = _hwBrghtnssLvlMax;
-   _brghtnssLvlMin = _hwBrghtnssLvlMin;
-   _brghtnssLvl = _brghtnssLvlMax;
-
-   _lclDspBuffPtr = new uint8_t[_dspDigitsQty];
-   begin();
 }
 
 SevenSegTM163X::~SevenSegTM163X()
 {
    end();
+   delete [] _lclDspBuffPtr;
+   if(_xcdDspBuffPtr != nullptr)
+      delete [] _xcdDspBuffPtr;
 }
 
-bool SevenSegTM163X::begin(){
+bool SevenSegTM163X::begin()
+{
    turnOn();
 
 	return true;
@@ -637,8 +633,8 @@ void SevenSegTM163X::_sendBffr(){
       _txWrByte(*(_lclDspBuffPtr + i));
       _txAsk();
    }
-   for(uint8_t i{_dspDigitsQty}; i < 6 ; i++){
-      _txWrByte(0x00);
+   for(uint8_t i{_dspDigitsQty}; i < _dspDigitsQtyMax ; i++){
+      _txWrByte(*(_xcdDspBuffPtr + i));
       _txAsk();
    }
 
@@ -765,11 +761,29 @@ void SevenSegTM163X::_updDsplyCntnt(){
 
 //============================================================> Class methods separator
 
-SevenSegTM1637::SevenSegTM1637(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
-:SevenSegTM163X(ioPins, dspDigits, commAnode)
+SevenSegTM1636::SevenSegTM1636(){}
+
+SevenSegTM1636::SevenSegTM1636(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
+:SevenSegTM163X(ioPins, dspDigits, commAnode, 4)
 {
-   Serial.println("\nSevenSegTM1637 constructor"); //FTPO
-   Serial.println("================================"); //FTPO
+   begin();
+}
+
+SevenSegTM1636::~SevenSegTM1636(){}
+
+void SevenSegTM1636::_unAbstract(){
+
+   return;
+}
+
+//============================================================> Class methods separator
+
+SevenSegTM1637::SevenSegTM1637(){};
+
+SevenSegTM1637::SevenSegTM1637(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
+:SevenSegTM163X(ioPins, dspDigits, commAnode, 6)
+{
+   begin();
 }
 
 SevenSegTM1637::~SevenSegTM1637(){}
@@ -779,6 +793,22 @@ void SevenSegTM1637::_unAbstract(){
    return;
 }
 
+//============================================================> Class methods separator
+
+SevenSegTM1639::SevenSegTM1639(){}
+
+SevenSegTM1639::SevenSegTM1639(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
+:SevenSegTM163X(ioPins, dspDigits, commAnode, 8)
+{
+   begin();
+}
+
+SevenSegTM1639::~SevenSegTM1639(){}
+
+void SevenSegTM1639::_unAbstract(){
+
+   return;
+}
 
 //============================================================> Class methods separator
 
@@ -788,7 +818,6 @@ SevenSegStatDummy::SevenSegStatDummy(uint8_t* ioPins, uint8_t dspDigits, bool co
    _ioPins = ioPins;
    _dspDigitsQty = dspDigits;
    _commAnode = commAnode;
-   Serial.begin(9600);
 }
 
 SevenSegStatDummy::~SevenSegStatDummy(){}

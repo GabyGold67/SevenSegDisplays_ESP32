@@ -1,8 +1,8 @@
 /**
  ******************************************************************************
- * @file ssd_ESP32-StatHC595x4-GenOverView.ino
+ * @file ssd_ESP32-DynHC595x4.ino
  * 
- * @brief Example file to demonstrate SevenSegDisplays_ESP32 class use with SevenSegDispHw::SevenSegStatHC595 class composition
+ * @brief Example file to demonstrate SevenSegDisplays_ESP32 class use with SevenSegDispHw::SevenSegDynHC595 class composition
  *
  * Framework: Arduino
  * Platform: ESP32
@@ -10,7 +10,7 @@
  * @author	: Gabriel D. Goldman
  *
  * @date First release: 15/05/2023 
- *       Last update:   27/03/2025 13:00 GMT+0200
+ *       Last update:   26/03/2025 14:50 GMT+0200
  ******************************************************************************
  * @attention
  * 
@@ -112,13 +112,8 @@ SevenSegDisplays myLedDisp(myLedDispPtr);
 /* A one liner example using as argument the pointer returned from dynamic instantiated object
 SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
 */
-   uint8_t theNewOrder [4] {3, 2, 1, 0};
 
-   SevenSegDispHw* myLedDispPtr {new SevenSegStatHC595 (myDispIOPins, 4, true)};
-   myLedDispPtr -> setDigitsOrder(theNewOrder);
-   SevenSegDisplays myLedDisp(myLedDispPtr);
-
-   // SevenSegDisplays myLedDisp(new SevenSegStatHC595 (myDispIOPins, 4, true));
+   SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
 
    for(;;){
       {

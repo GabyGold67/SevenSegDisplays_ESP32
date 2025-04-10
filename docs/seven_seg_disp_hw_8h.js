@@ -4,7 +4,10 @@ var seven_seg_disp_hw_8h =
     [ "SevenSegDynamic", "class_seven_seg_dynamic.html", "class_seven_seg_dynamic" ],
     [ "SevenSegDynHC595", "class_seven_seg_dyn_h_c595.html", "class_seven_seg_dyn_h_c595" ],
     [ "SevenSegDynDummy", "class_seven_seg_dyn_dummy.html", "class_seven_seg_dyn_dummy" ],
-    [ "SevenSegStatic", "class_seven_seg_static.html", null ],
-    [ "SevenSegStatHC595", "class_seven_seg_stat_h_c595.html", null ],
-    [ "SevenSegTM163X", "class_seven_seg_t_m163_x.html", "class_seven_seg_t_m163_x" ]
+    [ "SevenSegStatic", "class_seven_seg_static.html", "class_seven_seg_static" ],
+    [ "SevenSegStatHC595", "class_seven_seg_stat_h_c595.html", "class_seven_seg_stat_h_c595" ],
+    [ "SevenSegTM163X", "class_seven_seg_t_m163_x.html", "class_seven_seg_t_m163_x" ],
+    [ "SevenSegTM1637", "class_seven_seg_t_m1637.html", "class_seven_seg_t_m1637" ],
+    [ "SevenSegTM1636", "class_seven_seg_t_m1636.html", "class_seven_seg_t_m1636" ],
+    [ "SevenSegTM1639", "class_seven_seg_t_m1639.html", "class_seven_seg_t_m1639" ]
 ];

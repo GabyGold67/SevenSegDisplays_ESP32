@@ -114,7 +114,7 @@ Inheritance diagram for SevenSegDispHw:</div>
 <div class="center"><img src="class_seven_seg_disp_hw__inherit__graph.png" border="0" usemap="#a_seven_seg_disp_hw_inherit__map" alt="Inheritance graph"/></div>
 <map name="a_seven_seg_disp_hw_inherit__map" id="a_seven_seg_disp_hw_inherit__map">
 <area shape="rect" title="Base abstract class models a generic Seven Segment display hardware." alt="" coords="276,5,404,32"/>
-<area shape="rect" href="class_seven_seg_dynamic.html" title="Abstract class models a generic dynamically updated Seven Segment display hardware." alt="" coords="188,80,321,107"/>
+<area shape="rect" href="class_seven_seg_dynamic.html" title="Abstract class models a generic dynamically updated Seven Segment display hardware" alt="" coords="188,80,321,107"/>
 <area shape="poly" title=" " alt="" coords="315,44,271,82,267,78,312,40"/>
 <area shape="rect" href="class_seven_seg_static.html" title="Abstract class that models displays that don&#39;t need permanent MCU data updating to keep the data corr..." alt="" coords="367,80,483,107"/>
 <area shape="poly" title=" " alt="" coords="368,40,412,78,409,82,364,44"/>
@@ -124,8 +124,14 @@ Inheritance diagram for SevenSegDispHw:</div>
 <area shape="poly" title=" " alt="" coords="257,122,257,154,252,154,252,122"/>
 <area shape="rect" href="class_seven_seg_stat_h_c595.html" title="Models displays driven by 74HC595 or similar shift registers, one shift register per display port,..." alt="" coords="352,155,498,181"/>
 <area shape="poly" title=" " alt="" coords="428,122,428,154,422,154,422,122"/>
-<area shape="rect" href="class_seven_seg_t_m163_x.html" title="Models specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series chips..." alt="" coords="522,155,653,181"/>
+<area shape="rect" href="class_seven_seg_t_m163_x.html" title="Abstract class that models Seven Segments LEDs static displays hardware using Titan Micro TM163X seri..." alt="" coords="522,155,653,181"/>
 <area shape="poly" title=" " alt="" coords="468,111,560,152,558,156,466,116"/>
+<area shape="rect" href="class_seven_seg_t_m1636.html" title="Models a Seven Segment display hardware controlled by a TM1636 display controller component." alt="" coords="372,229,500,256"/>
+<area shape="poly" title=" " alt="" coords="549,191,463,231,461,226,546,186"/>
+<area shape="rect" href="class_seven_seg_t_m1637.html" title="Models a Seven Segment display hardware controlled by a TM1637 display controller component." alt="" coords="524,229,652,256"/>
+<area shape="poly" title=" " alt="" coords="590,197,590,229,585,229,585,197"/>
+<area shape="rect" href="class_seven_seg_t_m1639.html" title="Models a Seven Segment display hardware controlled by a TM1639 display controller component." alt="" coords="676,229,804,256"/>
+<area shape="poly" title=" " alt="" coords="629,186,714,226,712,231,627,191"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -140,20 +146,101 @@ Collaboration diagram for SevenSegDispHw:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a31e3b1f101170f21c7d247f72536ff8c" id="r_a31e3b1f101170f21c7d247f72536ff8c"><td class="memItemLeft" align="right" valign="top"><a id="a31e3b1f101170f21c7d247f72536ff8c" name="a31e3b1f101170f21c7d247f72536ff8c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>SevenSegDispHw</b> ()</td></tr>
+<tr class="memdesc:a31e3b1f101170f21c7d247f72536ff8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default class constructor. <br /></td></tr>
+<tr class="separator:a31e3b1f101170f21c7d247f72536ff8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dd283533f1deddffdd679c7e12c7c7d" id="r_a8dd283533f1deddffdd679c7e12c7c7d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8dd283533f1deddffdd679c7e12c7c7d">SevenSegDispHw</a> (uint8_t *ioPins, uint8_t dspDigits=4, bool commAnode=true)</td></tr>
+<tr class="memdesc:a8dd283533f1deddffdd679c7e12c7c7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor.  <br /></td></tr>
+<tr class="separator:a8dd283533f1deddffdd679c7e12c7c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a148b7eb20201e4dd6b7841857de93145" id="r_a148b7eb20201e4dd6b7841857de93145"><td class="memItemLeft" align="right" valign="top"><a id="a148b7eb20201e4dd6b7841857de93145" name="a148b7eb20201e4dd6b7841857de93145"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b> ()</td></tr>
+<tr class="memdesc:a148b7eb20201e4dd6b7841857de93145"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class destructor. <br /></td></tr>
+<tr class="separator:a148b7eb20201e4dd6b7841857de93145"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f3a59bcc54ddd20445e049359753ab6" id="r_a5f3a59bcc54ddd20445e049359753ab6"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5f3a59bcc54ddd20445e049359753ab6">begin</a> (uint32_t updtLps=0)</td></tr>
-<tr class="memdesc:a5f3a59bcc54ddd20445e049359753ab6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the hardware display to work. <br  />
+<tr class="memdesc:a5f3a59bcc54ddd20445e049359753ab6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the hardware display to work, and starts the display activities. <br  />
   <br /></td></tr>
 <tr class="separator:a5f3a59bcc54ddd20445e049359753ab6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10ef7e4db6af3dbbcdeb48331d94f2e2" id="r_a10ef7e4db6af3dbbcdeb48331d94f2e2"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a10ef7e4db6af3dbbcdeb48331d94f2e2">end</a> ()</td></tr>
+<tr class="memdesc:a10ef7e4db6af3dbbcdeb48331d94f2e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverts the <a class="el" href="#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities.">begin(uint32_t)</a> actions, stopping the display activities and freeing the resources used by the Seven Segment display hardware object. <br  />
+  <br /></td></tr>
+<tr class="separator:a10ef7e4db6af3dbbcdeb48331d94f2e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b9379b7b6ca6946813fd643d28d74f4" id="r_a5b9379b7b6ca6946813fd643d28d74f4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b9379b7b6ca6946813fd643d28d74f4">getCommAnode</a> ()</td></tr>
-<tr class="memdesc:a5b9379b7b6ca6946813fd643d28d74f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a value indicating if the hardware has the led display wired as common anode or common cathode.  <br /></td></tr>
+<tr class="memdesc:a5b9379b7b6ca6946813fd643d28d74f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a value indicating if the display module component uses a common anode or a common cathode led wiring. <br  />
+  <br /></td></tr>
 <tr class="separator:a5b9379b7b6ca6946813fd643d28d74f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17e903934d148f0d2c47da7ceb0982c7" id="r_a17e903934d148f0d2c47da7ceb0982c7"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a17e903934d148f0d2c47da7ceb0982c7">getDspBuffPtr</a> ()</td></tr>
+<tr class="memdesc:a17e903934d148f0d2c47da7ceb0982c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to the display buffer. <br  />
+  <br /></td></tr>
+<tr class="separator:a17e903934d148f0d2c47da7ceb0982c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6544795ed8c9b44211424c8b5ef216f" id="r_ac6544795ed8c9b44211424c8b5ef216f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6544795ed8c9b44211424c8b5ef216f">getHwDspDigitsQty</a> ()</td></tr>
+<tr class="memdesc:ac6544795ed8c9b44211424c8b5ef216f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the quantity of digits of the display module. <br  />
+  <br /></td></tr>
+<tr class="separator:ac6544795ed8c9b44211424c8b5ef216f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02d94944c1a9ade34a530c7e13503327" id="r_a02d94944c1a9ade34a530c7e13503327"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a02d94944c1a9ade34a530c7e13503327">ntfyUpdDsply</a> ()</td></tr>
+<tr class="memdesc:a02d94944c1a9ade34a530c7e13503327"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifies the object of a change of content available in the display buffer, the object must update the display. <br  />
+  <br /></td></tr>
+<tr class="separator:a02d94944c1a9ade34a530c7e13503327"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee6d67c3bdd719b05ac6e7d8d250d43f" id="r_aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aee6d67c3bdd719b05ac6e7d8d250d43f">setDigitsOrder</a> (uint8_t *newOrderPtr)</td></tr>
+<tr class="memdesc:aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mapping to relate the display buffer positions to the display port asigned to exhibit it's contents. <br  />
+  <br /></td></tr>
+<tr class="separator:aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc7402bad588be4ea2c7aedaf870f9ff" id="r_afc7402bad588be4ea2c7aedaf870f9ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc7402bad588be4ea2c7aedaf870f9ff">setDspBuffPtr</a> (uint8_t *newDspBuffPtr)</td></tr>
 <tr class="memdesc:afc7402bad588be4ea2c7aedaf870f9ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the pointer to the Display Buffer.  <br /></td></tr>
 <tr class="separator:afc7402bad588be4ea2c7aedaf870f9ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base abstract class models a generic Seven Segment display hardware. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+<dl class="section note"><dt>Note</dt><dd>This library, from it's base class to the last of it's subclasses, adhere to the following concepts: <b>Seven Segment display hardware</b>: is a hardware construction capable of receiving data in 8-bits units, each unit corresponding to a segment or decimal point of a seven segment display digit, as it is already normalized across the electronic industry. The Seven Segment display is composed of two basic elements: <br  />
+<ul>
+<li>The <b>display controller component</b>: Is conformed by the electronics receiving the data to be displayed and send the needed signals to turn on the corresponding segments to show the data at the display module. The display controller component might be as autonomous and complex as a specific "display controller chip", as simple as a "SIPO Shift Register" or as "non physical existent" as a "cable connector to the MCU", so that the MCU will have to take care of the data update and display logic, making the MCU the "display controller component".</li>
+<li>The <b>display module component</b>: Is conformed by the seven segments led display unit or units if more than one is required. This units include the leds to be lit as segments and decimal point, and some include colons to represent time values, or special icons in very specific use models. Each display module component will have it's internal wiring, the seven segment part pretty standard, the other components wired differently. As for this library the only display module characteristic considered essential is if the digit leds are connected in common anode or common cathode way. This required information is provided by each display module datasheet, the corresponding display module code is usually found printed in one side or at the bottom of the module. <br  />
+ </li>
+</ul>
+</dd></dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a8dd283533f1deddffdd679c7e12c7c7d" name="a8dd283533f1deddffdd679c7e12c7c7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8dd283533f1deddffdd679c7e12c7c7d">&#9670;&#160;</a></span>SevenSegDispHw()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SevenSegDispHw::SevenSegDispHw </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>ioPins</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>dspDigits</em></span><span class="paramdefsep"> = </span><span class="paramdefval">4</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>commAnode</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Class constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ioPins</td><td>A pointer to an array holding the identifieres for the MCU GPIO pins required to send the data to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants for each subclass. <br  />
+ </td></tr>
+    <tr><td class="paramname">dspDigits</td><td>Quantity of digits/ports of the display. This value is directly related to the <b>display module component</b> quantity of ports and characteristics. <br  />
+ </td></tr>
+    <tr><td class="paramname">commAnode</td><td>Boolean indicating if the hardware uses a <b>display module component</b> wired as common anode (true) or common cathode (false). <br  />
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section attention"><dt>Attention</dt><dd>The dspDigits parameter indicating the quantity of digits of the display module is a <b>basic fundamental</b> parameter passed at instantiation time. This information provides the value to be used to generate the data buffer, the digits order table, auxiliar buffers and even the required information to generate a valid left or right aligned display. Obviously the quantity is bigger than 0, and must be less than or equal to the hardware maximum display digits capability. <br  />
+ </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a5f3a59bcc54ddd20445e049359753ab6" name="a5f3a59bcc54ddd20445e049359753ab6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5f3a59bcc54ddd20445e049359753ab6">&#9670;&#160;</a></span>begin()</h2>
 
@@ -177,13 +264,14 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Sets up the hardware display to work. <br  />
+<p>Sets up the hardware display to work, and starts the display activities. <br  />
  </p>
-<p>Depending on the display technology and the resources it needs to start working, this method takes care of those preparation. That means that each specific subclass of display will have to provide it's version of <code><a class="el" href="#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work.">begin()</a></code> that will take care of: <br  />
+<p>Depending on the display technology and the resources it needs to work with, this method takes care of those preparations. That means that each specific subclass of display will provide it's own version of <code><a class="el" href="#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities.">begin()</a></code> that will take care of: <br  />
 </p><ul>
 <li>Configuring timers or interrupts. <br  />
 </li>
-<li>Setup tasks and unblocking procedures to get new contents from the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object</li>
+<li>Setup tasks and unblocking procedures to get new contents from the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object. <br  />
+</li>
 <li>Setup communications parameters. <br  />
 </li>
 <li>Establish communications with the display. <br  />
@@ -191,9 +279,17 @@ Public Member Functions</h2></td></tr>
 <li>Other specific services configuration and starting. <br  />
 </li>
 </ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">updtLps</td><td>Time lapse between updating activities required, specially by dynamic subclasses. The parameter will be used according to each subclass needs, which will be described in each class <a class="el" href="#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities.">begin()</a> method. <br  />
+</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>The specific configurations and startups could be successfully made </td></tr>
+    <tr><td class="paramname">true</td><td>The specific configurations and startups could be successfully completed. <br  />
+ </td></tr>
   </table>
   </dd>
 </dl>
@@ -201,6 +297,41 @@ Public Member Functions</h2></td></tr>
  </dd></dl>
 
 <p>Reimplemented in <a class="el" href="class_seven_seg_dynamic.html#a1184cb8662e12921f635c13b19a9df7b">SevenSegDynamic</a>, <a class="el" href="class_seven_seg_dyn_dummy.html#ac0f6ac50ac26d402d96e2a689eb724d7">SevenSegDynDummy</a>, and <a class="el" href="class_seven_seg_dyn_h_c595.html#acae65548bebc819a38ce07c07c140ef2">SevenSegDynHC595</a>.</p>
+
+</div>
+</div>
+<a id="a10ef7e4db6af3dbbcdeb48331d94f2e2" name="a10ef7e4db6af3dbbcdeb48331d94f2e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10ef7e4db6af3dbbcdeb48331d94f2e2">&#9670;&#160;</a></span>end()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDispHw::end </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reverts the <a class="el" href="#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities.">begin(uint32_t)</a> actions, stopping the display activities and freeing the resources used by the Seven Segment display hardware object. <br  />
+ </p>
+<dl class="section return"><dt>Returns</dt><dd>true The display activities could be stopped and resources freed with no problems. <br  />
+ </dd>
+<dd>
+false The display activities couldn't be stopped. The method failed. <br  />
+ </dd></dl>
+
+<p>Reimplemented in <a class="el" href="class_seven_seg_dynamic.html#ad33484426e9171966895857c9b7afcc4">SevenSegDynamic</a>, <a class="el" href="class_seven_seg_dyn_dummy.html#a2ca50c8a0dd4ff2d52caa0332119ce05">SevenSegDynDummy</a>, <a class="el" href="class_seven_seg_dyn_h_c595.html#add611b927a735ea74809379a0ecb8533">SevenSegDynHC595</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#aa698084ab67b3d6c6b324fa00d1f5e35">SevenSegTM163X</a>.</p>
 
 </div>
 </div>
@@ -219,16 +350,148 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns a value indicating if the hardware has the led display wired as common anode or common cathode. </p>
-<p>The <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> instantiated objects will compose the values corresponding to each character it can display according to the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> attribute _commAnode. Each <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> instantiable subclass will have that constant attribute set by the subclass developer to correspond to the technical specifications of the display hardware.</p>
+<p>Returns a value indicating if the display module component uses a common anode or a common cathode led wiring. <br  />
+ </p>
+<p>The <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> instantiated objects will compose the values corresponding to each character it can display according to the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> _commAnode attribute. Each <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> instantiable subclass will have that constant attribute set by the subclass developer to correspond to the technical specifications of the display module component.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>The display is built with Common Anode seven segment display modules </td></tr>
-    <tr><td class="paramname">false</td><td>The display is built with Common Cathode seven segment display modules </td></tr>
+    <tr><td class="paramname">true</td><td>The display is built with a Common Anode display module component. <br  />
+ </td></tr>
+    <tr><td class="paramname">false</td><td>The display is built with a Common Cathode display module component. <br  />
+ </td></tr>
   </table>
   </dd>
 </dl>
 
+</div>
+</div>
+<a id="a17e903934d148f0d2c47da7ceb0982c7" name="a17e903934d148f0d2c47da7ceb0982c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17e903934d148f0d2c47da7ceb0982c7">&#9670;&#160;</a></span>getDspBuffPtr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t * SevenSegDispHw::getDspBuffPtr </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a pointer to the display buffer. <br  />
+ </p>
+<p>The display buffer is a memory area set by the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> class object instantiated to hold the data to be displayed, and so it's shared by that object and the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> subclass object component. When the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object is constructed it sets the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> subclass object buffer pointer to the memory area it set for that purpose. This method retrieves that memory pointer. <br  />
+</p>
+<dl class="section return"><dt>Returns</dt><dd>uint8_t* The pointer to the buffer area used by the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> to get the data to display. <br  />
+</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>If <a class="el" href="#a17e903934d148f0d2c47da7ceb0982c7" title="Returns a pointer to the display buffer.">getDspBuffPtr()</a> returns a nullptr it means the <a class="el" href="#afc7402bad588be4ea2c7aedaf870f9ff" title="Returns the pointer to the Display Buffer.">setDspBuffPtr(uint8_t*)</a> invoked by the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> constructor failed and the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> object has no source for the data to be displayed. <br  />
+ </dd></dl>
+
+</div>
+</div>
+<a id="ac6544795ed8c9b44211424c8b5ef216f" name="ac6544795ed8c9b44211424c8b5ef216f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6544795ed8c9b44211424c8b5ef216f">&#9670;&#160;</a></span>getHwDspDigitsQty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t SevenSegDispHw::getHwDspDigitsQty </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the quantity of digits of the display module. <br  />
+ </p>
+<p>The value returned correspond to the dspDigits parameter passed at instantiation time. <br  />
+</p>
+<dl class="section return"><dt>Returns</dt><dd>uint8_t The <b>display module component</b> digits quantity. <br  />
+ </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_disp_hw_ac6544795ed8c9b44211424c8b5ef216f_icgraph.png" border="0" usemap="#aclass_seven_seg_disp_hw_ac6544795ed8c9b44211424c8b5ef216f_icgraph" alt=""/></div>
+<map name="aclass_seven_seg_disp_hw_ac6544795ed8c9b44211424c8b5ef216f_icgraph" id="aclass_seven_seg_disp_hw_ac6544795ed8c9b44211424c8b5ef216f_icgraph">
+<area shape="rect" title="Returns the quantity of digits of the display module." alt="" coords="254,5,452,48"/>
+<area shape="rect" href="class_seven_seg_displays.html#ada6d89fb083fd8a5a2ce603b3b1f5e43" title="Class constructor." alt="" coords="5,5,206,48"/>
+<area shape="poly" title=" " alt="" coords="238,29,206,29,206,24,238,24"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a02d94944c1a9ade34a530c7e13503327" name="a02d94944c1a9ade34a530c7e13503327"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02d94944c1a9ade34a530c7e13503327">&#9670;&#160;</a></span>ntfyUpdDsply()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SevenSegDispHw::ntfyUpdDsply </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Notifies the object of a change of content available in the display buffer, the object must update the display. <br  />
+ </p>
+<p>While the dynamic displays must periodically refresh the data displayed, and so they get the most updated content from the display buffer without the need to send them any notification, the data displayed by the static displays remains constant even if it's data buffer or registers are loaded with new data. This method notifies the display that the data buffer content has changed and it must load the new contents of it's registers or buffers to display the new information. <br  />
+ </p>
+
+<p>Reimplemented in <a class="el" href="class_seven_seg_stat_h_c595.html#af430da3b0859f74693dd0ee71c28d071">SevenSegStatHC595</a>, <a class="el" href="class_seven_seg_static.html#a31006d4f4f5a4019f0aed380e01b0d17">SevenSegStatic</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#ae45f5f1772b93dca12ccaef3e652d7b0">SevenSegTM163X</a>.</p>
+
+</div>
+</div>
+<a id="aee6d67c3bdd719b05ac6e7d8d250d43f" name="aee6d67c3bdd719b05ac6e7d8d250d43f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee6d67c3bdd719b05ac6e7d8d250d43f">&#9670;&#160;</a></span>setDigitsOrder()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDispHw::setDigitsOrder </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>newOrderPtr</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets a mapping to relate the display buffer positions to the display port asigned to exhibit it's contents. <br  />
+ </p>
+<p>As different <b>Seven Segment display hardware</b> implement different wiring schemes between the <b>display controller component</b> and the <b>display module component</b>, some implement the leftmost display port as it's lowest memory position of it's buffer, while some implement the rightmost position to it. When more than one <b>display module components</b> are used, it adds a new level of hardware implementation that differs from one supplier to the other. The library implements a mechanism to provide the instantiated object to relate the positions of the display ports to the display buffer positions through an array. The array has the size of the display buffer, and each array elment is meant to hold the number of the corresponding port that is wired to display the data in that display buffer position The array is default defined in the constructor as (0, 1, 2,...) that is the most usual implementation found. If the order needs to be changed the <a class="el" href="#aee6d67c3bdd719b05ac6e7d8d250d43f" title="Sets a mapping to relate the display buffer positions to the display port asigned to exhibit it&#39;s con...">setDigitsOrder()</a> method is the way to set a new mapping. <br  />
+</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newOrderPtr</td><td>Pointer to an uint8_t array of _dspDigits lenght containing the position of the port in the <b>display module components</b> wired to display that buffer position content. Each value will be checked against the _dspDigits value to ensure that they are all in the range acceptable, 0 &lt;= value &lt;= _dspDigits - 1. If one of the values is out of the valid range no change will be done. Please note that no checking will be done to ensure all of the array values are different. A repeated value will be accepted, ending in an undetermined non-critic, display behavior. <br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true All of the elements of the array were in the accepted range. The change was performed. <br  />
+ </dd>
+<dd>
+false At least one of the values of the array passed were out of range. The change wasn't performed. <br  />
+</dd></dl>
+<p>Use example: <br  />
+ </p><div class="fragment"><div class="line">uint8_t diyMore8Bits[8] {3, 2, 1, 0, 7, 6, 5, 4}; <span class="comment">//Builds an array with the port order of the &quot;DIY MORE 8-bit LED Display&quot;.</span></div>
+<div class="line">myLedDisp.setDigitsOrder(diyMore8Bits); <span class="comment">//Changes the display bit to port mapping according to the display characteristics.  </span></div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="afc7402bad588be4ea2c7aedaf870f9ff" name="afc7402bad588be4ea2c7aedaf870f9ff"></a>
@@ -251,7 +514,8 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>uint8_t* The pointer to the <b>Display Buffer Memory Area</b> <br  />
 </dd></dl>
 <dl class="section attention"><dt>Attention</dt><dd>Using this method is a resource to generate "animations" by changing the memory area from with the hardware displays takes it's contents, to some other area with ready to display information</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>Setting the display buffer pointer to an address not coinciding with the one configured in the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> will <b>disable</b> the possibility for it to get new generated content displayed!! Handle with extreme care!! </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The dspBuffPtr attribute might be changed to use a temporary different source of data to be displayed.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Setting the display buffer pointer to an address not coinciding with the one configured in the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> will <b>disable</b> the possibility for it to get new <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> generated content displayed!! Handle with extreme care, first saving the original provided pointer, changing it as needed, and reseting the _dspBuffPtr to the saved value!! </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
