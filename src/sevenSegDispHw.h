@@ -128,6 +128,12 @@ public:
      * @retval false The display is built with a Common Cathode  display module component.  
      */
     bool getCommAnode();
+
+    virtual uint8_t getBrghtnssLvl();
+    virtual uint8_t getBrghtnssMaxLvl();
+    virtual uint8_t getBrghtnssMinLvl();
+
+
     /**
      * @brief Returns a pointer to the display buffer.  
      * 
@@ -390,11 +396,19 @@ public:
  * @warning Using displays that implement the colon/s and/or icon/s through the DP segments of the active ports make the display unfit to display decimal non integer values, as no DP might be used. Verify the display module characteristics to setup the corresponding class with the right parameters.  
  */
 class SevenSegStatic: public SevenSegDispHw{
-    
+protected:
+    uint8_t _brghtnssLvl{0};  //!< Current display brightness level
+    uint8_t _brghtnssLvlMax{0};   //!< Maximum display brightness level
+    uint8_t _brghtnssLvlMin{0};   //!< Minimum display brightness level
+    bool _isOn{false};   //!< Current display status: On/Off
+     
 public:
     SevenSegStatic();
     SevenSegStatic(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
     ~SevenSegStatic();
+    virtual uint8_t getBrghtnssLvl();
+    virtual uint8_t getBrghtnssMaxLvl();
+    virtual uint8_t getBrghtnssMinLvl();
     virtual void ntfyUpdDsply();
 };
 
@@ -472,11 +486,11 @@ public:
  * @class SevenSegTM163X
  */
 class SevenSegTM163X: public SevenSegStatic{
-   static uint8_t _usTmrUsrs;
+//    static uint8_t _usTmrUsrs;
 private:
    const uint8_t _clkIndx {0};
    const uint8_t _dioIndx {1};
-   const uint8_t _dspDigitsQtyMax{}; // Maximum display size in digits: 4 for TM1636, 6 for TM1637, 8 for TM1639
+   const uint8_t _dspDigitsQtyMax{}; //!< Maximum display digits supported by the controller: 4 for TM1636, 6 for TM1637, 8 for TM1639
    const uint8_t _hwBrghtnssLvlMax{0x07};
    const uint8_t _hwBrghtnssLvlMin{0x00};
    uint32_t _txClkTckTm{2};
@@ -486,15 +500,9 @@ private:
 
    void _updDsplyCntnt();
 protected:
-   uint8_t _brghtnssLvl{};
-   uint8_t _brghtnssLvlMax{};
-   uint8_t _brghtnssLvlMin{};
-   bool _isOn{false};
-   uint8_t* _lclDspBuffPtr{nullptr};
-   uint8_t* _msgBffrPtr{nullptr};
-   uint8_t _mssgBffrLngth{0};
-   uint8_t* _xcdDspBuffPtr{nullptr};
-   uint8_t _xcdDspDigitsQty{};  // Number of unused available display ports, its the difference  (_dspDigitsQtyMax  - _dspDigitsQty)
+   uint8_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to or less than **display module component** digits ports, will be equal to or less than **display controller component** maximum digits/ports. The need for a divided display buffer comes from the fact that some **Seven Segment display hardware** use controllers with larger digits management capabilities than the display module digits, and the exceeding digits are used for propietary amenities, as colons, icons, etc.
+   uint8_t* _xcdDspBuffPtr{nullptr};    //!< A pointer to a buffer the size of the exceeding digits used to control display specific amenities.
+   uint8_t _xcdDspDigitsQty{};  //!<  Number of unused available display ports, its the difference  (_dspDigitsQtyMax  - _dspDigitsQty), being the size of the array pointed by _xcdDspBuffPtr
 
    void _txStart();
    void _txAsk();
@@ -553,7 +561,7 @@ protected:
     * 
     * @return The uint8_t value of the maximum brightness setting available for the object's class.  
     */
-   uint8_t getBrghtnssMaxLvl();
+   virtual uint8_t getBrghtnssMaxLvl();
    /**
     * @brief Returns the minimum brightness level for the instantiated object.  
     * 
@@ -701,4 +709,74 @@ public:
 
 //============================================================> Class declarations separator
 
+/**
+ * @class SevenSegMax7219
+ * 
+ * @brief Models a **Seven Segment display hardware** using a Max7219 **display controller component**
+ */
+class SevenSegMax7219: public SevenSegStatic{
+private:
+    const uint8_t _clkIndx {0};
+    const uint8_t _dinIndx {1};
+    const uint8_t _csIndx {2};
+    const uint8_t _dspDigitsQtyMax{8}; // Maximum display size in digits``````````````````````
+    const uint8_t _hwBrghtnssLvlMax{0x0F};
+    const uint8_t _hwBrghtnssLvlMin{0x00};
+    uint32_t _txClkTckTm{1};
+
+    uint8_t _clk {};    // Serial clock max. rate 10 MHz. Data is shifted into the chip on **clk rising edge**
+    uint8_t _din {};    // Data value to get into the chip reg, must be set before the clk rising edge to be accepted.
+    uint8_t _cs {}; // The data in the internal 16 bits are acepted to be loaded while _cs is low, and will be latched and exposed to pins at _cs rising edge.
+
+    virtual void _unAbstract();
+    void _updDsplyCntnt();
+
+protected:
+    // uint8_t _brghtnssLvl{};  //!< Current display brightness level
+    // uint8_t _brghtnssLvlMax{};   //!< Maximum display brightness level
+    // uint8_t _brghtnssLvlMin{};   //!< Minimum display brightness level
+    // bool _isOn{false};   //!< Current display status: On/Off
+    uint8_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to or less than **display module component** digits ports, will be equal to or less than **display     void _sendBffr();
+
+    void _txStart();
+    // void _txAsk();
+    void _txStop();
+    void _txWrWord(uint16_t dataUnit);  // 
+    virtual void _sendBffr();
+    
+public:
+    /**
+     * @brief Default class constructor
+     * 
+     */
+    SevenSegMax7219();    
+    SevenSegMax7219(uint8_t* ioPins, uint8_t dspDigits);
+    ~SevenSegMax7219();
+    bool begin();
+   /**
+    * @brief Turns the display module off.  
+    * 
+    * The display module will be cleared and will keep that status until a turnOn(), or turnOn(const uint8_t &) is invoked. 
+    * 
+    * @note While the display is Off, it will keep receiving display data and commands, but will keep the leds turned off. When it receives a turnOn command the display will show the data it received while turned off, or the same it was showing at turnOff if no change to the contents was done.  
+    */
+   virtual void turnOff();
+   /**
+    * @brief Turns the display module on.  
+    * 
+    * The display module will be turned on and it's content displayed, and will keep that status until a turnOff() is invoked.  
+    */
+   virtual void turnOn();
+   /**
+    * @brief Turns the display module on.  
+    * 
+    * The display module will be turned on, it's brightness level set to the requested level, it's content displayed, and will keep that status until a turnOff() is invoked. 
+    * 
+    * @param newBrghtnssLvl The new brightness level for the display. The value must be in the range **getBrghtnssMinLvl() <= newBrghtnssLvl <= getBrghtnssMaxLvl()**
+    */
+   virtual void turnOn(const uint8_t &newBrghtnssLvl);
+};
+
+//============================================================> Class declarations separator
+    
 #endif

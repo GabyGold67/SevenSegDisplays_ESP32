@@ -1,0 +1,7 @@
+<map id="SevenSegMax7219" name="SevenSegMax7219">
+<area shape="rect" id="Node000001" title="Models a Seven Segment display hardware using a Max7219 display controller component" alt="" coords="5,155,140,181"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_static.html" title="Abstract class that models displays that don&#39;t need permanent MCU data updating to keep the data corr..." alt="" coords="15,80,130,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="75,122,75,154,70,154,70,122"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware." alt="" coords="8,5,137,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="75,48,75,80,70,80,70,48"/>
+</map>

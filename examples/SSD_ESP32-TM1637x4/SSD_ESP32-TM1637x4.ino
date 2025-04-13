@@ -6,7 +6,7 @@
  * 
  * @details 
  *
- * Repository: https://github.com/GabyGold67/ShiftRegGPIOXpander_ESP32  
+ * Repository: https://github.com/GabyGold67/SevenSegDisplays_ESP32  
  * 
  * Framework: Arduino
  * Platform: ESP32
@@ -18,16 +18,16 @@
  * @date First release: 15/05/2023  
  *       Last update:   02/04/2025 21:00 GMT+0200 DST  
  ******************************************************************************
-  * @warning **Use of this library is under your own responsibility**
-  * 
-  * @warning The use of this library falls in the category described by The Alan 
-  * Parsons Project (c) 1980 "Games People play" disclaimer:
-  * 
-  * Games people play, you take it or you leave it
-  * Things that they say aren't alright
-  * If I promised you the moon and the stars, would you believe it?
-  * 
-  * Released into the public domain in accordance with "GPL-3.0-or-later" license terms.
+ * @warning **Use of this library is under your own responsibility**
+ * 
+ * @warning The use of this library falls in the category described by The Alan 
+ * Parsons Project (c) 1980 "Games People play" disclaimer:
+ * 
+ * Games people play, you take it or you leave it
+ * Things that they say aren't alright
+ * If I promised you the moon and the stars, would you believe it?
+ * 
+ * Released into the public domain in accordance with "GPL-3.0-or-later" license terms.
  ******************************************************************************
 */
 #include <Arduino.h>

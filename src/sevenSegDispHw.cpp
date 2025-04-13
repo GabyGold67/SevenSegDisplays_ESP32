@@ -67,6 +67,21 @@ bool SevenSegDispHw::end(){
    return true;
 }
 
+uint8_t SevenSegDispHw::getBrghtnssLvl(){
+
+   return 0;
+}
+
+uint8_t SevenSegDispHw::getBrghtnssMaxLvl(){
+
+   return 0;
+}
+
+uint8_t SevenSegDispHw::getBrghtnssMinLvl(){
+
+   return 0;
+}
+
 bool SevenSegDispHw::getCommAnode(){
 
    return _commAnode;
@@ -455,6 +470,21 @@ SevenSegStatic::SevenSegStatic(uint8_t* ioPins, uint8_t dspDigits, bool commAnod
 
 SevenSegStatic::~SevenSegStatic() {}
 
+uint8_t SevenSegStatic::getBrghtnssLvl(){
+
+   return _brghtnssLvl;
+}
+
+uint8_t SevenSegStatic::getBrghtnssMaxLvl(){
+
+   return _brghtnssLvlMax;
+}
+
+uint8_t SevenSegStatic::getBrghtnssMinLvl(){
+
+   return _brghtnssLvlMin;
+}
+
 void SevenSegStatic::ntfyUpdDsply(){
 
    return;
@@ -502,10 +532,10 @@ void SevenSegStatHC595::_updDsplyCntnt(){
 
    return;
 }
+
 //============================================================> Class methods separator
 
-SevenSegTM163X::SevenSegTM163X()
-{}
+SevenSegTM163X::SevenSegTM163X(){}
 
 SevenSegTM163X::SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspContMaxDigits)
 :SevenSegStatic(ioPins, dspDigits, commAnode), _dspDigitsQtyMax{dspContMaxDigits}
@@ -589,51 +619,50 @@ void SevenSegTM163X::_sendBffr(){
 	 *  --- --- - - ---
 	 *   |   |  | |  |
 	 *   |   |  | |  Data Write to display: 00
-	 *   |   |  | Address auto-increment:  0
-	 *   |   |  Normal/Test mode:         0
-	 *   |   N/C:                      00
-	 *   Data command setting:       01
-	 *   Command1:                 0b01000000 = 0x40 
+	 *   |   |  | Address autoinc./Fixed:  0
+	 *   |   |  Normal/Test mode (0/1):   0
+	 *   |   N/C:                       00
+	 *   Data command setting:        01
+	 *   Command1:                  0b01000000 = 0x40 
 	 *
 	 * >> - Command2: Address command setting, for TM1637 and TM1639 is 0xC0, 6 consecutive addresses for TM1637, 16 for TM1639
 	 * -----------------
 	 * |7|6|5|4|3|2|1|0|
 	 *  --- --- -------
 	 *   |   |     |
-	 *   |   |     00H:  0000 First address of the data register
-	 *   |   N/C:      00
-	 *   Add. comm.: 11
-	 *             0b11000000 = 0xC0
+	 *   |   |     00H:     0000 First address of the data register to write to
+	 *   |   N/C:         00
+	 *   Address comm.: 11
+	 *                0b11000000 = 0xC0
 	 *
-	 * >> Buffer contents: 6 ~ 16 bytes data sequence
+	 * >> Buffer contents: 4 ~ 16 bytes data sequence
 	 *
-	 * >> EOT commands: Command3:
 	 * Command3: Display control
 	 * -----------------
 	 * |7|6|5|4|3|2|1|0|
 	 *  --- --- - -----
 	 *   |   |  |   |
-	 *   |   |  |   Brightness control:    000~111
-	 *   |   |  Display switch On/Off:    1/0
-	 *   |   N/C:                       00
-	 *   Display Control:             10
-	 *                              0b1000XXXX -> 0x8F Display On, maximum brightness
+	 *   |   |  |   Brightness control:     000~111
+	 *   |   |  Display switch On/Off(1/0):1
+	 *   |   N/C:                        00
+	 *   Display Control:              10
+	 *                               0b1000XXXX -> 0x8F Display On, maximum brightness
 	 */
 
    _txStart();
-   _txWrByte(0x40);  // TM1637_COMM1: 40H -> address is automatically incremented by 1 mode (44H -> fixed address mode)
+   _txWrByte(0x40);  // TM163X_COMM1: 40H -> address is automatically incremented by 1 mode (44H -> fixed address mode)
    _txAsk();
    _txStop();
 
    _txStart();
-   _txWrByte(0xC0);  // Set the first address
+   _txWrByte(0xC0);  // Set the first display's buffer address
    _txAsk();
 
-   for(uint8_t i{0}; i < _dspDigitsQty ; i++){
+   for(uint8_t i{0}; i < _dspDigitsQty ; i++){  // Send the contents for the visible standard display ports
       _txWrByte(*(_lclDspBuffPtr + i));
       _txAsk();
    }
-   for(uint8_t i{_dspDigitsQty}; i < _dspDigitsQtyMax ; i++){
+   for(uint8_t i{_dspDigitsQty}; i < _dspDigitsQtyMax ; i++){// Send the contents for the non visible display ports
       _txWrByte(*(_xcdDspBuffPtr + i));
       _txAsk();
    }
@@ -812,17 +841,154 @@ void SevenSegTM1639::_unAbstract(){
 
 //============================================================> Class methods separator
 
-/*
-SevenSegStatDummy::SevenSegStatDummy(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
+SevenSegMax7219::SevenSegMax7219(){}
+
+SevenSegMax7219::SevenSegMax7219(uint8_t *ioPins, uint8_t dspDigits)
+:SevenSegStatic(ioPins, dspDigits, false)
 {
-   _ioPins = ioPins;
-   _dspDigitsQty = dspDigits;
-   _commAnode = commAnode;
+   _brghtnssLvlMax = _hwBrghtnssLvlMax;
+   _brghtnssLvlMin = _hwBrghtnssLvlMin;
+   _brghtnssLvl = _brghtnssLvlMax;
+
+   if(_dspDigitsQty > _dspDigitsQtyMax)
+      _dspDigitsQty = _dspDigitsQtyMax;
+   _lclDspBuffPtr = new uint8_t[_dspDigitsQty];
+   
+   _clk = *(ioPins + _clkIndx);
+   _din = *(ioPins + _dinIndx);
+   _cs = *(ioPins + _csIndx);
+
+   digitalWrite(_clk, HIGH);
+   digitalWrite(_din, LOW);
+   digitalWrite(_cs, LOW);
+   pinMode(_clk, OUTPUT);
+   pinMode(_din, OUTPUT);
+   pinMode(_cs, OUTPUT);
+
+   begin();
 }
 
-SevenSegStatDummy::~SevenSegStatDummy(){}
-*/
+SevenSegMax7219::~SevenSegMax7219()
+{
+   delete [] _lclDspBuffPtr;
+}
 
+bool SevenSegMax7219::begin()
+{
+   turnOn();
+
+	return true;
+}
+
+void SevenSegMax7219::_sendBffr(){
+
+// Create a message buffer according to the MAX7219 SPI modified protocol:
+
+   /**
+	 * The Max72xx defines it's messages as 16-bit units.
+    * Each message includes data and address sections. 
+    * The address space defines two sections: 
+    * - Digit addresses
+    * - Control registers addresses
+    * 
+    * 16-bit Message format: 
+	 * ----------------------------------
+	 * |F|E|D|C|B|A|9|8||7|6|5|4|3|2|1|0|
+	 *  ------- -------  ---------------
+	 *     |       |    MSb     |     LSb
+    *     |       |            Data
+	 *     |       Address
+	 *     N/C
+	 * Address Space map: 
+    * 
+    * Address|Purpose           |Selected value/Accepted range
+    * --------------------------------------------------------
+    * 0xX0   | NOP              | N/A
+    * 0xX1~X8| Digit 0~7 content| 0x00~0xFF with DpABCDEFG bit order
+    * 0xX9   | Decode Mode      | 0x00 NO decode of any kind
+    * 0xXA   | Brightness level | 0xX0~0xXF (min to max, turns on min., begin MAX)
+    * 0xXB   | Used digits Qty. | 0xX0~0xX7 (1 to 7 digits, start dspQty)
+    * 0xXC   | Shutdown Register| 0x00: Shutdown, 0x01: normal operation
+    * 0xXD   | N/C              |
+    * 0x0E   | N/C              |
+    * 0x0F   | Display test     | 0xX0: Normal operation 0xX1: Test all leds ON
+    * 
+	 */
+
+   _txStart();
+   _txWrWord(0x0000);  // TM1637_COMM1: 40H -> address is automatically incremented by 1 mode (44H -> fixed address mode)
+   // _txAsk();
+   _txStop();
+
+   _txStart();
+   _txWrWord(0x0000);  // Set the first address
+   // _txAsk();
+
+   for(uint8_t i{0}; i < _dspDigitsQty ; i++){
+      _txWrWord(*(_lclDspBuffPtr + i));
+      // _txAsk();
+   }
+
+   _txStop();
+
+   return;
+}
+
+void SevenSegTM163X::turnOff(){
+   if(_isOn){
+      _txStart();
+      _txWrByte(0b10000000 | _brghtnssLvl);  // Close display(0x80), keep brightness
+      _txAsk();
+      _txStop();
+      _isOn = false;
+   }
+
+   return;
+}
+
+void SevenSegTM163X::turnOn(){
+   if(!_isOn){
+      _txStart();
+      _txWrByte(0b10001000 | _brghtnssLvl);  // Open display(0x88), keep brightness
+      _txAsk();
+      _txStop();
+      _isOn = true;
+   }
+
+   return;
+}
+
+void SevenSegTM163X::turnOn(const uint8_t &newBrghtnssLvl){
+   if(!_isOn){
+      if(newBrghtnssLvl != _brghtnssLvl){
+         setBrghtnssLvl(newBrghtnssLvl);
+      }
+      turnOn();
+   }
+
+   return;
+}
+
+void SevenSegMax7219::_txWrWord(uint16_t data){   // void I2CWrByte (unsigned char oneByte)
+   
+   for(uint8_t i{0}; i < 8; i++){
+      digitalWrite(_clk, LOW);
+      digitalWrite(_din, (data &0x01)?HIGH:LOW); //Equivalent single line ternary operation
+      delayMicroseconds(3*_txClkTckTm);
+      data = data >> 1;
+      digitalWrite(_clk, HIGH);
+      delayMicroseconds(3*_txClkTckTm);
+   }
+   
+	return;
+}
+
+void SevenSegMax7219::_unAbstract(){
+
+   return;
+}
+
+//============================================================> Class methods separator
 
 
 template<typename T>

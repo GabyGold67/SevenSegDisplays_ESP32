@@ -1,20 +1,33 @@
 /**
  ******************************************************************************
- * @file ssd_ESP32-DynDummy-Example00-GenOV.ino
+ * @file SSD_ESP32-DynDummyx4.ino
  * 
  * @brief Example file to demonstrate SevenSegDisplays_ESP32 class use with SevenSegDispHw::SevenSegDynHC595 class composition
  *
+ * @details 
+ *
+ * Repository: https://github.com/GabyGold67/SevenSegDisplays_ESP32  
+ * 
  * Framework: Arduino
  * Platform: ESP32
  * 
  * @author	: Gabriel D. Goldman
+ * mail <gdgoldman67@hotmail.com>
+ * Github <https://github.com/GabyGold67>
  *
  * @date First release: 15/05/2023 
  *       Last update:   26/03/2025 14:50 GMT+0200
  ******************************************************************************
- * @attention
- * 
- * Released into the public domain in accordance with "GPL-3.0-or-later" license terms.
+  * @warning **Use of this library is under your own responsibility**
+  * 
+  * @warning The use of this library falls in the category described by The Alan 
+  * Parsons Project (c) 1980 "Games People play" disclaimer:
+  * 
+  * Games people play, you take it or you leave it
+  * Things that they say aren't alright
+  * If I promised you the moon and the stars, would you believe it?
+  * 
+  * Released into the public domain in accordance with "GPL-3.0-or-later" license terms.
  ******************************************************************************
 */
 #include <Arduino.h>

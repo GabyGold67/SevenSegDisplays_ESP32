@@ -157,9 +157,9 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>SevenSegTM163X</b> ()</td></tr>
 <tr class="memdesc:a6f511a29dcacfa8be9d2a8778dc2d05d inherit pub_methods_class_seven_seg_t_m163_x"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default class constructor. <br /></td></tr>
 <tr class="separator:a6f511a29dcacfa8be9d2a8778dc2d05d inherit pub_methods_class_seven_seg_t_m163_x"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5eb5d7d7c1c0c2d776d80d71c9253d85 inherit pub_methods_class_seven_seg_t_m163_x" id="r_a5eb5d7d7c1c0c2d776d80d71c9253d85"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_t_m163_x.html#a5eb5d7d7c1c0c2d776d80d71c9253d85">SevenSegTM163X</a> (uint8_t *ioPins, uint8_t dspDigits, bool commAnode)</td></tr>
-<tr class="memdesc:a5eb5d7d7c1c0c2d776d80d71c9253d85 inherit pub_methods_class_seven_seg_t_m163_x"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor.  <br /></td></tr>
-<tr class="separator:a5eb5d7d7c1c0c2d776d80d71c9253d85 inherit pub_methods_class_seven_seg_t_m163_x"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6812a6d00def57aaace41ad2a15da7f8 inherit pub_methods_class_seven_seg_t_m163_x" id="r_a6812a6d00def57aaace41ad2a15da7f8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_t_m163_x.html#a6812a6d00def57aaace41ad2a15da7f8">SevenSegTM163X</a> (uint8_t *ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspContMaxDigits)</td></tr>
+<tr class="memdesc:a6812a6d00def57aaace41ad2a15da7f8 inherit pub_methods_class_seven_seg_t_m163_x"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor.  <br /></td></tr>
+<tr class="separator:a6812a6d00def57aaace41ad2a15da7f8 inherit pub_methods_class_seven_seg_t_m163_x"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15cd5793c8ad4dd0c5207874d4fc2de4 inherit pub_methods_class_seven_seg_t_m163_x" id="r_a15cd5793c8ad4dd0c5207874d4fc2de4"><td class="memItemLeft" align="right" valign="top">
 &#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegTM163X</b> ()</td></tr>
 <tr class="memdesc:a15cd5793c8ad4dd0c5207874d4fc2de4 inherit pub_methods_class_seven_seg_t_m163_x"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class destructor. <br /></td></tr>
@@ -176,7 +176,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a484553b3cf9c8e60bc87e944d07fecde inherit pub_methods_class_seven_seg_t_m163_x"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current brightness level setting for the display module. <br  />
   <br /></td></tr>
 <tr class="separator:a484553b3cf9c8e60bc87e944d07fecde inherit pub_methods_class_seven_seg_t_m163_x"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b12ba68a4ed1738bbf0457a4dbec33e inherit pub_methods_class_seven_seg_t_m163_x" id="r_a4b12ba68a4ed1738bbf0457a4dbec33e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_t_m163_x.html#a4b12ba68a4ed1738bbf0457a4dbec33e">getBrghtnssMaxLvl</a> ()</td></tr>
+<tr class="memitem:a4b12ba68a4ed1738bbf0457a4dbec33e inherit pub_methods_class_seven_seg_t_m163_x" id="r_a4b12ba68a4ed1738bbf0457a4dbec33e"><td class="memItemLeft" align="right" valign="top">virtual uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_t_m163_x.html#a4b12ba68a4ed1738bbf0457a4dbec33e">getBrghtnssMaxLvl</a> ()</td></tr>
 <tr class="memdesc:a4b12ba68a4ed1738bbf0457a4dbec33e inherit pub_methods_class_seven_seg_t_m163_x"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the maximum brightness level for the instantiated object. <br  />
   <br /></td></tr>
 <tr class="separator:a4b12ba68a4ed1738bbf0457a4dbec33e inherit pub_methods_class_seven_seg_t_m163_x"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -240,13 +240,49 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 <tr class="memitem:afc7402bad588be4ea2c7aedaf870f9ff inherit pub_methods_class_seven_seg_disp_hw" id="r_afc7402bad588be4ea2c7aedaf870f9ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff">setDspBuffPtr</a> (uint8_t *newDspBuffPtr)</td></tr>
 <tr class="memdesc:afc7402bad588be4ea2c7aedaf870f9ff inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the pointer to the Display Buffer.  <br /></td></tr>
 <tr class="separator:afc7402bad588be4ea2c7aedaf870f9ff inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_methods_class_seven_seg_t_m163_x"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_class_seven_seg_t_m163_x')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_seven_seg_t_m163_x.html">SevenSegTM163X</a></td></tr>
+<tr class="inherit_header pro_methods_class_seven_seg_disp_hw"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_class_seven_seg_disp_hw')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a></td></tr>
+<tr class="inherit_header pro_attribs_class_seven_seg_t_m163_x"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_seven_seg_t_m163_x')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_seven_seg_t_m163_x.html">SevenSegTM163X</a></td></tr>
+<tr class="memitem:ac15a9132e32747ba1cab6b13495b9eb2 inherit pro_attribs_class_seven_seg_t_m163_x" id="r_ac15a9132e32747ba1cab6b13495b9eb2"><td class="memItemLeft" align="right" valign="top">
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_lclDspBuffPtr</b> {nullptr}</td></tr>
+<tr class="memdesc:ac15a9132e32747ba1cab6b13495b9eb2 inherit pro_attribs_class_seven_seg_t_m163_x"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to an array of size equal to or less than <b>display module component</b> digits ports, will be equal to or less than <b>display controller component</b> maximum digits/ports. The need for a divided display buffer comes from the fact that some <b>Seven Segment display hardware</b> use controllers with larger digits management capabilities than the display module digits, and the exceeding digits are used for propietary amenities, as colons, icons, etc. <br /></td></tr>
+<tr class="separator:ac15a9132e32747ba1cab6b13495b9eb2 inherit pro_attribs_class_seven_seg_t_m163_x"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6085a13a7d24c8bf67ecd94a307fec2c inherit pro_attribs_class_seven_seg_t_m163_x" id="r_a6085a13a7d24c8bf67ecd94a307fec2c"><td class="memItemLeft" align="right" valign="top">
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_xcdDspBuffPtr</b> {nullptr}</td></tr>
+<tr class="memdesc:a6085a13a7d24c8bf67ecd94a307fec2c inherit pro_attribs_class_seven_seg_t_m163_x"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to a buffer the size of the exceeding digits used to control display specific amenities. <br /></td></tr>
+<tr class="separator:a6085a13a7d24c8bf67ecd94a307fec2c inherit pro_attribs_class_seven_seg_t_m163_x"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6bcf57af3fb44db0565e987f4ef7b9c inherit pro_attribs_class_seven_seg_t_m163_x" id="r_aa6bcf57af3fb44db0565e987f4ef7b9c"><td class="memItemLeft" align="right" valign="top">
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_xcdDspDigitsQty</b> {}</td></tr>
+<tr class="memdesc:aa6bcf57af3fb44db0565e987f4ef7b9c inherit pro_attribs_class_seven_seg_t_m163_x"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of unused available display ports, its the difference (_dspDigitsQtyMax - _dspDigitsQty), being the size of the array pointed by _xcdDspBuffPtr. <br /></td></tr>
+<tr class="separator:aa6bcf57af3fb44db0565e987f4ef7b9c inherit pro_attribs_class_seven_seg_t_m163_x"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_seven_seg_static"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_seven_seg_static')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_seven_seg_static.html">SevenSegStatic</a></td></tr>
+<tr class="memitem:a9ed53120b10f765215787c5861cc4b09 inherit pro_attribs_class_seven_seg_static" id="r_a9ed53120b10f765215787c5861cc4b09"><td class="memItemLeft" align="right" valign="top">
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvl</b> {0}</td></tr>
+<tr class="memdesc:a9ed53120b10f765215787c5861cc4b09 inherit pro_attribs_class_seven_seg_static"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current display brightness level. <br /></td></tr>
+<tr class="separator:a9ed53120b10f765215787c5861cc4b09 inherit pro_attribs_class_seven_seg_static"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c5cc6b91da937ad8912168ff1ab9894 inherit pro_attribs_class_seven_seg_static" id="r_a9c5cc6b91da937ad8912168ff1ab9894"><td class="memItemLeft" align="right" valign="top">
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvlMax</b> {0}</td></tr>
+<tr class="memdesc:a9c5cc6b91da937ad8912168ff1ab9894 inherit pro_attribs_class_seven_seg_static"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum display brightness level. <br /></td></tr>
+<tr class="separator:a9c5cc6b91da937ad8912168ff1ab9894 inherit pro_attribs_class_seven_seg_static"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63f29aeda0fed5f5024ae5b48cf51b66 inherit pro_attribs_class_seven_seg_static" id="r_a63f29aeda0fed5f5024ae5b48cf51b66"><td class="memItemLeft" align="right" valign="top">
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvlMin</b> {0}</td></tr>
+<tr class="memdesc:a63f29aeda0fed5f5024ae5b48cf51b66 inherit pro_attribs_class_seven_seg_static"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum display brightness level. <br /></td></tr>
+<tr class="separator:a63f29aeda0fed5f5024ae5b48cf51b66 inherit pro_attribs_class_seven_seg_static"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dc3b3c09e20a30b6042a2be8bdd1909 inherit pro_attribs_class_seven_seg_static" id="r_a4dc3b3c09e20a30b6042a2be8bdd1909"><td class="memItemLeft" align="right" valign="top">
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td></tr>
+<tr class="memdesc:a4dc3b3c09e20a30b6042a2be8bdd1909 inherit pro_attribs_class_seven_seg_static"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current display status: On/Off. <br /></td></tr>
+<tr class="separator:a4dc3b3c09e20a30b6042a2be8bdd1909 inherit pro_attribs_class_seven_seg_static"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_seven_seg_disp_hw"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_seven_seg_disp_hw')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Models a Seven Segment display hardware controlled by a TM1637 display controller component. <br  />
  </p>
 <p>The TM1637 is a very popular Titan Micro TM163X family member, whose differencial characteristics from other members of this family (related to this library incumbent attributes) are: <br  />
 </p><ul>
-<li>Maximum number of display ports: 6 _ Brightness levels: 8 (0X00 to 0X07) </li>
+<li>Maximum number of display ports: 6 </li>
 </ul>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a0df4df18dd6e69963a5ff6abada18786" name="a0df4df18dd6e69963a5ff6abada18786"></a>
