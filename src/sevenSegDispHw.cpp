@@ -17,7 +17,7 @@
  * @version 3.0.0  
  * 
  * @date First release: 20/12/2023  
- *       Last update:   08/04/2025 09:00 (GMT+0200)  
+ *       Last update:   14/04/2025 18:20 (GMT+0200) DSP
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -852,15 +852,15 @@ SevenSegMax7219::SevenSegMax7219(uint8_t *ioPins, uint8_t dspDigits)
 
    if(_dspDigitsQty > _dspDigitsQtyMax)
       _dspDigitsQty = _dspDigitsQtyMax;
-   _lclDspBuffPtr = new uint8_t[_dspDigitsQty];
+   _lclDspBuffPtr = new uint16_t[_dspDigitsQty];
    
    _clk = *(ioPins + _clkIndx);
    _din = *(ioPins + _dinIndx);
    _cs = *(ioPins + _csIndx);
 
-   digitalWrite(_clk, HIGH);
+   digitalWrite(_clk, LOW);
    digitalWrite(_din, LOW);
-   digitalWrite(_cs, LOW);
+   digitalWrite(_cs, HIGH);
    pinMode(_clk, OUTPUT);
    pinMode(_din, OUTPUT);
    pinMode(_cs, OUTPUT);
@@ -875,9 +875,44 @@ SevenSegMax7219::~SevenSegMax7219()
 
 bool SevenSegMax7219::begin()
 {
+   _dataMssg = 0x0000;  //!< Start with a blank message to compose
+   _dataMssg = _dataMssg | _dspDigitsQty; //!< Register data 0x01 to 0x08: quantity of digits to keep updated
+   _dataMssg = _dataMssg | 0x0B00; //!< Register address 0x0B: Scan limit
+   _send(_dataMssg);   
+
+   setBrghtnssLvl(_brghtnssLvl);
    turnOn();
 
 	return true;
+}
+
+bool SevenSegMax7219::end()
+{
+   turnOff();
+
+   return true;
+}
+
+void SevenSegMax7219::ntfyUpdDsply(){
+   _updDsplyCntnt();
+   // _sendBffr();
+
+   return;
+}
+
+
+void SevenSegMax7219::_send(uint16_t data){
+   digitalWrite(_cs, LOW);   
+   for(int8_t bitPtr{0x0F}; bitPtr >= 0x00; bitPtr--){
+      digitalWrite(_din, ((data & 0x8000)?HIGH:LOW));
+      digitalWrite(_clk, HIGH);
+      delayMicroseconds(1);
+      digitalWrite(_clk, LOW);
+      data << 1; 
+   }
+   digitalWrite(_cs, LOW);
+
+   return;
 }
 
 void SevenSegMax7219::_sendBffr(){
@@ -886,9 +921,9 @@ void SevenSegMax7219::_sendBffr(){
 
    /**
 	 * The Max72xx defines it's messages as 16-bit units.
-    * Each message includes data and address sections. 
+    * Each 16-bit message includes data and address sections. 
     * The address space defines two sections: 
-    * - Digit addresses
+    * - Digit content addresses
     * - Control registers addresses
     * 
     * 16-bit Message format: 
@@ -905,7 +940,7 @@ void SevenSegMax7219::_sendBffr(){
     * --------------------------------------------------------
     * 0xX0   | NOP              | N/A
     * 0xX1~X8| Digit 0~7 content| 0x00~0xFF with DpABCDEFG bit order
-    * 0xX9   | Decode Mode      | 0x00 NO decode of any kind
+    * 0xX9   | Decode Mode      | 0x00 NO decode of any kind (0x01, 0x0F, 0xFF valid options)
     * 0xXA   | Brightness level | 0xX0~0xXF (min to max, turns on min., begin MAX)
     * 0xXB   | Used digits Qty. | 0xX0~0xX7 (1 to 7 digits, start dspQty)
     * 0xXC   | Shutdown Register| 0x00: Shutdown, 0x01: normal operation
@@ -915,69 +950,90 @@ void SevenSegMax7219::_sendBffr(){
     * 
 	 */
 
-   _txStart();
-   _txWrWord(0x0000);  // TM1637_COMM1: 40H -> address is automatically incremented by 1 mode (44H -> fixed address mode)
-   // _txAsk();
-   _txStop();
-
-   _txStart();
-   _txWrWord(0x0000);  // Set the first address
-   // _txAsk();
-
-   for(uint8_t i{0}; i < _dspDigitsQty ; i++){
-      _txWrWord(*(_lclDspBuffPtr + i));
-      // _txAsk();
-   }
-
-   _txStop();
+   
 
    return;
 }
 
-void SevenSegTM163X::turnOff(){
+bool SevenSegMax7219::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
+   bool result{false};
+
+   if((newBrghtnssLvl >=_brghtnssLvlMin)&&(newBrghtnssLvl<=_brghtnssLvlMax)){
+      if(newBrghtnssLvl != _brghtnssLvl){
+         _dataMssg = 0x0000;  //!< Start with a blank message to compose
+         _dataMssg = _dataMssg | _brghtnssLvl; //!< Register data 0x01: Normal operation, 0x00: Shutdown
+         _dataMssg = _dataMssg | 0x0A00; //!< Register address 0x0A: Intensity
+         _send(_dataMssg);   
+         _brghtnssLvl = newBrghtnssLvl;
+      }
+      result = true;
+   }
+
+   return result;
+}
+
+void SevenSegMax7219::turnOff(){
    if(_isOn){
-      _txStart();
-      _txWrByte(0b10000000 | _brghtnssLvl);  // Close display(0x80), keep brightness
-      _txAsk();
-      _txStop();
+      //!< Compose the message
+      _dataMssg = 0x0000;  //!< Start with a blank message to compose
+      _dataMssg = _dataMssg | 0x0000; //!< Register data 0x01: Normal operation, 0x00: Shutdown
+      _dataMssg = _dataMssg | 0x0C00; //!< Register address 0x0C: Shutdown command
+      _send(_dataMssg);
+
       _isOn = false;
    }
 
    return;
 }
 
-void SevenSegTM163X::turnOn(){
+void SevenSegMax7219::turnOn(){
    if(!_isOn){
-      _txStart();
-      _txWrByte(0b10001000 | _brghtnssLvl);  // Open display(0x88), keep brightness
-      _txAsk();
-      _txStop();
+      //!< Compose the message
+      _dataMssg = 0x0000;  //!< Start with a blank message to compose
+      _dataMssg = _dataMssg | 0x0001; //!< Register data 0x01: Normal operation, 0x00: Shutdown
+      _dataMssg = _dataMssg | 0x0C00; //!< Register address 0x0C: Shutdown command
+      _send(_dataMssg);
       _isOn = true;
    }
 
    return;
 }
 
-void SevenSegTM163X::turnOn(const uint8_t &newBrghtnssLvl){
-   if(!_isOn){
-      if(newBrghtnssLvl != _brghtnssLvl){
-         setBrghtnssLvl(newBrghtnssLvl);
-      }
-      turnOn();
-   }
+void SevenSegMax7219::turnOn(const uint8_t &newBrghtnssLvl){
+   setBrghtnssLvl(newBrghtnssLvl);
+   turnOn();
 
    return;
 }
 
-void SevenSegMax7219::_txWrWord(uint16_t data){   // void I2CWrByte (unsigned char oneByte)
-   
-   for(uint8_t i{0}; i < 8; i++){
-      digitalWrite(_clk, LOW);
-      digitalWrite(_din, (data &0x01)?HIGH:LOW); //Equivalent single line ternary operation
-      delayMicroseconds(3*_txClkTckTm);
-      data = data >> 1;
-      digitalWrite(_clk, HIGH);
-      delayMicroseconds(3*_txClkTckTm);
+void SevenSegMax7219::_updDsplyCntnt(){
+   uint8_t sgmntByte{0};
+   uint8_t origBffrByte{0};
+   uint8_t readMask{0x01};
+   uint8_t writeMask{0x40};
+
+   for(uint8_t dspPrt{0}; dspPrt < _dspDigitsQty; dspPrt++){
+      _dataMssg = 0x0000;  //!< Start with a blank message to compose
+      
+      sgmntByte = 0x00;  //!< Register data: digit segments to set
+      origBffrByte = *(_dspBuffPtr + dspPrt);
+      // Convert the standard DpGFEDCBA to the MAX7219 DpABDCEFG
+      for(uint8_t bitPos{0}; bitPos<7; bitPos++){
+         if(readMask & origBffrByte){
+            sgmntByte = sgmntByte | writeMask;
+         }
+         writeMask >> 1;
+         readMask << 1;
+      }
+      sgmntByte = sgmntByte | (*(_dspBuffPtr + dspPrt) & 0x80);   //!< The Dp is the MSb on both layouts
+      
+      _dataMssg = _dataMssg | sgmntByte;      
+      
+      _dataMssg = _dataMssg | ((dspPrt + 1) << 8); //!< Register address 0x01~0x08: Digit display position to fill
+
+      _send(_dataMssg);
+
+      delayMicroseconds(1);
    }
    
 	return;

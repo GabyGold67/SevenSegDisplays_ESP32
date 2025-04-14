@@ -1,0 +1,5 @@
+<map id="SevenSegMax7219::turnOff" name="SevenSegMax7219::turnOff">
+<area shape="rect" id="Node000001" title="Turns the display module off." alt="" coords="217,5,398,32"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_max7219.html#a5870af7127dcf97df29cfb8d07bb4a7f" title="Reverts the begin(uint32_t) actions, stopping the display activities and freeing the resources used b..." alt="" coords="5,5,169,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="201,21,169,21,169,16,201,16"/>
+</map>

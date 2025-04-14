@@ -15,7 +15,7 @@
  * @version 3.0.0
  * 
  * @date First release: 20/12/2023  
- *       Last update:   08/04/2025 09:00 (GMT+0200) DST  
+ *       Last update:   14/04/2025 18:20 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -119,6 +119,11 @@ public:
      * @return false The display activities couldn't be stopped. The method failed.  
      */
     virtual bool end();
+
+    virtual uint8_t getBrghtnssLvl();
+    virtual uint8_t getBrghtnssMaxLvl();
+    virtual uint8_t getBrghtnssMinLvl();
+
     /**
      * @brief Returns a value indicating if the display module component uses a common anode or a common cathode led wiring.  
      * 
@@ -128,12 +133,6 @@ public:
      * @retval false The display is built with a Common Cathode  display module component.  
      */
     bool getCommAnode();
-
-    virtual uint8_t getBrghtnssLvl();
-    virtual uint8_t getBrghtnssMaxLvl();
-    virtual uint8_t getBrghtnssMinLvl();
-
-
     /**
      * @brief Returns a pointer to the display buffer.  
      * 
@@ -212,6 +211,7 @@ protected:
     virtual void send(uint8_t content);
     virtual void send(const uint8_t &segments, const uint8_t &port);
     TimerHandle_t _svnSgDynTmrHndl{NULL};
+    virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
 public:
     SevenSegDynamic();
     SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
@@ -401,6 +401,8 @@ protected:
     uint8_t _brghtnssLvlMax{0};   //!< Maximum display brightness level
     uint8_t _brghtnssLvlMin{0};   //!< Minimum display brightness level
     bool _isOn{false};   //!< Current display status: On/Off
+
+    virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
      
 public:
     SevenSegStatic();
@@ -509,7 +511,8 @@ protected:
    void _txStop();
    void _txWrByte(uint8_t data);
    virtual void _sendBffr();
- 
+   virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
+
  public:
    /**
     * @brief Default class constructor
@@ -713,16 +716,18 @@ public:
  * @class SevenSegMax7219
  * 
  * @brief Models a **Seven Segment display hardware** using a Max7219 **display controller component**
+ * 
+ * The Max7219 is a seven segment 8 digits maximum display controller, that shares most of it's characteristics with the Max7221. The main difference is that the Max7219 is not completely compliant with the SPI communications standard as the Max7221 is, so a software line handling solution must be provided.  
  */
 class SevenSegMax7219: public SevenSegStatic{
 private:
     const uint8_t _clkIndx {0};
     const uint8_t _dinIndx {1};
     const uint8_t _csIndx {2};
-    const uint8_t _dspDigitsQtyMax{8}; // Maximum display size in digits``````````````````````
+    const uint8_t _dspDigitsQtyMax{8};
     const uint8_t _hwBrghtnssLvlMax{0x0F};
     const uint8_t _hwBrghtnssLvlMin{0x00};
-    uint32_t _txClkTckTm{1};
+    uint16_t _dataMssg{0x00};
 
     uint8_t _clk {};    // Serial clock max. rate 10 MHz. Data is shifted into the chip on **clk rising edge**
     uint8_t _din {};    // Data value to get into the chip reg, must be set before the clk rising edge to be accepted.
@@ -732,28 +737,35 @@ private:
     void _updDsplyCntnt();
 
 protected:
-    // uint8_t _brghtnssLvl{};  //!< Current display brightness level
-    // uint8_t _brghtnssLvlMax{};   //!< Maximum display brightness level
-    // uint8_t _brghtnssLvlMin{};   //!< Minimum display brightness level
-    // bool _isOn{false};   //!< Current display status: On/Off
-    uint8_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to or less than **display module component** digits ports, will be equal to or less than **display     void _sendBffr();
-
-    void _txStart();
-    // void _txAsk();
-    void _txStop();
-    void _txWrWord(uint16_t dataUnit);  // 
+    uint16_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to _dspDigitsQty, the local buffer differs from the shared _dspBuffPtr because it holds the data of the _dspBuffPtr formated and ready to be sent to the display controller    
+    
+    virtual void _send(uint16_t data);
     virtual void _sendBffr();
     
 public:
     /**
      * @brief Default class constructor
-     * 
      */
     SevenSegMax7219();    
-    SevenSegMax7219(uint8_t* ioPins, uint8_t dspDigits);
-    ~SevenSegMax7219();
+    /**
+    * @brief Class constructor
+    * 
+    * @param ioPins A pointer to an array holding the identifieres for the 3 GPIO pins required to send the data to the **Seven Segment display hardware** to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->din, 2->cs.  
+    * @param dspDigits Quantity of digits/ports of the display. This parameter for this subclass must be in the range 1 <= dspDigits <= 8.  
+    */
+     SevenSegMax7219(uint8_t* ioPins, uint8_t dspDigits);
+     /**
+      * @brief Class destructor
+      */
+     ~SevenSegMax7219();
     bool begin();
+    bool end();
    /**
+    * @brief See SevenSegDispHw::ntfyUpdDsply() for description
+    */
+   virtual void ntfyUpdDsply();
+    virtual bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl); 
+    /**
     * @brief Turns the display module off.  
     * 
     * The display module will be cleared and will keep that status until a turnOn(), or turnOn(const uint8_t &) is invoked. 

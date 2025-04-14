@@ -16,18 +16,18 @@
  * Github <https://github.com/GabyGold67>
  *
  * @date First release: 15/05/2023  
- *       Last update:   02/04/2025 21:00 GMT+0200 DST  
+ *       Last update:   13/04/2025 16:50 GMT+0200 DST  
  ******************************************************************************
- * @warning **Use of this library is under your own responsibility**
- * 
- * @warning The use of this library falls in the category described by The Alan 
- * Parsons Project (c) 1980 "Games People play" disclaimer:
- * 
- * Games people play, you take it or you leave it
- * Things that they say aren't alright
- * If I promised you the moon and the stars, would you believe it?
- * 
- * Released into the public domain in accordance with "GPL-3.0-or-later" license terms.
+  * @warning **Use of this library is under your own responsibility**
+  * 
+  * @warning The use of this library falls in the category described by The Alan 
+  * Parsons Project (c) 1980 "Games People play" disclaimer:
+  * 
+  * Games people play, you take it or you leave it
+  * Things that they say aren't alright
+  * If I promised you the moon and the stars, would you believe it?
+  * 
+  * Released into the public domain in accordance with "GPL-3.0-or-later" license terms.
  ******************************************************************************
 */
 #include <Arduino.h>
@@ -451,88 +451,30 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
          vTaskDelay(testTime);
       }
       
-      {
-         myLedDisp.getDspUndrlHwPtr()->setBrghtnssLvl(6);
-         Serial.println("Brightness Level = 6");
-         vTaskDelay(250);
-      }
+      {         
+         int8_t minBrgthnss {(int8_t)myLedDisp.getDspUndrlHwPtr()->getBrghtnssMinLvl()};
+         int8_t maxBrgthnss {(int8_t)myLedDisp.getDspUndrlHwPtr()->getBrghtnssMaxLvl()};
+         int8_t curBrgthnss {(int8_t)myLedDisp.getDspUndrlHwPtr()->getBrghtnssLvl()};
 
-      {
-         myLedDisp.getDspUndrlHwPtr()->setBrghtnssLvl(5);
-         Serial.println("Brightness Level = 5");
-         vTaskDelay(250);
-      }
+         Serial.print("Minimum brightness level: ");
+         Serial.println(minBrgthnss);
+         Serial.print("Maximum brightness level: ");
+         Serial.println(maxBrgthnss);
+         Serial.print("Current brightness level: ");
+         Serial.println(curBrgthnss);
 
-      {
-         myLedDisp.getDspUndrlHwPtr()->setBrghtnssLvl(4);
-         Serial.println("Brightness Level = 4");
-         vTaskDelay(250);
-      }
-
-      {
-         myLedDisp.getDspUndrlHwPtr()->setBrghtnssLvl(3);
-         Serial.println("Brightness Level = 3");
-         vTaskDelay(250);
-      }
-
-      {
-         myLedDisp.getDspUndrlHwPtr()->setBrghtnssLvl(2);
-         Serial.println("Brightness Level = 2");
-         vTaskDelay(250);
-      }
-
-      {
-         myLedDisp.getDspUndrlHwPtr()->setBrghtnssLvl(1);
-         Serial.println("Brightness Level = 1");
-         vTaskDelay(250);
-      }
-
-      {
-         myLedDisp.getDspUndrlHwPtr()->setBrghtnssLvl(0);
-         Serial.println("Brightness Level = 0");
-         vTaskDelay(500);
-      }
-
-      {
-         myLedDisp.getDspUndrlHwPtr()->setBrghtnssLvl(1);
-         Serial.println("Brightness Level = 1");
-         vTaskDelay(250);
-      }
-
-      {
-         myLedDisp.getDspUndrlHwPtr()->setBrghtnssLvl(2);
-         Serial.println("Brightness Level = 2");
-         vTaskDelay(250);
-      }
-
-      {
-         myLedDisp.getDspUndrlHwPtr()->setBrghtnssLvl(3);
-         Serial.println("Brightness Level = 3");
-         vTaskDelay(250);
-      }
-
-      {
-         myLedDisp.getDspUndrlHwPtr()->setBrghtnssLvl(4);
-         Serial.println("Brightness Level = 4");
-         vTaskDelay(250);
-      }
-
-      {
-         myLedDisp.getDspUndrlHwPtr()->setBrghtnssLvl(5);
-         Serial.println("Brightness Level = 5");
-         vTaskDelay(250);
-      }
-
-      {
-         myLedDisp.getDspUndrlHwPtr()->setBrghtnssLvl(6);
-         Serial.println("Brightness Level = 6");
-         vTaskDelay(250);
-      }
-
-      {
-         myLedDisp.getDspUndrlHwPtr()->setBrghtnssLvl(7);
-         Serial.println("Brightness Level Back to Max!");
-         vTaskDelay(testTime);
+         for(int8_t curBrgthnss{maxBrgthnss}; curBrgthnss >= minBrgthnss; --curBrgthnss){
+            myLedDisp.getDspUndrlHwPtr()->setBrghtnssLvl(curBrgthnss);
+            Serial.print("Brightness Level = ");
+            Serial.println(curBrgthnss);
+            vTaskDelay(350);   
+         }
+         for(int8_t curBrgthnss{minBrgthnss}; curBrgthnss <= maxBrgthnss; ++curBrgthnss){
+            myLedDisp.getDspUndrlHwPtr()->setBrghtnssLvl(curBrgthnss);
+            Serial.print("Brightness Level = ");
+            Serial.println(curBrgthnss);
+            vTaskDelay(350);   
+         }
       }
 
       {

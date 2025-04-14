@@ -141,23 +141,34 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>SevenSegMax7219</b> ()</td></tr>
 <tr class="memdesc:a8155d7b57fbc565fc7092351328dbc0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default class constructor. <br /></td></tr>
 <tr class="separator:a8155d7b57fbc565fc7092351328dbc0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7856c3bfb493792afcc45ade9c5177c0" id="r_a7856c3bfb493792afcc45ade9c5177c0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7856c3bfb493792afcc45ade9c5177c0">turnOff</a> ()</td></tr>
-<tr class="memdesc:a7856c3bfb493792afcc45ade9c5177c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module off. <br  />
+<tr class="memitem:adfd8f4ad5a8b82598409b952163b9a4f" id="r_adfd8f4ad5a8b82598409b952163b9a4f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adfd8f4ad5a8b82598409b952163b9a4f">SevenSegMax7219</a> (uint8_t *ioPins, uint8_t dspDigits)</td></tr>
+<tr class="memdesc:adfd8f4ad5a8b82598409b952163b9a4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor.  <br /></td></tr>
+<tr class="separator:adfd8f4ad5a8b82598409b952163b9a4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc856b37e1f80e486521b70bd85e09df" id="r_abc856b37e1f80e486521b70bd85e09df"><td class="memItemLeft" align="right" valign="top"><a id="abc856b37e1f80e486521b70bd85e09df" name="abc856b37e1f80e486521b70bd85e09df"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegMax7219</b> ()</td></tr>
+<tr class="memdesc:abc856b37e1f80e486521b70bd85e09df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class destructor. <br /></td></tr>
+<tr class="separator:abc856b37e1f80e486521b70bd85e09df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5870af7127dcf97df29cfb8d07bb4a7f" id="r_a5870af7127dcf97df29cfb8d07bb4a7f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5870af7127dcf97df29cfb8d07bb4a7f">end</a> ()</td></tr>
+<tr class="memdesc:a5870af7127dcf97df29cfb8d07bb4a7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverts the <a class="el" href="class_seven_seg_disp_hw.html#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities.">begin(uint32_t)</a> actions, stopping the display activities and freeing the resources used by the Seven Segment display hardware object. <br  />
   <br /></td></tr>
-<tr class="separator:a7856c3bfb493792afcc45ade9c5177c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cd92c1590d71379cc151ef8d5d8dd1e" id="r_a5cd92c1590d71379cc151ef8d5d8dd1e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5cd92c1590d71379cc151ef8d5d8dd1e">turnOn</a> ()</td></tr>
-<tr class="memdesc:a5cd92c1590d71379cc151ef8d5d8dd1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module on. <br  />
+<tr class="separator:a5870af7127dcf97df29cfb8d07bb4a7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a559f2c5cca5eb5a806720359efd99788" id="r_a559f2c5cca5eb5a806720359efd99788"><td class="memItemLeft" align="right" valign="top"><a id="a559f2c5cca5eb5a806720359efd99788" name="a559f2c5cca5eb5a806720359efd99788"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>ntfyUpdDsply</b> ()</td></tr>
+<tr class="memdesc:a559f2c5cca5eb5a806720359efd99788"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the object of a change of content available in the display buffer, the object must update th...">SevenSegDispHw::ntfyUpdDsply()</a> for description. <br /></td></tr>
+<tr class="separator:a559f2c5cca5eb5a806720359efd99788"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0007a5a290087062e5595fa065be4ad6" id="r_a0007a5a290087062e5595fa065be4ad6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0007a5a290087062e5595fa065be4ad6">turnOff</a> ()</td></tr>
+<tr class="memdesc:a0007a5a290087062e5595fa065be4ad6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module off. <br  />
   <br /></td></tr>
-<tr class="separator:a5cd92c1590d71379cc151ef8d5d8dd1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f011bc9652d1aa4da6d89398fa07d61" id="r_a6f011bc9652d1aa4da6d89398fa07d61"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f011bc9652d1aa4da6d89398fa07d61">turnOn</a> (const uint8_t &amp;newBrghtnssLvl)</td></tr>
-<tr class="memdesc:a6f011bc9652d1aa4da6d89398fa07d61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module on. <br  />
+<tr class="separator:a0007a5a290087062e5595fa065be4ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dfe9eb652fec8a06f5d126654f47883" id="r_a7dfe9eb652fec8a06f5d126654f47883"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7dfe9eb652fec8a06f5d126654f47883">turnOn</a> ()</td></tr>
+<tr class="memdesc:a7dfe9eb652fec8a06f5d126654f47883"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module on. <br  />
   <br /></td></tr>
-<tr class="separator:a6f011bc9652d1aa4da6d89398fa07d61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a7dfe9eb652fec8a06f5d126654f47883"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abff2d6deb86f12e4ca7a0bd17a444cc1" id="r_abff2d6deb86f12e4ca7a0bd17a444cc1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abff2d6deb86f12e4ca7a0bd17a444cc1">turnOn</a> (const uint8_t &amp;newBrghtnssLvl)</td></tr>
+<tr class="memdesc:abff2d6deb86f12e4ca7a0bd17a444cc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module on. <br  />
+  <br /></td></tr>
+<tr class="separator:abff2d6deb86f12e4ca7a0bd17a444cc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_seven_seg_static"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_seven_seg_static')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_seven_seg_static.html">SevenSegStatic</a></td></tr>
-<tr class="memitem:a31006d4f4f5a4019f0aed380e01b0d17 inherit pub_methods_class_seven_seg_static" id="r_a31006d4f4f5a4019f0aed380e01b0d17"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_static.html#a31006d4f4f5a4019f0aed380e01b0d17">ntfyUpdDsply</a> ()</td></tr>
-<tr class="memdesc:a31006d4f4f5a4019f0aed380e01b0d17 inherit pub_methods_class_seven_seg_static"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifies the object of a change of content available in the display buffer, the object must update the display. <br  />
-  <br /></td></tr>
-<tr class="separator:a31006d4f4f5a4019f0aed380e01b0d17 inherit pub_methods_class_seven_seg_static"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_seven_seg_disp_hw"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_seven_seg_disp_hw')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a></td></tr>
 <tr class="memitem:a31e3b1f101170f21c7d247f72536ff8c inherit pub_methods_class_seven_seg_disp_hw" id="r_a31e3b1f101170f21c7d247f72536ff8c"><td class="memItemLeft" align="right" valign="top">
 &#160;</td><td class="memItemRight" valign="bottom"><b>SevenSegDispHw</b> ()</td></tr>
@@ -174,10 +185,6 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 <tr class="memdesc:a5f3a59bcc54ddd20445e049359753ab6 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the hardware display to work, and starts the display activities. <br  />
   <br /></td></tr>
 <tr class="separator:a5f3a59bcc54ddd20445e049359753ab6 inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10ef7e4db6af3dbbcdeb48331d94f2e2 inherit pub_methods_class_seven_seg_disp_hw" id="r_a10ef7e4db6af3dbbcdeb48331d94f2e2"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a10ef7e4db6af3dbbcdeb48331d94f2e2">end</a> ()</td></tr>
-<tr class="memdesc:a10ef7e4db6af3dbbcdeb48331d94f2e2 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverts the <a class="el" href="class_seven_seg_disp_hw.html#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities.">begin(uint32_t)</a> actions, stopping the display activities and freeing the resources used by the Seven Segment display hardware object. <br  />
-  <br /></td></tr>
-<tr class="separator:a10ef7e4db6af3dbbcdeb48331d94f2e2 inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b9379b7b6ca6946813fd643d28d74f4 inherit pub_methods_class_seven_seg_disp_hw" id="r_a5b9379b7b6ca6946813fd643d28d74f4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a5b9379b7b6ca6946813fd643d28d74f4">getCommAnode</a> ()</td></tr>
 <tr class="memdesc:a5b9379b7b6ca6946813fd643d28d74f4 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a value indicating if the display module component uses a common anode or a common cathode led wiring. <br  />
   <br /></td></tr>
@@ -200,10 +207,11 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a79583f354ea2df08f1a45fea1ec23a37" id="r_a79583f354ea2df08f1a45fea1ec23a37"><td class="memItemLeft" align="right" valign="top"><a id="a79583f354ea2df08f1a45fea1ec23a37" name="a79583f354ea2df08f1a45fea1ec23a37"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_lclDspBuffPtr</b> {nullptr}</td></tr>
-<tr class="memdesc:a79583f354ea2df08f1a45fea1ec23a37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to an array of size equal to or less than <b>display module component</b> digits ports, will be equal to or less than **display void _sendBffr();. <br /></td></tr>
-<tr class="separator:a79583f354ea2df08f1a45fea1ec23a37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adba41b7e8ec479ab0d4b95996323d757" id="r_adba41b7e8ec479ab0d4b95996323d757"><td class="memItemLeft" align="right" valign="top"><a id="adba41b7e8ec479ab0d4b95996323d757" name="adba41b7e8ec479ab0d4b95996323d757"></a>
+uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_lclDspBuffPtr</b> {nullptr}</td></tr>
+<tr class="memdesc:adba41b7e8ec479ab0d4b95996323d757"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to an array of size equal to _dspDigitsQty, the local buffer differs from the shared _dspBuffPtr because it holds the data of the _dspBuffPtr formated and ready to be sent to the display controller <br  />
+ <br /></td></tr>
+<tr class="separator:adba41b7e8ec479ab0d4b95996323d757"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_seven_seg_static"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_seven_seg_static')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_seven_seg_static.html">SevenSegStatic</a></td></tr>
 <tr class="memitem:a9ed53120b10f765215787c5861cc4b09 inherit pro_attribs_class_seven_seg_static" id="r_a9ed53120b10f765215787c5861cc4b09"><td class="memItemLeft" align="right" valign="top">
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvl</b> {0}</td></tr>
@@ -225,9 +233,44 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Models a <b>Seven Segment display hardware</b> using a Max7219 <b>display controller component</b> </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a7856c3bfb493792afcc45ade9c5177c0" name="a7856c3bfb493792afcc45ade9c5177c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7856c3bfb493792afcc45ade9c5177c0">&#9670;&#160;</a></span>turnOff()</h2>
+<p>The Max7219 is a seven segment 8 digits maximum display controller, that shares most of it's characteristics with the Max7221. The main difference is that the Max7219 is not completely compliant with the SPI communications standard as the Max7221 is, so a software line handling solution must be provided. <br  />
+ </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="adfd8f4ad5a8b82598409b952163b9a4f" name="adfd8f4ad5a8b82598409b952163b9a4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfd8f4ad5a8b82598409b952163b9a4f">&#9670;&#160;</a></span>SevenSegMax7219()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SevenSegMax7219::SevenSegMax7219 </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>ioPins</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>dspDigits</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Class constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ioPins</td><td>A pointer to an array holding the identifieres for the 3 GPIO pins required to send the data to the <b>Seven Segment display hardware</b> to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0-&gt;clk, 1-&gt;din, 2-&gt;cs. <br  />
+ </td></tr>
+    <tr><td class="paramname">dspDigits</td><td>Quantity of digits/ports of the display. This parameter for this subclass must be in the range 1 &lt;= dspDigits &lt;= 8. <br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a5870af7127dcf97df29cfb8d07bb4a7f" name="a5870af7127dcf97df29cfb8d07bb4a7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5870af7127dcf97df29cfb8d07bb4a7f">&#9670;&#160;</a></span>end()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -236,7 +279,52 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void SevenSegMax7219::turnOff </td>
+          <td class="memname">bool SevenSegMax7219::end </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reverts the <a class="el" href="class_seven_seg_disp_hw.html#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities.">begin(uint32_t)</a> actions, stopping the display activities and freeing the resources used by the Seven Segment display hardware object. <br  />
+ </p>
+<dl class="section return"><dt>Returns</dt><dd>true The display activities could be stopped and resources freed with no problems. <br  />
+ </dd>
+<dd>
+false The display activities couldn't be stopped. The method failed. <br  />
+ </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_seven_seg_disp_hw.html#a10ef7e4db6af3dbbcdeb48331d94f2e2">SevenSegDispHw</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_max7219_a5870af7127dcf97df29cfb8d07bb4a7f_cgraph.png" border="0" usemap="#aclass_seven_seg_max7219_a5870af7127dcf97df29cfb8d07bb4a7f_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_max7219_a5870af7127dcf97df29cfb8d07bb4a7f_cgraph" id="aclass_seven_seg_max7219_a5870af7127dcf97df29cfb8d07bb4a7f_cgraph">
+<area shape="rect" title="Reverts the begin(uint32_t) actions, stopping the display activities and freeing the resources used b..." alt="" coords="5,5,169,32"/>
+<area shape="rect" href="class_seven_seg_max7219.html#a0007a5a290087062e5595fa065be4ad6" title="Turns the display module off." alt="" coords="217,5,398,32"/>
+<area shape="poly" title=" " alt="" coords="169,16,201,16,201,21,169,21"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a0007a5a290087062e5595fa065be4ad6" name="a0007a5a290087062e5595fa065be4ad6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0007a5a290087062e5595fa065be4ad6">&#9670;&#160;</a></span>turnOff()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SevenSegMax7219::turnOff </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -251,16 +339,26 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
 
 <p>Turns the display module off. <br  />
  </p>
-<p>The display module will be cleared and will keep that status until a <a class="el" href="#a5cd92c1590d71379cc151ef8d5d8dd1e" title="Turns the display module on.">turnOn()</a>, or <a class="el" href="#a6f011bc9652d1aa4da6d89398fa07d61" title="Turns the display module on.">turnOn(const uint8_t &amp;)</a> is invoked.</p>
+<p>The display module will be cleared and will keep that status until a <a class="el" href="#a7dfe9eb652fec8a06f5d126654f47883" title="Turns the display module on.">turnOn()</a>, or <a class="el" href="#abff2d6deb86f12e4ca7a0bd17a444cc1" title="Turns the display module on.">turnOn(const uint8_t &amp;)</a> is invoked.</p>
 <dl class="section note"><dt>Note</dt><dd>While the display is Off, it will keep receiving display data and commands, but will keep the leds turned off. When it receives a turnOn command the display will show the data it received while turned off, or the same it was showing at turnOff if no change to the contents was done. <br  />
  </dd></dl>
 
 <p>Reimplemented from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_max7219_a0007a5a290087062e5595fa065be4ad6_icgraph.png" border="0" usemap="#aclass_seven_seg_max7219_a0007a5a290087062e5595fa065be4ad6_icgraph" alt=""/></div>
+<map name="aclass_seven_seg_max7219_a0007a5a290087062e5595fa065be4ad6_icgraph" id="aclass_seven_seg_max7219_a0007a5a290087062e5595fa065be4ad6_icgraph">
+<area shape="rect" title="Turns the display module off." alt="" coords="217,5,398,32"/>
+<area shape="rect" href="class_seven_seg_max7219.html#a5870af7127dcf97df29cfb8d07bb4a7f" title="Reverts the begin(uint32_t) actions, stopping the display activities and freeing the resources used b..." alt="" coords="5,5,169,32"/>
+<area shape="poly" title=" " alt="" coords="201,21,169,21,169,16,201,16"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="a5cd92c1590d71379cc151ef8d5d8dd1e" name="a5cd92c1590d71379cc151ef8d5d8dd1e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5cd92c1590d71379cc151ef8d5d8dd1e">&#9670;&#160;</a></span>turnOn() <span class="overload">[1/2]</span></h2>
+<a id="a7dfe9eb652fec8a06f5d126654f47883" name="a7dfe9eb652fec8a06f5d126654f47883"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7dfe9eb652fec8a06f5d126654f47883">&#9670;&#160;</a></span>turnOn() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -269,7 +367,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void SevenSegMax7219::turnOn </td>
+          <td class="memname">void SevenSegMax7219::turnOn </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -284,15 +382,25 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
 
 <p>Turns the display module on. <br  />
  </p>
-<p>The display module will be turned on and it's content displayed, and will keep that status until a <a class="el" href="#a7856c3bfb493792afcc45ade9c5177c0" title="Turns the display module off.">turnOff()</a> is invoked. <br  />
+<p>The display module will be turned on and it's content displayed, and will keep that status until a <a class="el" href="#a0007a5a290087062e5595fa065be4ad6" title="Turns the display module off.">turnOff()</a> is invoked. <br  />
  </p>
 
 <p>Reimplemented from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_max7219_a7dfe9eb652fec8a06f5d126654f47883_icgraph.png" border="0" usemap="#aclass_seven_seg_max7219_a7dfe9eb652fec8a06f5d126654f47883_icgraph" alt=""/></div>
+<map name="aclass_seven_seg_max7219_a7dfe9eb652fec8a06f5d126654f47883_icgraph" id="aclass_seven_seg_max7219_a7dfe9eb652fec8a06f5d126654f47883_icgraph">
+<area shape="rect" title="Turns the display module on." alt="" coords="235,5,416,32"/>
+<area shape="rect" href="class_seven_seg_max7219.html#abff2d6deb86f12e4ca7a0bd17a444cc1" title="Turns the display module on." alt="" coords="5,5,187,32"/>
+<area shape="poly" title=" " alt="" coords="219,21,187,21,187,16,219,16"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="a6f011bc9652d1aa4da6d89398fa07d61" name="a6f011bc9652d1aa4da6d89398fa07d61"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f011bc9652d1aa4da6d89398fa07d61">&#9670;&#160;</a></span>turnOn() <span class="overload">[2/2]</span></h2>
+<a id="abff2d6deb86f12e4ca7a0bd17a444cc1" name="abff2d6deb86f12e4ca7a0bd17a444cc1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abff2d6deb86f12e4ca7a0bd17a444cc1">&#9670;&#160;</a></span>turnOn() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -301,7 +409,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void SevenSegMax7219::turnOn </td>
+          <td class="memname">void SevenSegMax7219::turnOn </td>
           <td>(</td>
           <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>newBrghtnssLvl</em></span></td><td>)</td>
           <td></td>
@@ -316,7 +424,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
 
 <p>Turns the display module on. <br  />
  </p>
-<p>The display module will be turned on, it's brightness level set to the requested level, it's content displayed, and will keep that status until a <a class="el" href="#a7856c3bfb493792afcc45ade9c5177c0" title="Turns the display module off.">turnOff()</a> is invoked.</p>
+<p>The display module will be turned on, it's brightness level set to the requested level, it's content displayed, and will keep that status until a <a class="el" href="#a0007a5a290087062e5595fa065be4ad6" title="Turns the display module off.">turnOff()</a> is invoked.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">newBrghtnssLvl</td><td>The new brightness level for the display. The value must be in the range <b>getBrghtnssMinLvl() &lt;= newBrghtnssLvl &lt;= getBrghtnssMaxLvl()</b> </td></tr>
@@ -325,6 +433,16 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
 </dl>
 
 <p>Reimplemented from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_max7219_abff2d6deb86f12e4ca7a0bd17a444cc1_cgraph.png" border="0" usemap="#aclass_seven_seg_max7219_abff2d6deb86f12e4ca7a0bd17a444cc1_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_max7219_abff2d6deb86f12e4ca7a0bd17a444cc1_cgraph" id="aclass_seven_seg_max7219_abff2d6deb86f12e4ca7a0bd17a444cc1_cgraph">
+<area shape="rect" title="Turns the display module on." alt="" coords="5,5,187,32"/>
+<area shape="rect" href="class_seven_seg_max7219.html#a7dfe9eb652fec8a06f5d126654f47883" title="Turns the display module on." alt="" coords="235,5,416,32"/>
+<area shape="poly" title=" " alt="" coords="187,16,219,16,219,21,187,21"/>
+</map>
+</div>
 
 </div>
 </div>
