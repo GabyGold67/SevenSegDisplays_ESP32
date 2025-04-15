@@ -207,11 +207,11 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:adba41b7e8ec479ab0d4b95996323d757" id="r_adba41b7e8ec479ab0d4b95996323d757"><td class="memItemLeft" align="right" valign="top"><a id="adba41b7e8ec479ab0d4b95996323d757" name="adba41b7e8ec479ab0d4b95996323d757"></a>
-uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_lclDspBuffPtr</b> {nullptr}</td></tr>
-<tr class="memdesc:adba41b7e8ec479ab0d4b95996323d757"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to an array of size equal to _dspDigitsQty, the local buffer differs from the shared _dspBuffPtr because it holds the data of the _dspBuffPtr formated and ready to be sent to the display controller <br  />
+<tr class="memitem:a79583f354ea2df08f1a45fea1ec23a37" id="r_a79583f354ea2df08f1a45fea1ec23a37"><td class="memItemLeft" align="right" valign="top"><a id="a79583f354ea2df08f1a45fea1ec23a37" name="a79583f354ea2df08f1a45fea1ec23a37"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_lclDspBuffPtr</b> {nullptr}</td></tr>
+<tr class="memdesc:a79583f354ea2df08f1a45fea1ec23a37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to an array of size equal to _dspDigitsQty, the local buffer differs from the shared _dspBuffPtr because it holds the data of the _dspBuffPtr formated and ready to be sent to the display controller <br  />
  <br /></td></tr>
-<tr class="separator:adba41b7e8ec479ab0d4b95996323d757"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a79583f354ea2df08f1a45fea1ec23a37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_seven_seg_static"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_seven_seg_static')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_seven_seg_static.html">SevenSegStatic</a></td></tr>
 <tr class="memitem:a9ed53120b10f765215787c5861cc4b09 inherit pro_attribs_class_seven_seg_static" id="r_a9ed53120b10f765215787c5861cc4b09"><td class="memItemLeft" align="right" valign="top">
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvl</b> {0}</td></tr>
@@ -233,8 +233,16 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Models a <b>Seven Segment display hardware</b> using a Max7219 <b>display controller component</b> </p>
-<p>The Max7219 is a seven segment 8 digits maximum display controller, that shares most of it's characteristics with the Max7221. The main difference is that the Max7219 is not completely compliant with the SPI communications standard as the Max7221 is, so a software line handling solution must be provided. <br  />
- </p>
+<p>The Max7219 is a seven segment 8 digits maximum display controller, that shares most of it's characteristics with the Max7221. The main difference is that the Max7219 is not completely compliant with the SPI communications standard as the Max7221 is, so a software line handling solution must be provided.</p>
+<p>The Max72xx defines it's messages as 16-bit units. Each 16-bit message includes data and address sections. The address space defines two sections:</p><ul>
+<li>Digit content addresses</li>
+<li>Control registers addresses</li>
+</ul>
+<h2>16-bit Message format: </h2>
+<p>|F|E|D|C|B|A|9|8||7|6|5|4|3|2|1|0| </p><hr  />
+<p> | | MSb | LSb | | Data | Address N/C Address Space map:</p>
+<h2>Address|Purpose |Selected value/Accepted range </h2>
+<p>0xX0 | NOP | N/A 0xX1~X8| Digit 0~7 content| 0x00~0xFF with DpABCDEFG bit order 0xX9 | Decode Mode | 0x00 NO decode of any kind (0x01, 0x0F, 0xFF valid options) 0xXA | Brightness level | 0xX0~0xXF (min to max, turns on min., begin MAX) 0xXB | Used digits Qty. | 0xX0~0xX7 (1 to 7 digits, start dspQty) 0xXC | Shutdown Register| 0x00: Shutdown, 0x01: normal operation 0xXD | N/C | 0x0E | N/C | 0x0F | Display test | 0xX0: Normal operation 0xX1: Test all leds ON </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="adfd8f4ad5a8b82598409b952163b9a4f" name="adfd8f4ad5a8b82598409b952163b9a4f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adfd8f4ad5a8b82598409b952163b9a4f">&#9670;&#160;</a></span>SevenSegMax7219()</h2>

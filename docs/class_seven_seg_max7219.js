@@ -8,5 +8,5 @@ var class_seven_seg_max7219 =
     [ "turnOff", "class_seven_seg_max7219.html#a0007a5a290087062e5595fa065be4ad6", null ],
     [ "turnOn", "class_seven_seg_max7219.html#a7dfe9eb652fec8a06f5d126654f47883", null ],
     [ "turnOn", "class_seven_seg_max7219.html#abff2d6deb86f12e4ca7a0bd17a444cc1", null ],
-    [ "_lclDspBuffPtr", "class_seven_seg_max7219.html#adba41b7e8ec479ab0d4b95996323d757", null ]
+    [ "_lclDspBuffPtr", "class_seven_seg_max7219.html#a79583f354ea2df08f1a45fea1ec23a37", null ]
 ];
