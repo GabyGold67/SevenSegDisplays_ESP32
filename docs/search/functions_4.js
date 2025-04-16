@@ -12,7 +12,8 @@ var searchData=
   ['getdspvalmax_9',['getDspValMax',['../class_seven_seg_displays.html#ace9c93b38f969bac953449c506c2ce2f',1,'SevenSegDisplays']]],
   ['getdspvalmin_10',['getDspValMin',['../class_seven_seg_displays.html#a09b7157b7be5f4c4b0562f862d6aaf5c',1,'SevenSegDisplays']]],
   ['gethwdspdigitsqty_11',['getHwDspDigitsQty',['../class_seven_seg_disp_hw.html#ac6544795ed8c9b44211424c8b5ef216f',1,'SevenSegDispHw']]],
-  ['getmaxblinkrate_12',['getMaxBlinkRate',['../class_seven_seg_displays.html#acacba9047c40769b42a11268df302f9c',1,'SevenSegDisplays']]],
-  ['getminblinkrate_13',['getMinBlinkRate',['../class_seven_seg_displays.html#a0c32e61a26a22821230c012f8a3f6583',1,'SevenSegDisplays']]],
-  ['getserialnbr_14',['getSerialNbr',['../class_seven_seg_displays.html#a017863a7a0d36b18f47cd0f0ae4128b6',1,'SevenSegDisplays']]]
+  ['getison_12',['getIsOn',['../class_seven_seg_max7219.html#a0dca0ec94329140f654383ddee5bc142',1,'SevenSegMax7219']]],
+  ['getmaxblinkrate_13',['getMaxBlinkRate',['../class_seven_seg_displays.html#acacba9047c40769b42a11268df302f9c',1,'SevenSegDisplays']]],
+  ['getminblinkrate_14',['getMinBlinkRate',['../class_seven_seg_displays.html#a0c32e61a26a22821230c012f8a3f6583',1,'SevenSegDisplays']]],
+  ['getserialnbr_15',['getSerialNbr',['../class_seven_seg_displays.html#a017863a7a0d36b18f47cd0f0ae4128b6',1,'SevenSegDisplays']]]
 ];

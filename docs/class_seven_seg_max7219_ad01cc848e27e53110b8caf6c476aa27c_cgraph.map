@@ -1,0 +1,5 @@
+<map id="SevenSegMax7219::begin" name="SevenSegMax7219::begin">
+<area shape="rect" id="Node000001" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="5,5,179,32"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_max7219.html#a7dfe9eb652fec8a06f5d126654f47883" title="Turns the display module on." alt="" coords="227,5,408,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="179,16,211,16,211,21,179,21"/>
+</map>

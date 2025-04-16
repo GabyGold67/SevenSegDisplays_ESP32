@@ -1,7 +1,7 @@
 # **SevenSegDisplays_ESP32: A Seven Segments displays easy to use library**  
 
 # "One library to rule them all..."  
-**(Or at least as many as I could put my hands on)**  
+**(At least as many as I could put my hands on)**  
 
 The library goal is to provide a common consistent API to display data on **seven segments LED displays** independently of the hardware used: the display modules and the driving electronics.  
 

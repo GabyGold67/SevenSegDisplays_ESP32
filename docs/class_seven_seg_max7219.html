@@ -148,14 +148,24 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegMax7219</b> ()</td></tr>
 <tr class="memdesc:abc856b37e1f80e486521b70bd85e09df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class destructor. <br /></td></tr>
 <tr class="separator:abc856b37e1f80e486521b70bd85e09df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad01cc848e27e53110b8caf6c476aa27c" id="r_ad01cc848e27e53110b8caf6c476aa27c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad01cc848e27e53110b8caf6c476aa27c">begin</a> ()</td></tr>
+<tr class="memdesc:ad01cc848e27e53110b8caf6c476aa27c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the hardware display to work, and starts the display activities. <br  />
+  <br /></td></tr>
+<tr class="separator:ad01cc848e27e53110b8caf6c476aa27c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5870af7127dcf97df29cfb8d07bb4a7f" id="r_a5870af7127dcf97df29cfb8d07bb4a7f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5870af7127dcf97df29cfb8d07bb4a7f">end</a> ()</td></tr>
-<tr class="memdesc:a5870af7127dcf97df29cfb8d07bb4a7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverts the <a class="el" href="class_seven_seg_disp_hw.html#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities.">begin(uint32_t)</a> actions, stopping the display activities and freeing the resources used by the Seven Segment display hardware object. <br  />
+<tr class="memdesc:a5870af7127dcf97df29cfb8d07bb4a7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ends the active mode of the display by shutting it off. <br  />
   <br /></td></tr>
 <tr class="separator:a5870af7127dcf97df29cfb8d07bb4a7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0dca0ec94329140f654383ddee5bc142" id="r_a0dca0ec94329140f654383ddee5bc142"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0dca0ec94329140f654383ddee5bc142">getIsOn</a> ()</td></tr>
+<tr class="memdesc:a0dca0ec94329140f654383ddee5bc142"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a value indicating if the display controller is in working/On or shutdown/Off mode.  <br /></td></tr>
+<tr class="separator:a0dca0ec94329140f654383ddee5bc142"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a559f2c5cca5eb5a806720359efd99788" id="r_a559f2c5cca5eb5a806720359efd99788"><td class="memItemLeft" align="right" valign="top"><a id="a559f2c5cca5eb5a806720359efd99788" name="a559f2c5cca5eb5a806720359efd99788"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>ntfyUpdDsply</b> ()</td></tr>
 <tr class="memdesc:a559f2c5cca5eb5a806720359efd99788"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the object of a change of content available in the display buffer, the object must update th...">SevenSegDispHw::ntfyUpdDsply()</a> for description. <br /></td></tr>
 <tr class="separator:a559f2c5cca5eb5a806720359efd99788"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00e46d6be95a02bd6d20de36bf671080" id="r_a00e46d6be95a02bd6d20de36bf671080"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a00e46d6be95a02bd6d20de36bf671080">setBrghtnssLvl</a> (const uint8_t &amp;newBrghtnssLvl)</td></tr>
+<tr class="memdesc:a00e46d6be95a02bd6d20de36bf671080"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the brightness level for the display module.  <br /></td></tr>
+<tr class="separator:a00e46d6be95a02bd6d20de36bf671080"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0007a5a290087062e5595fa065be4ad6" id="r_a0007a5a290087062e5595fa065be4ad6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0007a5a290087062e5595fa065be4ad6">turnOff</a> ()</td></tr>
 <tr class="memdesc:a0007a5a290087062e5595fa065be4ad6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module off. <br  />
   <br /></td></tr>
@@ -233,16 +243,17 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Models a <b>Seven Segment display hardware</b> using a Max7219 <b>display controller component</b> </p>
-<p>The Max7219 is a seven segment 8 digits maximum display controller, that shares most of it's characteristics with the Max7221. The main difference is that the Max7219 is not completely compliant with the SPI communications standard as the Max7221 is, so a software line handling solution must be provided.</p>
-<p>The Max72xx defines it's messages as 16-bit units. Each 16-bit message includes data and address sections. The address space defines two sections:</p><ul>
-<li>Digit content addresses</li>
+<p>The Max7219 is a seven segment 8 digits (maximum) display controller that shares most of it's characteristics with the Max7221. The main difference is that the Max7219 is not completely compliant with the SPI communications protocol standard as the Max7221 is, so a software line handling solution must be provided.</p>
+<p>The Max72xx defines it's messages as 16-bit units. Each 16-bit message includes data and address sections. The address space is separated into two sections:</p><ul>
+<li>Display ports content addresses</li>
 <li>Control registers addresses</li>
 </ul>
 <h2>16-bit Message format: </h2>
 <p>|F|E|D|C|B|A|9|8||7|6|5|4|3|2|1|0| </p><hr  />
-<p> | | MSb | LSb | | Data | Address N/C Address Space map:</p>
+<p> | | MSb | LSb | | Data | Address N/C</p>
+<h2>Address Space map: </h2>
 <h2>Address|Purpose |Selected value/Accepted range </h2>
-<p>0xX0 | NOP | N/A 0xX1~X8| Digit 0~7 content| 0x00~0xFF with DpABCDEFG bit order 0xX9 | Decode Mode | 0x00 NO decode of any kind (0x01, 0x0F, 0xFF valid options) 0xXA | Brightness level | 0xX0~0xXF (min to max, turns on min., begin MAX) 0xXB | Used digits Qty. | 0xX0~0xX7 (1 to 7 digits, start dspQty) 0xXC | Shutdown Register| 0x00: Shutdown, 0x01: normal operation 0xXD | N/C | 0x0E | N/C | 0x0F | Display test | 0xX0: Normal operation 0xX1: Test all leds ON </p>
+<p>0xX0 | NOP | N/A 0xX1~X8| Digit 0~7 content| 0x00~0xFF with DpABCDEFG bit order 0xX9 | Decode Mode | 0x00 NO decode of any kind (0x01, 0x0F, 0xFF valid options) 0xXA | Brightness level | 0xX0~0xXF (min to max, turns on at minimum) 0xXB | Used digits Qty. | 0xX0~0xX7 (1 to 7 digits, turns on at 1) 0xXC | Shutdown Register| 0x00: Shutdown, 0x01: normal operation 0xXD | N/C | 0x0E | N/C | 0x0F | Display test | 0xX0: Normal operation, 0xX1: Test all leds ON </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="adfd8f4ad5a8b82598409b952163b9a4f" name="adfd8f4ad5a8b82598409b952163b9a4f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adfd8f4ad5a8b82598409b952163b9a4f">&#9670;&#160;</a></span>SevenSegMax7219()</h2>
@@ -269,14 +280,80 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
     <tr><td class="paramname">ioPins</td><td>A pointer to an array holding the identifieres for the 3 GPIO pins required to send the data to the <b>Seven Segment display hardware</b> to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0-&gt;clk, 1-&gt;din, 2-&gt;cs. <br  />
  </td></tr>
     <tr><td class="paramname">dspDigits</td><td>Quantity of digits/ports of the display. This parameter for this subclass must be in the range 1 &lt;= dspDigits &lt;= 8. <br  />
- </td></tr>
+</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The Max72XX <b>display controller</b> family is designed to control common cathode <b>display modules</b>, so there is no parameter provided to instantiate a common anode <a class="el" href="class_seven_seg_max7219.html" title="Models a Seven Segment display hardware using a Max7219 display controller component">SevenSegMax7219</a> class object. <br  />
+ </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_max7219_adfd8f4ad5a8b82598409b952163b9a4f_cgraph.png" border="0" usemap="#aclass_seven_seg_max7219_adfd8f4ad5a8b82598409b952163b9a4f_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_max7219_adfd8f4ad5a8b82598409b952163b9a4f_cgraph" id="aclass_seven_seg_max7219_adfd8f4ad5a8b82598409b952163b9a4f_cgraph">
+<area shape="rect" title="Class constructor." alt="" coords="5,23,208,65"/>
+<area shape="rect" href="class_seven_seg_max7219.html#ad01cc848e27e53110b8caf6c476aa27c" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="284,5,457,32"/>
+<area shape="poly" title=" " alt="" coords="208,32,268,26,268,31,208,37"/>
+<area shape="rect" href="class_seven_seg_max7219.html#a00e46d6be95a02bd6d20de36bf671080" title="Sets the brightness level for the display module." alt="" coords="256,56,485,83"/>
+<area shape="poly" title=" " alt="" coords="208,51,240,54,240,59,208,56"/>
+<area shape="rect" href="class_seven_seg_max7219.html#a7dfe9eb652fec8a06f5d126654f47883" title="Turns the display module on." alt="" coords="533,5,714,32"/>
+<area shape="poly" title=" " alt="" coords="458,16,518,16,518,21,458,21"/>
+</map>
+</div>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="ad01cc848e27e53110b8caf6c476aa27c" name="ad01cc848e27e53110b8caf6c476aa27c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad01cc848e27e53110b8caf6c476aa27c">&#9670;&#160;</a></span>begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegMax7219::begin </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets up the hardware display to work, and starts the display activities. <br  />
+ </p>
+<p>For the Max72XX display controllers this setup includes:</p><ul>
+<li>Setting the display in "Normal operation mode"</li>
+<li>Setting the quantity of display ports of the "Display module" connected to the controller. <br  />
+</li>
+<li>BCD decoding use. <br  />
+</li>
+<li>Turning on the Display controller (shutdown register setting). <br  />
+</li>
+</ul>
+<dl class="section return"><dt>Returns</dt><dd>true Always </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_max7219_ad01cc848e27e53110b8caf6c476aa27c_cgraph.png" border="0" usemap="#aclass_seven_seg_max7219_ad01cc848e27e53110b8caf6c476aa27c_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_max7219_ad01cc848e27e53110b8caf6c476aa27c_cgraph" id="aclass_seven_seg_max7219_ad01cc848e27e53110b8caf6c476aa27c_cgraph">
+<area shape="rect" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="5,5,179,32"/>
+<area shape="rect" href="class_seven_seg_max7219.html#a7dfe9eb652fec8a06f5d126654f47883" title="Turns the display module on." alt="" coords="227,5,408,32"/>
+<area shape="poly" title=" " alt="" coords="179,16,211,16,211,21,179,21"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_max7219_ad01cc848e27e53110b8caf6c476aa27c_icgraph.png" border="0" usemap="#aclass_seven_seg_max7219_ad01cc848e27e53110b8caf6c476aa27c_icgraph" alt=""/></div>
+<map name="aclass_seven_seg_max7219_ad01cc848e27e53110b8caf6c476aa27c_icgraph" id="aclass_seven_seg_max7219_ad01cc848e27e53110b8caf6c476aa27c_icgraph">
+<area shape="rect" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="256,13,429,40"/>
+<area shape="rect" href="class_seven_seg_max7219.html#adfd8f4ad5a8b82598409b952163b9a4f" title="Class constructor." alt="" coords="5,5,208,48"/>
+<area shape="poly" title=" " alt="" coords="240,29,208,29,208,24,240,24"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a5870af7127dcf97df29cfb8d07bb4a7f" name="a5870af7127dcf97df29cfb8d07bb4a7f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5870af7127dcf97df29cfb8d07bb4a7f">&#9670;&#160;</a></span>end()</h2>
 
@@ -300,13 +377,11 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
 </table>
 </div><div class="memdoc">
 
-<p>Reverts the <a class="el" href="class_seven_seg_disp_hw.html#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities.">begin(uint32_t)</a> actions, stopping the display activities and freeing the resources used by the Seven Segment display hardware object. <br  />
+<p>Ends the active mode of the display by shutting it off. <br  />
  </p>
-<dl class="section return"><dt>Returns</dt><dd>true The display activities could be stopped and resources freed with no problems. <br  />
- </dd>
-<dd>
-false The display activities couldn't be stopped. The method failed. <br  />
- </dd></dl>
+<p>While the control module will keep receiving and updating it's registers, while the display controller is in shutdown mode the display module will be turned off and no activity will be executed in the corresponding led powering lines. <br  />
+</p>
+<dl class="section return"><dt>Returns</dt><dd>true Always </dd></dl>
 
 <p>Reimplemented from <a class="el" href="class_seven_seg_disp_hw.html#a10ef7e4db6af3dbbcdeb48331d94f2e2">SevenSegDispHw</a>.</p>
 <div class="dynheader">
@@ -314,9 +389,90 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_max7219_a5870af7127dcf97df29cfb8d07bb4a7f_cgraph.png" border="0" usemap="#aclass_seven_seg_max7219_a5870af7127dcf97df29cfb8d07bb4a7f_cgraph" alt=""/></div>
 <map name="aclass_seven_seg_max7219_a5870af7127dcf97df29cfb8d07bb4a7f_cgraph" id="aclass_seven_seg_max7219_a5870af7127dcf97df29cfb8d07bb4a7f_cgraph">
-<area shape="rect" title="Reverts the begin(uint32_t) actions, stopping the display activities and freeing the resources used b..." alt="" coords="5,5,169,32"/>
+<area shape="rect" title="Ends the active mode of the display by shutting it off." alt="" coords="5,5,169,32"/>
 <area shape="rect" href="class_seven_seg_max7219.html#a0007a5a290087062e5595fa065be4ad6" title="Turns the display module off." alt="" coords="217,5,398,32"/>
 <area shape="poly" title=" " alt="" coords="169,16,201,16,201,21,169,21"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a0dca0ec94329140f654383ddee5bc142" name="a0dca0ec94329140f654383ddee5bc142"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0dca0ec94329140f654383ddee5bc142">&#9670;&#160;</a></span>getIsOn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegMax7219::getIsOn </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a value indicating if the display controller is in working/On or shutdown/Off mode. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The display controller is in working/On mode. <br  />
+ </td></tr>
+    <tr><td class="paramname">false</td><td>The display controller is in shutdown/Off mode. <br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a>.</p>
+
+</div>
+</div>
+<a id="a00e46d6be95a02bd6d20de36bf671080" name="a00e46d6be95a02bd6d20de36bf671080"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00e46d6be95a02bd6d20de36bf671080">&#9670;&#160;</a></span>setBrghtnssLvl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegMax7219::setBrghtnssLvl </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>newBrghtnssLvl</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the brightness level for the display module. </p>
+<p>See <a class="el" href="class_seven_seg_t_m163_x.html#a4e74de34810a89ff8409e277e962e09f" title="Sets the Brghtness level of the display.">SevenSegTM163X::setBrghtnssLvl(const uint8_t &amp;)</a> for details. <br  />
+ </p>
+
+<p>Reimplemented from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_max7219_a00e46d6be95a02bd6d20de36bf671080_icgraph.png" border="0" usemap="#aclass_seven_seg_max7219_a00e46d6be95a02bd6d20de36bf671080_icgraph" alt=""/></div>
+<map name="aclass_seven_seg_max7219_a00e46d6be95a02bd6d20de36bf671080_icgraph" id="aclass_seven_seg_max7219_a00e46d6be95a02bd6d20de36bf671080_icgraph">
+<area shape="rect" title="Sets the brightness level for the display module." alt="" coords="256,43,485,69"/>
+<area shape="rect" href="class_seven_seg_max7219.html#adfd8f4ad5a8b82598409b952163b9a4f" title="Class constructor." alt="" coords="5,5,208,48"/>
+<area shape="poly" title=" " alt="" coords="240,44,208,41,208,35,240,39"/>
+<area shape="rect" href="class_seven_seg_max7219.html#abff2d6deb86f12e4ca7a0bd17a444cc1" title="Turns the display module on." alt="" coords="16,72,197,99"/>
+<area shape="poly" title=" " alt="" coords="241,73,198,78,197,73,240,68"/>
 </map>
 </div>
 
@@ -358,7 +514,7 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="class_seven_seg_max7219_a0007a5a290087062e5595fa065be4ad6_icgraph.png" border="0" usemap="#aclass_seven_seg_max7219_a0007a5a290087062e5595fa065be4ad6_icgraph" alt=""/></div>
 <map name="aclass_seven_seg_max7219_a0007a5a290087062e5595fa065be4ad6_icgraph" id="aclass_seven_seg_max7219_a0007a5a290087062e5595fa065be4ad6_icgraph">
 <area shape="rect" title="Turns the display module off." alt="" coords="217,5,398,32"/>
-<area shape="rect" href="class_seven_seg_max7219.html#a5870af7127dcf97df29cfb8d07bb4a7f" title="Reverts the begin(uint32_t) actions, stopping the display activities and freeing the resources used b..." alt="" coords="5,5,169,32"/>
+<area shape="rect" href="class_seven_seg_max7219.html#a5870af7127dcf97df29cfb8d07bb4a7f" title="Ends the active mode of the display by shutting it off." alt="" coords="5,5,169,32"/>
 <area shape="poly" title=" " alt="" coords="201,21,169,21,169,16,201,16"/>
 </map>
 </div>
@@ -399,9 +555,13 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_max7219_a7dfe9eb652fec8a06f5d126654f47883_icgraph.png" border="0" usemap="#aclass_seven_seg_max7219_a7dfe9eb652fec8a06f5d126654f47883_icgraph" alt=""/></div>
 <map name="aclass_seven_seg_max7219_a7dfe9eb652fec8a06f5d126654f47883_icgraph" id="aclass_seven_seg_max7219_a7dfe9eb652fec8a06f5d126654f47883_icgraph">
-<area shape="rect" title="Turns the display module on." alt="" coords="235,5,416,32"/>
-<area shape="rect" href="class_seven_seg_max7219.html#abff2d6deb86f12e4ca7a0bd17a444cc1" title="Turns the display module on." alt="" coords="5,5,187,32"/>
-<area shape="poly" title=" " alt="" coords="219,21,187,21,187,16,219,16"/>
+<area shape="rect" title="Turns the display module on." alt="" coords="485,39,666,65"/>
+<area shape="rect" href="class_seven_seg_max7219.html#ad01cc848e27e53110b8caf6c476aa27c" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="260,13,433,40"/>
+<area shape="poly" title=" " alt="" coords="469,43,433,39,434,34,470,38"/>
+<area shape="rect" href="class_seven_seg_max7219.html#abff2d6deb86f12e4ca7a0bd17a444cc1" title="Turns the display module on." alt="" coords="256,64,437,91"/>
+<area shape="poly" title=" " alt="" coords="470,66,438,70,437,65,469,61"/>
+<area shape="rect" href="class_seven_seg_max7219.html#adfd8f4ad5a8b82598409b952163b9a4f" title="Class constructor." alt="" coords="5,5,208,48"/>
+<area shape="poly" title=" " alt="" coords="244,29,208,29,208,24,244,24"/>
 </map>
 </div>
 
@@ -446,9 +606,11 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_max7219_abff2d6deb86f12e4ca7a0bd17a444cc1_cgraph.png" border="0" usemap="#aclass_seven_seg_max7219_abff2d6deb86f12e4ca7a0bd17a444cc1_cgraph" alt=""/></div>
 <map name="aclass_seven_seg_max7219_abff2d6deb86f12e4ca7a0bd17a444cc1_cgraph" id="aclass_seven_seg_max7219_abff2d6deb86f12e4ca7a0bd17a444cc1_cgraph">
-<area shape="rect" title="Turns the display module on." alt="" coords="5,5,187,32"/>
-<area shape="rect" href="class_seven_seg_max7219.html#a7dfe9eb652fec8a06f5d126654f47883" title="Turns the display module on." alt="" coords="235,5,416,32"/>
-<area shape="poly" title=" " alt="" coords="187,16,219,16,219,21,187,21"/>
+<area shape="rect" title="Turns the display module on." alt="" coords="5,31,187,57"/>
+<area shape="rect" href="class_seven_seg_max7219.html#a00e46d6be95a02bd6d20de36bf671080" title="Sets the brightness level for the display module." alt="" coords="235,5,464,32"/>
+<area shape="poly" title=" " alt="" coords="187,32,219,29,219,34,187,38"/>
+<area shape="rect" href="class_seven_seg_max7219.html#a7dfe9eb652fec8a06f5d126654f47883" title="Turns the display module on." alt="" coords="259,56,440,83"/>
+<area shape="poly" title=" " alt="" coords="187,50,244,56,243,61,187,56"/>
 </map>
 </div>
 

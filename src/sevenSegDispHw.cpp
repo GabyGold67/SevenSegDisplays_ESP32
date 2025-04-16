@@ -839,6 +839,7 @@ SevenSegMax7219::SevenSegMax7219(uint8_t* ioPins, uint8_t dspDigits)
    digitalWrite(_cs, HIGH);
 
    begin();
+   setBrghtnssLvl(_brghtnssLvlMax);
 }
 
 SevenSegMax7219::~SevenSegMax7219()
@@ -848,21 +849,12 @@ SevenSegMax7219::~SevenSegMax7219()
 
 bool SevenSegMax7219::begin()
 {
-   uint8_t _mssgData{0x00};
-
    // Set Not in test mode!
    send(_DspTestAddr, _NormalOp);   
-
-   setBrghtnssLvl(_brghtnssLvlMax);
-
-   
    // Set Scan Limit
-   _mssgData = _dspDigitsQty - 1; //!< Register data 0x00 to 0x07: quantity of digits to keep updated
-   send(_ScanLimitAddr, _mssgData);   
-
+   send(_ScanLimitAddr, (_dspDigitsQty - 1), true);   //!< Register data 0x00 to 0x07: quantity of digits to keep updated
    // Set No Decode format
    send(_DecodeModeAddr, _NoDecode);   
-
    turnOn();
 
 	return true;
@@ -872,11 +864,10 @@ uint8_t SevenSegMax7219::_cnvrtStdDgtTo72xxDgt(const uint8_t &stdDgt){
    uint8_t result {0x00};
 
    for(uint8_t i {0}; i < 7; i++) {
-      if((stdDgt & (1 << (6 - i))) != 0){
-         result = result | (1 << i);
-      }
+      if((stdDgt & (1 << (6 - i))) != 0)
+         result |=  (1 << i);
    }
-   result = result | (stdDgt & 0x80);
+   result |= (stdDgt & 0x80);
 
    return result;
 }
@@ -901,7 +892,6 @@ void SevenSegMax7219::ntfyUpdDsply(){
 }
 
 void SevenSegMax7219::send(const uint8_t &val, const  bool &MSbFrst) {
-
    for(uint8_t i {0}; i < 8; i++) {
       if(MSbFrst)
          digitalWrite(_din, (val & (1 << (7 - i)))?HIGH:LOW);
@@ -910,6 +900,8 @@ void SevenSegMax7219::send(const uint8_t &val, const  bool &MSbFrst) {
       digitalWrite(_clk, HIGH);
       digitalWrite(_clk, LOW);
    }
+
+   return;
 }
 
 void SevenSegMax7219::send(const uint8_t &address, const uint8_t &data, const  bool &MSbFrst){
@@ -926,9 +918,8 @@ void SevenSegMax7219::send(const uint8_t &address, const uint8_t &data, const  b
 }
 
 void SevenSegMax7219::_sendBffr(){
-   for(uint8_t dspPrt{0}; dspPrt < _dspDigitsQty; dspPrt++){
+   for(uint8_t dspPrt{0}; dspPrt < _dspDigitsQty; dspPrt++)
       send((_DspPortsBaseAddr + dspPrt), *(_lclDspBuffPtr + dspPrt));
-   }
 
    return;
 }
@@ -938,7 +929,7 @@ bool SevenSegMax7219::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
 
    if((newBrghtnssLvl >= _brghtnssLvlMin) && (newBrghtnssLvl <= _brghtnssLvlMax)){
       if(newBrghtnssLvl != _brghtnssLvl){
-         send(_BrghtnsSettAddr, newBrghtnssLvl);   
+         send(_BrghtnsSettAddr, newBrghtnssLvl, true);   
          _brghtnssLvl = newBrghtnssLvl;
       }
       result = true;
@@ -949,7 +940,7 @@ bool SevenSegMax7219::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
 
 void SevenSegMax7219::turnOff(){
    if(_isOn){
-      send(_ShutDownAddr, _TurnOff);   
+      send(_ShutDownAddr, _TurnOff, true);   
       _isOn = false;
    }
 
@@ -958,7 +949,7 @@ void SevenSegMax7219::turnOff(){
 
 void SevenSegMax7219::turnOn(){
    if(!_isOn){
-      send(_ShutDownAddr, _TurnOn);   
+      send(_ShutDownAddr, _TurnOn, true);   
       _isOn = true;
    }
 
