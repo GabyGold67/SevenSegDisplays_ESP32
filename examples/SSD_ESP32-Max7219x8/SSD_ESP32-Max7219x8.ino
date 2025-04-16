@@ -16,7 +16,7 @@
  * Github <https://github.com/GabyGold67>
  *
  * @date First release: 15/05/2023  
- *       Last update:   14/04/2025 17:00 GMT+0200 DST  
+ *       Last update:   16/04/2025 17:30 GMT+0200 DST  
  ******************************************************************************
   * @warning **Use of this library is under your own responsibility**
   * 
@@ -84,10 +84,6 @@ void loop() {
 void mainCtrlTsk(void *pvParameters){
    delay(10);  //FTPO Part of the WOKWI simulator additions, for simulation startup needs
 
-   TickType_t loopTmrStrtTm{0};
-   TickType_t* loopTmrStrtTmPtr{&loopTmrStrtTm};
-   TickType_t totalDelay {LoopDlyTtlTm};
-
    //Set of variables and constants needed for the tests
    bool testResult{};
    const long testTime{2000};
@@ -132,42 +128,91 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
    // myLedDispPtr -> setDigitsOrder(theNewOrder);
    SevenSegDisplays myLedDisp(myLedDispPtr);
 
-   // myLedDisp.getDspUndrlHwPtr()->begin();
    Serial.println("Service Started");
 
-   for(;;){
+for(;;){
 
-      {
-         if(!myLedDisp.getDspUndrlHwPtr()->getIsOn()){
-            myLedDisp.getDspUndrlHwPtr()->turnOn();
-            Serial.println("Display turned on");
-            testResult = myLedDisp.print("On");
-            vTaskDelay(testTime*5);
-         }
-      }
-
-      /*{
-         //print() with a string argument, two characters long, all characters included in the representable characters list
-         testResult = myLedDisp.print("01234567");
-         vTaskDelay(testTime*5);
-      }
-
-      {
-         //Clear the display contents before starting
-         myLedDisp.clear();
-         Serial.println("Display cleared");
+   {
+      if(!myLedDisp.getDspUndrlHwPtr()->getIsOn()){
          myLedDisp.getDspUndrlHwPtr()->turnOn();
-         Serial.println("Display turned On");
-         vTaskDelay(250);
+         Serial.println("Display turned on");
       }
+      else
+         Serial.println("Display WAS ALREADY turned ON");   
+   }
 
-      {
-         //print() with a string argument, two characters long, all characters included in the representable characters list
-         testResult = myLedDisp.print("On");
-         vTaskDelay(testTime);
-      }
+   {
+      //print() with a string argument, two characters long, all characters included in the representable characters list
+      myLedDisp.clear();
+      Serial.println("Display cleared");
+      testResult = myLedDisp.print("On");
+      vTaskDelay(testTime);
+   }
+
+   {
+      //print() with a string argument, two characters long, all characters included in the representable characters list
+      Serial.println("Display 0");
+      testResult = myLedDisp.print("0");
+      vTaskDelay(testTime);
+   }
+
+   {
+      //print() with a string argument, two characters long, all characters included in the representable characters list
+      Serial.println("Display 0.1");
+      testResult = myLedDisp.print("0.1");
+      vTaskDelay(testTime);
+   }
       
-      {
+   {
+      //print() with a string argument, two characters long, all characters included in the representable characters list
+      Serial.println("Display 0.1.2");
+      testResult = myLedDisp.print("0.1.2");
+      vTaskDelay(testTime);
+   }
+
+   {
+      //print() with a string argument, two characters long, all characters included in the representable characters list
+      Serial.println("Display 0.1.2.3");
+      testResult = myLedDisp.print("0.1.2.3");
+      vTaskDelay(testTime);
+   }
+
+   {
+      //print() with a string argument, two characters long, all characters included in the representable characters list
+      Serial.println("Display 0.1.2.3.4");
+      testResult = myLedDisp.print("0.1.2.3.4");
+      vTaskDelay(testTime);
+   }
+
+   {
+      //print() with a string argument, two characters long, all characters included in the representable characters list
+      Serial.println("Display 0.1.2.3.4.5");
+      testResult = myLedDisp.print("0.1.2.3.4.5");
+      vTaskDelay(testTime);
+   }
+
+   {
+      //print() with a string argument, two characters long, all characters included in the representable characters list
+      Serial.println("Display 0.1.2.3.4.5.6");
+      testResult = myLedDisp.print("0.1.2.3.4.5.6");
+      vTaskDelay(testTime);
+   }
+
+   {
+      //print() with a string argument, two characters long, all characters included in the representable characters list
+      Serial.println("Display 0.1.2.3.4.5.6.7");
+      testResult = myLedDisp.print("0.1.2.3.4.5.6.7");
+      vTaskDelay(testTime);
+   }
+
+   {
+      //print() with a string argument, two characters long, all characters included in the representable characters list
+      Serial.println("Display 0.1.2.3.4.5.6.7.");
+      testResult = myLedDisp.print("0.1.2.3.4.5.6.7.");
+      vTaskDelay(testTime);
+   }
+
+   {
          //print() with a string argument, four characters long, all characters included in the representable characters list
          Serial.println("Display turned Off");
          myLedDisp.getDspUndrlHwPtr()->turnOff();  // Demonstrates the display control keeps receiving data altough it's set turned Off
@@ -178,31 +223,6 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
          vTaskDelay(testTime);
       }
 
-      {
-         testResult = myLedDisp.print("0000");
-         vTaskDelay(testTime);
-      }
-
-      {
-         testResult = myLedDisp.print("1.111");
-         vTaskDelay(testTime);
-      }
-
-      {
-         testResult = myLedDisp.print("22.22");
-         vTaskDelay(testTime);
-      }
-
-      {
-         testResult = myLedDisp.print("333.3");
-         vTaskDelay(testTime);
-      }
-
-      {
-         testResult = myLedDisp.print("4444.");
-         vTaskDelay(testTime);
-      }
-         
       {
          //print() with a string argument, fails to represent as it is 5 chars long (enough to fail), AND has a non-representable char included (!)
          testResult = myLedDisp.print("Hello!");
@@ -332,7 +352,7 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
       }
 
       {
-         testResult = myLedDisp.print("batt.");
+         testResult = myLedDisp.print("batterY");
          vTaskDelay(testTime);
       }
 
@@ -352,7 +372,7 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
       }
 
       {         
-         myLedDisp.write("7", 0);
+         myLedDisp.write("7", 4);
          vTaskDelay(testTime);
       }
 
@@ -366,12 +386,12 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
       }
 
       {         
-         myLedDisp.write("5", 1);
+         myLedDisp.write("5", 5);
          vTaskDelay(testTime);
       }
 
       {         
-         myLedDisp.write("6", 1);
+         myLedDisp.write("6", 5);
          vTaskDelay(testTime);
       }
 
@@ -385,17 +405,17 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
       }
 
       {         
-         myLedDisp.write("3", 2);
+         myLedDisp.write("3", 6);
          vTaskDelay(testTime);
       }
 
       {         
-         myLedDisp.write("4", 2);
+         myLedDisp.write("4", 6);
          vTaskDelay(testTime);
       }
 
       {         
-         myLedDisp.write("5", 2);
+         myLedDisp.write("5", 6);
          vTaskDelay(testTime);
       }
 
@@ -409,22 +429,22 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
       }
 
       {         
-         myLedDisp.write("1", 3);
+         myLedDisp.write("1", 7);
          vTaskDelay(testTime);
       }
 
       {         
-         myLedDisp.write("2", 3);
+         myLedDisp.write("2", 7);
          vTaskDelay(testTime);
       }
 
       {         
-         myLedDisp.write("3", 3);
+         myLedDisp.write("3", 7);
          vTaskDelay(testTime);
       }
 
       {         
-         myLedDisp.write("4", 3);
+         myLedDisp.write("4", 7);
          vTaskDelay(testTime);
       }
 
@@ -525,7 +545,7 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
          myLedDisp.getDspUndrlHwPtr()->end();
          Serial.println("Service stopped");
          vTaskDelay(testTime);
-      }*/
+      }
 
       {
          myLedDisp.getDspUndrlHwPtr()->turnOff();
@@ -534,8 +554,9 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
       }
 
       {
-         // vTaskDelay(testTime);
+         vTaskDelay(testTime);
       }
+      
    }
 }
 

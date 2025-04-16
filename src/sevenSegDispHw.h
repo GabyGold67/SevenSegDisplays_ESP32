@@ -122,6 +122,7 @@ public:
     virtual uint8_t getBrghtnssLvl(){return 0;};
     virtual uint8_t getBrghtnssMaxLvl(){return 0;};
     virtual uint8_t getBrghtnssMinLvl(){return 0;};
+
     /**
      * @brief Returns a value indicating if the display module component uses a common anode or a common cathode led wiring.  
      * 
@@ -266,8 +267,8 @@ protected:
     TimerHandle_t _dynHC595DspRfrshTmrHndl{NULL};  
 
     void _refresh();
-    void send(uint8_t content){};
-    void send(const uint8_t &segments, const uint8_t &port){};
+    virtual void send(uint8_t content){};
+    virtual void send(const uint8_t &segments, const uint8_t &port){};
 public:
     /**
      * @brief Class constructor
@@ -339,7 +340,7 @@ protected:
 
     virtual void _unAbstract();
     void _refresh();
-    void send(const uint8_t &segments, const uint8_t &port);
+    virtual void send(const uint8_t &segments, const uint8_t &port);
 public:
     /**
      * @brief Class constructor, instantiates a SevenSegDynDummy object
@@ -749,20 +750,6 @@ public:
  * 
  */
 class SevenSegMax7219: public SevenSegStatic{
-private:
-    const uint8_t _clkIndx {0};
-    const uint8_t _dinIndx {1};
-    const uint8_t _csIndx {2};
-    const uint8_t _dspDigitsQtyMax{8};
-    const uint8_t _hwBrghtnssLvlMax{0x0F};
-    const uint8_t _hwBrghtnssLvlMin{0x00};
-    uint8_t _mssgAddress{0x00};
-    uint8_t _mssgData{0x00};
-
-    uint8_t _clk {};    // Serial clock max. rate 10 MHz. Data is shifted into the chip on **clk rising edge**
-    uint8_t _din {};    // Data value to get into the chip reg, must be set before the clk rising edge to be accepted.
-    uint8_t _cs {}; // The data in the internal 16 bits are acepted to be loaded while _cs is low, and will be latched and exposed to pins at _cs rising edge.
-
     // Address Map Constants
     const uint8_t _NoOpAddr{0x00};
     const uint8_t _DspPortsBaseAddr{0x01};
@@ -772,18 +759,40 @@ private:
     const uint8_t _ShutDownAddr{0x0C};
     const uint8_t _DspTestAddr{0x0F};
 
+    // Valid parameters constants
+    const uint8_t _DisplayTestMode{0x01};
+    const uint8_t _NoDecode{0x00};
+    const uint8_t _NormalOp{0x00};
+    const uint8_t _TurnOff{0x00};
+    const uint8_t _TurnOn{0x01};
+
+private:
+    const uint8_t _clkIndx {0};
+    const uint8_t _dinIndx {1};
+    const uint8_t _csIndx {2};
+
+    const uint8_t _dspDigitsQtyMax{8};
+    const uint8_t _hwBrghtnssLvlMax{0x0F};
+    const uint8_t _hwBrghtnssLvlMin{0x00};
+
+    uint8_t _clk {};    // Serial clock max. rate 10 MHz. Data is shifted into the chip on **clk rising edge**
+    uint8_t _din {};    // Data value to get into the chip reg, must be set before the clk rising edge to be accepted.
+    uint8_t _cs {}; // The data in the internal 16 bits are acepted to be loaded while _cs is low, and will be latched and exposed to pins at _cs rising edge.
+
+    uint8_t _cnvrtStdDgtTo72xxDgt(const uint8_t &StdDgt);
     virtual void _unAbstract();
-    void _updDsplyCntnt();
+    void _updLclBffrCntnt();
 
 protected:
     uint8_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to _dspDigitsQty, the local buffer differs from the shared _dspBuffPtr because it holds the data of the _dspBuffPtr formated and ready to be sent to the display controller    
     
-    virtual void _send(uint8_t content);
-    virtual void _send(const uint8_t &address, const uint8_t &data);
+    // virtual void send(uint8_t content);
+    virtual void send(const uint8_t &val, const bool &MSbFrst = true);
+    virtual void send(const uint8_t &address, const uint8_t &data, const bool &MSbFrst = true);
     virtual void _sendBffr();
     
 public:
-    /**
+/**
      * @brief Default class constructor
      */
     SevenSegMax7219();    
