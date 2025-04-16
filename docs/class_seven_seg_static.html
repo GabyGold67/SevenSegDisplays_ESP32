@@ -99,8 +99,9 @@ $(function(){initNavTree('class_seven_seg_static.html',''); initResizable(true);
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_seven_seg_static-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">SevenSegStatic Class Reference</div></div>
+  <div class="headertitle"><div class="title">SevenSegStatic Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -113,19 +114,21 @@ Inheritance diagram for SevenSegStatic:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_static__inherit__graph.png" border="0" usemap="#a_seven_seg_static_inherit__map" alt="Inheritance graph"/></div>
 <map name="a_seven_seg_static_inherit__map" id="a_seven_seg_static_inherit__map">
-<area shape="rect" title="Abstract class that models displays that don&#39;t need permanent MCU data updating to keep the data corr..." alt="" coords="102,80,218,107"/>
-<area shape="rect" href="class_seven_seg_stat_h_c595.html" title="Models displays driven by 74HC595 or similar shift registers, one shift register per display port,..." alt="" coords="5,155,152,181"/>
-<area shape="poly" title=" " alt="" coords="136,119,94,156,91,152,133,115"/>
-<area shape="rect" href="class_seven_seg_t_m163_x.html" title="Abstract class that models Seven Segments LEDs static displays hardware using Titan Micro TM163X seri..." alt="" coords="176,155,306,181"/>
-<area shape="poly" title=" " alt="" coords="187,115,229,152,225,156,183,119"/>
-<area shape="rect" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware." alt="" coords="96,5,224,32"/>
-<area shape="poly" title=" " alt="" coords="162,48,162,80,157,80,157,48"/>
-<area shape="rect" href="class_seven_seg_t_m1636.html" title="Models a Seven Segment display hardware controlled by a TM1636 display controller component." alt="" coords="25,229,153,256"/>
-<area shape="poly" title=" " alt="" coords="202,191,117,231,115,226,200,186"/>
-<area shape="rect" href="class_seven_seg_t_m1637.html" title="Models a Seven Segment display hardware controlled by a TM1637 display controller component." alt="" coords="177,229,305,256"/>
-<area shape="poly" title=" " alt="" coords="244,197,244,229,238,229,238,197"/>
-<area shape="rect" href="class_seven_seg_t_m1639.html" title="Models a Seven Segment display hardware controlled by a TM1639 display controller component." alt="" coords="329,229,457,256"/>
-<area shape="poly" title=" " alt="" coords="282,186,368,226,365,231,280,191"/>
+<area shape="rect" title="Abstract class that models displays that don&#39;t need permanent MCU data updating to keep the data corr..." alt="" coords="179,80,294,107"/>
+<area shape="rect" href="class_seven_seg_max7219.html" title="Models a Seven Segment display hardware using a Max7219 display controller component" alt="" coords="5,155,140,181"/>
+<area shape="poly" title=" " alt="" coords="195,116,102,156,100,152,193,111"/>
+<area shape="rect" href="class_seven_seg_stat_h_c595.html" title="Models displays driven by 74HC595 or similar shift registers, one shift register per display port,..." alt="" coords="163,155,310,181"/>
+<area shape="poly" title=" " alt="" coords="239,122,239,154,234,154,234,122"/>
+<area shape="rect" href="class_seven_seg_t_m163_x.html" title="Abstract class that models Seven Segments LEDs static displays hardware using Titan Micro TM163X seri..." alt="" coords="334,155,464,181"/>
+<area shape="poly" title=" " alt="" coords="280,111,372,152,370,156,278,116"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware." alt="" coords="172,5,301,32"/>
+<area shape="poly" title=" " alt="" coords="239,48,239,80,234,80,234,48"/>
+<area shape="rect" href="class_seven_seg_t_m1636.html" title="Models a Seven Segment display hardware controlled by a TM1636 display controller component." alt="" coords="183,229,311,256"/>
+<area shape="poly" title=" " alt="" coords="360,191,275,231,273,226,358,186"/>
+<area shape="rect" href="class_seven_seg_t_m1637.html" title="Models a Seven Segment display hardware controlled by a TM1637 display controller component." alt="" coords="335,229,463,256"/>
+<area shape="poly" title=" " alt="" coords="402,197,402,229,396,229,396,197"/>
+<area shape="rect" href="class_seven_seg_t_m1639.html" title="Models a Seven Segment display hardware controlled by a TM1639 display controller component." alt="" coords="487,229,615,256"/>
+<area shape="poly" title=" " alt="" coords="440,186,526,226,523,231,438,191"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -185,6 +188,26 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 <tr class="memitem:afc7402bad588be4ea2c7aedaf870f9ff inherit pub_methods_class_seven_seg_disp_hw" id="r_afc7402bad588be4ea2c7aedaf870f9ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff">setDspBuffPtr</a> (uint8_t *newDspBuffPtr)</td></tr>
 <tr class="memdesc:afc7402bad588be4ea2c7aedaf870f9ff inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the pointer to the Display Buffer.  <br /></td></tr>
 <tr class="separator:afc7402bad588be4ea2c7aedaf870f9ff inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a9ed53120b10f765215787c5861cc4b09" id="r_a9ed53120b10f765215787c5861cc4b09"><td class="memItemLeft" align="right" valign="top"><a id="a9ed53120b10f765215787c5861cc4b09" name="a9ed53120b10f765215787c5861cc4b09"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvl</b> {0}</td></tr>
+<tr class="memdesc:a9ed53120b10f765215787c5861cc4b09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current display brightness level. <br /></td></tr>
+<tr class="separator:a9ed53120b10f765215787c5861cc4b09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c5cc6b91da937ad8912168ff1ab9894" id="r_a9c5cc6b91da937ad8912168ff1ab9894"><td class="memItemLeft" align="right" valign="top"><a id="a9c5cc6b91da937ad8912168ff1ab9894" name="a9c5cc6b91da937ad8912168ff1ab9894"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvlMax</b> {0}</td></tr>
+<tr class="memdesc:a9c5cc6b91da937ad8912168ff1ab9894"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum display brightness level. <br /></td></tr>
+<tr class="separator:a9c5cc6b91da937ad8912168ff1ab9894"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63f29aeda0fed5f5024ae5b48cf51b66" id="r_a63f29aeda0fed5f5024ae5b48cf51b66"><td class="memItemLeft" align="right" valign="top"><a id="a63f29aeda0fed5f5024ae5b48cf51b66" name="a63f29aeda0fed5f5024ae5b48cf51b66"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvlMin</b> {0}</td></tr>
+<tr class="memdesc:a63f29aeda0fed5f5024ae5b48cf51b66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum display brightness level. <br /></td></tr>
+<tr class="separator:a63f29aeda0fed5f5024ae5b48cf51b66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dc3b3c09e20a30b6042a2be8bdd1909" id="r_a4dc3b3c09e20a30b6042a2be8bdd1909"><td class="memItemLeft" align="right" valign="top"><a id="a4dc3b3c09e20a30b6042a2be8bdd1909" name="a4dc3b3c09e20a30b6042a2be8bdd1909"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td></tr>
+<tr class="memdesc:a4dc3b3c09e20a30b6042a2be8bdd1909"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current display status: On/Off. <br /></td></tr>
+<tr class="separator:a4dc3b3c09e20a30b6042a2be8bdd1909"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_seven_seg_disp_hw"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_seven_seg_disp_hw')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract class that models displays that don't need permanent MCU data updating to keep the data correctly displayed. </p>
@@ -239,7 +262,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 
 <p>Reimplemented from <a class="el" href="class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327">SevenSegDispHw</a>.</p>
 
-<p>Reimplemented in <a class="el" href="class_seven_seg_stat_h_c595.html#af430da3b0859f74693dd0ee71c28d071">SevenSegStatHC595</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#ae45f5f1772b93dca12ccaef3e652d7b0">SevenSegTM163X</a>.</p>
+<p>Reimplemented in <a class="el" href="class_seven_seg_max7219.html#a559f2c5cca5eb5a806720359efd99788">SevenSegMax7219</a>, <a class="el" href="class_seven_seg_stat_h_c595.html#af430da3b0859f74693dd0ee71c28d071">SevenSegStatHC595</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#ae45f5f1772b93dca12ccaef3e652d7b0">SevenSegTM163X</a>.</p>
 
 </div>
 </div>

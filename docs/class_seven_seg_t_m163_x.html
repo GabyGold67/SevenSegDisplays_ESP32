@@ -99,8 +99,9 @@ $(function(){initNavTree('class_seven_seg_t_m163_x.html',''); initResizable(true
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_seven_seg_t_m163_x-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">SevenSegTM163X Class Reference</div></div>
+  <div class="headertitle"><div class="title">SevenSegTM163X Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -146,9 +147,9 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>SevenSegTM163X</b> ()</td></tr>
 <tr class="memdesc:a6f511a29dcacfa8be9d2a8778dc2d05d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default class constructor. <br /></td></tr>
 <tr class="separator:a6f511a29dcacfa8be9d2a8778dc2d05d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5eb5d7d7c1c0c2d776d80d71c9253d85" id="r_a5eb5d7d7c1c0c2d776d80d71c9253d85"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5eb5d7d7c1c0c2d776d80d71c9253d85">SevenSegTM163X</a> (uint8_t *ioPins, uint8_t dspDigits, bool commAnode)</td></tr>
-<tr class="memdesc:a5eb5d7d7c1c0c2d776d80d71c9253d85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor.  <br /></td></tr>
-<tr class="separator:a5eb5d7d7c1c0c2d776d80d71c9253d85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6812a6d00def57aaace41ad2a15da7f8" id="r_a6812a6d00def57aaace41ad2a15da7f8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6812a6d00def57aaace41ad2a15da7f8">SevenSegTM163X</a> (uint8_t *ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspContMaxDigits)</td></tr>
+<tr class="memdesc:a6812a6d00def57aaace41ad2a15da7f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor.  <br /></td></tr>
+<tr class="separator:a6812a6d00def57aaace41ad2a15da7f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15cd5793c8ad4dd0c5207874d4fc2de4" id="r_a15cd5793c8ad4dd0c5207874d4fc2de4"><td class="memItemLeft" align="right" valign="top"><a id="a15cd5793c8ad4dd0c5207874d4fc2de4" name="a15cd5793c8ad4dd0c5207874d4fc2de4"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegTM163X</b> ()</td></tr>
 <tr class="memdesc:a15cd5793c8ad4dd0c5207874d4fc2de4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class destructor. <br /></td></tr>
@@ -165,7 +166,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a484553b3cf9c8e60bc87e944d07fecde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current brightness level setting for the display module. <br  />
   <br /></td></tr>
 <tr class="separator:a484553b3cf9c8e60bc87e944d07fecde"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b12ba68a4ed1738bbf0457a4dbec33e" id="r_a4b12ba68a4ed1738bbf0457a4dbec33e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4b12ba68a4ed1738bbf0457a4dbec33e">getBrghtnssMaxLvl</a> ()</td></tr>
+<tr class="memitem:a4b12ba68a4ed1738bbf0457a4dbec33e" id="r_a4b12ba68a4ed1738bbf0457a4dbec33e"><td class="memItemLeft" align="right" valign="top">virtual uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4b12ba68a4ed1738bbf0457a4dbec33e">getBrghtnssMaxLvl</a> ()</td></tr>
 <tr class="memdesc:a4b12ba68a4ed1738bbf0457a4dbec33e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the maximum brightness level for the instantiated object. <br  />
   <br /></td></tr>
 <tr class="separator:a4b12ba68a4ed1738bbf0457a4dbec33e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -229,6 +230,39 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 <tr class="memitem:afc7402bad588be4ea2c7aedaf870f9ff inherit pub_methods_class_seven_seg_disp_hw" id="r_afc7402bad588be4ea2c7aedaf870f9ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff">setDspBuffPtr</a> (uint8_t *newDspBuffPtr)</td></tr>
 <tr class="memdesc:afc7402bad588be4ea2c7aedaf870f9ff inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the pointer to the Display Buffer.  <br /></td></tr>
 <tr class="separator:afc7402bad588be4ea2c7aedaf870f9ff inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:ac15a9132e32747ba1cab6b13495b9eb2" id="r_ac15a9132e32747ba1cab6b13495b9eb2"><td class="memItemLeft" align="right" valign="top"><a id="ac15a9132e32747ba1cab6b13495b9eb2" name="ac15a9132e32747ba1cab6b13495b9eb2"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_lclDspBuffPtr</b> {nullptr}</td></tr>
+<tr class="memdesc:ac15a9132e32747ba1cab6b13495b9eb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to an array of size equal to or less than <b>display module component</b> digits ports, will be equal to or less than <b>display controller component</b> maximum digits/ports. The need for a divided display buffer comes from the fact that some <b>Seven Segment display hardware</b> use controllers with larger digits management capabilities than the display module digits, and the exceeding digits are used for propietary amenities, as colons, icons, etc. <br /></td></tr>
+<tr class="separator:ac15a9132e32747ba1cab6b13495b9eb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6085a13a7d24c8bf67ecd94a307fec2c" id="r_a6085a13a7d24c8bf67ecd94a307fec2c"><td class="memItemLeft" align="right" valign="top"><a id="a6085a13a7d24c8bf67ecd94a307fec2c" name="a6085a13a7d24c8bf67ecd94a307fec2c"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_xcdDspBuffPtr</b> {nullptr}</td></tr>
+<tr class="memdesc:a6085a13a7d24c8bf67ecd94a307fec2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to a buffer the size of the exceeding digits used to control display specific amenities. <br /></td></tr>
+<tr class="separator:a6085a13a7d24c8bf67ecd94a307fec2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6bcf57af3fb44db0565e987f4ef7b9c" id="r_aa6bcf57af3fb44db0565e987f4ef7b9c"><td class="memItemLeft" align="right" valign="top"><a id="aa6bcf57af3fb44db0565e987f4ef7b9c" name="aa6bcf57af3fb44db0565e987f4ef7b9c"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_xcdDspDigitsQty</b> {}</td></tr>
+<tr class="memdesc:aa6bcf57af3fb44db0565e987f4ef7b9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of unused available display ports, its the difference (_dspDigitsQtyMax - _dspDigitsQty), being the size of the array pointed by _xcdDspBuffPtr. <br /></td></tr>
+<tr class="separator:aa6bcf57af3fb44db0565e987f4ef7b9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_seven_seg_static"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_seven_seg_static')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_seven_seg_static.html">SevenSegStatic</a></td></tr>
+<tr class="memitem:a9ed53120b10f765215787c5861cc4b09 inherit pro_attribs_class_seven_seg_static" id="r_a9ed53120b10f765215787c5861cc4b09"><td class="memItemLeft" align="right" valign="top">
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvl</b> {0}</td></tr>
+<tr class="memdesc:a9ed53120b10f765215787c5861cc4b09 inherit pro_attribs_class_seven_seg_static"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current display brightness level. <br /></td></tr>
+<tr class="separator:a9ed53120b10f765215787c5861cc4b09 inherit pro_attribs_class_seven_seg_static"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c5cc6b91da937ad8912168ff1ab9894 inherit pro_attribs_class_seven_seg_static" id="r_a9c5cc6b91da937ad8912168ff1ab9894"><td class="memItemLeft" align="right" valign="top">
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvlMax</b> {0}</td></tr>
+<tr class="memdesc:a9c5cc6b91da937ad8912168ff1ab9894 inherit pro_attribs_class_seven_seg_static"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum display brightness level. <br /></td></tr>
+<tr class="separator:a9c5cc6b91da937ad8912168ff1ab9894 inherit pro_attribs_class_seven_seg_static"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63f29aeda0fed5f5024ae5b48cf51b66 inherit pro_attribs_class_seven_seg_static" id="r_a63f29aeda0fed5f5024ae5b48cf51b66"><td class="memItemLeft" align="right" valign="top">
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvlMin</b> {0}</td></tr>
+<tr class="memdesc:a63f29aeda0fed5f5024ae5b48cf51b66 inherit pro_attribs_class_seven_seg_static"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum display brightness level. <br /></td></tr>
+<tr class="separator:a63f29aeda0fed5f5024ae5b48cf51b66 inherit pro_attribs_class_seven_seg_static"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dc3b3c09e20a30b6042a2be8bdd1909 inherit pro_attribs_class_seven_seg_static" id="r_a4dc3b3c09e20a30b6042a2be8bdd1909"><td class="memItemLeft" align="right" valign="top">
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td></tr>
+<tr class="memdesc:a4dc3b3c09e20a30b6042a2be8bdd1909 inherit pro_attribs_class_seven_seg_static"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current display status: On/Off. <br /></td></tr>
+<tr class="separator:a4dc3b3c09e20a30b6042a2be8bdd1909 inherit pro_attribs_class_seven_seg_static"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_seven_seg_disp_hw"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_seven_seg_disp_hw')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract class that models Seven Segments LEDs static displays hardware using Titan Micro TM163X series chips as <b>display controller component</b> </p>
@@ -246,12 +280,12 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 </ul>
 <dl class="section note"><dt>Note</dt><dd>As the communications protocol doesn't completely comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet <b>Maximum clock frequency</b> stated as 500KHz to a less demanding time slices, managed by <code>delayMicroseconds()</code> function keyword, (or a timer interrupt set at 100KHz for other implementatins, enabling the timer interrupt service only while transmitting data, and disabling it while idle). <br  />
 </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>While the TM1636, TM1637, TM1639 (at least these are our most known members of this "family") are stable and well documented devices, the parts sold as <b>"TM1637 Display Modules"</b>, <b>"TM1638 Display Modules"</b> etc, breakboards that include the TM163X display driver, supporting electronics and one or several 7 segments display modules are not all created equal. A well known example: having the TM1637 modules the hability to drive 6 display ports, some breakboards present 4 display ports and a <b>center colon</b>, as is standard to time displaying modules. The <b>big issue</b> is the lack of a standard for those display modules, not all displays have the same disposition, not all of them are internally wired the same, and that not all the manufacturers wire the TM1637 modules to the 7 segments display modules in the same way. For example, some will attach the colon to the DP (decimal point) segment of the third port (RtL), some will attach them to ALL the DP segment, some will attach each of the dots of the colon independently, one to the 5th display port, the other to the 6th display port, and then some other manufacturer in some other way. <br  />
+<dl class="section warning"><dt>Warning</dt><dd>While the TM1636, TM1637, TM1639 (at least these are our most known members of this "family" that includes other chips) are stable and well documented devices, the parts sold as <b>"TM1637 Display Modules"</b>, <b>"TM1638 Display Modules"</b> etc, breakboards that include the TM163X display driver, supporting electronics and one or several 7 segments display modules are not all created equal. A well known example: having the TM1637 modules the hability to drive 6 display ports, some breakboards present 4 display ports and a <b>center colon</b>, as is standard to time displaying modules. The <b>big issue</b> is the lack of a standard for those display modules, not all displays have the same disposition, not all of them are internally wired the same, and that not all the manufacturers wire the TM1637 modules to the 7 segments display modules in the same way. For example, some will attach the colon to the DP (decimal point) segment of the third port (RtL), some will attach them to ALL the DP segment, some will attach each of the dots of the colon independently, one to the 5th display port, the other to the 6th display port, and then some other manufacturer in some other way. <br  />
  Whenever is possible to get a specific module for testing, a <a class="el" href="class_seven_seg_t_m163_x.html" title="Abstract class that models Seven Segments LEDs static displays hardware using Titan Micro TM163X seri...">SevenSegTM163X</a> subclass might be added to manage it correctly, please read the subclasses' description for correct display module oriented class identification. <br  />
  </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a5eb5d7d7c1c0c2d776d80d71c9253d85" name="a5eb5d7d7c1c0c2d776d80d71c9253d85"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5eb5d7d7c1c0c2d776d80d71c9253d85">&#9670;&#160;</a></span>SevenSegTM163X()</h2>
+<a id="a6812a6d00def57aaace41ad2a15da7f8" name="a6812a6d00def57aaace41ad2a15da7f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6812a6d00def57aaace41ad2a15da7f8">&#9670;&#160;</a></span>SevenSegTM163X()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -269,7 +303,12 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>commAnode</em></span>&#160;)</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>commAnode</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>dspContMaxDigits</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -278,9 +317,10 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ioPins</td><td>A pointer to an array holding the identifieres for the 2 GPIO pins required to send the data to the <b>Seven Segment display hardware</b> to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0-&gt;clk, 1-&gt;dio </td></tr>
-    <tr><td class="paramname">dspDigits</td><td>Quantity of digits/ports of the display. This parameter acceptable value is directly related to the TM163X family specific member. <br  />
+    <tr><td class="paramname">dspDigits</td><td>Quantity of digits/ports of the <b>display module component</b>. This parameter acceptable values are directly related to the TM163X family specific member. <br  />
  </td></tr>
     <tr><td class="paramname">commAnode</td><td>Boolean indicating if the hardware uses a <b>display module component</b> wired as common anode (true) or common cathode (false). </td></tr>
+    <tr><td class="paramname">dspContMaxDigits</td><td>Maximum quantity of digits/ports the <b>display controller component</b> can handle, is a value that in this case depends on the TM163X family module member selected. </td></tr>
   </table>
   </dd>
 </dl>
@@ -394,6 +434,9 @@ Here is the caller graph for this function:</div>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">uint8_t SevenSegTM163X::getBrghtnssLvl </td>
@@ -402,6 +445,11 @@ Here is the caller graph for this function:</div>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Returns the current brightness level setting for the display module. <br  />
@@ -412,6 +460,8 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>The current brightness level setting. <br  />
  </dd></dl>
 
+<p>Reimplemented from <a class="el" href="class_seven_seg_static.html">SevenSegStatic</a>.</p>
+
 </div>
 </div>
 <a id="a4b12ba68a4ed1738bbf0457a4dbec33e" name="a4b12ba68a4ed1738bbf0457a4dbec33e"></a>
@@ -419,6 +469,9 @@ Here is the caller graph for this function:</div>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">uint8_t SevenSegTM163X::getBrghtnssMaxLvl </td>
@@ -427,6 +480,11 @@ Here is the caller graph for this function:</div>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Returns the maximum brightness level for the instantiated object. <br  />
@@ -436,6 +494,8 @@ Here is the caller graph for this function:</div>
 <dl class="section return"><dt>Returns</dt><dd>The uint8_t value of the maximum brightness setting available for the object's class. <br  />
  </dd></dl>
 
+<p>Reimplemented from <a class="el" href="class_seven_seg_static.html">SevenSegStatic</a>.</p>
+
 </div>
 </div>
 <a id="a4cf3e667babba4a13292cb2124c7d60e" name="a4cf3e667babba4a13292cb2124c7d60e"></a>
@@ -443,6 +503,9 @@ Here is the caller graph for this function:</div>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">uint8_t SevenSegTM163X::getBrghtnssMinLvl </td>
@@ -451,6 +514,11 @@ Here is the caller graph for this function:</div>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Returns the minimum brightness level for the instantiated object. <br  />
@@ -459,6 +527,8 @@ Here is the caller graph for this function:</div>
 </p>
 <dl class="section return"><dt>Returns</dt><dd>The uint8_t value of the minimum brightness setting available for the object's class. <br  />
  </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_seven_seg_static.html">SevenSegStatic</a>.</p>
 
 </div>
 </div>

@@ -17,7 +17,7 @@
  * @version 3.0.0  
  * 
  * @date First release: 20/12/2023  
- *       Last update:   08/04/2025 09:00 (GMT+0200)  
+ *       Last update:   14/04/2025 18:20 (GMT+0200) DSP
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -44,9 +44,6 @@ SevenSegDispHw::SevenSegDispHw() {}
 SevenSegDispHw::SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
 :_ioPins{ioPins}, _digitPosPtr{new uint8_t[dspDigits]}, _dspDigitsQty {dspDigits}, _commAnode {commAnode}
 {
-   Serial.println("\nSevenSegDispHw constructor"); //FTPO
-   Serial.println("=========================="); //FTPO
-    
    _dspHwInstNbr = _dspHwSerialNum++;
    _dspHwInstance = this;
    for (uint8_t i{0}; i < _dspDigitsQty; i++)
@@ -124,8 +121,6 @@ SevenSegDynamic::SevenSegDynamic(){}
 SevenSegDynamic::SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
 :SevenSegDispHw(ioPins, dspDigits, commAnode)
 {
-   Serial.println("\nSevenSegDynamic constructor"); //FTPO
-   Serial.println("==========================="); //FTPO
 }
 
 SevenSegDynamic::~SevenSegDynamic(){}
@@ -298,8 +293,6 @@ void SevenSegDynHC595::_refresh(){
 
    for (int i {0}; i < _dspDigitsQty; i++){
       tmpDigToSend = *(_dspBuffPtr + ((i + _firstRefreshed) % _dspDigitsQty));
-      // send(tmpDigToSend, uint8_t(1) << *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty)));
-
       *(_drvrShftRegSndPtr + 0) = uint8_t(1) << *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty));
       *(_drvrShftRegSndPtr + 1) = tmpDigToSend;
       _drvrShftRegPtr->stampOverMain(_drvrShftRegSndPtr);
@@ -449,11 +442,24 @@ SevenSegStatic::SevenSegStatic(){}
 SevenSegStatic::SevenSegStatic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
 :SevenSegDispHw(ioPins, dspDigits, commAnode)
 {   
-   Serial.println("\nSevenSegStatic constructor"); //FTPO
-   Serial.println("==========================="); //FTPO
 }
 
 SevenSegStatic::~SevenSegStatic() {}
+
+uint8_t SevenSegStatic::getBrghtnssLvl(){
+
+   return _brghtnssLvl;
+}
+
+uint8_t SevenSegStatic::getBrghtnssMaxLvl(){
+
+   return _brghtnssLvlMax;
+}
+
+uint8_t SevenSegStatic::getBrghtnssMinLvl(){
+
+   return _brghtnssLvlMin;
+}
 
 void SevenSegStatic::ntfyUpdDsply(){
 
@@ -467,9 +473,6 @@ SevenSegStatHC595::SevenSegStatHC595(){}
 SevenSegStatHC595::SevenSegStatHC595(uint8_t *ioPins, uint8_t dspDigits, bool commAnode)
 :SevenSegStatic(ioPins, dspDigits, commAnode)
 {
-   Serial.println("\nSevenSegStatHC595 constructor"); //FTPO
-   Serial.println("==========================="); //FTPO
-
    _sclk = *(ioPins + _sclkIndx);
    _rclk = *(ioPins + _rclkIndx);
    _dio = *(ioPins + _dioIndx);
@@ -502,10 +505,10 @@ void SevenSegStatHC595::_updDsplyCntnt(){
 
    return;
 }
+
 //============================================================> Class methods separator
 
-SevenSegTM163X::SevenSegTM163X()
-{}
+SevenSegTM163X::SevenSegTM163X(){}
 
 SevenSegTM163X::SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspContMaxDigits)
 :SevenSegStatic(ioPins, dspDigits, commAnode), _dspDigitsQtyMax{dspContMaxDigits}
@@ -589,51 +592,50 @@ void SevenSegTM163X::_sendBffr(){
 	 *  --- --- - - ---
 	 *   |   |  | |  |
 	 *   |   |  | |  Data Write to display: 00
-	 *   |   |  | Address auto-increment:  0
-	 *   |   |  Normal/Test mode:         0
-	 *   |   N/C:                      00
-	 *   Data command setting:       01
-	 *   Command1:                 0b01000000 = 0x40 
+	 *   |   |  | Address autoinc./Fixed:  0
+	 *   |   |  Normal/Test mode (0/1):   0
+	 *   |   N/C:                       00
+	 *   Data command setting:        01
+	 *   Command1:                  0b01000000 = 0x40 
 	 *
 	 * >> - Command2: Address command setting, for TM1637 and TM1639 is 0xC0, 6 consecutive addresses for TM1637, 16 for TM1639
 	 * -----------------
 	 * |7|6|5|4|3|2|1|0|
 	 *  --- --- -------
 	 *   |   |     |
-	 *   |   |     00H:  0000 First address of the data register
-	 *   |   N/C:      00
-	 *   Add. comm.: 11
-	 *             0b11000000 = 0xC0
+	 *   |   |     00H:     0000 First address of the data register to write to
+	 *   |   N/C:         00
+	 *   Address comm.: 11
+	 *                0b11000000 = 0xC0
 	 *
-	 * >> Buffer contents: 6 ~ 16 bytes data sequence
+	 * >> Buffer contents: 4 ~ 16 bytes data sequence
 	 *
-	 * >> EOT commands: Command3:
 	 * Command3: Display control
 	 * -----------------
 	 * |7|6|5|4|3|2|1|0|
 	 *  --- --- - -----
 	 *   |   |  |   |
-	 *   |   |  |   Brightness control:    000~111
-	 *   |   |  Display switch On/Off:    1/0
-	 *   |   N/C:                       00
-	 *   Display Control:             10
-	 *                              0b1000XXXX -> 0x8F Display On, maximum brightness
+	 *   |   |  |   Brightness control:     000~111
+	 *   |   |  Display switch On/Off(1/0):1
+	 *   |   N/C:                        00
+	 *   Display Control:              10
+	 *                               0b1000XXXX -> 0x8F Display On, maximum brightness
 	 */
 
    _txStart();
-   _txWrByte(0x40);  // TM1637_COMM1: 40H -> address is automatically incremented by 1 mode (44H -> fixed address mode)
+   _txWrByte(0x40);  // TM163X_COMM1: 40H -> address is automatically incremented by 1 mode (44H -> fixed address mode)
    _txAsk();
    _txStop();
 
    _txStart();
-   _txWrByte(0xC0);  // Set the first address
+   _txWrByte(0xC0);  // Set the first display's buffer address
    _txAsk();
 
-   for(uint8_t i{0}; i < _dspDigitsQty ; i++){
+   for(uint8_t i{0}; i < _dspDigitsQty ; i++){  // Send the contents for the visible standard display ports
       _txWrByte(*(_lclDspBuffPtr + i));
       _txAsk();
    }
-   for(uint8_t i{_dspDigitsQty}; i < _dspDigitsQtyMax ; i++){
+   for(uint8_t i{_dspDigitsQty}; i < _dspDigitsQtyMax ; i++){// Send the contents for the non visible display ports
       _txWrByte(*(_xcdDspBuffPtr + i));
       _txAsk();
    }
@@ -812,18 +814,165 @@ void SevenSegTM1639::_unAbstract(){
 
 //============================================================> Class methods separator
 
-/*
-SevenSegStatDummy::SevenSegStatDummy(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
+SevenSegMax7219::SevenSegMax7219(){}
+
+SevenSegMax7219::SevenSegMax7219(uint8_t* ioPins, uint8_t dspDigits)
+:SevenSegStatic(ioPins, dspDigits, false)
 {
-   _ioPins = ioPins;
-   _dspDigitsQty = dspDigits;
-   _commAnode = commAnode;
+   _brghtnssLvlMax = _hwBrghtnssLvlMax;
+   _brghtnssLvlMin = _hwBrghtnssLvlMin;
+   _brghtnssLvl = _brghtnssLvlMin;
+
+   if(_dspDigitsQty > _dspDigitsQtyMax)
+      _dspDigitsQty = _dspDigitsQtyMax;
+   _lclDspBuffPtr = new uint8_t[_dspDigitsQty];
+   
+   _clk = *(ioPins + _clkIndx);
+   _din = *(ioPins + _dinIndx);
+   _cs = *(ioPins + _csIndx);
+
+   pinMode(_clk, OUTPUT);
+   pinMode(_din, OUTPUT);
+   pinMode(_cs, OUTPUT);
+   digitalWrite(_clk, LOW);
+   digitalWrite(_din, LOW);
+   digitalWrite(_cs, HIGH);
+
+   begin();
+   setBrghtnssLvl(_brghtnssLvlMax);
 }
 
-SevenSegStatDummy::~SevenSegStatDummy(){}
-*/
+SevenSegMax7219::~SevenSegMax7219()
+{
+   delete [] _lclDspBuffPtr;
+}
 
+bool SevenSegMax7219::begin()
+{
+   // Set Not in test mode!
+   send(_DspTestAddr, _NormalOp);   
+   // Set Scan Limit
+   send(_ScanLimitAddr, (_dspDigitsQty - 1), true);   //!< Register data 0x00 to 0x07: quantity of digits to keep updated
+   // Set No Decode format
+   send(_DecodeModeAddr, _NoDecode);   
+   turnOn();
 
+	return true;
+}
+
+uint8_t SevenSegMax7219::_cnvrtStdDgtTo72xxDgt(const uint8_t &stdDgt){
+   uint8_t result {0x00};
+
+   for(uint8_t i {0}; i < 7; i++) {
+      if((stdDgt & (1 << (6 - i))) != 0)
+         result |=  (1 << i);
+   }
+   result |= (stdDgt & 0x80);
+
+   return result;
+}
+
+bool SevenSegMax7219::end()
+{
+   turnOff();
+
+   return true;
+}
+
+bool SevenSegMax7219::getIsOn(){
+
+   return _isOn;
+}
+
+void SevenSegMax7219::ntfyUpdDsply(){
+   _updLclBffrCntnt();
+   _sendBffr();
+
+   return;
+}
+
+void SevenSegMax7219::send(const uint8_t &val, const  bool &MSbFrst) {
+   for(uint8_t i {0}; i < 8; i++) {
+      if(MSbFrst)
+         digitalWrite(_din, (val & (1 << (7 - i)))?HIGH:LOW);
+      else
+         digitalWrite(_din, (val & (1 << i))?HIGH:LOW);
+      digitalWrite(_clk, HIGH);
+      digitalWrite(_clk, LOW);
+   }
+
+   return;
+}
+
+void SevenSegMax7219::send(const uint8_t &address, const uint8_t &data, const  bool &MSbFrst){
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+
+   taskENTER_CRITICAL(&mux);
+   digitalWrite(_cs, LOW);
+   send(address, MSbFrst);
+   send(data, MSbFrst);
+   digitalWrite(_cs, HIGH);
+   taskEXIT_CRITICAL(&mux);
+
+   return;
+}
+
+void SevenSegMax7219::_sendBffr(){
+   for(uint8_t dspPrt{0}; dspPrt < _dspDigitsQty; dspPrt++)
+      send((_DspPortsBaseAddr + dspPrt), *(_lclDspBuffPtr + dspPrt));
+
+   return;
+}
+
+bool SevenSegMax7219::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
+   bool result{false};
+
+   if((newBrghtnssLvl >= _brghtnssLvlMin) && (newBrghtnssLvl <= _brghtnssLvlMax)){
+      if(newBrghtnssLvl != _brghtnssLvl){
+         send(_BrghtnsSettAddr, newBrghtnssLvl, true);   
+         _brghtnssLvl = newBrghtnssLvl;
+      }
+      result = true;
+   }
+
+   return result;
+}
+
+void SevenSegMax7219::turnOff(){
+   if(_isOn){
+      send(_ShutDownAddr, _TurnOff, true);   
+      _isOn = false;
+   }
+
+   return;
+}
+
+void SevenSegMax7219::turnOn(){
+   if(!_isOn){
+      send(_ShutDownAddr, _TurnOn, true);   
+      _isOn = true;
+   }
+
+   return;
+}
+
+void SevenSegMax7219::turnOn(const uint8_t &newBrghtnssLvl){
+   setBrghtnssLvl(newBrghtnssLvl);
+   turnOn();
+
+   return;
+}
+
+void SevenSegMax7219::_updLclBffrCntnt(){
+   for(uint8_t dspPrt{0}; dspPrt < _dspDigitsQty; dspPrt++)
+      *(_lclDspBuffPtr + dspPrt) = _cnvrtStdDgtTo72xxDgt(*(_dspBuffPtr + dspPrt));
+   
+	return;
+}
+
+void SevenSegMax7219::_unAbstract(){return;}
+
+//============================================================> Class methods separator
 
 template<typename T>
 void pushElmnt(T* &elmntLstPtr, T elmntToPush, uint8_t &elmntQty){
