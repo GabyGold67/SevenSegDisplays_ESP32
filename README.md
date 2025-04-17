@@ -3,7 +3,7 @@
 # "One library to rule them all..."  
 **(At least as many as I could put my hands on)**  
 
-The library goal is to provide a common consistent API to display data on **seven segments LED displays** independently of the hardware used: the display modules and the driving electronics.  
+This library goal is to provide a common consistent API to display data on **seven segments LED displays** independently of the hardware used: the display modules and the driving electronics.  
 
 With a very long time in the market, **many** different techniques and technologies have been developed to display information in seven segment displays, but like any other technical resource, massification contributed to the development of specific standard hardware, both for the display and the display driving sides.  
 
@@ -65,7 +65,7 @@ If no modification of the hardware object is needed this becomes a single line c
 |---|---|
 |**_SevenSegDisplays_** |SevenSegDispHw* **dspUndrlHwPtr**|
 |**blink()**|None|
-||unsigned long **onRate** (,unsigned long **offRate**)|
+||uint32_t **onRate** (,uint32_t **offRate**)|
 |**clear()**|None|
 |**doubleGauge()**|int **levelLeft**, int **levelRight** (, char **labeLeft**(, char **labelRight**))|
 |**gauge()**|int **level** (, char **label**)|
@@ -85,14 +85,15 @@ If no modification of the hardware object is needed this becomes a single line c
 |**noBlink()**|None|
 |**noWait()**|None|
 |**print()**|String **text**|
-||int **value** (, bool **rgtAlgn** (, bool **zeroPad**))|
+||int32_t **value** (, bool **rgtAlgn** (, bool **zeroPad**))|
 ||double **value** (, unsigned int **decPlaces** (, bool **rgtAlgn** (, bool **zeroPad**)))|
 |**resetBlinkMask()**|None|
-|**setBlinkMask()**|bool **blnkPort[]**|
-|**setBlinkRate()**|unsigned long **newOnRate**, (unsigned long **newOffRate**)|
+|**setBlinkMask()**|bool* **newBlnkMsk[]**|
+|**setBlinkRate()**|uint32_t **newOnRate**, (uint32_t **newOffRate**)|
 |**setWaitChar()**|char **newWaitChar**|
-|**setWaitRate()**|unsigned long **newWaitRate**|
-|**wait()**|(unsigned long **waitRate**)|
+|**setWaitRate()**|uint32_t **newWaitRate**|
+|**wait()**|None|
+||(uint32_t **newWaitRate**)|
 |**write()**|uint8_t **segments**, uint8_t **port**|
 ||String **character**, uint8_t **port**|   
 
@@ -101,26 +102,29 @@ If no modification of the hardware object is needed this becomes a single line c
 # **Included Methods for SevenSegDispHw subclasses**  
 |Method | Parameters|
 |---|---|
-|**begin()**|None|
+|**_SevenSegDynHC595_** |uint8_t* **ioPins**, uint8_t **dspDigits**, bool **commAnode**|
+|**_SevenSegDynDummy_** |(uint8_t **dspDigits**(, bool **commAnode**))|
+|**_SevenSegMax7219_** |uint8_t* **ioPins**, uint8_t **dspDigits**|
+|**_SevenSegStatHC595_** |uint8_t* **ioPins**(, uint8_t **dspDigits**(, bool **commAnode**))|
+|**_SevenSegTM1636_** |uint8_t* **ioPins**, uint8_t **dspDigits**, bool **commAnode**, uint8_t **dspContMaxDigits**|
+|**_SevenSegTM1637_** |uint8_t* **ioPins**, uint8_t **dspDigits**, bool **commAnode**, uint8_t **dspContMaxDigits**|
+|**_SevenSegTM1639_** |uint8_t* **ioPins**, uint8_t **dspDigits**, bool **commAnode**, uint8_t **dspContMaxDigits**|
+|**begin()**|(uint32_t **updtLps**)|
 |**end()**|None|
-|**getCommAnode()**|None|
-|**getDspBuffPtr()**|None|
-|**getHwDspDigitsQty()**|None|
-|**ntfyUpdDsply()**|None|
-|**setDigitsOrder()**|uint8_t* **newOrder**, uint8_t **newOrderSize**|
-|**setDspBuffPtr()**|uint8_t* **newDspBuffPtr**|
-
----  
-
-# **Included Methods for SevenSegTM163X subclasses**  
-|Method | Parameters|
-|---|---|
 |**getBrghtnssLvl()**|None|
 |**getBrghtnssMaxLvl()**|None|
 |**getBrghtnssMinLvl()**|None|
+|**getCommAnode()**|None|
+|**getDspBuffPtr()**|None|
+|**getHwDspDigitsQty()**|None|
+|**getIsOn()**|None|
+|**ntfyUpdDsply()**|None|
 |**setBrghtnssLvl()**|uint8_t **newBrghtnssLvl**|
+|**setDigitsOrder()**|uint8_t* **newOrder**, uint8_t **newOrderSize**|
+|**setDspBuffPtr()**|uint8_t* **newDspBuffPtr**|
+|**turnOff()**|None|
+|**turnOn()**|(uint8_t **newBrghtnssLvl**)|
 
+---  
 
-# **Included Methods for SevenSegDynHC595 class**
-
-
+# [Complete SevenSegDisplays_ESP32 library documentation HERE!](https://gabygold67.github.io/SevenSegDisplays_ESP32/)

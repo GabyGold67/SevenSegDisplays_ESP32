@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Seven Segments Displays Agnostic Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.0.0</span>
+   <div id="projectname">Seven Segments Displays Agnostic Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.0.1</span>
    </div>
    <div id="projectbrief">A library that provides a class that models a Seven Segment Display and provides an unified API through it&#39;s members independently of the display technology.</div>
   </td>
@@ -208,7 +208,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
   <br /></td></tr>
 <tr class="separator:ac6544795ed8c9b44211424c8b5ef216f inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw" id="r_aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#aee6d67c3bdd719b05ac6e7d8d250d43f">setDigitsOrder</a> (uint8_t *newOrderPtr)</td></tr>
-<tr class="memdesc:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mapping to relate the display buffer positions to the display port asigned to exhibit it's contents. <br  />
+<tr class="memdesc:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mapping to relate the display buffer positions to the display port assigned to exhibit it's contents. <br  />
   <br /></td></tr>
 <tr class="separator:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc7402bad588be4ea2c7aedaf870f9ff inherit pub_methods_class_seven_seg_disp_hw" id="r_afc7402bad588be4ea2c7aedaf870f9ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff">setDspBuffPtr</a> (uint8_t *newDspBuffPtr)</td></tr>
@@ -219,7 +219,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a79583f354ea2df08f1a45fea1ec23a37" id="r_a79583f354ea2df08f1a45fea1ec23a37"><td class="memItemLeft" align="right" valign="top"><a id="a79583f354ea2df08f1a45fea1ec23a37" name="a79583f354ea2df08f1a45fea1ec23a37"></a>
 uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_lclDspBuffPtr</b> {nullptr}</td></tr>
-<tr class="memdesc:a79583f354ea2df08f1a45fea1ec23a37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to an array of size equal to _dspDigitsQty, the local buffer differs from the shared _dspBuffPtr because it holds the data of the _dspBuffPtr formated and ready to be sent to the display controller <br  />
+<tr class="memdesc:a79583f354ea2df08f1a45fea1ec23a37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to an array of size equal to _dspDigitsQty, the local buffer differs from the shared _dspBuffPtr because it holds the data of the _dspBuffPtr formatted and ready to be sent to the display controller <br  />
  <br /></td></tr>
 <tr class="separator:a79583f354ea2df08f1a45fea1ec23a37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_seven_seg_static"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_seven_seg_static')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_seven_seg_static.html">SevenSegStatic</a></td></tr>
@@ -277,7 +277,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
 <p>Class constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ioPins</td><td>A pointer to an array holding the identifieres for the 3 GPIO pins required to send the data to the <b>Seven Segment display hardware</b> to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0-&gt;clk, 1-&gt;din, 2-&gt;cs. <br  />
+    <tr><td class="paramname">ioPins</td><td>A pointer to an array holding the identifiers for the 3 GPIO pins required to send the data to the <b>Seven Segment display hardware</b> to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0-&gt;clk, 1-&gt;din, 2-&gt;cs. <br  />
  </td></tr>
     <tr><td class="paramname">dspDigits</td><td>Quantity of digits/ports of the display. This parameter for this subclass must be in the range 1 &lt;= dspDigits &lt;= 8. <br  />
 </td></tr>
@@ -459,7 +459,7 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Sets the brightness level for the display module. </p>
-<p>See <a class="el" href="class_seven_seg_t_m163_x.html#a4e74de34810a89ff8409e277e962e09f" title="Sets the Brghtness level of the display.">SevenSegTM163X::setBrghtnssLvl(const uint8_t &amp;)</a> for details. <br  />
+<p>See <a class="el" href="class_seven_seg_t_m163_x.html#a4e74de34810a89ff8409e277e962e09f" title="Sets the Brightness level of the display.">SevenSegTM163X::setBrghtnssLvl(const uint8_t &amp;)</a> for details. <br  />
  </p>
 
 <p>Reimplemented from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a>.</p>

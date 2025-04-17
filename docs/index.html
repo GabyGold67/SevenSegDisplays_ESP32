@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Seven Segments Displays Agnostic Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.0.0</span>
+   <div id="projectname">Seven Segments Displays Agnostic Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.0.1</span>
    </div>
    <div id="projectbrief">A library that provides a class that models a Seven Segment Display and provides an unified API through it&#39;s members independently of the display technology.</div>
   </td>
@@ -104,7 +104,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <h1>"One library to rule them all..."</h1>
 <p><b>(At least as many as I could put my hands on)</b> <br  />
 </p>
-<p>The library goal is to provide a common consistent API to display data on <b>seven segments LED displays</b> independently of the hardware used: the display modules and the driving electronics. <br  />
+<p>This library goal is to provide a common consistent API to display data on <b>seven segments LED displays</b> independently of the hardware used: the display modules and the driving electronics. <br  />
 </p>
 <p>With a very long time in the market, <b>many</b> different techniques and technologies have been developed to display information in seven segment displays, but like any other technical resource, massification contributed to the development of specific standard hardware, both for the display and the display driving sides. <br  />
 </p>
@@ -188,7 +188,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>blink()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">unsigned long <b>onRate</b> (,unsigned long <b>offRate</b>)    </td></tr>
+<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">uint32_t <b>onRate</b> (,uint32_t <b>offRate</b>)    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>clear()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
 <tr class="markdownTableRowOdd">
@@ -228,24 +228,26 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>print()</b>   </td><td class="markdownTableBodyNone">String <b>text</b>    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">int <b>value</b> (, bool <b>rgtAlgn</b> (, bool <b>zeroPad</b>))    </td></tr>
+<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">int32_t <b>value</b> (, bool <b>rgtAlgn</b> (, bool <b>zeroPad</b>))    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">double <b>value</b> (, unsigned int <b>decPlaces</b> (, bool <b>rgtAlgn</b> (, bool <b>zeroPad</b>)))    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>resetBlinkMask()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>setBlinkMask()</b>   </td><td class="markdownTableBodyNone">bool <b>blnkPort[]</b>    </td></tr>
+<td class="markdownTableBodyNone"><b>setBlinkMask()</b>   </td><td class="markdownTableBodyNone">bool* <b>newBlnkMsk[]</b>    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>setBlinkRate()</b>   </td><td class="markdownTableBodyNone">unsigned long <b>newOnRate</b>, (unsigned long <b>newOffRate</b>)    </td></tr>
+<td class="markdownTableBodyNone"><b>setBlinkRate()</b>   </td><td class="markdownTableBodyNone">uint32_t <b>newOnRate</b>, (uint32_t <b>newOffRate</b>)    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>setWaitChar()</b>   </td><td class="markdownTableBodyNone">char <b>newWaitChar</b>    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>setWaitRate()</b>   </td><td class="markdownTableBodyNone">unsigned long <b>newWaitRate</b>    </td></tr>
+<td class="markdownTableBodyNone"><b>setWaitRate()</b>   </td><td class="markdownTableBodyNone">uint32_t <b>newWaitRate</b>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>wait()</b>   </td><td class="markdownTableBodyNone">(unsigned long <b>waitRate</b>)    </td></tr>
+<td class="markdownTableBodyNone"><b>wait()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>write()</b>   </td><td class="markdownTableBodyNone">uint8_t <b>segments</b>, uint8_t <b>port</b>    </td></tr>
+<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">(uint32_t <b>newWaitRate</b>)    </td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>write()</b>   </td><td class="markdownTableBodyNone">uint8_t <b>segments</b>, uint8_t <b>port</b>    </td></tr>
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">String <b>character</b>, uint8_t <b>port</b>   </td></tr>
 </table>
 <hr  />
@@ -254,9 +256,29 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Method   </th><th class="markdownTableHeadNone">Parameters    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>begin()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<td class="markdownTableBodyNone">**_SevenSegDynHC595_**   </td><td class="markdownTableBodyNone">uint8_t* <b>ioPins</b>, uint8_t <b>dspDigits</b>, bool <b>commAnode</b>    </td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">**_SevenSegDynDummy_**   </td><td class="markdownTableBodyNone">(uint8_t <b>dspDigits</b>(, bool <b>commAnode</b>))    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">**_SevenSegMax7219_**   </td><td class="markdownTableBodyNone">uint8_t* <b>ioPins</b>, uint8_t <b>dspDigits</b>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">**_SevenSegStatHC595_**   </td><td class="markdownTableBodyNone">uint8_t* <b>ioPins</b>(, uint8_t <b>dspDigits</b>(, bool <b>commAnode</b>))    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">**_SevenSegTM1636_**   </td><td class="markdownTableBodyNone">uint8_t* <b>ioPins</b>, uint8_t <b>dspDigits</b>, bool <b>commAnode</b>, uint8_t <b>dspContMaxDigits</b>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">**_SevenSegTM1637_**   </td><td class="markdownTableBodyNone">uint8_t* <b>ioPins</b>, uint8_t <b>dspDigits</b>, bool <b>commAnode</b>, uint8_t <b>dspContMaxDigits</b>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">**_SevenSegTM1639_**   </td><td class="markdownTableBodyNone">uint8_t* <b>ioPins</b>, uint8_t <b>dspDigits</b>, bool <b>commAnode</b>, uint8_t <b>dspContMaxDigits</b>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>begin()</b>   </td><td class="markdownTableBodyNone">(uint32_t <b>updtLps</b>)    </td></tr>
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>end()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>getBrghtnssLvl()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>getBrghtnssMaxLvl()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>getBrghtnssMinLvl()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>getCommAnode()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
 <tr class="markdownTableRowEven">
@@ -264,27 +286,22 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>getHwDspDigitsQty()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>getIsOn()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>ntfyUpdDsply()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>setBrghtnssLvl()</b>   </td><td class="markdownTableBodyNone">uint8_t <b>newBrghtnssLvl</b>    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>setDigitsOrder()</b>   </td><td class="markdownTableBodyNone">uint8_t* <b>newOrder</b>, uint8_t <b>newOrderSize</b>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>setDspBuffPtr()</b>   </td><td class="markdownTableBodyNone">uint8_t* <b>newDspBuffPtr</b>   </td></tr>
+<td class="markdownTableBodyNone"><b>setDspBuffPtr()</b>   </td><td class="markdownTableBodyNone">uint8_t* <b>newDspBuffPtr</b>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>turnOff()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>turnOn()</b>   </td><td class="markdownTableBodyNone">(uint8_t <b>newBrghtnssLvl</b>)   </td></tr>
 </table>
 <hr  />
-<h1><b>Included Methods for <a class="el" href="class_seven_seg_t_m163_x.html" title="Abstract class that models Seven Segments LEDs static displays hardware using Titan Micro TM163X seri...">SevenSegTM163X</a> subclasses</b></h1>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Method   </th><th class="markdownTableHeadNone">Parameters    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>getBrghtnssLvl()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>getBrghtnssMaxLvl()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>getBrghtnssMinLvl()</b>   </td><td class="markdownTableBodyNone">None    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>setBrghtnssLvl()</b>   </td><td class="markdownTableBodyNone">uint8_t <b>newBrghtnssLvl</b>   </td></tr>
-</table>
-<h1><b>Included Methods for <a class="el" href="class_seven_seg_dyn_h_c595.html" title="Models seven segment displays driven by two 74HC595 shift registers.">SevenSegDynHC595</a> class</b></h1>
+<h1><a href="https://gabygold67.github.io/SevenSegDisplays_ESP32/">Complete SevenSegDisplays_ESP32 library documentation HERE!</a></h1>
 </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
 </div><!-- contents -->

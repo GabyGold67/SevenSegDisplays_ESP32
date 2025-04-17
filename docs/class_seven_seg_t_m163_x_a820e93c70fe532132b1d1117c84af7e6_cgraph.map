@@ -1,6 +1,6 @@
 <map id="SevenSegTM163X::turnOn" name="SevenSegTM163X::turnOn">
 <area shape="rect" id="Node000001" title="Turns the display module on." alt="" coords="5,31,183,57"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_t_m163_x.html#a4e74de34810a89ff8409e277e962e09f" title="Sets the Brghtness level of the display." alt="" coords="231,5,456,32"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_t_m163_x.html#a4e74de34810a89ff8409e277e962e09f" title="Sets the Brightness level of the display." alt="" coords="231,5,456,32"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="183,32,215,29,215,34,183,38"/>
 <area shape="rect" id="Node000003" href="$class_seven_seg_t_m163_x.html#a0469f1b57c14141db8a290e8ce7bb35a" title="Turns the display module on." alt="" coords="255,56,432,83"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="183,50,240,56,239,61,183,56"/>

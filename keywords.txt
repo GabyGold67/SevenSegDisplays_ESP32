@@ -13,6 +13,11 @@ SevenSegStatHC595 KEYWORD1
 SevenSegTM1636 KEYWORD1
 SevenSegTM1637 KEYWORD1
 SevenSegTM1639 KEYWORD1
+##########################
+SevenSegDispHw KEYWORD1
+SevenSegDynamic   KEYWORD1
+SevenSegStatic KEYWORD1
+SevenSegTM163X KEYWORD1
 ################################################
 # Methods and Functions (KEYWORD2)
 ################################################
@@ -57,9 +62,9 @@ getDspBuffPtr  KEYWORD2
 getHwDspDigitsQty KEYWORD2
 getIsOn  KEYWORD2
 ntfyUpdDsply   KEYWORD2
+setBrghtnssLvl KEYWORD2
 setDigitsOrder KEYWORD2
 setDspBuffPtr  KEYWORD2
-setBrghtnssLvl KEYWORD2
 turnOff  KEYWORD2
 turnOn  KEYWORD2
 ###############################################
