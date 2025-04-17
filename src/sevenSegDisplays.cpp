@@ -15,10 +15,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.0.0
+ * @version 3.0.1
  * 
  * @date First release: 20/12/2023  
- *       Last update:   31/03/2025 15:40 (GMT+0200) DST  
+ *       Last update:   17/04/2025 17:50 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -91,7 +91,7 @@ bool SevenSegDisplays::blink(){
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
-   if(_isWaiting)   // If the display is waiting stop, as the waiting and the blinking options are mutually excluyent, as both simultaneous states has no logical use!
+   if(_isWaiting)   // If the display is waiting stop, as the waiting and the blinking options are mutually exclusive, as both simultaneous states has no logical use!
       noWait();
    if (!_isBlinking){
       taskENTER_CRITICAL(&mux);         
@@ -127,7 +127,6 @@ bool SevenSegDisplays::blink(){
             _dspAuxBuffPtr = new uint8_t[_dspDigitsQty];
          }
          if(_dspAuxBuffPtr){
-            // _saveDspBuff();   // Unneeded, first thing done by the blink cb rutine
             _blinkShowOn = false;
             _isBlinking = true;
             _blinkTimer = 0;  //Start the blinking pace timer...      
@@ -387,7 +386,7 @@ bool SevenSegDisplays::noBlink(){
       taskENTER_CRITICAL(&mux);
       _isBlinking = false;
 
-      // tmrModResult = xTimerStop(_blinkTmrHndl, portMAX_DELAY); //FFDR The method fails when stopping the timer as it retrieves the buffer nos correctly modified for a write while blinkin. Check for the axuiliary buffer being modified if a write is executed while blinking!!!
+      // tmrModResult = xTimerStop(_blinkTmrHndl, portMAX_DELAY); //FFDR The method fails when stopping the timer as it retrieves the buffer nos correctly modified for a write while blinkin. Check for the auxiliary buffer being modified if a write is executed while blinking!!!
       // if (tmrModResult == pdPASS){
       //    result = true;
       // }
@@ -839,7 +838,7 @@ void SevenSegDisplays::_updBlinkState(){
    bool mainBuffChng{false};
    BaseType_t tmrModResult{};
 
-   //The use of a xTimer that keeps flip-floping the _blinkShowOn value is better suited for symmetrical blinking, but not for asymmetrical cases.
+   //The use of a xTimer that keeps flip-flopping the _blinkShowOn value is better suited for symmetrical blinking, but not for asymmetrical cases.
    if (_isBlinking == true){
       if (_blinkShowOn == false) {
          if (_blinkTimer == 0){  // The turn-Off display stage of the blinking started, copy the dspBuff contents to the dspAuxBuff before blanking the appropriate ports            
@@ -909,7 +908,7 @@ bool SevenSegDisplays::wait(){
 
    if (_isBlinking)
       noBlink();
-   if(!_isWaiting){   //If the display is waiting the blinking option is blocked out as they are mutually excluyent, as both simultaneous has no logical use!
+   if(!_isWaiting){   //If the display is waiting the blinking option is blocked out as they are mutually exclusive, as both simultaneous has no logical use!
       taskENTER_CRITICAL(&mux);
       if (!_waitTmrHndl){         
          String waitTmrName{""}; //Create a valid unique Name for identifying the Wait timer created

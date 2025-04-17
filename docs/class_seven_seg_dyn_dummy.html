@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Seven Segments Displays Agnostic Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.0.0</span>
+   <div id="projectname">Seven Segments Displays Agnostic Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.0.1</span>
    </div>
    <div id="projectbrief">A library that provides a class that models a Seven Segment Display and provides an unified API through it&#39;s members independently of the display technology.</div>
   </td>
@@ -182,7 +182,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
   <br /></td></tr>
 <tr class="separator:a02d94944c1a9ade34a530c7e13503327 inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw" id="r_aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#aee6d67c3bdd719b05ac6e7d8d250d43f">setDigitsOrder</a> (uint8_t *newOrderPtr)</td></tr>
-<tr class="memdesc:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mapping to relate the display buffer positions to the display port asigned to exhibit it's contents. <br  />
+<tr class="memdesc:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mapping to relate the display buffer positions to the display port assigned to exhibit it's contents. <br  />
   <br /></td></tr>
 <tr class="separator:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc7402bad588be4ea2c7aedaf870f9ff inherit pub_methods_class_seven_seg_disp_hw" id="r_afc7402bad588be4ea2c7aedaf870f9ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff">setDspBuffPtr</a> (uint8_t *newDspBuffPtr)</td></tr>
@@ -193,7 +193,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 <div class="textblock"><p>Models a dynamic display with no screen, for tests or remote display of the data. <br  />
  </p>
 <p>The objects instantiated are usefull for development of code expecting to use a dynamic display while the precise hardware to be used in production is not defined. This is done by sending the data through the MCU UART port, making possible the implementation without depending of a physical display. The refresh rate is a parameter of the <code><a class="el" href="#ac0f6ac50ac26d402d96e2a689eb724d7" title="Sets up the required resources for the &quot;dummy hardware display&quot; to work.">begin(uint32_t)</a></code> method, so that it can be adjusted to a reasonable speed, either to reading it in real-time, either to send it to storage. <br  />
- For each periodic "display refresh" event a message will be transmited through the UART, including:</p><ul>
+ For each periodic "display refresh" event a message will be transmitted through the UART, including:</p><ul>
 <li>A time stamp</li>
 <li>The content of each port indicating: <br  />
 <ul>

@@ -12,10 +12,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.0.0
+ * @version 3.0.1
  * 
  * @date First release: 20/12/2023  
- *       Last update:   14/04/2025 18:20 (GMT+0200) DST  
+ *       Last update:   17/04/2025 17:50 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -64,18 +64,20 @@ void pushElmnt(T* &elmntLstPtr, T ssdToPush, uint8_t &elmntQty);
  */
 class SevenSegDispHw{
     static uint8_t _dspHwSerialNum;
-protected:
-    bool _commAnode {true}; // SevenSegDisplays objects need this info to build the right segments to represent each character
-    uint8_t* _digitPosPtr{nullptr};
-    uint8_t* _dspBuffPtr{nullptr};  
-    uint8_t _dspDigitsQty{}; // Display size in digits    
-    uint8_t _dspHwInstNbr{0};
-    SevenSegDispHw* _dspHwInstance{nullptr};
-    uint8_t* _ioPins{};
+private:
+   virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
 
-    virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
-    virtual void send(uint8_t* digitsBuffer);
-    virtual void send(const uint8_t &segments, const uint8_t &port);
+protected:
+   bool _commAnode {true}; // SevenSegDisplays objects need this info to build the right segments to represent each character
+   uint8_t* _digitPosPtr{nullptr};
+   uint8_t* _dspBuffPtr{nullptr};  
+   uint8_t _dspDigitsQty{}; // Display size in digits    
+   uint8_t _dspHwInstNbr{0};
+   SevenSegDispHw* _dspHwInstance{nullptr};
+   uint8_t* _ioPins{};
+
+   virtual void send(uint8_t* digitsBuffer);
+   virtual void send(const uint8_t &segments, const uint8_t &port);
 public:
     /**
      * @brief Default class constructor
@@ -85,11 +87,11 @@ public:
     /**
      * @brief Class constructor
      * 
-     * @param ioPins A pointer to an array holding the identifieres for the MCU GPIO pins required to send the data to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants for each subclass.  
+     * @param ioPins A pointer to an array holding the identifiers for the MCU GPIO pins required to send the data to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants for each subclass.  
      * @param dspDigits Quantity of digits/ports of the display. This value is directly related to the **display module component** quantity of ports and characteristics.  
      * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).  
      *      
-     * @attention The dspDigits parameter indicating the quantity of digits of the display module is a **basic fundamental** parameter passed at instantiation time. This information provides the value to be used to generate the data buffer, the digits order table, auxiliar buffers and even the required information to generate a valid left or right aligned display. Obviously the quantity is bigger than 0, and must be less than or equal to the hardware maximum display digits capability.  
+     * @attention The dspDigits parameter indicating the quantity of digits of the display module is a **basic fundamental** parameter passed at instantiation time. This information provides the value to be used to generate the data buffer, the digits order table, auxiliary buffers and even the required information to generate a valid left or right aligned display. Obviously the quantity is bigger than 0, and must be less than or equal to the hardware maximum display digits capability.  
      */
     SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
     /**
@@ -122,7 +124,6 @@ public:
     virtual uint8_t getBrghtnssLvl(){return 0;};
     virtual uint8_t getBrghtnssMaxLvl(){return 0;};
     virtual uint8_t getBrghtnssMinLvl(){return 0;};
-
     /**
      * @brief Returns a value indicating if the display module component uses a common anode or a common cathode led wiring.  
      * 
@@ -159,11 +160,11 @@ public:
    virtual void ntfyUpdDsply();
    virtual bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl){return true;}; 
    /**
-    * @brief Sets a mapping to relate the display buffer positions to the display port asigned to exhibit it's contents.  
+    * @brief Sets a mapping to relate the display buffer positions to the display port assigned to exhibit it's contents.  
     * 
-     * As different **Seven Segment display hardware** implement different wiring schemes between the **display controller component** and the **display module component**, some implement the leftmost display port as it's lowest memory position of it's buffer, while some implement the rightmost position to it. When more than one **display module components** are used, it adds a new level of hardware implementation that differs from one supplier to the other. The library implements a mechanism to provide the instantiated object to relate the positions of the display ports to the display buffer positions through an array. The array has the size of the display buffer, and each array elment is meant to hold the number of the corresponding port that is wired to display the data in that display buffer position The array is default defined in the constructor as (0, 1, 2,...) that is the most usual implementation found. If the order needs to be changed the setDigitsOrder() method is the way to set a new mapping.  
+     * As different **Seven Segment display hardware** implement different wiring schemes between the **display controller component** and the **display module component**, some implement the leftmost display port as it's lowest memory position of it's buffer, while some implement the rightmost position to it. When more than one **display module components** are used, it adds a new level of hardware implementation that differs from one supplier to the other. The library implements a mechanism to provide the instantiated object to relate the positions of the display ports to the display buffer positions through an array. The array has the size of the display buffer, and each array element is meant to hold the number of the corresponding port that is wired to display the data in that display buffer position The array is default defined in the constructor as (0, 1, 2,...) that is the most usual implementation found. If the order needs to be changed the setDigitsOrder() method is the way to set a new mapping.  
      * 
-     * @param newOrderPtr Pointer to an uint8_t array of _dspDigits lenght containing the position of the port in the **display module components** wired to display that buffer position content. Each value will be checked against the _dspDigits value to ensure that they are all in the range acceptable, 0 <= value <= _dspDigits - 1. If one of the values is out of the valid range no change will be done. Please note that no checking will be done to ensure all of the array values are different. A repeated value will be accepted, ending in an undetermined non-critic, display behavior.  
+     * @param newOrderPtr Pointer to an uint8_t array of _dspDigits length containing the position of the port in the **display module components** wired to display that buffer position content. Each value will be checked against the _dspDigits value to ensure that they are all in the range acceptable, 0 <= value <= _dspDigits - 1. If one of the values is out of the valid range no change will be done. Please note that no checking will be done to ensure all of the array values are different. A repeated value will be accepted, ending in an undetermined non-critic, display behavior.  
      * @return true All of the elements of the array were in the accepted range. The change was performed.  
      * @return false At least one of the values of the array passed were out of range. The change wasn't performed.  
      * 
@@ -191,7 +192,6 @@ public:
     virtual void turnOff(){};
     virtual void turnOn(){};
     virtual void turnOn(const uint8_t &newBrghtnssLvl){};
-   //  virtual void testSend(uint16_t tstData){};
 };
 
 //============================================================> Class declarations separator
@@ -203,20 +203,22 @@ public:
  */
 class SevenSegDynamic: public SevenSegDispHw{    
     static void tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg);
+private:
+   virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
 
 protected:
-    // static TimerHandle_t _dynDspRfrshTmrHndl;
-    TimerHandle_t _dynDspRfrshTmrHndl{NULL};
-    uint8_t _firstRefreshed{0};
-    void _refresh();
-    virtual void send(uint8_t content);
-    virtual void send(const uint8_t &segments, const uint8_t &port);
-    TimerHandle_t _svnSgDynTmrHndl{NULL};
-    virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
+   // static TimerHandle_t _dynDspRfrshTmrHndl;
+   TimerHandle_t _dynDspRfrshTmrHndl{NULL};
+   uint8_t _firstRefreshed{0};
+   void _refresh();
+   virtual void send(uint8_t content);
+   virtual void send(const uint8_t &segments, const uint8_t &port);
+   TimerHandle_t _svnSgDynTmrHndl{NULL};
+
 public:
-    SevenSegDynamic();
-    SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
-    ~SevenSegDynamic();
+   SevenSegDynamic();
+   SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
+   ~SevenSegDynamic();
    /**
     * @brief Sets up the hardware display to work.  
     * 
@@ -228,14 +230,14 @@ public:
     * 
     * @note For each SevenSegDynamic instantiable subclass a short description of their respective `begin()` actions will be added if they are relevant to the developer using the library.  
     */
-    virtual bool begin(uint32_t updtLps=0);
+   virtual bool begin(uint32_t updtLps=0);
     /**
      * @brief Reverts the begin(uint32_t) actions, stopping the display activities, stopping and deleting the timer created for periodic refreshing and freeing the resources used by the Seven Segment display hardware object.  
      * 
      * @return true The display activities could be stopped and resources freed with no problems.  
      * @return false The display activities couldn't be stopped. The method failed.  
      */
-    virtual bool end();
+   virtual bool end();
 };
 
 //============================================================> Class declarations separator
@@ -252,28 +254,30 @@ class SevenSegDynHC595: public SevenSegDynamic{
     static void tmrCbRfrshDynHC595(TimerHandle_t rfrshTmrCbArg);
 
 private:
-    const uint8_t _sclkIndx {0};
-    const uint8_t _rclkIndx {1};
-    const uint8_t _dioIndx {2};
+   const uint8_t _sclkIndx {0};
+   const uint8_t _rclkIndx {1};
+   const uint8_t _dioIndx {2};
 
-    ShiftRegGPIOXpander* _drvrShftRegPtr{nullptr};
-    uint8_t* _drvrShftRegSndPtr{nullptr};
-    uint8_t _sclk {};
-    uint8_t _rclk {};
-    uint8_t _dio {};
-    virtual void _unAbstract();
+   ShiftRegGPIOXpander* _drvrShftRegPtr{nullptr};
+   uint8_t* _drvrShftRegSndPtr{nullptr};
+   uint8_t _sclk {};
+   uint8_t _rclk {};
+   uint8_t _dio {};
+   
+   virtual void _unAbstract();
 
 protected:
-    TimerHandle_t _dynHC595DspRfrshTmrHndl{NULL};  
+   TimerHandle_t _dynHC595DspRfrshTmrHndl{NULL};  
 
-    void _refresh();
-    virtual void send(uint8_t content){};
-    virtual void send(const uint8_t &segments, const uint8_t &port){};
+   void _refresh();
+   virtual void send(uint8_t content){};
+   virtual void send(const uint8_t &segments, const uint8_t &port){};
+
 public:
     /**
      * @brief Class constructor
      * 
-     * @param ioPins A pointer to an array holding the identifieres for the 3 GPIO pins required to send the data to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->sclk, 1->rclk, 2->dio
+     * @param ioPins A pointer to an array holding the identifiers for the 3 GPIO pins required to send the data to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->sclk, 1->rclk, 2->dio
      * @param dspDigits Quantity of digits/ports of the display. This class supports the wiring scheme allowing a maximum of 8 digits.  
      * @param commAnode Boolean indicating if the hardware uses **display module component** wired as common anode (true) or common cathode (false).  
      */
@@ -325,7 +329,7 @@ public:
  * @brief Models a dynamic display with no screen, for tests or remote display of the data.  
  * 
  * The objects instantiated are usefull for development of code expecting to use a dynamic display while the precise hardware to be used in production is not defined. This is done by sending the data through the MCU UART port, making possible the implementation without depending of a physical display. The refresh rate is a parameter of the `begin(uint32_t)` method, so that it can be adjusted to a reasonable speed, either to reading it in real-time, either to send it to storage.  
- * For each periodic "display refresh" event a message will be transmited through the UART, including: 
+ * For each periodic "display refresh" event a message will be transmitted through the UART, including: 
  * - A time stamp
  * - The content of each port indicating:  
  *      - The port position as a **decimal**  
@@ -333,14 +337,16 @@ public:
  */
 class SevenSegDynDummy: public SevenSegDynamic{
     static void tmrCbRfrshDynDummy(TimerHandle_t rfrshTmrCbArg);
-    
-protected:
-    // static TimerHandle_t _dynDummyDspRfrshTmrHndl;
-    TimerHandle_t _dynDummyDspRfrshTmrHndl{NULL};
+private:    
+   virtual void _unAbstract();
 
-    virtual void _unAbstract();
-    void _refresh();
-    virtual void send(const uint8_t &segments, const uint8_t &port);
+protected:
+   // static TimerHandle_t _dynDummyDspRfrshTmrHndl;
+   TimerHandle_t _dynDummyDspRfrshTmrHndl{NULL};
+
+   void _refresh();
+   virtual void send(const uint8_t &segments, const uint8_t &port);
+
 public:
     /**
      * @brief Class constructor, instantiates a SevenSegDynDummy object
@@ -389,7 +395,7 @@ public:
  * - They provide 8 pins for the seven segments + DP ports.  
  * - They provide 1 pin per digit/port supported by the specific chip.  
  * 
- * @note **NONE** of the **driver chips** controlling the displays modeled by the SevenSegStatic subclasses includes **COLONS**, **ICONS** or any other amenity some **display module component** includes, this class and it's subclasses model generic use chip drivers for seven segment display modules. For these chips the activation of those **colons** and/or **icons** is provided by the use of some of the existing described chip pins in a display module propietary exclusive way, and are described in those display modules' datasheets. Some of those mechanisms are:  
+ * @note **NONE** of the **driver chips** controlling the displays modeled by the SevenSegStatic subclasses includes **COLONS**, **ICONS** or any other amenity some **display module component** includes, this class and it's subclasses model generic use chip drivers for seven segment display modules. For these chips the activation of those **colons** and/or **icons** is provided by the use of some of the existing described chip pins in a display module proprietary exclusive way, and are described in those display modules' datasheet. Some of those mechanisms are:  
  * - Have less display ports than the maximum supported by the chip, and use one or more segments of the exceeding ports wired to the colon/s or icon/s of the display.  
  * - Use an external source to activate the colon/s or icon/s independently from the driving chip.  
  * - Wire **one or more** of the visible display ports DP segments to the colon/s or icon/s of the display.  
@@ -397,13 +403,14 @@ public:
  * @warning Using displays that implement the colon/s and/or icon/s through the DP segments of the active ports make the display unfit to display decimal non integer values, as no DP might be used. Verify the display module characteristics to setup the corresponding class with the right parameters.  
  */
 class SevenSegStatic: public SevenSegDispHw{
-protected:
-    uint8_t _brghtnssLvl{0};  //!< Current display brightness level
-    uint8_t _brghtnssLvlMax{0};   //!< Maximum display brightness level
-    uint8_t _brghtnssLvlMin{0};   //!< Minimum display brightness level
-    bool _isOn{false};   //!< Current display status: On/Off
+private:
+   virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
 
-    virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
+protected:
+   uint8_t _brghtnssLvl{0};  //!< Current display brightness level
+   uint8_t _brghtnssLvlMax{0};   //!< Maximum display brightness level
+   uint8_t _brghtnssLvlMin{0};   //!< Minimum display brightness level
+   bool _isOn{false};   //!< Current display status: On/Off
      
 public:
     SevenSegStatic();
@@ -448,7 +455,7 @@ public:
     /**
      * @brief Class constructor.  
      * 
-     * @param ioPins A pointer to an array holding the identifieres for the 3 GPIO pins required to send the data to be displayed to the **display controller component**. The correlation between the array positions and the pin function is given as in-class defined constants: 0->sclk, 1->rclk, 2->dio
+     * @param ioPins A pointer to an array holding the identifiers for the 3 GPIO pins required to send the data to be displayed to the **display controller component**. The correlation between the array positions and the pin function is given as in-class defined constants: 0->sclk, 1->rclk, 2->dio
      * @param dspDigits Quantity of digits/ports of the display. This class supports the wiring scheme allowing a maximum of 8 digits per shift register composing the **display controller component**, up to the 256 limit imposed by the parameter data type **uint8_t**.  
      * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).  
      */
@@ -479,11 +486,11 @@ public:
  *
  * Different attributes include:
  * - Maximum number of ports addressable.
- * - Keyscanning services
+ * - Keyscaning services
  *
- * @note As the communications protocol doesn't completely comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet **Maximum clock frequency** stated as 500KHz to a less demanding time slices, managed by `delayMicroseconds()` function keyword, (or a timer interrupt set at 100KHz for other implementatins, enabling the timer interrupt service only while transmitting data, and disabling it while idle).  
+ * @note As the communications protocol doesn't completely comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet **Maximum clock frequency** stated as 500KHz to a less demanding time slices, managed by `delayMicroseconds()` function keyword, (or a timer interrupt set at 100KHz for other implementations, enabling the timer interrupt service only while transmitting data, and disabling it while idle).  
  * 
- * @warning While the TM1636, TM1637, TM1639 (at least these are our most known members of this "family" that includes other chips) are stable and well documented devices, the parts sold as **"TM1637 Display Modules"**, **"TM1638 Display Modules"** etc, breakboards that include the TM163X display driver, supporting electronics and one or several 7 segments display modules are not all created equal. A well known example: having the TM1637 modules the hability to drive 6 display ports, some breakboards present 4 display ports and a **center colon**, as is standard to time displaying modules. The **big issue** is the lack of a standard for those display modules, not all displays have the same disposition, not all of them are internally wired the same, and that not all the manufacturers wire the TM1637 modules to the 7 segments display modules in the same way. For example, some will attach the colon to the DP (decimal point) segment of the third port (RtL), some will attach them to ALL the DP segment, some will attach each of the dots of the colon independently, one to the 5th display port, the other to the 6th display port, and then some other manufacturer in some other way.  
+ * @warning While the TM1636, TM1637, TM1639 (at least these are our most known members of this "family" that includes other chips) are stable and well documented devices, the parts sold as **"TM1637 Display Modules"**, **"TM1638 Display Modules"** etc, breakboards that include the TM163X display driver, supporting electronics and one or several 7 segments display modules are not all created equal. A well known example: having the TM1637 modules the ability to drive 6 display ports, some breakboards present 4 display ports and a **center colon**, as is standard to time displaying modules. The **big issue** is the lack of a standard for those display modules, not all displays have the same disposition, not all of them are internally wired the same, and that not all the manufacturers wire the TM1637 modules to the 7 segments display modules in the same way. For example, some will attach the colon to the DP (decimal point) segment of the third port (RtL), some will attach them to ALL the DP segment, some will attach each of the dots of the colon independently, one to the 5th display port, the other to the 6th display port, and then some other manufacturer in some other way.  
  * Whenever is possible to get a specific module for testing, a SevenSegTM163X subclass might be added to manage it correctly, please read the subclasses' description for correct display module oriented class identification.  
  *
  * @class SevenSegTM163X
@@ -496,13 +503,14 @@ private:
    const uint8_t _hwBrghtnssLvlMax{0x07};
    const uint8_t _hwBrghtnssLvlMin{0x00};
    uint32_t _txClkTckTm{2};
-
    uint8_t _clk {};
    uint8_t _dio {}; 
 
+   virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
    void _updDsplyCntnt();
+
 protected:
-   uint8_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to or less than **display module component** digits ports, will be equal to or less than **display controller component** maximum digits/ports. The need for a divided display buffer comes from the fact that some **Seven Segment display hardware** use controllers with larger digits management capabilities than the display module digits, and the exceeding digits are used for propietary amenities, as colons, icons, etc.
+   uint8_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to or less than **display module component** digits ports, will be equal to or less than **display controller component** maximum digits/ports. The need for a divided display buffer comes from the fact that some **Seven Segment display hardware** use controllers with larger digits management capabilities than the display module digits, and the exceeding digits are used for proprietary amenities, as colons, icons, etc.
    uint8_t* _xcdDspBuffPtr{nullptr};    //!< A pointer to a buffer the size of the exceeding digits used to control display specific amenities.
    uint8_t _xcdDspDigitsQty{};  //!<  Number of unused available display ports, its the difference  (_dspDigitsQtyMax  - _dspDigitsQty), being the size of the array pointed by _xcdDspBuffPtr
 
@@ -511,8 +519,7 @@ protected:
    void _txStop();
    void _txWrByte(uint8_t data);
    virtual void _sendBffr();
-   virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
-
+   
  public:
    /**
     * @brief Default class constructor
@@ -521,7 +528,7 @@ protected:
    /**
     * @brief Class constructor
     * 
-    * @param ioPins A pointer to an array holding the identifieres for the 2 GPIO pins required to send the data to the **Seven Segment display hardware** to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->dio
+    * @param ioPins A pointer to an array holding the identifiers for the 2 GPIO pins required to send the data to the **Seven Segment display hardware** to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->dio
     * @param dspDigits Quantity of digits/ports of the **display module component**. This parameter acceptable values are directly related to the TM163X family specific member.  
     * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).
     * @param dspContMaxDigits Maximum quantity of digits/ports the **display controller component** can handle, is a value that in this case depends on the TM163X family module member selected.
@@ -550,7 +557,7 @@ protected:
    /**
     * @brief Returns the current brightness level setting for the display module.  
     * 
-    * The TM163X series display drivers have the capability of changing the led display brightness level by using PWM on it's output pins. The resulting brightness levels are not percieved as linear, and the minimum and maximum brightness values don't reach the levels of totaly turning the display off, neither turning the display to it's maximum possible brightness.
+    * The TM163X series display drivers have the capability of changing the led display brightness level by using PWM on it's output pins. The resulting brightness levels are not perceived as linear, and the minimum and maximum brightness values don't reach the levels of totally turning the display off, neither turning the display to it's maximum possible brightness.
     * 
     * @note The SevenSegTM163X abstract class is instrumented so that any subclass must incorporate the minimum and maximum values for that specific display subclass. All the members of the TM163X family I could check at this point share the minimum and the maximum brightness values: 0 for the minimum, 7 for the maximum, resulting in 8 brightness levels. But this is not taken for granted. See setBrghtnssLvl(const uint8_t &) for more details.  
     * 
@@ -578,7 +585,7 @@ protected:
     */
    virtual void ntfyUpdDsply();
    /**
-    * @brief Sets the Brghtness level of the display.  
+    * @brief Sets the Brightness level of the display.  
     * 
     * @param newBrghtnssLvl The new brightness level for the display. The value must be in the range **getBrghtnssMinLvl() <= newBrghtnssLvl <= getBrghtnssMaxLvl()**
     * 
@@ -615,32 +622,32 @@ protected:
  * 
  * @brief Models a Seven Segment display hardware controlled by a TM1636 display controller component.  
  * 
- * The TM1636 is a Titan Micro TM163X family member, whose differencial characteristics from other members of this family (related to this library incumbent attributes) are:  
+ * The TM1636 is a Titan Micro TM163X family member, whose differential characteristics from other members of this family (related to this library incumbent attributes) are:  
  * - Maximum number of display ports: 4
  */
 class SevenSegTM1636: public SevenSegTM163X{
-    private:
-       const uint8_t _dspDigitsQtyMax{4}; // Maximum display size in digits
-       virtual void _unAbstract();
+private:
+   const uint8_t _dspDigitsQtyMax{4}; // Maximum display size in digits
+   virtual void _unAbstract();
     
-    public:
-       /**
-        * @brief Default constructor
-        */
-       SevenSegTM1636();
-       /**
-        * @brief Class constructor
-        * 
-        * @param ioPins A pointer to an array holding the identifieres for the 2 GPIO pins required to send the data to the **Seven Segment display hardware** to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->dio
-        * @param dspDigits Quantity of digits/ports of the display. This parameter for this subclass must be in the range 1 <= dspDigits <= 4.  
-        * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).
-      */
-     SevenSegTM1636(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
-       /**
-        * @brief Default destructor
-        */
-       ~SevenSegTM1636();
-    };
+public:
+   /**
+    * @brief Default constructor
+    */
+   SevenSegTM1636();
+   /**
+    * @brief Class constructor
+    * 
+    * @param ioPins A pointer to an array holding the identifiers for the 2 GPIO pins required to send the data to the **Seven Segment display hardware** to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->dio
+    * @param dspDigits Quantity of digits/ports of the display. This parameter for this subclass must be in the range 1 <= dspDigits <= 4.  
+    * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).
+*/
+SevenSegTM1636(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
+   /**
+    * @brief Default destructor
+    */
+   ~SevenSegTM1636();
+};
        
 //============================================================> Class declarations separator
 
@@ -649,7 +656,7 @@ class SevenSegTM1636: public SevenSegTM163X{
  * 
  * @brief Models a Seven Segment display hardware controlled by a TM1637 display controller component.  
  * 
- * The TM1637 is a very popular Titan Micro TM163X family member, whose differencial characteristics from other members of this family (related to this library incumbent attributes) are:  
+ * The TM1637 is a very popular Titan Micro TM163X family member, whose differential characteristics from other members of this family (related to this library incumbent attributes) are:  
  * - Maximum number of display ports: 6
  */
 class SevenSegTM1637: public SevenSegTM163X{
@@ -665,7 +672,7 @@ public:
    /**
     * @brief Class constructor
     * 
-    * @param ioPins A pointer to an array holding the identifieres for the 2 GPIO pins required to send the data to the **Seven Segment display hardware** to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->dio
+    * @param ioPins A pointer to an array holding the identifiers for the 2 GPIO pins required to send the data to the **Seven Segment display hardware** to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->dio
     * @param dspDigits Quantity of digits/ports of the display. This parameter for this subclass must be in the range 1 <= dspDigits <= 6.  
     * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).
   */
@@ -683,7 +690,7 @@ public:
  * 
  * @brief Models a Seven Segment display hardware controlled by a TM1639 display controller component.  
  * 
- * The TM1639 is a Titan Micro TM1639 family member, whose differencial characteristics from other members of this family (related to this library incumbent attributes) are:  
+ * The TM1639 is a Titan Micro TM1639 family member, whose differential characteristics from other members of this family (related to this library incumbent attributes) are:  
  * - Maximum number of display ports: 8  
  */
 class SevenSegTM1639: public SevenSegTM163X{
@@ -699,7 +706,7 @@ public:
    /**
     * @brief Class constructor
     * 
-    * @param ioPins A pointer to an array holding the identifieres for the 2 GPIO pins required to send the data to the **Seven Segment display hardware** to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->dio
+    * @param ioPins A pointer to an array holding the identifiers for the 2 GPIO pins required to send the data to the **Seven Segment display hardware** to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->dio
     * @param dspDigits Quantity of digits/ports of the display. This parameter for this subclass must be in the range 1 <= dspDigits <= 8.  
     * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).
   */
@@ -776,14 +783,14 @@ private:
 
 	uint8_t _clk {};	// Serial clock max. rate 10 MHz. Data is shifted into the chip on **clk rising edge**
 	uint8_t _din {};	// Data value to get into the chip reg, must be set before the clk rising edge to be accepted.
-	uint8_t _cs {}; // The data in the internal 16 bits are acepted to be loaded while _cs is low, and will be latched and exposed to pins at _cs rising edge.
+	uint8_t _cs {}; // The data in the internal 16 bits are accepted to be loaded while _cs is low, and will be latched and exposed to pins at _cs rising edge.
 
 	uint8_t _cnvrtStdDgtTo72xxDgt(const uint8_t &StdDgt);
 	virtual void _unAbstract();
 	void _updLclBffrCntnt();
 
 protected:
-	uint8_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to _dspDigitsQty, the local buffer differs from the shared _dspBuffPtr because it holds the data of the _dspBuffPtr formated and ready to be sent to the display controller    
+	uint8_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to _dspDigitsQty, the local buffer differs from the shared _dspBuffPtr because it holds the data of the _dspBuffPtr formatted and ready to be sent to the display controller    
     
 	virtual void send(const uint8_t &val, const bool &MSbFrst = true);
 	virtual void send(const uint8_t &address, const uint8_t &data, const bool &MSbFrst = true);
@@ -797,7 +804,7 @@ public:
 	/**
     * @brief Class constructor
     * 
-    * @param ioPins A pointer to an array holding the identifieres for the 3 GPIO pins required to send the data to the **Seven Segment display hardware** to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->din, 2->cs.  
+    * @param ioPins A pointer to an array holding the identifiers for the 3 GPIO pins required to send the data to the **Seven Segment display hardware** to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0->clk, 1->din, 2->cs.  
     * @param dspDigits Quantity of digits/ports of the display. This parameter for this subclass must be in the range 1 <= dspDigits <= 8.  
 	 * 
 	 * @note The Max72XX **display controller** family is designed to control common cathode **display modules**, so there is no parameter provided to instantiate a common anode SevenSegMax7219 class object.  

@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Seven Segments Displays Agnostic Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.0.0</span>
+   <div id="projectname">Seven Segments Displays Agnostic Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.0.1</span>
    </div>
    <div id="projectbrief">A library that provides a class that models a Seven Segment Display and provides an unified API through it&#39;s members independently of the display technology.</div>
   </td>
@@ -188,7 +188,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
   <br /></td></tr>
 <tr class="separator:ac6544795ed8c9b44211424c8b5ef216f inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw" id="r_aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#aee6d67c3bdd719b05ac6e7d8d250d43f">setDigitsOrder</a> (uint8_t *newOrderPtr)</td></tr>
-<tr class="memdesc:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mapping to relate the display buffer positions to the display port asigned to exhibit it's contents. <br  />
+<tr class="memdesc:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mapping to relate the display buffer positions to the display port assigned to exhibit it's contents. <br  />
   <br /></td></tr>
 <tr class="separator:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc7402bad588be4ea2c7aedaf870f9ff inherit pub_methods_class_seven_seg_disp_hw" id="r_afc7402bad588be4ea2c7aedaf870f9ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff">setDspBuffPtr</a> (uint8_t *newDspBuffPtr)</td></tr>
@@ -197,7 +197,6 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pro_methods_class_seven_seg_static"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_class_seven_seg_static')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_seven_seg_static.html">SevenSegStatic</a></td></tr>
 <tr class="inherit_header pro_methods_class_seven_seg_disp_hw"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_class_seven_seg_disp_hw')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a></td></tr>
 <tr class="inherit_header pro_attribs_class_seven_seg_static"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_seven_seg_static')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_seven_seg_static.html">SevenSegStatic</a></td></tr>
 <tr class="memitem:a9ed53120b10f765215787c5861cc4b09 inherit pro_attribs_class_seven_seg_static" id="r_a9ed53120b10f765215787c5861cc4b09"><td class="memItemLeft" align="right" valign="top">
@@ -254,7 +253,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
  </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ioPins</td><td>A pointer to an array holding the identifieres for the 3 GPIO pins required to send the data to be displayed to the <b>display controller component</b>. The correlation between the array positions and the pin function is given as in-class defined constants: 0-&gt;sclk, 1-&gt;rclk, 2-&gt;dio </td></tr>
+    <tr><td class="paramname">ioPins</td><td>A pointer to an array holding the identifiers for the 3 GPIO pins required to send the data to be displayed to the <b>display controller component</b>. The correlation between the array positions and the pin function is given as in-class defined constants: 0-&gt;sclk, 1-&gt;rclk, 2-&gt;dio </td></tr>
     <tr><td class="paramname">dspDigits</td><td>Quantity of digits/ports of the display. This class supports the wiring scheme allowing a maximum of 8 digits per shift register composing the <b>display controller component</b>, up to the 256 limit imposed by the parameter data type <b>uint8_t</b>. <br  />
  </td></tr>
     <tr><td class="paramname">commAnode</td><td>Boolean indicating if the hardware uses a <b>display module component</b> wired as common anode (true) or common cathode (false). <br  />

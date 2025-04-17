@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Seven Segments Displays Agnostic Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.0.0</span>
+   <div id="projectname">Seven Segments Displays Agnostic Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.0.1</span>
    </div>
    <div id="projectbrief">A library that provides a class that models a Seven Segment Display and provides an unified API through it&#39;s members independently of the display technology.</div>
   </td>
@@ -179,7 +179,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>ntfyUpdDsply<
 <tr class="memdesc:ae45f5f1772b93dca12ccaef3e652d7b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the object of a change of content available in the display buffer, the object must update th...">SevenSegDispHw::ntfyUpdDsply()</a> for description. <br /></td></tr>
 <tr class="separator:ae45f5f1772b93dca12ccaef3e652d7b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e74de34810a89ff8409e277e962e09f" id="r_a4e74de34810a89ff8409e277e962e09f"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e74de34810a89ff8409e277e962e09f">setBrghtnssLvl</a> (const uint8_t &amp;newBrghtnssLvl)</td></tr>
-<tr class="memdesc:a4e74de34810a89ff8409e277e962e09f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the Brghtness level of the display. <br  />
+<tr class="memdesc:a4e74de34810a89ff8409e277e962e09f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the Brightness level of the display. <br  />
   <br /></td></tr>
 <tr class="separator:a4e74de34810a89ff8409e277e962e09f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd8804278138008c6f94996ee44b8afd" id="r_acd8804278138008c6f94996ee44b8afd"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd8804278138008c6f94996ee44b8afd">turnOff</a> ()</td></tr>
@@ -224,7 +224,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
   <br /></td></tr>
 <tr class="separator:ac6544795ed8c9b44211424c8b5ef216f inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw" id="r_aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#aee6d67c3bdd719b05ac6e7d8d250d43f">setDigitsOrder</a> (uint8_t *newOrderPtr)</td></tr>
-<tr class="memdesc:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mapping to relate the display buffer positions to the display port asigned to exhibit it's contents. <br  />
+<tr class="memdesc:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mapping to relate the display buffer positions to the display port assigned to exhibit it's contents. <br  />
   <br /></td></tr>
 <tr class="separator:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc7402bad588be4ea2c7aedaf870f9ff inherit pub_methods_class_seven_seg_disp_hw" id="r_afc7402bad588be4ea2c7aedaf870f9ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff">setDspBuffPtr</a> (uint8_t *newDspBuffPtr)</td></tr>
@@ -235,7 +235,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 Protected Attributes</h2></td></tr>
 <tr class="memitem:ac15a9132e32747ba1cab6b13495b9eb2" id="r_ac15a9132e32747ba1cab6b13495b9eb2"><td class="memItemLeft" align="right" valign="top"><a id="ac15a9132e32747ba1cab6b13495b9eb2" name="ac15a9132e32747ba1cab6b13495b9eb2"></a>
 uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_lclDspBuffPtr</b> {nullptr}</td></tr>
-<tr class="memdesc:ac15a9132e32747ba1cab6b13495b9eb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to an array of size equal to or less than <b>display module component</b> digits ports, will be equal to or less than <b>display controller component</b> maximum digits/ports. The need for a divided display buffer comes from the fact that some <b>Seven Segment display hardware</b> use controllers with larger digits management capabilities than the display module digits, and the exceeding digits are used for propietary amenities, as colons, icons, etc. <br /></td></tr>
+<tr class="memdesc:ac15a9132e32747ba1cab6b13495b9eb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to an array of size equal to or less than <b>display module component</b> digits ports, will be equal to or less than <b>display controller component</b> maximum digits/ports. The need for a divided display buffer comes from the fact that some <b>Seven Segment display hardware</b> use controllers with larger digits management capabilities than the display module digits, and the exceeding digits are used for proprietary amenities, as colons, icons, etc. <br /></td></tr>
 <tr class="separator:ac15a9132e32747ba1cab6b13495b9eb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6085a13a7d24c8bf67ecd94a307fec2c" id="r_a6085a13a7d24c8bf67ecd94a307fec2c"><td class="memItemLeft" align="right" valign="top"><a id="a6085a13a7d24c8bf67ecd94a307fec2c" name="a6085a13a7d24c8bf67ecd94a307fec2c"></a>
 uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_xcdDspBuffPtr</b> {nullptr}</td></tr>
@@ -276,11 +276,11 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
 </ul>
 <p>Different attributes include:</p><ul>
 <li>Maximum number of ports addressable.</li>
-<li>Keyscanning services</li>
+<li>Keyscaning services</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>As the communications protocol doesn't completely comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet <b>Maximum clock frequency</b> stated as 500KHz to a less demanding time slices, managed by <code>delayMicroseconds()</code> function keyword, (or a timer interrupt set at 100KHz for other implementatins, enabling the timer interrupt service only while transmitting data, and disabling it while idle). <br  />
+<dl class="section note"><dt>Note</dt><dd>As the communications protocol doesn't completely comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet <b>Maximum clock frequency</b> stated as 500KHz to a less demanding time slices, managed by <code>delayMicroseconds()</code> function keyword, (or a timer interrupt set at 100KHz for other implementations, enabling the timer interrupt service only while transmitting data, and disabling it while idle). <br  />
 </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>While the TM1636, TM1637, TM1639 (at least these are our most known members of this "family" that includes other chips) are stable and well documented devices, the parts sold as <b>"TM1637 Display Modules"</b>, <b>"TM1638 Display Modules"</b> etc, breakboards that include the TM163X display driver, supporting electronics and one or several 7 segments display modules are not all created equal. A well known example: having the TM1637 modules the hability to drive 6 display ports, some breakboards present 4 display ports and a <b>center colon</b>, as is standard to time displaying modules. The <b>big issue</b> is the lack of a standard for those display modules, not all displays have the same disposition, not all of them are internally wired the same, and that not all the manufacturers wire the TM1637 modules to the 7 segments display modules in the same way. For example, some will attach the colon to the DP (decimal point) segment of the third port (RtL), some will attach them to ALL the DP segment, some will attach each of the dots of the colon independently, one to the 5th display port, the other to the 6th display port, and then some other manufacturer in some other way. <br  />
+<dl class="section warning"><dt>Warning</dt><dd>While the TM1636, TM1637, TM1639 (at least these are our most known members of this "family" that includes other chips) are stable and well documented devices, the parts sold as <b>"TM1637 Display Modules"</b>, <b>"TM1638 Display Modules"</b> etc, breakboards that include the TM163X display driver, supporting electronics and one or several 7 segments display modules are not all created equal. A well known example: having the TM1637 modules the ability to drive 6 display ports, some breakboards present 4 display ports and a <b>center colon</b>, as is standard to time displaying modules. The <b>big issue</b> is the lack of a standard for those display modules, not all displays have the same disposition, not all of them are internally wired the same, and that not all the manufacturers wire the TM1637 modules to the 7 segments display modules in the same way. For example, some will attach the colon to the DP (decimal point) segment of the third port (RtL), some will attach them to ALL the DP segment, some will attach each of the dots of the colon independently, one to the 5th display port, the other to the 6th display port, and then some other manufacturer in some other way. <br  />
  Whenever is possible to get a specific module for testing, a <a class="el" href="class_seven_seg_t_m163_x.html" title="Abstract class that models Seven Segments LEDs static displays hardware using Titan Micro TM163X seri...">SevenSegTM163X</a> subclass might be added to manage it correctly, please read the subclasses' description for correct display module oriented class identification. <br  />
  </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -316,7 +316,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
 <p>Class constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ioPins</td><td>A pointer to an array holding the identifieres for the 2 GPIO pins required to send the data to the <b>Seven Segment display hardware</b> to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0-&gt;clk, 1-&gt;dio </td></tr>
+    <tr><td class="paramname">ioPins</td><td>A pointer to an array holding the identifiers for the 2 GPIO pins required to send the data to the <b>Seven Segment display hardware</b> to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants: 0-&gt;clk, 1-&gt;dio </td></tr>
     <tr><td class="paramname">dspDigits</td><td>Quantity of digits/ports of the <b>display module component</b>. This parameter acceptable values are directly related to the TM163X family specific member. <br  />
  </td></tr>
     <tr><td class="paramname">commAnode</td><td>Boolean indicating if the hardware uses a <b>display module component</b> wired as common anode (true) or common cathode (false). </td></tr>
@@ -454,8 +454,8 @@ Here is the caller graph for this function:</div>
 
 <p>Returns the current brightness level setting for the display module. <br  />
  </p>
-<p>The TM163X series display drivers have the capability of changing the led display brightness level by using PWM on it's output pins. The resulting brightness levels are not percieved as linear, and the minimum and maximum brightness values don't reach the levels of totaly turning the display off, neither turning the display to it's maximum possible brightness.</p>
-<dl class="section note"><dt>Note</dt><dd>The <a class="el" href="class_seven_seg_t_m163_x.html" title="Abstract class that models Seven Segments LEDs static displays hardware using Titan Micro TM163X seri...">SevenSegTM163X</a> abstract class is instrumented so that any subclass must incorporate the minimum and maximum values for that specific display subclass. All the members of the TM163X family I could check at this point share the minimum and the maximum brightness values: 0 for the minimum, 7 for the maximum, resulting in 8 brightness levels. But this is not taken for granted. See <a class="el" href="#a4e74de34810a89ff8409e277e962e09f" title="Sets the Brghtness level of the display.">setBrghtnssLvl(const uint8_t &amp;)</a> for more details. <br  />
+<p>The TM163X series display drivers have the capability of changing the led display brightness level by using PWM on it's output pins. The resulting brightness levels are not perceived as linear, and the minimum and maximum brightness values don't reach the levels of totally turning the display off, neither turning the display to it's maximum possible brightness.</p>
+<dl class="section note"><dt>Note</dt><dd>The <a class="el" href="class_seven_seg_t_m163_x.html" title="Abstract class that models Seven Segments LEDs static displays hardware using Titan Micro TM163X seri...">SevenSegTM163X</a> abstract class is instrumented so that any subclass must incorporate the minimum and maximum values for that specific display subclass. All the members of the TM163X family I could check at this point share the minimum and the maximum brightness values: 0 for the minimum, 7 for the maximum, resulting in 8 brightness levels. But this is not taken for granted. See <a class="el" href="#a4e74de34810a89ff8409e277e962e09f" title="Sets the Brightness level of the display.">setBrghtnssLvl(const uint8_t &amp;)</a> for more details. <br  />
 </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>The current brightness level setting. <br  />
  </dd></dl>
@@ -555,7 +555,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Sets the Brghtness level of the display. <br  />
+<p>Sets the Brightness level of the display. <br  />
  </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -574,7 +574,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_t_m163_x_a4e74de34810a89ff8409e277e962e09f_icgraph.png" border="0" usemap="#aclass_seven_seg_t_m163_x_a4e74de34810a89ff8409e277e962e09f_icgraph" alt=""/></div>
 <map name="aclass_seven_seg_t_m163_x_a4e74de34810a89ff8409e277e962e09f_icgraph" id="aclass_seven_seg_t_m163_x_a4e74de34810a89ff8409e277e962e09f_icgraph">
-<area shape="rect" title="Sets the Brghtness level of the display." alt="" coords="231,5,456,32"/>
+<area shape="rect" title="Sets the Brightness level of the display." alt="" coords="231,5,456,32"/>
 <area shape="rect" href="class_seven_seg_t_m163_x.html#a820e93c70fe532132b1d1117c84af7e6" title="Turns the display module on." alt="" coords="5,5,183,32"/>
 <area shape="poly" title=" " alt="" coords="215,21,183,21,183,16,215,16"/>
 </map>
@@ -715,7 +715,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="class_seven_seg_t_m163_x_a820e93c70fe532132b1d1117c84af7e6_cgraph.png" border="0" usemap="#aclass_seven_seg_t_m163_x_a820e93c70fe532132b1d1117c84af7e6_cgraph" alt=""/></div>
 <map name="aclass_seven_seg_t_m163_x_a820e93c70fe532132b1d1117c84af7e6_cgraph" id="aclass_seven_seg_t_m163_x_a820e93c70fe532132b1d1117c84af7e6_cgraph">
 <area shape="rect" title="Turns the display module on." alt="" coords="5,31,183,57"/>
-<area shape="rect" href="class_seven_seg_t_m163_x.html#a4e74de34810a89ff8409e277e962e09f" title="Sets the Brghtness level of the display." alt="" coords="231,5,456,32"/>
+<area shape="rect" href="class_seven_seg_t_m163_x.html#a4e74de34810a89ff8409e277e962e09f" title="Sets the Brightness level of the display." alt="" coords="231,5,456,32"/>
 <area shape="poly" title=" " alt="" coords="183,32,215,29,215,34,183,38"/>
 <area shape="rect" href="class_seven_seg_t_m163_x.html#a0469f1b57c14141db8a290e8ce7bb35a" title="Turns the display module on." alt="" coords="255,56,432,83"/>
 <area shape="poly" title=" " alt="" coords="183,50,240,56,239,61,183,56"/>

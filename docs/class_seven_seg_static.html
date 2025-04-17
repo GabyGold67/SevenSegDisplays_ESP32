@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Seven Segments Displays Agnostic Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.0.0</span>
+   <div id="projectname">Seven Segments Displays Agnostic Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.0.1</span>
    </div>
    <div id="projectbrief">A library that provides a class that models a Seven Segment Display and provides an unified API through it&#39;s members independently of the display technology.</div>
   </td>
@@ -182,7 +182,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
   <br /></td></tr>
 <tr class="separator:ac6544795ed8c9b44211424c8b5ef216f inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw" id="r_aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#aee6d67c3bdd719b05ac6e7d8d250d43f">setDigitsOrder</a> (uint8_t *newOrderPtr)</td></tr>
-<tr class="memdesc:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mapping to relate the display buffer positions to the display port asigned to exhibit it's contents. <br  />
+<tr class="memdesc:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mapping to relate the display buffer positions to the display port assigned to exhibit it's contents. <br  />
   <br /></td></tr>
 <tr class="separator:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc7402bad588be4ea2c7aedaf870f9ff inherit pub_methods_class_seven_seg_disp_hw" id="r_afc7402bad588be4ea2c7aedaf870f9ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff">setDspBuffPtr</a> (uint8_t *newDspBuffPtr)</td></tr>
@@ -219,7 +219,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
 <li>They provide 1 pin per digit/port supported by the specific chip. <br  />
 </li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd><b>NONE</b> of the <b>driver chips</b> controlling the displays modeled by the <a class="el" href="class_seven_seg_static.html" title="Abstract class that models displays that don&#39;t need permanent MCU data updating to keep the data corr...">SevenSegStatic</a> subclasses includes <b>COLONS</b>, <b>ICONS</b> or any other amenity some <b>display module component</b> includes, this class and it's subclasses model generic use chip drivers for seven segment display modules. For these chips the activation of those <b>colons</b> and/or <b>icons</b> is provided by the use of some of the existing described chip pins in a display module propietary exclusive way, and are described in those display modules' datasheets. Some of those mechanisms are: <br  />
+<dl class="section note"><dt>Note</dt><dd><b>NONE</b> of the <b>driver chips</b> controlling the displays modeled by the <a class="el" href="class_seven_seg_static.html" title="Abstract class that models displays that don&#39;t need permanent MCU data updating to keep the data corr...">SevenSegStatic</a> subclasses includes <b>COLONS</b>, <b>ICONS</b> or any other amenity some <b>display module component</b> includes, this class and it's subclasses model generic use chip drivers for seven segment display modules. For these chips the activation of those <b>colons</b> and/or <b>icons</b> is provided by the use of some of the existing described chip pins in a display module proprietary exclusive way, and are described in those display modules' datasheet. Some of those mechanisms are: <br  />
 <ul>
 <li>Have less display ports than the maximum supported by the chip, and use one or more segments of the exceeding ports wired to the colon/s or icon/s of the display. <br  />
 </li>

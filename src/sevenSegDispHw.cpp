@@ -14,10 +14,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.0.0  
+ * @version 3.0.1  
  * 
  * @date First release: 20/12/2023  
- *       Last update:   14/04/2025 18:20 (GMT+0200) DSP
+ *       Last update:   17/04/2025 17:50 (GMT+0200) DSP
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -252,7 +252,7 @@ bool SevenSegDynHC595::begin(uint32_t updtLps){
     return result;
 }
 
-//FFDR Split this end() as the noWait(): 1)Check if the timer is running and just stop it. 2) Place the end() call at the destructor, and delete the timer if existed. Before that ensure the begin checks for existance and status before creating new timer.
+//FFDR Split this end() as the noWait(): 1)Check if the timer is running and just stop it. 2) Place the end() call at the destructor, and delete the timer if existed. Before that ensure the begin checks for existence and status before creating new timer.
 
 /**
  * @brief Stops the active display updating.  

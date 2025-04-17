@@ -1,5 +1,5 @@
 <map id="SevenSegTM163X::setBrghtnssLvl" name="SevenSegTM163X::setBrghtnssLvl">
-<area shape="rect" id="Node000001" title="Sets the Brghtness level of the display." alt="" coords="231,5,456,32"/>
+<area shape="rect" id="Node000001" title="Sets the Brightness level of the display." alt="" coords="231,5,456,32"/>
 <area shape="rect" id="Node000002" href="$class_seven_seg_t_m163_x.html#a820e93c70fe532132b1d1117c84af7e6" title="Turns the display module on." alt="" coords="5,5,183,32"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="215,21,183,21,183,16,215,16"/>
 </map>

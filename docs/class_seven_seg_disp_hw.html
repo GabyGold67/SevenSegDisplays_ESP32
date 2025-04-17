@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Seven Segments Displays Agnostic Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.0.0</span>
+   <div id="projectname">Seven Segments Displays Agnostic Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.0.1</span>
    </div>
    <div id="projectbrief">A library that provides a class that models a Seven Segment Display and provides an unified API through it&#39;s members independently of the display technology.</div>
   </td>
@@ -184,7 +184,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
   <br /></td></tr>
 <tr class="separator:a02d94944c1a9ade34a530c7e13503327"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee6d67c3bdd719b05ac6e7d8d250d43f" id="r_aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aee6d67c3bdd719b05ac6e7d8d250d43f">setDigitsOrder</a> (uint8_t *newOrderPtr)</td></tr>
-<tr class="memdesc:aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mapping to relate the display buffer positions to the display port asigned to exhibit it's contents. <br  />
+<tr class="memdesc:aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mapping to relate the display buffer positions to the display port assigned to exhibit it's contents. <br  />
   <br /></td></tr>
 <tr class="separator:aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc7402bad588be4ea2c7aedaf870f9ff" id="r_afc7402bad588be4ea2c7aedaf870f9ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc7402bad588be4ea2c7aedaf870f9ff">setDspBuffPtr</a> (uint8_t *newDspBuffPtr)</td></tr>
@@ -228,7 +228,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 <p>Class constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ioPins</td><td>A pointer to an array holding the identifieres for the MCU GPIO pins required to send the data to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants for each subclass. <br  />
+    <tr><td class="paramname">ioPins</td><td>A pointer to an array holding the identifiers for the MCU GPIO pins required to send the data to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants for each subclass. <br  />
  </td></tr>
     <tr><td class="paramname">dspDigits</td><td>Quantity of digits/ports of the display. This value is directly related to the <b>display module component</b> quantity of ports and characteristics. <br  />
  </td></tr>
@@ -237,7 +237,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
   </table>
   </dd>
 </dl>
-<dl class="section attention"><dt>Attention</dt><dd>The dspDigits parameter indicating the quantity of digits of the display module is a <b>basic fundamental</b> parameter passed at instantiation time. This information provides the value to be used to generate the data buffer, the digits order table, auxiliar buffers and even the required information to generate a valid left or right aligned display. Obviously the quantity is bigger than 0, and must be less than or equal to the hardware maximum display digits capability. <br  />
+<dl class="section attention"><dt>Attention</dt><dd>The dspDigits parameter indicating the quantity of digits of the display module is a <b>basic fundamental</b> parameter passed at instantiation time. This information provides the value to be used to generate the data buffer, the digits order table, auxiliary buffers and even the required information to generate a valid left or right aligned display. Obviously the quantity is bigger than 0, and must be less than or equal to the hardware maximum display digits capability. <br  />
  </dd></dl>
 
 </div>
@@ -474,13 +474,13 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Sets a mapping to relate the display buffer positions to the display port asigned to exhibit it's contents. <br  />
+<p>Sets a mapping to relate the display buffer positions to the display port assigned to exhibit it's contents. <br  />
  </p>
-<p>As different <b>Seven Segment display hardware</b> implement different wiring schemes between the <b>display controller component</b> and the <b>display module component</b>, some implement the leftmost display port as it's lowest memory position of it's buffer, while some implement the rightmost position to it. When more than one <b>display module components</b> are used, it adds a new level of hardware implementation that differs from one supplier to the other. The library implements a mechanism to provide the instantiated object to relate the positions of the display ports to the display buffer positions through an array. The array has the size of the display buffer, and each array elment is meant to hold the number of the corresponding port that is wired to display the data in that display buffer position The array is default defined in the constructor as (0, 1, 2,...) that is the most usual implementation found. If the order needs to be changed the <a class="el" href="#aee6d67c3bdd719b05ac6e7d8d250d43f" title="Sets a mapping to relate the display buffer positions to the display port asigned to exhibit it&#39;s con...">setDigitsOrder()</a> method is the way to set a new mapping. <br  />
+<p>As different <b>Seven Segment display hardware</b> implement different wiring schemes between the <b>display controller component</b> and the <b>display module component</b>, some implement the leftmost display port as it's lowest memory position of it's buffer, while some implement the rightmost position to it. When more than one <b>display module components</b> are used, it adds a new level of hardware implementation that differs from one supplier to the other. The library implements a mechanism to provide the instantiated object to relate the positions of the display ports to the display buffer positions through an array. The array has the size of the display buffer, and each array element is meant to hold the number of the corresponding port that is wired to display the data in that display buffer position The array is default defined in the constructor as (0, 1, 2,...) that is the most usual implementation found. If the order needs to be changed the <a class="el" href="#aee6d67c3bdd719b05ac6e7d8d250d43f" title="Sets a mapping to relate the display buffer positions to the display port assigned to exhibit it&#39;s co...">setDigitsOrder()</a> method is the way to set a new mapping. <br  />
 </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">newOrderPtr</td><td>Pointer to an uint8_t array of _dspDigits lenght containing the position of the port in the <b>display module components</b> wired to display that buffer position content. Each value will be checked against the _dspDigits value to ensure that they are all in the range acceptable, 0 &lt;= value &lt;= _dspDigits - 1. If one of the values is out of the valid range no change will be done. Please note that no checking will be done to ensure all of the array values are different. A repeated value will be accepted, ending in an undetermined non-critic, display behavior. <br  />
+    <tr><td class="paramname">newOrderPtr</td><td>Pointer to an uint8_t array of _dspDigits length containing the position of the port in the <b>display module components</b> wired to display that buffer position content. Each value will be checked against the _dspDigits value to ensure that they are all in the range acceptable, 0 &lt;= value &lt;= _dspDigits - 1. If one of the values is out of the valid range no change will be done. Please note that no checking will be done to ensure all of the array values are different. A repeated value will be accepted, ending in an undetermined non-critic, display behavior. <br  />
  </td></tr>
   </table>
   </dd>
