@@ -42,6 +42,7 @@
 
 #include "Arduino.h"
 #include <stdint.h>
+#include <Wire.h>
 #include <ShiftRegGPIOXpander_ESP32.h>
 
 //------- Generic Functions prototypes BEGIN
@@ -72,8 +73,8 @@ protected:
    uint8_t* _digitPosPtr{nullptr};
    uint8_t* _dspBuffPtr{nullptr};  
    uint8_t _dspDigitsQty{}; // Display size in digits    
-   uint8_t _dspHwInstNbr{0};
    SevenSegDispHw* _dspHwInstance{nullptr};
+   uint8_t _dspHwInstNbr{0};
    uint8_t* _ioPins{};
 
    virtual void send(uint8_t* digitsBuffer);
@@ -87,7 +88,7 @@ public:
     /**
      * @brief Class constructor
      * 
-     * @param ioPins A pointer to an array holding the identifiers for the MCU GPIO pins required to send the data to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants for each subclass.  
+     * @param ioPins A pointer to an array holding the identifiers for the MCU GPIO pins required to send the data to be displayed to the **Display controller**. The correlation between the array positions and the pin function is given as in-class defined constants for each subclass.  
      * @param dspDigits Quantity of digits/ports of the display. This value is directly related to the **display module component** quantity of ports and characteristics.  
      * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).  
      *      
@@ -121,6 +122,7 @@ public:
      * @return false The display activities couldn't be stopped. The method failed.  
      */
     virtual bool end();
+
     virtual uint8_t getBrghtnssLvl(){return 0;};
     virtual uint8_t getBrghtnssMaxLvl(){return 0;};
     virtual uint8_t getBrghtnssMinLvl(){return 0;};
@@ -151,6 +153,7 @@ public:
      * @return uint8_t The **display module component** digits quantity.  
      */
     uint8_t getHwDspDigitsQty();
+    
     virtual bool getIsOn(){return true;};
     /**
      * @brief Notifies the object of a change of content available in the display buffer, the object must update the display.  
@@ -158,6 +161,7 @@ public:
      * While the dynamic displays must periodically refresh the data displayed, and so they get the most updated content from the display buffer without the need to send them any notification, the data displayed by the static displays remains constant even if it's data buffer or registers are loaded with new data. This method notifies the display that the data buffer content has changed and it must load the new contents of it's registers or buffers to display the new information.  
      */
    virtual void ntfyUpdDsply();
+
    virtual bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl){return true;}; 
    /**
     * @brief Sets a mapping to relate the display buffer positions to the display port assigned to exhibit it's contents.  
@@ -189,6 +193,7 @@ public:
      * @warning Setting the display buffer pointer to an address not coinciding with the one configured in the SevenSegDisplays will **disable** the possibility for it to get new SevenSegDisplays generated content displayed!! Handle with extreme care, first saving the original provided pointer, changing it as needed, and reseting the _dspBuffPtr to the saved value!!
      */
     void setDspBuffPtr(uint8_t* newDspBuffPtr);
+    
     virtual void turnOff(){};
     virtual void turnOn(){};
     virtual void turnOn(const uint8_t &newBrghtnssLvl){};
@@ -218,7 +223,7 @@ protected:
 public:
    SevenSegDynamic();
    SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
-   ~SevenSegDynamic();
+   virtual ~SevenSegDynamic();
    /**
     * @brief Sets up the hardware display to work.  
     * 
@@ -286,7 +291,7 @@ public:
      * @brief Class destructor
      * 
      */
-    ~SevenSegDynHC595();
+    virtual ~SevenSegDynHC595();
     /**
      * @brief Sets up the required resources for the hardware display to work
      * 
@@ -337,6 +342,7 @@ public:
  */
 class SevenSegDynDummy: public SevenSegDynamic{
     static void tmrCbRfrshDynDummy(TimerHandle_t rfrshTmrCbArg);
+    
 private:    
    virtual void _unAbstract();
 
@@ -358,7 +364,7 @@ public:
     /**
      * @brief Class destructor  
      */
-    ~SevenSegDynDummy();
+    virtual ~SevenSegDynDummy();
     /**
      * @brief Sets up the required resources for the "dummy hardware display" to work
      * 
@@ -415,7 +421,7 @@ protected:
 public:
     SevenSegStatic();
     SevenSegStatic(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
-    ~SevenSegStatic();
+    virtual ~SevenSegStatic();
     virtual uint8_t getBrghtnssLvl();
     virtual uint8_t getBrghtnssMaxLvl();
     virtual uint8_t getBrghtnssMinLvl();
@@ -447,7 +453,8 @@ private:
 
     virtual void _unAbstract();
     void _updDsplyCntnt();
-public:
+
+   public:
     /**
      * @brief Class default constructor.  
      */
@@ -463,7 +470,7 @@ public:
     /**
      * @brief Class destructor
      */
-    ~SevenSegStatHC595();
+    virtual ~SevenSegStatHC595();
     /**
      * @brief See SevenSegDispHw::ntfyUpdDsply() for description
      */
@@ -642,11 +649,11 @@ public:
     * @param dspDigits Quantity of digits/ports of the display. This parameter for this subclass must be in the range 1 <= dspDigits <= 4.  
     * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).
 */
-SevenSegTM1636(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
+   SevenSegTM1636(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
    /**
     * @brief Default destructor
     */
-   ~SevenSegTM1636();
+   virtual ~SevenSegTM1636();
 };
        
 //============================================================> Class declarations separator
@@ -876,5 +883,99 @@ public:
 };
 
 //============================================================> Class declarations separator
-    
+class HT16K33: public SevenSegStatic{
+
+   // Command/Address Map Constants
+	const uint8_t _DspPortsBaseAddr{0x00}; //!< Last address depends on digitsQty, maximum will be 0x0F
+   const uint8_t _SetStndByCmnd{0x20};
+	const uint8_t _ExitStndByCmnd{0x21};
+
+   const uint8_t _TurnOffDspCmnd{0x80};
+	const uint8_t _TurnOnDspCmnd{0x81};
+
+	const uint8_t _BrghtnsBaseAddr{0xE0};  //!< 0xE0 dim (off) -> 0xEF brightest
+	const uint8_t _ScanLimitAddr{0x0B};
+	const uint8_t _DspTestAddr{0x0F};
+
+private:
+   const uint8_t _sclIndx {0};
+   const uint8_t _sdaIndx {1};
+
+   const uint8_t _dspDigitsQtyMax{16};
+   const uint8_t _hwBrghtnssLvlMax{0x0F};
+   const uint8_t _hwBrghtnssLvlMin{0x00};
+
+	uint8_t _i2cAddress {};
+   uint8_t _scl {};	//! Serial clock max. rate ??? MHz. Data is shifted into the chip on **clk rising edge**
+	uint8_t _sda {};	// Data value to get into the chip reg, must be set before the clk rising edge to be accepted.
+
+   virtual void _unAbstract();
+	void _updLclBffrCntnt();
+
+public:
+   HT16K33();
+   HT16K33(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t i2cAddress);
+   virtual ~HT16K33();
+	/**
+	 * @brief Sets up the hardware display to work, and starts the display activities.  
+	 * 
+	 * For the Max72XX display controllers this setup includes:
+	 * - Setting the display in "Normal operation mode"
+	 * - Setting the quantity of display ports of the "Display module" connected to the controller.  
+	 * - BCD decoding use.  
+	 * - Turning on the Display controller (shutdown register setting).  
+	 * 
+	 * @return true Always
+	*/
+bool begin();
+/**
+ * @brief Ends the active mode of the display by shutting it off.  
+ * 
+ * While the control module will keep receiving and updating it's registers, while the display controller is in shutdown mode the display module will be turned off and no activity will be executed in the corresponding led powering lines.  
+ * 
+ * @return true Always
+ */
+bool end();
+/**
+ * @brief Returns a value indicating if the display controller is in working/On or shutdown/Off mode
+ * 
+ * @retval true The display controller is in working/On mode.  
+ * @retval false The display controller is in shutdown/Off mode.  
+ */
+virtual bool getIsOn();
+/**
+ * @brief See SevenSegDispHw::ntfyUpdDsply() for description
+ */
+virtual void ntfyUpdDsply();
+/**
+ * @brief Sets the brightness level for the display module
+ * 
+ * See SevenSegTM163X::setBrghtnssLvl(const uint8_t &) for details.  
+ */
+virtual bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl); 
+ /**
+ * @brief Turns the display module off.  
+ * 
+ * The display module will be cleared and will keep that status until a turnOn(), or turnOn(const uint8_t &) is invoked. 
+ * 
+ * @note While the display is Off, it will keep receiving display data and commands, but will keep the leds turned off. When it receives a turnOn command the display will show the data it received while turned off, or the same it was showing at turnOff if no change to the contents was done.  
+ */
+virtual void turnOff();
+/**
+ * @brief Turns the display module on.  
+ * 
+ * The display module will be turned on and it's content displayed, and will keep that status until a turnOff() is invoked.  
+ */
+virtual void turnOn();
+/**
+ * @brief Turns the display module on.  
+ * 
+ * The display module will be turned on, it's brightness level set to the requested level, it's content displayed, and will keep that status until a turnOff() is invoked. 
+ * 
+ * @param newBrghtnssLvl The new brightness level for the display. The value must be in the range **getBrghtnssMinLvl() <= newBrghtnssLvl <= getBrghtnssMaxLvl()**
+ */
+virtual void turnOn(const uint8_t &newBrghtnssLvl);
+};    
+//============================================================> Class declarations separator
+
 #endif

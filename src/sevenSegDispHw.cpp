@@ -1,9 +1,9 @@
 /**
  ******************************************************************************
  * @file SevenSegDispHw.cpp
- * @brief Code file for the SevenSegDisplays_ESP32 library, SevenSegDispHw class and subclasses 
+ * @brief Code file for the SevenSegDisplays_ESP32 library
  * 
- * @details  
+ * @details This code files includes the SevenSegDispHw class and subclasses, including one class for each specific **Display controller** managed by the library/  
  * 
  * Repository: https://github.com/GabyGold67/SevenSegDisplays_ESP32  
  * 
@@ -972,6 +972,44 @@ void SevenSegMax7219::_updLclBffrCntnt(){
 
 void SevenSegMax7219::_unAbstract(){return;}
 
+//============================================================> Class methods separator
+
+HT16K33::HT16K33(){};
+
+HT16K33::HT16K33(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t i2cAddress)
+:SevenSegStatic(ioPins, dspDigits, commAnode), _i2cAddress{i2cAddress}
+{
+   _brghtnssLvlMax = _hwBrghtnssLvlMax;
+   _brghtnssLvlMin = _hwBrghtnssLvlMin;
+   _brghtnssLvl = _brghtnssLvlMin;
+
+   if(_dspDigitsQty > _dspDigitsQtyMax)
+      _dspDigitsQty = _dspDigitsQtyMax;
+   // _lclDspBuffPtr = new uint8_t[_dspDigitsQty];
+   
+   if(ioPins != nullptr){
+      _sda = *(ioPins + _sdaIndx);
+      _scl = *(ioPins + _sclIndx);
+   }
+   else{
+      _sda = SDA;
+      _scl = SCL;
+   }
+
+   begin();
+   setBrghtnssLvl(_brghtnssLvlMax);
+}
+
+bool HT16K33::begin(){
+   bool result {false};
+
+   // Turn on oscilator
+   // Row/Int output pin
+   // Dimming value set
+   // Blink set
+
+   return result;
+}
 //============================================================> Class methods separator
 
 template<typename T>

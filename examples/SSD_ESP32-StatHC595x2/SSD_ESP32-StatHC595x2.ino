@@ -4,7 +4,7 @@
  * 
  * @brief Code example file to demonstrate SevenSegDisplays_ESP32 library use with SevenSegDispHw::SevenSegStatHC595 class
  * 
- * @details 
+ * @details This example is specific for a 2 digits/ports 74HC595 display module, setting the corresponding parameters for the constructor, blink mask array and digits order array for that specific number of digits. The number of display ports also sets specific attibutes for the instantiated object, like the maximum and minimum values the display can show. For the use of the same library and class with a different amount of ports see the SSD_ESP32-StatHC595x4.ino and SSD_ESP32-StatHC595x3.ino examples.  
  *
  * Repository: https://github.com/GabyGold67/SevenSegDisplays_ESP32  
  * 

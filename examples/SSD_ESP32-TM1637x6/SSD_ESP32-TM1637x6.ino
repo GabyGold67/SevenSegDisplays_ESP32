@@ -1,10 +1,10 @@
 /**
  ******************************************************************************
- * @file SSD_ESP32-StatHC595x4.ino
+ * @file SSD_ESP32-TM1637x6.ino
  * 
- * @brief Code example file to demonstrate SevenSegDisplays_ESP32 library use with SevenSegDispHw::SevenSegStatHC595 class
+ * @brief Code example file to demonstrate SevenSegDisplays_ESP32 library use with SevenSegDispHw::SevenSegTM1637 class
  * 
- * @details This example is specific for a 4 digits/ports 74HC595 display module, setting the corresponding parameters for the constructor, blink mask array and digits order array for that specific number of digits. The number of display ports also sets specific attibutes for the instantiated object, like the maximum and minimum values the display can show. For the use of the same library and class with a different amount of ports see the SSD_ESP32-StatHC595x3.ino and SSD_ESP32-StatHC595x2.ino examples.  
+ * @details 
  *
  * Repository: https://github.com/GabyGold67/SevenSegDisplays_ESP32  
  * 
@@ -16,19 +16,18 @@
  * Github <https://github.com/GabyGold67>
  *
  * @date First release: 15/05/2023  
- *       Last update:   02/04/2025 21:00 GMT+0200 DST  
+ *       Last update:   23/04/2025 19:00 GMT+0200 DST  
  ******************************************************************************
- * @warning **Use of this library is under your own responsibility**
- * 
- * @warning The use of this library falls in the category described by The Alan 
- * Parsons Project (c) 1980 "Games People play" disclaimer:
- * 
- * Games people play, you take it or you leave it
- * Things that they say aren't alright
- * If I promised you the moon and the stars, would you believe it?
- * 
- ******************************************************************************
- * Released into the public domain in accordance with "GPL-3.0-or-later" license terms.
+  * @warning **Use of this library is under your own responsibility**
+  * 
+  * @warning The use of this library falls in the category described by The Alan 
+  * Parsons Project (c) 1980 "Games People play" disclaimer:
+  * 
+  * Games people play, you take it or you leave it
+  * Things that they say aren't alright
+  * If I promised you the moon and the stars, would you believe it?
+  * 
+  * Released into the public domain in accordance with "GPL-3.0-or-later" license terms.
  ******************************************************************************
 */
 #include <Arduino.h>
@@ -94,40 +93,115 @@ void mainCtrlTsk(void *pvParameters){
    const long testTime{2000};
    bool myBlinkMask[4] {true, true, true, true};
 
-   const uint8_t dio {GPIO_NUM_33};  // Pin connected to DS of 74HC595 AKA DIO AKA SDI
-   const uint8_t rclk {GPIO_NUM_25}; // Pin connected to ST_CP of 74HC595 AKA RCLK AKA LOAD
-   const uint8_t sclk {GPIO_NUM_26}; // Pin connected to SH_CP of 74HC595 AKA SCLK
+   const uint8_t dio {GPIO_NUM_16};  // Pin connected to DIO of TM1637
+   const uint8_t clk {GPIO_NUM_15}; // Pin connected to CLK of TM1637
    
-   static uint8_t myDispIOPins[3] {sclk, rclk, dio}; // Pins set as an array as required by hw constructor
+   static uint8_t myDispIOPins[2] {clk, dio}; // Pins set as an array as required by hw constructor
 
-   uint8_t theNewOrder [4] {3, 2, 1, 0};
 
-   SevenSegDispHw* myLedDispPtr {new SevenSegStatHC595 (myDispIOPins, 4, true)};
+/* Instantiation examples, different possibilities for use according to developer preferences*/
+/* A three lines step by step code example:  
+SevenSegDynHC595 myLedDispHw(myDispIOPins, 4, true);
+SevenSegDispHw* myLedDispHwPtr = &myLedDispHw;
+SevenSegDisplays myLedDisp(myLedDispHwPtr);
+*/
+
+/* A two lines example using the & operand to pass the pointer
+SevenSegDynHC595 myLedDispHw(myDispIOPins, 4, true);
+SevenSegDisplays myLedDisp(&myLedDispHw);
+*/
+
+/* A two lines example using a sub-class pointer to a dynamic instantiated object
+SevenSegDynHC595* myLedDispPtr {new SevenSegDynHC595 (myDispIOPins, 4, true)};
+SevenSegDisplays myLedDisp(myLedDispPtr);
+*/
+
+/* A two lines example using a base class pointer to a dynamic instantiated object
+SevenSegDispHw* myLedDispPtr {new SevenSegDynHC595 (myDispIOPins, 4, true)};
+SevenSegDisplays myLedDisp(myLedDispPtr);
+*/
+
+/* A one liner example using as argument the pointer returned from dynamic instantiated object
+SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
+*/
+
+   uint8_t theNewOrder [6] {3, 4, 5, 0 , 1, 2};
+
+   SevenSegDispHw* myLedDispPtr {new SevenSegTM1637(myDispIOPins, 6, false)};
    myLedDispPtr -> setDigitsOrder(theNewOrder);
    SevenSegDisplays myLedDisp(myLedDispPtr);
 
-   // SevenSegDisplays myLedDisp(new SevenSegStatHC595 (myDispIOPins, 4, true));
+   myLedDisp.getDspUndrlHwPtr()->begin();
+   Serial.println("Service Started");
 
    for(;;){
       {
-         myLedDisp.getDspUndrlHwPtr()->begin();
-         Serial.println("Service Started");
+         //Clear the display contents before starting
+         myLedDisp.clear();
+         Serial.println("Display cleared");
+         myLedDisp.getDspUndrlHwPtr()->turnOn();
+         Serial.println("Display turned On");
          vTaskDelay(250);
       }
 
       {
-      //print() with a string argument, two characters long, all characters included in the representable characters list
-      testResult = myLedDisp.print("On");
-      vTaskDelay(testTime);
+         //print() with a string argument, two characters long, all characters included in the representable characters list
+         testResult = myLedDisp.print("On");
+         vTaskDelay(testTime);
       }
-
+      
       {
          //print() with a string argument, four characters long, all characters included in the representable characters list
+         Serial.println("Display turned Off");
+         myLedDisp.getDspUndrlHwPtr()->turnOff();  // Demonstrates the display control keeps receiving data altough it's set turned Off
+         Serial.println("Text 'Strt'sent to the display while turned Off");
          testResult = myLedDisp.print("Strt");
+         myLedDisp.getDspUndrlHwPtr()->turnOn();
+         Serial.println("Display turned On, showing the data was received");
          vTaskDelay(testTime);
       }
 
       {
+        testResult = myLedDisp.print("012345");
+        vTaskDelay(testTime);
+     }
+        
+     {
+         testResult = myLedDisp.print("000000");
+         vTaskDelay(testTime);
+      }
+
+      {
+         testResult = myLedDisp.print("1.11111");
+         vTaskDelay(testTime);
+      }
+
+      {
+         testResult = myLedDisp.print("22.2222");
+         vTaskDelay(testTime);
+      }
+
+      {
+         testResult = myLedDisp.print("333.333");
+         vTaskDelay(testTime);
+      }
+
+      {
+         testResult = myLedDisp.print("4444.44");
+         vTaskDelay(testTime);
+      }
+         
+      {
+        testResult = myLedDisp.print("55555.5");
+        vTaskDelay(testTime);
+     }
+        
+     {
+      testResult = myLedDisp.print("666666.");
+      vTaskDelay(testTime);
+   }
+      
+  {
          //print() with a string argument, fails to represent as it is 5 chars long (enough to fail), AND has a non-representable char included (!)
          testResult = myLedDisp.print("Hello!");
          if(!testResult)
@@ -211,19 +285,26 @@ void mainCtrlTsk(void *pvParameters){
          //gauge() with an integer argument, 2nd range, start blinking to show low level
          testResult = myLedDisp.gauge(1, 'b');
          myLedDisp.blink();
-         vTaskDelay(testTime*2);
+         vTaskDelay(testTime);
       }
 
       {
+         //gauge() with an integer argument, 2nd range, start blinking to show low level
+         testResult = myLedDisp.gauge(1, 'b');
+         myLedDisp.blink(400);
+         vTaskDelay(testTime);
+      }
+      
+      {
          //gauge() with an integer argument, 1st range, blinks faster
-         myLedDisp.setBlinkRate(350);
+         myLedDisp.setBlinkRate(300);
          testResult = myLedDisp.gauge(0, 'b');
          vTaskDelay(testTime*2);
       }
       
       {
          //gauge() with an integer argument, 1st range, blinks faster
-         myLedDisp.setBlinkRate(150, 300);
+         myLedDisp.setBlinkRate(110, 200);
          vTaskDelay(testTime*2);
          testResult = myLedDisp.noBlink();
       }
@@ -254,7 +335,7 @@ void mainCtrlTsk(void *pvParameters){
       }
 
       {
-         testResult = myLedDisp.print("0246");
+         testResult = myLedDisp.print("02468A");
          vTaskDelay(testTime);
       }
 
@@ -263,13 +344,15 @@ void mainCtrlTsk(void *pvParameters){
          myBlinkMask[1] = false;
          myBlinkMask[2] = false;
          myBlinkMask[3] = false;
+         myBlinkMask[4] = false;
+         myBlinkMask[5] = false;
          myLedDisp.setBlinkMask(myBlinkMask);
-         myLedDisp.blink(250);
+         myLedDisp.blink(200);
          vTaskDelay(testTime*2);
       }
 
       {         
-         myLedDisp.write("7", 0);
+         myLedDisp.write("b", 0);
          vTaskDelay(testTime);
       }
 
@@ -278,8 +361,10 @@ void mainCtrlTsk(void *pvParameters){
          myBlinkMask[1] = true;
          myBlinkMask[2] = false;
          myBlinkMask[3] = false;
+         myBlinkMask[4] = false;
+         myBlinkMask[5] = false;
          myLedDisp.setBlinkMask(myBlinkMask);
-         vTaskDelay(testTime*2);
+         vTaskDelay(testTime);
       }
 
       {         
@@ -297,17 +382,19 @@ void mainCtrlTsk(void *pvParameters){
          myBlinkMask[1] = false;
          myBlinkMask[2] = true;
          myBlinkMask[3] = false;
+         myBlinkMask[4] = false;
+         myBlinkMask[5] = false;
          myLedDisp.setBlinkMask(myBlinkMask);
-         vTaskDelay(testTime*2);
-      }
-
-      {         
-         myLedDisp.write(0xAD, 2);
          vTaskDelay(testTime);
       }
 
       {         
-         myLedDisp.write(0x81, 2);
+         myLedDisp.write("3", 2);
+         vTaskDelay(testTime);
+      }
+
+      {         
+         myLedDisp.write("4", 2);
          vTaskDelay(testTime);
       }
 
@@ -321,8 +408,10 @@ void mainCtrlTsk(void *pvParameters){
          myBlinkMask[1] = false;
          myBlinkMask[2] = false;
          myBlinkMask[3] = true;
+         myBlinkMask[4] = false;
+         myBlinkMask[5] = false;
          myLedDisp.setBlinkMask(myBlinkMask);
-         vTaskDelay(testTime*2);
+         vTaskDelay(testTime);
       }
 
       {         
@@ -384,9 +473,52 @@ void mainCtrlTsk(void *pvParameters){
          myLedDisp.setWaitChar('-');
          vTaskDelay(testTime);
       }
+      
+      {         
+         int8_t minBrgthnss {(int8_t)myLedDisp.getDspUndrlHwPtr()->getBrghtnssMinLvl()};
+         int8_t maxBrgthnss {(int8_t)myLedDisp.getDspUndrlHwPtr()->getBrghtnssMaxLvl()};
+         int8_t curBrgthnss {(int8_t)myLedDisp.getDspUndrlHwPtr()->getBrghtnssLvl()};
+
+         Serial.print("Minimum brightness level: ");
+         Serial.println(minBrgthnss);
+         Serial.print("Maximum brightness level: ");
+         Serial.println(maxBrgthnss);
+         Serial.print("Current brightness level: ");
+         Serial.println(curBrgthnss);
+
+         for(int8_t curBrgthnss{maxBrgthnss}; curBrgthnss >= minBrgthnss; --curBrgthnss){
+            myLedDisp.getDspUndrlHwPtr()->setBrghtnssLvl(curBrgthnss);
+            Serial.print("Brightness Level = ");
+            Serial.println(curBrgthnss);
+            vTaskDelay(350);   
+         }
+         for(int8_t curBrgthnss{minBrgthnss}; curBrgthnss <= maxBrgthnss; ++curBrgthnss){
+            myLedDisp.getDspUndrlHwPtr()->setBrghtnssLvl(curBrgthnss);
+            Serial.print("Brightness Level = ");
+            Serial.println(curBrgthnss);
+            vTaskDelay(350);   
+         }
+      }
 
       {
          myLedDisp.print("OFF");
+         vTaskDelay(testTime);
+      }
+
+      {
+         myLedDisp.getDspUndrlHwPtr()->turnOff();
+         Serial.println("Display turned Off");
+         vTaskDelay(testTime);
+      }
+
+      {
+         myLedDisp.print("On");
+         myLedDisp.getDspUndrlHwPtr()->turnOn();
+         Serial.println("Display turned On");
+         vTaskDelay(testTime);
+      }
+      {
+         myLedDisp.print("End");
          vTaskDelay(testTime);
       }
 

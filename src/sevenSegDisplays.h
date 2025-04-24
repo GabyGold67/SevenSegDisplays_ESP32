@@ -87,6 +87,13 @@ protected:
    int32_t _dspValMax{};
    int32_t _dspValMin{};
    bool _dspUndrlHwCommAnode{};
+   
+//====================================>> New addition WIP
+   bool _dspUndrlHwDimmable{};
+   uint8_t _dspUndrlHwCurBrghtnss{0};
+   uint8_t _dspUndrlHwMaxBrghtnss{0};
+   uint8_t _dspUndrlHwMinBrghtnss{0};
+//====================================>> New addition WIP
     
    bool _isBlinking{false};
    bool _blinkShowOn{false};
@@ -229,7 +236,6 @@ public:
     * @code {.cpp}
     * myLedDisp.blink(); // Begin blinking at the already set rate
     * @endcode
-    * 
     */
    bool blink();
    /**
@@ -258,8 +264,6 @@ public:
    * unsigned long rateTooBig {myLedDisp.getMaxBlinkRate() + 10} // Saves in a variable a blinking rate out of accepted range
    * myLedDisp.blink(rateTooBig); //Returns false and the display stays without change.  
    * @endcode
-   * 
-   * 
    */
    bool blink(const uint32_t &onRate, const uint32_t &offRate = 0);
    /**
@@ -410,6 +414,14 @@ public:
     * @return The quantity of instantiated displays.  
     */
    uint8_t getDspCount();
+
+//====================================>> New addition WIP
+   bool getDspIsDmmbl();
+   uint8_t getCurBrghtnssLvl();
+   uint8_t getMaxBrghtnssLvl();
+   uint8_t getMinBrghtnssLvl();
+//====================================>> New addition WIP
+
    /**
     * @brief Returns a pointer to the underlying hardware display object
     * 
