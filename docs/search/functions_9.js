@@ -2,7 +2,7 @@ var searchData=
 [
   ['setblinkmask_0',['setBlinkMask',['../class_seven_seg_displays.html#adbf4a53a706c00d9a237991e234a9353',1,'SevenSegDisplays']]],
   ['setblinkrate_1',['setBlinkRate',['../class_seven_seg_displays.html#aa96b5cde05602ba58624b103c852ad71',1,'SevenSegDisplays']]],
-  ['setbrghtnsslvl_2',['setBrghtnssLvl',['../class_seven_seg_t_m163_x.html#a4e74de34810a89ff8409e277e962e09f',1,'SevenSegTM163X::setBrghtnssLvl()'],['../class_seven_seg_max7219.html#a00e46d6be95a02bd6d20de36bf671080',1,'SevenSegMax7219::setBrghtnssLvl()']]],
+  ['setbrghtnsslvl_2',['setBrghtnssLvl',['../class_seven_seg_disp_hw.html#a8494bc6061172e6604be159cd78ebd24',1,'SevenSegDispHw::setBrghtnssLvl()'],['../class_seven_seg_t_m163_x.html#a4e74de34810a89ff8409e277e962e09f',1,'SevenSegTM163X::setBrghtnssLvl()'],['../class_seven_seg_max7219.html#a00e46d6be95a02bd6d20de36bf671080',1,'SevenSegMax7219::setBrghtnssLvl()']]],
   ['setdigitsorder_3',['setDigitsOrder',['../class_seven_seg_disp_hw.html#aee6d67c3bdd719b05ac6e7d8d250d43f',1,'SevenSegDispHw']]],
   ['setdspbuffptr_4',['setDspBuffPtr',['../class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff',1,'SevenSegDispHw']]],
   ['setwaitchar_5',['setWaitChar',['../class_seven_seg_displays.html#a806a5ed32988ec7d82b65157b56b538e',1,'SevenSegDisplays']]],

@@ -8,7 +8,11 @@ var class_seven_seg_disp_hw =
     [ "getCommAnode", "class_seven_seg_disp_hw.html#a5b9379b7b6ca6946813fd643d28d74f4", null ],
     [ "getDspBuffPtr", "class_seven_seg_disp_hw.html#a17e903934d148f0d2c47da7ceb0982c7", null ],
     [ "getHwDspDigitsQty", "class_seven_seg_disp_hw.html#ac6544795ed8c9b44211424c8b5ef216f", null ],
+    [ "getIsOn", "class_seven_seg_disp_hw.html#a16c93c61e795bb8f058dad9d457db1db", null ],
     [ "ntfyUpdDsply", "class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327", null ],
+    [ "setBrghtnssLvl", "class_seven_seg_disp_hw.html#a8494bc6061172e6604be159cd78ebd24", null ],
     [ "setDigitsOrder", "class_seven_seg_disp_hw.html#aee6d67c3bdd719b05ac6e7d8d250d43f", null ],
-    [ "setDspBuffPtr", "class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff", null ]
+    [ "setDspBuffPtr", "class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff", null ],
+    [ "turnOff", "class_seven_seg_disp_hw.html#a1e43097203738e6e058be20287be7a12", null ],
+    [ "turnOn", "class_seven_seg_disp_hw.html#a99f4c0e60a9da8d5548e13b9cbe9ba71", null ]
 ];

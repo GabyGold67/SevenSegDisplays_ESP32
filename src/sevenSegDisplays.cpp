@@ -15,10 +15,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.0.1
+ * @version 3.1.0
  * 
  * @date First release: 20/12/2023  
- *       Last update:   17/04/2025 17:50 (GMT+0200) DST  
+ *       Last update:   27/04/2025 17:10 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -84,6 +84,11 @@ SevenSegDisplays::~SevenSegDisplays(){
    delete [] _dspBuffPtr;  // Free the resources of the display digits buffer
    _popSsd(_ssdInstancesLstPtr, _dspInstance);
    --_displaysCount;
+}
+
+bool SevenSegDisplays::begin(){
+
+   return getDspUndrlHwPtr()->begin();
 }
 
 bool SevenSegDisplays::blink(){
@@ -265,6 +270,12 @@ bool SevenSegDisplays::doubleGauge(const int &levelLeft, const int &levelRight, 
 
     return displayable;
 }
+
+bool SevenSegDisplays::end(){
+
+   return getDspUndrlHwPtr()->end();
+}
+
 
 bool SevenSegDisplays::gauge(const int &level, char label){
    bool displayable{true};

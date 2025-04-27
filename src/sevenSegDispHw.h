@@ -12,10 +12,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.0.1
+ * @version 3.1.0
  * 
  * @date First release: 20/12/2023  
- *       Last update:   17/04/2025 17:50 (GMT+0200) DST  
+ *       Last update:   27/04/2025 20:10 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -153,7 +153,14 @@ public:
      * @return uint8_t The **display module component** digits quantity.  
      */
     uint8_t getHwDspDigitsQty();
-    
+    /**
+     * @brief Returns the state of the display.  
+     * 
+     * Returns a boolean value indicating if the display is turned On or Off
+     * 
+     * @retval true The display is turned On
+     * @retval false The display is turned Off 
+     */
     virtual bool getIsOn(){return true;};
     /**
      * @brief Notifies the object of a change of content available in the display buffer, the object must update the display.  
@@ -161,7 +168,16 @@ public:
      * While the dynamic displays must periodically refresh the data displayed, and so they get the most updated content from the display buffer without the need to send them any notification, the data displayed by the static displays remains constant even if it's data buffer or registers are loaded with new data. This method notifies the display that the data buffer content has changed and it must load the new contents of it's registers or buffers to display the new information.  
      */
    virtual void ntfyUpdDsply();
-
+   /**
+    * @brief Sets the brightness level for the display.  
+    * 
+    * Although dummy dynamic and smart static brightness displays might be dimmed using PWM management, the dummy dynamic displays require MCU intervention, added to the regular required cinematic effect load, making the brightness control very expensive in resources use. For this reason the brightness control in this library will be available for the **smart static** displays equiped with a display controller unit specifically providing the option. Each class description and documentation will detail if the service is available or not, and in case the method is invoked in an object instantiated from a class with no brightness control capabilities, the value returned will be false, avoiding the need of a error handling mechanism.  
+    * 
+    * @param newBrghtnssLvl The new brightness level for the display. The value must be in the range **getBrghtnssMinLvl() <= newBrghtnssLvl <= getBrghtnssMaxLvl()**
+    * 
+    * @retval true The parameter was in the acceptable range, the display will be set to the new brightness level (or keep it's brightness level if the parameter passed is equal to the current brightness level) 
+    * @return false The display module does not support brightness level setting, or the parameter passed is outside the acceptable range, no brightness level changes will be done.  
+    */
    virtual bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl){return true;}; 
    /**
     * @brief Sets a mapping to relate the display buffer positions to the display port assigned to exhibit it's contents.  
@@ -192,11 +208,22 @@ public:
      * 
      * @warning Setting the display buffer pointer to an address not coinciding with the one configured in the SevenSegDisplays will **disable** the possibility for it to get new SevenSegDisplays generated content displayed!! Handle with extreme care, first saving the original provided pointer, changing it as needed, and reseting the _dspBuffPtr to the saved value!!
      */
-    void setDspBuffPtr(uint8_t* newDspBuffPtr);
-    
+   void setDspBuffPtr(uint8_t* newDspBuffPtr);
+   /**
+    * @brief Turns the display module off.  
+    * 
+    * The display module will be cleared and will keep that status until a turnOn(), or turnOn(const uint8_t &) is invoked.  
+    * 
+    * @note Turning the display Off is not the same as clearing the display -see clear() method- as clearing the display implies changing the display data buffer content to fill it with spaces. Some of the display modules managed by display controllers have the hability to turn off the leds display while keeping it's buffer contents unmodified. So turning On/Off those displays will have the effect of holding the data displayed and even receiving and filling their buffer with new data while keeping their display with no leds turned on.  
+    */
     virtual void turnOff(){};
-    virtual void turnOn(){};
-    virtual void turnOn(const uint8_t &newBrghtnssLvl){};
+   /**
+    * @brief Turns the display module on.  
+    * 
+    * The display module will be turned on, making visible the contents of the display buffer.  
+    */
+   virtual void turnOn(){};
+   virtual void turnOn(const uint8_t &newBrghtnssLvl){};
 };
 
 //============================================================> Class declarations separator
@@ -526,6 +553,8 @@ protected:
    void _txStop();
    void _txWrByte(uint8_t data);
    virtual void _sendBffr();
+   virtual bool _sendByte(uint8_t data);
+   
    
  public:
    /**
@@ -884,18 +913,26 @@ public:
 
 //============================================================> Class declarations separator
 class HT16K33: public SevenSegStatic{
-
+   static TwoWire* i2cGenCommPtr;
    // Command/Address Map Constants
 	const uint8_t _DspPortsBaseAddr{0x00}; //!< Last address depends on digitsQty, maximum will be 0x0F
-   const uint8_t _SetStndByCmnd{0x20};
-	const uint8_t _ExitStndByCmnd{0x21};
+   
+   const uint8_t _StndByCmnd = (uint8_t)0x20;
+      const uint8_t _EnterStndBy = _StndByCmnd|0x00;
+	   const uint8_t _ExitStndBy = _StndByCmnd|0x01;
 
-   const uint8_t _TurnOffDspCmnd{0x80};
-	const uint8_t _TurnOnDspCmnd{0x81};
+   const uint8_t _TurnOnOffDspCmnd = (uint8_t)0x80;
+      const uint8_t _TurnOffDsp = _TurnOnOffDspCmnd|0x00;
+   	const uint8_t _TurnOnDsp = _TurnOnOffDspCmnd|0x01;
+      const uint8_t _TurnOnBlnkNo = _TurnOnOffDspCmnd|0x01|0x00;   //!< Turn on and blink NO
+      const uint8_t _TurnOnBlnk2 = _TurnOnOffDspCmnd|0x01|0x02; //!< Turn on and blink 2Hz
+      const uint8_t _TurnOnBlnk1 = _TurnOnOffDspCmnd|0x01|0x04; //!< Turn on and blink 1Hz
+      const uint8_t _TurnOnBlnk0 = _TurnOnOffDspCmnd|0x01|0x06; //!< Turn on and blink 0.5Hz
 
-	const uint8_t _BrghtnsBaseAddr{0xE0};  //!< 0xE0 dim (off) -> 0xEF brightest
-	const uint8_t _ScanLimitAddr{0x0B};
-	const uint8_t _DspTestAddr{0x0F};
+	const uint8_t _RowIntSetCmnd = (uint8_t)0xA0;
+      const uint8_t _SetRowOtpt = _RowIntSetCmnd|0x00;
+   
+   const uint8_t _SetBrghtnssCmd = (uint8_t)0xE0;  //!<  _SetBrghtnssLvl = (0xE0|_hwBrghtnssLvlMin) -> (off) ~ (0xE0|_hwBrghtnssLvlMax) -> (brightest)
 
 private:
    const uint8_t _sclIndx {0};
@@ -905,16 +942,20 @@ private:
    const uint8_t _hwBrghtnssLvlMax{0x0F};
    const uint8_t _hwBrghtnssLvlMin{0x00};
 
+   uint8_t _i2cPortNum{};  //!< For multiport devBoards, the Wire library will retrieve the scl and sda standard pin outputs for that port number
 	uint8_t _i2cAddress {};
-   uint8_t _scl {};	//! Serial clock max. rate ??? MHz. Data is shifted into the chip on **clk rising edge**
+   uint8_t _scl {};	//! Serial clock, max. rate will depend on the board's hardware capabilities, standards are 100KHz and 400KHz. Data is shifted into the chip on **clk rising edge**
 	uint8_t _sda {};	// Data value to get into the chip reg, must be set before the clk rising edge to be accepted.
 
+   virtual bool _sendByte(uint8_t data);
+   virtual bool _sendMssg(uint8_t* data, uint8_t mssgLngth);
    virtual void _unAbstract();
 	void _updLclBffrCntnt();
 
 public:
    HT16K33();
-   HT16K33(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t i2cAddress);
+   // HT16K33(uint8_t* ioPins, uint8_t dspDigits, uint8_t i2cAddress, bool commAnode = false);
+   HT16K33(uint8_t i2cPortNum, uint8_t dspDigits, uint8_t i2cAddress, bool commAnode = false);
    virtual ~HT16K33();
 	/**
 	 * @brief Sets up the hardware display to work, and starts the display activities.  

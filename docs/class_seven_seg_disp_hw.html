@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Seven Segments Displays Agnostic Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.0.1</span>
+   <div id="projectname">Seven Segments Displays Agnostic Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.1.0</span>
    </div>
    <div id="projectbrief">A library that provides a class that models a Seven Segment Display and provides an unified API through it&#39;s members independently of the display technology.</div>
   </td>
@@ -179,10 +179,18 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 <tr class="memdesc:ac6544795ed8c9b44211424c8b5ef216f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the quantity of digits of the display module. <br  />
   <br /></td></tr>
 <tr class="separator:ac6544795ed8c9b44211424c8b5ef216f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16c93c61e795bb8f058dad9d457db1db" id="r_a16c93c61e795bb8f058dad9d457db1db"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16c93c61e795bb8f058dad9d457db1db">getIsOn</a> ()</td></tr>
+<tr class="memdesc:a16c93c61e795bb8f058dad9d457db1db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the state of the display. <br  />
+  <br /></td></tr>
+<tr class="separator:a16c93c61e795bb8f058dad9d457db1db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02d94944c1a9ade34a530c7e13503327" id="r_a02d94944c1a9ade34a530c7e13503327"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a02d94944c1a9ade34a530c7e13503327">ntfyUpdDsply</a> ()</td></tr>
 <tr class="memdesc:a02d94944c1a9ade34a530c7e13503327"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifies the object of a change of content available in the display buffer, the object must update the display. <br  />
   <br /></td></tr>
 <tr class="separator:a02d94944c1a9ade34a530c7e13503327"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8494bc6061172e6604be159cd78ebd24" id="r_a8494bc6061172e6604be159cd78ebd24"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8494bc6061172e6604be159cd78ebd24">setBrghtnssLvl</a> (const uint8_t &amp;newBrghtnssLvl)</td></tr>
+<tr class="memdesc:a8494bc6061172e6604be159cd78ebd24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the brightness level for the display. <br  />
+  <br /></td></tr>
+<tr class="separator:a8494bc6061172e6604be159cd78ebd24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee6d67c3bdd719b05ac6e7d8d250d43f" id="r_aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aee6d67c3bdd719b05ac6e7d8d250d43f">setDigitsOrder</a> (uint8_t *newOrderPtr)</td></tr>
 <tr class="memdesc:aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mapping to relate the display buffer positions to the display port assigned to exhibit it's contents. <br  />
   <br /></td></tr>
@@ -190,6 +198,14 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 <tr class="memitem:afc7402bad588be4ea2c7aedaf870f9ff" id="r_afc7402bad588be4ea2c7aedaf870f9ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc7402bad588be4ea2c7aedaf870f9ff">setDspBuffPtr</a> (uint8_t *newDspBuffPtr)</td></tr>
 <tr class="memdesc:afc7402bad588be4ea2c7aedaf870f9ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the pointer to the Display Buffer.  <br /></td></tr>
 <tr class="separator:afc7402bad588be4ea2c7aedaf870f9ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e43097203738e6e058be20287be7a12" id="r_a1e43097203738e6e058be20287be7a12"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e43097203738e6e058be20287be7a12">turnOff</a> ()</td></tr>
+<tr class="memdesc:a1e43097203738e6e058be20287be7a12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module off. <br  />
+  <br /></td></tr>
+<tr class="separator:a1e43097203738e6e058be20287be7a12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99f4c0e60a9da8d5548e13b9cbe9ba71" id="r_a99f4c0e60a9da8d5548e13b9cbe9ba71"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a99f4c0e60a9da8d5548e13b9cbe9ba71">turnOn</a> ()</td></tr>
+<tr class="memdesc:a99f4c0e60a9da8d5548e13b9cbe9ba71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module on. <br  />
+  <br /></td></tr>
+<tr class="separator:a99f4c0e60a9da8d5548e13b9cbe9ba71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base abstract class models a generic Seven Segment display hardware. </p>
@@ -228,7 +244,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 <p>Class constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ioPins</td><td>A pointer to an array holding the identifiers for the MCU GPIO pins required to send the data to be displayed. The correlation between the array positions and the pin function is given as in-class defined constants for each subclass. <br  />
+    <tr><td class="paramname">ioPins</td><td>A pointer to an array holding the identifiers for the MCU GPIO pins required to send the data to be displayed to the <b>Display controller</b>. The correlation between the array positions and the pin function is given as in-class defined constants for each subclass. <br  />
  </td></tr>
     <tr><td class="paramname">dspDigits</td><td>Quantity of digits/ports of the display. This value is directly related to the <b>display module component</b> quantity of ports and characteristics. <br  />
  </td></tr>
@@ -427,6 +443,44 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="a16c93c61e795bb8f058dad9d457db1db" name="a16c93c61e795bb8f058dad9d457db1db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16c93c61e795bb8f058dad9d457db1db">&#9670;&#160;</a></span>getIsOn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool SevenSegDispHw::getIsOn </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the state of the display. <br  />
+ </p>
+<p>Returns a boolean value indicating if the display is turned On or Off</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The display is turned On </td></tr>
+    <tr><td class="paramname">false</td><td>The display is turned Off </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented in <a class="el" href="class_seven_seg_max7219.html#a0dca0ec94329140f654383ddee5bc142">SevenSegMax7219</a>.</p>
+
+</div>
+</div>
 <a id="a02d94944c1a9ade34a530c7e13503327" name="a02d94944c1a9ade34a530c7e13503327"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a02d94944c1a9ade34a530c7e13503327">&#9670;&#160;</a></span>ntfyUpdDsply()</h2>
 
@@ -456,6 +510,52 @@ Here is the caller graph for this function:</div>
  </p>
 
 <p>Reimplemented in <a class="el" href="class_seven_seg_max7219.html#a559f2c5cca5eb5a806720359efd99788">SevenSegMax7219</a>, <a class="el" href="class_seven_seg_stat_h_c595.html#af430da3b0859f74693dd0ee71c28d071">SevenSegStatHC595</a>, <a class="el" href="class_seven_seg_static.html#a31006d4f4f5a4019f0aed380e01b0d17">SevenSegStatic</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#ae45f5f1772b93dca12ccaef3e652d7b0">SevenSegTM163X</a>.</p>
+
+</div>
+</div>
+<a id="a8494bc6061172e6604be159cd78ebd24" name="a8494bc6061172e6604be159cd78ebd24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8494bc6061172e6604be159cd78ebd24">&#9670;&#160;</a></span>setBrghtnssLvl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool SevenSegDispHw::setBrghtnssLvl </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>newBrghtnssLvl</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the brightness level for the display. <br  />
+ </p>
+<p>Although dummy dynamic and smart static brightness displays might be dimmed using PWM management, the dummy dynamic displays require MCU intervention, added to the regular required cinematic effect load, making the brightness control very expensive in resources use. For this reason the brightness control in this library will be available for the <b>smart static</b> displays equiped with a display controller unit specifically providing the option. Each class description and documentation will detail if the service is available or not, and in case the method is invoked in an object instantiated from a class with no brightness control capabilities, the value returned will be false, avoiding the need of a error handling mechanism. <br  />
+</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newBrghtnssLvl</td><td>The new brightness level for the display. The value must be in the range <b>getBrghtnssMinLvl() &lt;= newBrghtnssLvl &lt;= getBrghtnssMaxLvl()</b></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The parameter was in the acceptable range, the display will be set to the new brightness level (or keep it's brightness level if the parameter passed is equal to the current brightness level) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>false The display module does not support brightness level setting, or the parameter passed is outside the acceptable range, no brightness level changes will be done. <br  />
+ </dd></dl>
+
+<p>Reimplemented in <a class="el" href="class_seven_seg_max7219.html#a00e46d6be95a02bd6d20de36bf671080">SevenSegMax7219</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#a4e74de34810a89ff8409e277e962e09f">SevenSegTM163X</a>.</p>
 
 </div>
 </div>
@@ -528,6 +628,72 @@ Here is the caller graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="238,29,206,29,206,24,238,24"/>
 </map>
 </div>
+
+</div>
+</div>
+<a id="a1e43097203738e6e058be20287be7a12" name="a1e43097203738e6e058be20287be7a12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e43097203738e6e058be20287be7a12">&#9670;&#160;</a></span>turnOff()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void SevenSegDispHw::turnOff </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Turns the display module off. <br  />
+ </p>
+<p>The display module will be cleared and will keep that status until a <a class="el" href="#a99f4c0e60a9da8d5548e13b9cbe9ba71" title="Turns the display module on.">turnOn()</a>, or turnOn(const uint8_t &amp;) is invoked. <br  />
+</p>
+<dl class="section note"><dt>Note</dt><dd>Turning the display Off is not the same as clearing the display -see clear() method- as clearing the display implies changing the display data buffer content to fill it with spaces. Some of the display modules managed by display controllers have the hability to turn off the leds display while keeping it's buffer contents unmodified. So turning On/Off those displays will have the effect of holding the data displayed and even receiving and filling their buffer with new data while keeping their display with no leds turned on. <br  />
+ </dd></dl>
+
+<p>Reimplemented in <a class="el" href="class_seven_seg_max7219.html#a0007a5a290087062e5595fa065be4ad6">SevenSegMax7219</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#acd8804278138008c6f94996ee44b8afd">SevenSegTM163X</a>.</p>
+
+</div>
+</div>
+<a id="a99f4c0e60a9da8d5548e13b9cbe9ba71" name="a99f4c0e60a9da8d5548e13b9cbe9ba71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99f4c0e60a9da8d5548e13b9cbe9ba71">&#9670;&#160;</a></span>turnOn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void SevenSegDispHw::turnOn </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Turns the display module on. <br  />
+ </p>
+<p>The display module will be turned on, making visible the contents of the display buffer. <br  />
+ </p>
+
+<p>Reimplemented in <a class="el" href="class_seven_seg_max7219.html#a7dfe9eb652fec8a06f5d126654f47883">SevenSegMax7219</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#a0469f1b57c14141db8a290e8ce7bb35a">SevenSegTM163X</a>.</p>
 
 </div>
 </div>

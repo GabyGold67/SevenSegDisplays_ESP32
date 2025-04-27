@@ -20,10 +20,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.0.1
+ * @version 3.1.0
  * 
  * @date First release: 20/12/2023  
- *       Last update:   31/03/2025 18:10 (GMT+0200) DST  
+ *       Last update:   27/04/2025 17:10 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license  
  *******************************************************************************
@@ -220,7 +220,10 @@ public:
      * @brief Class destructor
      */
     ~SevenSegDisplays();
-   /**
+   
+   bool begin();
+
+    /**
     * @brief Makes the display blink the contents it is showing.
     * 
     * The display will blink the contents it is showing until a **`noBlink()`** method is invoked. The display will continue blinking even if the contents are changed.  
@@ -316,6 +319,9 @@ public:
     * @endcode
     */
    bool doubleGauge(const int &levelLeft, const int &levelRight, char labelLeft = ' ', char labelRight = ' ');
+
+   bool end();
+
    /**
     * @brief Displays a basic graphical representation of the level of fulfillment or completeness of a segmented value or task.
     * 

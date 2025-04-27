@@ -14,10 +14,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.0.1  
+ * @version 3.1.0  
  * 
  * @date First release: 20/12/2023  
- *       Last update:   17/04/2025 17:50 (GMT+0200) DSP
+ *       Last update:   27/04/2025 20:10 (GMT+0200) DSP
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -32,6 +32,8 @@ const uint8_t stdRtoLx4 [4] {3, 2, 1, 0};
 
 //-------------------------------------->> Static variables initialization BEGIN
 uint8_t SevenSegDispHw::_dspHwSerialNum = 0;
+TwoWire* HT16K33::i2cGenCommPtr = nullptr;
+
 // TimerHandle_t SevenSegDynamic::_dynDspRfrshTmrHndl = nullptr;
 // TimerHandle_t SevenSegDynHC595::_dynHC595DspRfrshTmrHndl = nullptr;
 // TimerHandle_t SevenSegDynDummy::_dynDummyDspRfrshTmrHndl = nullptr;
@@ -210,8 +212,6 @@ SevenSegDynHC595::SevenSegDynHC595(uint8_t* ioPins, uint8_t dspDigits, bool comm
     
    _drvrShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, 2, nullptr);
    _drvrShftRegSndPtr = new uint8_t[2];
-
-   begin();
 }
 
 SevenSegDynHC595::~SevenSegDynHC595(){
@@ -323,7 +323,6 @@ void SevenSegDynHC595::_unAbstract() {
 SevenSegDynDummy::SevenSegDynDummy(uint8_t dspDigits, bool commAnode)
 :SevenSegDynamic(nullptr, dspDigits, commAnode)
 {
-   begin();
 }
 
 SevenSegDynDummy::~SevenSegDynDummy(){
@@ -430,10 +429,7 @@ void SevenSegDynDummy::tmrCbRfrshDynDummy(TimerHandle_t rfrshTmrCbArg){
    return;
 }
 
-void SevenSegDynDummy::_unAbstract(){
-
-   return;
-}
+void SevenSegDynDummy::_unAbstract(){return;}
 
 //============================================================> Class methods separator
 
@@ -489,10 +485,7 @@ void SevenSegStatHC595::ntfyUpdDsply(){
    return;
 }
 
-void SevenSegStatHC595::_unAbstract(){
-
-   return;
-}
+void SevenSegStatHC595::_unAbstract(){return;}
 
 void SevenSegStatHC595::_updDsplyCntnt(){
    uint8_t dspBuffPtrOffset{0};
@@ -536,16 +529,14 @@ SevenSegTM163X::SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnod
    pinMode(_dio, OUTPUT);
 }
 
-SevenSegTM163X::~SevenSegTM163X()
-{
+SevenSegTM163X::~SevenSegTM163X(){
    end();
    delete [] _lclDspBuffPtr;
    if(_xcdDspBuffPtr != nullptr)
       delete [] _xcdDspBuffPtr;
 }
 
-bool SevenSegTM163X::begin()
-{
+bool SevenSegTM163X::begin(){
    turnOn();
 
 	return true;
@@ -580,7 +571,7 @@ void SevenSegTM163X::ntfyUpdDsply(){
 }
 
 void SevenSegTM163X::_sendBffr(){
-	/* If it's low cost confirm the new buffer contents are different from the display content
+	/* 
 	 * Create a message buffer according to the TM1637 I2C modified protocol:
 	 * Invoke the send() method to output the message to the display
 	 * Delete the message buffer
@@ -622,10 +613,7 @@ void SevenSegTM163X::_sendBffr(){
 	 *                               0b1000XXXX -> 0x8F Display On, maximum brightness
 	 */
 
-   _txStart();
-   _txWrByte(0x40);  // TM163X_COMM1: 40H -> address is automatically incremented by 1 mode (44H -> fixed address mode)
-   _txAsk();
-   _txStop();
+   _sendByte(0x40);  // TM163X_COMM1: 40H -> address is automatically incremented by 1 mode (44H -> fixed address mode)
 
    _txStart();
    _txWrByte(0xC0);  // Set the first display's buffer address
@@ -645,15 +633,23 @@ void SevenSegTM163X::_sendBffr(){
    return;
 }
 
+bool SevenSegTM163X::_sendByte(uint8_t data){
+   bool result{false};
+
+   _txStart();
+   _txWrByte(data);
+   _txAsk();
+   _txStop();
+
+   return result;
+}
+   
 bool SevenSegTM163X::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
    bool result{false};
 
    if((newBrghtnssLvl >=_brghtnssLvlMin)&&(newBrghtnssLvl<=_brghtnssLvlMax)){
       if(newBrghtnssLvl != _brghtnssLvl){
-         _txStart();
-         _txWrByte((_isOn?0x88:0x80) | newBrghtnssLvl);  // Keep display on/of state, set new brightness
-         _txAsk();
-         _txStop();
+         _sendByte((_isOn?0x88:0x80) | newBrghtnssLvl);  // Keep display on/of state, set new brightness
          _brghtnssLvl = newBrghtnssLvl;
       }
       result = true;
@@ -664,10 +660,7 @@ bool SevenSegTM163X::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
 
 void SevenSegTM163X::turnOff(){
    if(_isOn){
-      _txStart();
-      _txWrByte(0b10000000 | _brghtnssLvl);  // Close display(0x80), keep brightness
-      _txAsk();
-      _txStop();
+      _sendByte(0b10000000 | _brghtnssLvl);  // Close display(0x80), keep brightness
       _isOn = false;
    }
 
@@ -676,10 +669,7 @@ void SevenSegTM163X::turnOff(){
 
 void SevenSegTM163X::turnOn(){
    if(!_isOn){
-      _txStart();
-      _txWrByte(0b10001000 | _brghtnssLvl);  // Open display(0x88), keep brightness
-      _txAsk();
-      _txStop();
+      _sendByte(0b10001000 | _brghtnssLvl);  // Open display(0x88), keep brightness
       _isOn = true;
    }
 
@@ -699,15 +689,13 @@ void SevenSegTM163X::turnOn(const uint8_t &newBrghtnssLvl){
 
 void SevenSegTM163X::_txAsk(){   // void I2Cask (void)
    pinMode(_dio, INPUT);
-
    digitalWrite(_clk, LOW);
    delayMicroseconds(5*_txClkTckTm);
-   while (digitalRead(_dio)){
+   while(digitalRead(_dio)){
    }
    digitalWrite(_clk, HIGH);
    delayMicroseconds(2*_txClkTckTm);
    digitalWrite(_clk, LOW);
-   
    pinMode(_dio, OUTPUT);
 
 	return;
@@ -734,14 +722,17 @@ void SevenSegTM163X::_txStop(){  // void I2CStop (void)
 	return;
 }
 
+//FFDR change the sliding part from the data to a mask to keep the data unaltered!!
 void SevenSegTM163X::_txWrByte(uint8_t data){   // void I2CWrByte (unsigned char oneByte)
+   uint8_t  mask{0x01};
+   
    for(uint8_t i{0}; i < 8; i++){
       digitalWrite(_clk, LOW);
-      digitalWrite(_dio, (data &0x01)?HIGH:LOW); //Equivalent single line ternary operation
-      delayMicroseconds(3*_txClkTckTm);
-      data = data >> 1;
+      digitalWrite(_dio, (data & mask)?HIGH:LOW); //Equivalent single line ternary operation
+      delayMicroseconds(3 * _txClkTckTm);
+      mask = mask << 1;
       digitalWrite(_clk, HIGH);
-      delayMicroseconds(3*_txClkTckTm);
+      delayMicroseconds(3 * _txClkTckTm);
    }
    
 	return;
@@ -976,8 +967,8 @@ void SevenSegMax7219::_unAbstract(){return;}
 
 HT16K33::HT16K33(){};
 
-HT16K33::HT16K33(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t i2cAddress)
-:SevenSegStatic(ioPins, dspDigits, commAnode), _i2cAddress{i2cAddress}
+HT16K33::HT16K33(uint8_t i2cPortNum, uint8_t dspDigits, uint8_t i2cAddress, bool commAnode)
+:SevenSegStatic(nullptr, dspDigits, commAnode), _i2cPortNum{i2cPortNum}, _i2cAddress{i2cAddress}
 {
    _brghtnssLvlMax = _hwBrghtnssLvlMax;
    _brghtnssLvlMin = _hwBrghtnssLvlMin;
@@ -985,8 +976,17 @@ HT16K33::HT16K33(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t i2c
 
    if(_dspDigitsQty > _dspDigitsQtyMax)
       _dspDigitsQty = _dspDigitsQtyMax;
-   // _lclDspBuffPtr = new uint8_t[_dspDigitsQty];
-   
+}
+
+/*HT16K33::HT16K33(uint8_t* ioPins, uint8_t dspDigits, uint8_t i2cAddress, bool commAnode)
+:SevenSegStatic(ioPins, dspDigits, commAnode), _i2cAddress{i2cAddress}
+{
+   _brghtnssLvlMax = _hwBrghtnssLvlMax;
+   _brghtnssLvlMin = _hwBrghtnssLvlMin;
+   _brghtnssLvl = _brghtnssLvlMin;
+
+   if(_dspDigitsQty > _dspDigitsQtyMax)
+      _dspDigitsQty = _dspDigitsQtyMax;   
    if(ioPins != nullptr){
       _sda = *(ioPins + _sdaIndx);
       _scl = *(ioPins + _sclIndx);
@@ -995,21 +995,114 @@ HT16K33::HT16K33(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t i2c
       _sda = SDA;
       _scl = SCL;
    }
+}*/
 
-   begin();
-   setBrghtnssLvl(_brghtnssLvlMax);
-}
+
+
+HT16K33::~HT16K33(){};
 
 bool HT16K33::begin(){
    bool result {false};
 
-   // Turn on oscilator
-   // Row/Int output pin
-   // Dimming value set
-   // Blink set
+   TwoWire tmpI2C{TwoWire(_i2cPortNum)};
+   i2cGenCommPtr = &tmpI2C;
+
+   i2cGenCommPtr->begin(); // Set I2C port active
+   i2cGenCommPtr->setClock(400000); // Set I2C port speed
+
+   _sendByte(_ExitStndBy);  // Activate display
+   _sendByte(_SetRowOtpt);  // Display Row/Int output pin = Row
+   setBrghtnssLvl(_brghtnssLvlMax); // Set display brightness level to maximum
+   ntfyUpdDsply();   // Force to fill the display with the current display buffer content
+   turnOn();   // Turn display On
 
    return result;
 }
+
+bool HT16K33::end(){
+   #ifdef WIRE_HAS_END
+      i2cGenCommPtr->end();   // Set I2C port Inactive
+   #endif
+
+   return true;
+}
+
+bool HT16K33::getIsOn(){
+
+   return _isOn;
+}
+
+void HT16K33::ntfyUpdDsply(){
+   _sendMssg(_dspBuffPtr, _dspDigitsQty);
+
+   return;
+}
+
+bool HT16K33::_sendByte(uint8_t data){
+   int result{0};
+
+   i2cGenCommPtr->beginTransmission(_i2cAddress);  
+   i2cGenCommPtr->write(data);   // Single data byte to send
+   result = i2cGenCommPtr->endTransmission(true);
+
+   return (result == 0);
+}
+
+bool HT16K33::_sendMssg(uint8_t* data, uint8_t mssgLngth){
+   int result{0};
+
+   i2cGenCommPtr->beginTransmission(_i2cAddress);  
+   for(uint8_t mssgPtrOffset{0}; mssgPtrOffset < mssgLngth; mssgPtrOffset++)
+      i2cGenCommPtr->write(*(data + mssgPtrOffset));   // Single data byte to send
+   result = i2cGenCommPtr->endTransmission(true);
+   
+   return (result == 0);
+}
+
+bool HT16K33::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
+   bool result{false};
+   uint8_t mssgData{0};
+
+   if((newBrghtnssLvl >= _brghtnssLvlMin) && (newBrghtnssLvl <= _brghtnssLvlMax)){
+      if(newBrghtnssLvl != _brghtnssLvl){
+         mssgData = _SetBrghtnssCmd | newBrghtnssLvl;
+         result = _sendByte(mssgData);   
+         if(result)
+            _brghtnssLvl = newBrghtnssLvl;
+      }
+      else
+         result = true;
+   }
+
+   return result;
+}
+
+void HT16K33::turnOff(){
+   if(_isOn){
+      if(_sendByte(_TurnOffDsp))
+         _isOn = false;
+   }
+
+   return;
+}
+void HT16K33::turnOn(){
+   if(!_isOn){
+      if(_sendByte(_TurnOnBlnkNo))
+         _isOn = true;
+   }
+
+   return;
+}
+
+void HT16K33::turnOn(const uint8_t &newBrghtnssLvl){
+   setBrghtnssLvl(newBrghtnssLvl);
+   turnOn();
+
+   return;
+}
+
+void HT16K33::_unAbstract(){return;}
+
 //============================================================> Class methods separator
 
 template<typename T>
