@@ -45,11 +45,6 @@
 #include <Wire.h>
 #include <ShiftRegGPIOXpander_ESP32.h>
 
-//------- Generic Functions prototypes BEGIN
-template<typename T>
-void pushElmnt(T* &elmntLstPtr, T ssdToPush, uint8_t &elmntQty);
-//--------- Generic Functions prototypes END
-
 //============================================================> Class declarations separator
 
 /**
@@ -76,60 +71,91 @@ protected:
    SevenSegDispHw* _dspHwInstance{nullptr};
    uint8_t _dspHwInstNbr{0};
    uint8_t* _ioPins{};
+   bool _isOn{false};   //!< Current display status: On/Off
 
-   virtual void send(uint8_t* digitsBuffer);
-   virtual void send(const uint8_t &segments, const uint8_t &port);
+   virtual void _send(uint8_t* digitsBuffer);
+   virtual void _send(const uint8_t &segments, const uint8_t &port);
+
 public:
-    /**
+   /**
      * @brief Default class constructor
-     * 
      */
-    SevenSegDispHw();
-    /**
+   SevenSegDispHw();
+   /**
      * @brief Class constructor
      * 
      * @param ioPins A pointer to an array holding the identifiers for the MCU GPIO pins required to send the data to be displayed to the **Display controller**. The correlation between the array positions and the pin function is given as in-class defined constants for each subclass.  
      * @param dspDigits Quantity of digits/ports of the display. This value is directly related to the **display module component** quantity of ports and characteristics.  
      * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).  
      *      
-     * @attention The dspDigits parameter indicating the quantity of digits of the display module is a **basic fundamental** parameter passed at instantiation time. This information provides the value to be used to generate the data buffer, the digits order table, auxiliary buffers and even the required information to generate a valid left or right aligned display. Obviously the quantity is bigger than 0, and must be less than or equal to the hardware maximum display digits capability.  
+     * @attention The dspDigits parameter indicating the quantity of digits of the display module is a **basic fundamental** parameter passed at instantiation time. This information provides the value to be used to create a data buffer of the right size, the digits order table, auxiliary buffers and even the required information to calculate the range of values displayable and to generate a valid left or right aligned display. Obviously the quantity is bigger than 0, and must be less than or equal to the hardware maximum display digits capability.  
+     * 
+     * @warning The dspDigits parameter value must not be confused with the maximum display digits a display controller component can handle. Many displays are designed using part of the controller's digits management for real seven segment displays digits, while using non used digits to manage some other display elements, like leds, special backlighting elements, etc. The class instantiated object needs the right amount of display digits available as such, the exceeding digits/ports is another issue.  
      */
-    SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
-    /**
+   SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
+   /**
      * @brief Class destructor
      */
-    virtual ~SevenSegDispHw();    
+   virtual ~SevenSegDispHw();    
    /**
     * @brief Sets up the hardware display to work, and starts the display activities.  
     * 
     * Depending on the display technology and the resources it needs to work with, this method takes care of those preparations. That means that each specific subclass of display will provide it's own version of `begin()` that will take care of:  
-    * - Configuring timers or interrupts.  
+    * - Configuring timers or interrupts required.  
     * - Setup tasks and unblocking procedures to get new contents from the SevenSegDisplays object.  
-    * - Setup communications parameters.  
-    * - Establish communications with the display.  
-    * - Other specific services configuration and starting.  
+    * - Setup communications parameters and establish communications with the display hardware.  
+    * - Other specific services configuration and setups.  
+    * - Turn On the display.  
     * 
     * @param updtLps Time lapse between updating activities required, specially by dynamic subclasses. The parameter will be used according to each subclass needs, which will be described in each class begin() method.  
     * 
     * @retval true The specific configurations and startups could be successfully completed.  
     * @return false One or more of the specific configurations or startups failed.  
     */
-    virtual bool begin(uint32_t updtLps = 0);
-    /**
-     * @brief Reverts the begin(uint32_t) actions, stopping the display activities and freeing the resources used by the Seven Segment display hardware object.  
+   virtual bool begin(uint32_t updtLps = 0);
+   /**
+     * @brief Reverts the begin(uint32_t) actions, stopping the display activities, turning the display off and freeing the resources used by the Seven Segment display hardware object.  
      * 
      * @return true The display activities could be stopped and resources freed with no problems.  
      * @return false The display activities couldn't be stopped. The method failed.  
-     */
-    virtual bool end();
-
-    virtual uint8_t getBrghtnssLvl(){return 0;};
-    virtual uint8_t getBrghtnssMaxLvl(){return 0;};
-    virtual uint8_t getBrghtnssMinLvl(){return 0;};
-    /**
-     * @brief Returns a value indicating if the display module component uses a common anode or a common cathode led wiring.  
      * 
-     * The SevenSegDisplays instantiated objects will compose the values corresponding to each character it can display according to the SevenSegDispHw _commAnode attribute. Each SevenSegDispHw instantiable subclass will have that constant attribute set by the subclass developer to correspond to the technical specifications of the display module component. 
+     * @note The `end()` method does not destroy the object, and it's effect can be reverted by invoking a new `begin(uint32_t)` method for the object.  
+     */
+   virtual bool end();
+   /**
+    * @brief Returns the current display brightness level setting for the display.  
+    * 
+    * For displays with variable display brighness levels this method will return the current brightness level. The returned value will be in the range **getBrghtnssMinLvl() <= getBrghtnssLvl() <= getBrghtnssMaxLvl()**, see setBrghtnssLvl(const uint8_t &) for more details.  
+    * 
+    * @note For display classes that models object without the capacity of changing brightness levels, getBrghtnssMinLvl() = getBrghtnssLvl() = getBrghtnssMaxLvl() = 0, this implies that using (getBrghtnssMinLvl() == getBrghtnssMaxLvl()) condition is enough to identify if a given display has or has not the capacity of changing brightness levels.  
+    * 
+    * @return The current display brightness level setting, as long as the display has the capacity of changing brightness levels.  
+    */
+   virtual uint8_t getBrghtnssLvl();
+   /**
+    * @brief Returns the maximum display brightness level setting allowed for the display.  
+    * 
+    * For displays with variable display brightness levels this method will return the maximum brightness level value valid setting. See setBrghtnssLvl(const uint8_t &) for more details.  
+    * 
+    * @note For display classes that models object without the capacity of changing brightness levels, getBrghtnssMinLvl() = getBrghtnssLvl() = getBrghtnssMaxLvl() = 0, this implies that using (getBrghtnssMinLvl() == getBrghtnssMaxLvl()) condition is enough to identify if a given display has or has not the capacity of changing brightness levels.  
+    * 
+    * @return The display brightness level maximum value setting as long as the display has the capacity of changing brightness levels.  
+    */
+   virtual uint8_t getBrghtnssMaxLvl();
+   /**
+    * @brief Returns the minimum display brightness level setting for the display.  
+    * 
+    * For displays with variable display brightness levels this method will return the minimum brightness level value setting. See setBrghtnssLvl(const uint8_t &) for more details.  
+    * 
+    * @note For display classes that models object without the capacity of changing brightness levels, getBrghtnssMinLvl() = getBrghtnssLvl() = getBrghtnssMaxLvl() = 0, this implies that using `(getBrghtnssMinLvl() == getBrghtnssMaxLvl())` condition is enough to identify if a given display has or has not the capacity of changing brightness levels.  
+    * 
+    * @return The display brightness level minimum value setting, as long as the display has the capacity of changing brightness levels.  
+    */
+   virtual uint8_t getBrghtnssMinLvl();
+    /**
+     * @brief Returns a value indicating if the **display module component** of the display hardware uses a common anode or a common cathode led wiring.  
+     * 
+     * The SevenSegDisplays instantiated objects will compose the values corresponding to each character it displays according to the SevenSegDispHw _commAnode attribute. Each SevenSegDispHw instantiable subclass will have that constant attribute set by the subclass developer to correspond to the technical specifications of the display module component, unless the display module has the capacity to work with both technologies, in wich case the subclass constructor will include a _commAnode boolean parameter to set that attribute.  
      * 
      * @retval true The display is built with a Common Anode display module component.  
      * @retval false The display is built with a Common Cathode  display module component.  
@@ -138,7 +164,7 @@ public:
     /**
      * @brief Returns a pointer to the display buffer.  
      * 
-     * The display buffer is a memory area set by the SevenSegDisplays class object instantiated to hold the data to be displayed, and so it's shared by that object and the SevenSegDispHw subclass object component. When the SevenSegDisplays object is constructed it sets the SevenSegDispHw subclass object buffer pointer to the memory area it set for that purpose. This method retrieves that memory pointer.  
+     * The display buffer is the memory area set by the SevenSegDisplays class object instantiated to hold the data to be displayed, and so it's shared by that object and it's SevenSegDispHw subclass object component. When the SevenSegDisplays object is constructed it sets the SevenSegDispHw subclass object buffer pointer to the memory area it set for that purpose. This method retrieves that memory pointer.  
      * 
      * @return uint8_t* The pointer to the buffer area used by the SevenSegDispHw to get the data to display.  
      * 
@@ -151,6 +177,8 @@ public:
      * The value returned correspond to the dspDigits parameter passed at instantiation time.  
      * 
      * @return uint8_t The **display module component** digits quantity.  
+     * 
+     * @warning The dspDigits parameter value return by this method must not be confused with the maximum display digits a display controller component can handle. For more information see SevenSegDispHw(uint8_t*, uint8_t, bool commAnode)
      */
     uint8_t getHwDspDigitsQty();
     /**
@@ -161,24 +189,26 @@ public:
      * @retval true The display is turned On
      * @retval false The display is turned Off 
      */
-    virtual bool getIsOn(){return true;};
+    virtual bool getIsOn();
     /**
-     * @brief Notifies the object of a change of content available in the display buffer, the object must update the display.  
+     * @brief Notifies the SevenSegDispHw component object of a change of content available in the display buffer, so that the object proceeds to update the display.  
      * 
-     * While the dynamic displays must periodically refresh the data displayed, and so they get the most updated content from the display buffer without the need to send them any notification, the data displayed by the static displays remains constant even if it's data buffer or registers are loaded with new data. This method notifies the display that the data buffer content has changed and it must load the new contents of it's registers or buffers to display the new information.  
+     * While the dynamic displays must periodically refresh the data displayed, and so they get the most updated content from the display buffer without the need to receive any notification, the data displayed by the static displays internal buffer to hold the displayed data. The internal buffer contents remain constant until it's data buffer or registers are loaded with new data. This method notifies the display that the data buffer content has changed and it must load the new contents of it's internal registers or buffers to display the new information.  
+     * 
+     * @note The usual possibilities to work in these cases are two: exception notification or constant polling. The exception notification mechanism has been selected for economy of resources and usual considerations of similar cases.  
      */
    virtual void ntfyUpdDsply();
    /**
     * @brief Sets the brightness level for the display.  
     * 
-    * Although dummy dynamic and smart static brightness displays might be dimmed using PWM management, the dummy dynamic displays require MCU intervention, added to the regular required cinematic effect load, making the brightness control very expensive in resources use. For this reason the brightness control in this library will be available for the **smart static** displays equiped with a display controller unit specifically providing the option. Each class description and documentation will detail if the service is available or not, and in case the method is invoked in an object instantiated from a class with no brightness control capabilities, the value returned will be false, avoiding the need of a error handling mechanism.  
+    * Although dummy dynamic and dummy static displays brightness might be dimmed using PWM management, both displays require MCU intervention, added to the regular required cinematic effect generation workload, making the brightness control very expensive in resources use. For this reason the brightness control in this library will be available for the **smart static** displays equiped with a display controller unit specifically providing the option. Each class description and documentation will detail if the service is available or not, and in case the method is invoked in an object instantiated from a class with no brightness control capabilities, the value returned will be false, avoiding the need of a error handling mechanism.  
     * 
     * @param newBrghtnssLvl The new brightness level for the display. The value must be in the range **getBrghtnssMinLvl() <= newBrghtnssLvl <= getBrghtnssMaxLvl()**
     * 
-    * @retval true The parameter was in the acceptable range, the display will be set to the new brightness level (or keep it's brightness level if the parameter passed is equal to the current brightness level) 
-    * @return false The display module does not support brightness level setting, or the parameter passed is outside the acceptable range, no brightness level changes will be done.  
+    * @retval true The parameter was in the valid range, the display will be set to the new brightness level (or keep it's brightness level if the parameter passed is equal to the current brightness level) 
+    * @return false The display module does not support brightness level setting, or the parameter passed is outside the valid range, no brightness level changes could be made.  
     */
-   virtual bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl){return true;}; 
+   virtual bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl); 
    /**
     * @brief Sets a mapping to relate the display buffer positions to the display port assigned to exhibit it's contents.  
     * 
@@ -196,15 +226,15 @@ public:
 */
     bool setDigitsOrder(uint8_t* newOrderPtr);
     /**
-     * @brief Returns the pointer to the Display Buffer
+     * @brief Sets the pointer to the Display Buffer memory area.  
      * 
-     * When a SevenSegDisplays object is instantiated it's constructor sets a display buffer memory area to store the contents ready to be displayed. Part of the constructor execution includes passing to the SevenSegDispHw subclass component that pointer, as the underlying hardware display object will be taking the information to display from that memory buffer. The resource to set the pointer is this method. 
+     * When a **SevenSegDisplays** object is instantiated it's constructor sets a display buffer memory area to store the contents ready to be displayed. Part of the constructor execution includes passing to the SevenSegDispHw subclass component that pointer, as the underlying hardware display object will be taking the information to display from that memory buffer. The resource to set the pointer is this method. 
      * 
-     * @return uint8_t* The pointer to the **Display Buffer Memory Area**  
+     * @return uint8_t* The pointer to the **Display Buffer Memory Area**.  
      * 
-     * @attention Using this method is a resource to generate "animations" by changing the memory area from with the hardware displays takes it's contents, to some other area with ready to display information
+     * @attention Using this method is a resource to generate "animations" by changing the memory area from with the hardware displays takes it's contents, to some other area with ready to display information.  
      * 
-     * @note The dspBuffPtr attribute might be changed to use a temporary different source of data to be displayed. 
+     * @note The dspBuffPtr attribute might be changed to use a temporary different source of data to be displayed.  
      * 
      * @warning Setting the display buffer pointer to an address not coinciding with the one configured in the SevenSegDisplays will **disable** the possibility for it to get new SevenSegDisplays generated content displayed!! Handle with extreme care, first saving the original provided pointer, changing it as needed, and reseting the _dspBuffPtr to the saved value!!
      */
@@ -215,15 +245,26 @@ public:
     * The display module will be cleared and will keep that status until a turnOn(), or turnOn(const uint8_t &) is invoked.  
     * 
     * @note Turning the display Off is not the same as clearing the display -see clear() method- as clearing the display implies changing the display data buffer content to fill it with spaces. Some of the display modules managed by display controllers have the hability to turn off the leds display while keeping it's buffer contents unmodified. So turning On/Off those displays will have the effect of holding the data displayed and even receiving and filling their buffer with new data while keeping their display with no leds turned on.  
+    * 
+    * @todo For the seven segment displays with controller components that does not implement On and Off commands, the class will provide a propietary solution to achieve similar features. While there are not implemented the turnOff(), turnOn() and turnOn(const uint8_t &) will be ignored and will produce no effect in the object behavior. 
     */
-    virtual void turnOff(){};
+    virtual void turnOff();
    /**
     * @brief Turns the display module on.  
     * 
-    * The display module will be turned on, making visible the contents of the display buffer.  
+    * The display module will be turned on, making visible the contents of the display buffer. For more reference see turnOff() method.   
     */
-   virtual void turnOn(){};
-   virtual void turnOn(const uint8_t &newBrghtnssLvl){};
+   virtual void turnOn();
+   /**
+    * @brief Turns the display module on set at the provided brightness level.  
+    * 
+    * For correct execution and visual response, this method executes a setBrghtnssLvl(const uint8_t &) method followed by a turnOn() method execution.  
+    * 
+    * @warning If the setBrghtnssLvl(const uint8_t &) method returns false indicating it has failed, this method will go on invoking the turnOn() method instead of failing altogether, as it gives more priority to the turning on of the display than to the brightness level setting. If the developer is not ok with this scheme he can always use the two methods independently in the sequence he decides better fits his needs and act as his own criteria dictates after the setBrghtnssLvl(const uint8_t &) fails.  
+    * 
+    * @param newBrghtnssLvl The new brightness level for the display. The value must be in the range **getBrghtnssMinLvl() <= newBrghtnssLvl <= getBrghtnssMaxLvl()**
+    */
+   virtual void turnOn(const uint8_t &newBrghtnssLvl);
 };
 
 //============================================================> Class declarations separator
@@ -235,6 +276,7 @@ public:
  */
 class SevenSegDynamic: public SevenSegDispHw{    
     static void tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg);
+    
 private:
    virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
 
@@ -443,7 +485,7 @@ protected:
    uint8_t _brghtnssLvl{0};  //!< Current display brightness level
    uint8_t _brghtnssLvlMax{0};   //!< Maximum display brightness level
    uint8_t _brghtnssLvlMin{0};   //!< Minimum display brightness level
-   bool _isOn{false};   //!< Current display status: On/Off
+   // bool _isOn{false};   //!< Current display status: On/Off
      
 public:
     SevenSegStatic();

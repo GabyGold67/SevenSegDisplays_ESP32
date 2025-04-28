@@ -99,6 +99,7 @@ $(function(){initNavTree('class_seven_seg_disp_hw.html',''); initResizable(true)
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_seven_seg_disp_hw-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">SevenSegDispHw Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
 </div><!--header-->
@@ -164,11 +165,23 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
   <br /></td></tr>
 <tr class="separator:a5f3a59bcc54ddd20445e049359753ab6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10ef7e4db6af3dbbcdeb48331d94f2e2" id="r_a10ef7e4db6af3dbbcdeb48331d94f2e2"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a10ef7e4db6af3dbbcdeb48331d94f2e2">end</a> ()</td></tr>
-<tr class="memdesc:a10ef7e4db6af3dbbcdeb48331d94f2e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverts the <a class="el" href="#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities.">begin(uint32_t)</a> actions, stopping the display activities and freeing the resources used by the Seven Segment display hardware object. <br  />
+<tr class="memdesc:a10ef7e4db6af3dbbcdeb48331d94f2e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverts the <a class="el" href="#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities.">begin(uint32_t)</a> actions, stopping the display activities, turning the display off and freeing the resources used by the Seven Segment display hardware object. <br  />
   <br /></td></tr>
 <tr class="separator:a10ef7e4db6af3dbbcdeb48331d94f2e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c5d2d46808b3194bd248d133d3117bf" id="r_a0c5d2d46808b3194bd248d133d3117bf"><td class="memItemLeft" align="right" valign="top">virtual uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c5d2d46808b3194bd248d133d3117bf">getBrghtnssLvl</a> ()</td></tr>
+<tr class="memdesc:a0c5d2d46808b3194bd248d133d3117bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current display brightness level setting for the display. <br  />
+  <br /></td></tr>
+<tr class="separator:a0c5d2d46808b3194bd248d133d3117bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75b0eb720bddb4e467814e41dd958575" id="r_a75b0eb720bddb4e467814e41dd958575"><td class="memItemLeft" align="right" valign="top">virtual uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a75b0eb720bddb4e467814e41dd958575">getBrghtnssMaxLvl</a> ()</td></tr>
+<tr class="memdesc:a75b0eb720bddb4e467814e41dd958575"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the maximum display brightness level setting allowed for the display. <br  />
+  <br /></td></tr>
+<tr class="separator:a75b0eb720bddb4e467814e41dd958575"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa098a72fb84ffbec783e0c38f130f2c3" id="r_aa098a72fb84ffbec783e0c38f130f2c3"><td class="memItemLeft" align="right" valign="top">virtual uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa098a72fb84ffbec783e0c38f130f2c3">getBrghtnssMinLvl</a> ()</td></tr>
+<tr class="memdesc:aa098a72fb84ffbec783e0c38f130f2c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the minimum display brightness level setting for the display. <br  />
+  <br /></td></tr>
+<tr class="separator:aa098a72fb84ffbec783e0c38f130f2c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b9379b7b6ca6946813fd643d28d74f4" id="r_a5b9379b7b6ca6946813fd643d28d74f4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b9379b7b6ca6946813fd643d28d74f4">getCommAnode</a> ()</td></tr>
-<tr class="memdesc:a5b9379b7b6ca6946813fd643d28d74f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a value indicating if the display module component uses a common anode or a common cathode led wiring. <br  />
+<tr class="memdesc:a5b9379b7b6ca6946813fd643d28d74f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a value indicating if the <b>display module component</b> of the display hardware uses a common anode or a common cathode led wiring. <br  />
   <br /></td></tr>
 <tr class="separator:a5b9379b7b6ca6946813fd643d28d74f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a17e903934d148f0d2c47da7ceb0982c7" id="r_a17e903934d148f0d2c47da7ceb0982c7"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a17e903934d148f0d2c47da7ceb0982c7">getDspBuffPtr</a> ()</td></tr>
@@ -179,33 +192,45 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 <tr class="memdesc:ac6544795ed8c9b44211424c8b5ef216f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the quantity of digits of the display module. <br  />
   <br /></td></tr>
 <tr class="separator:ac6544795ed8c9b44211424c8b5ef216f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16c93c61e795bb8f058dad9d457db1db" id="r_a16c93c61e795bb8f058dad9d457db1db"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16c93c61e795bb8f058dad9d457db1db">getIsOn</a> ()</td></tr>
-<tr class="memdesc:a16c93c61e795bb8f058dad9d457db1db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the state of the display. <br  />
+<tr class="memitem:aa23f15cca7bb2db9821982965d969773" id="r_aa23f15cca7bb2db9821982965d969773"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa23f15cca7bb2db9821982965d969773">getIsOn</a> ()</td></tr>
+<tr class="memdesc:aa23f15cca7bb2db9821982965d969773"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the state of the display. <br  />
   <br /></td></tr>
-<tr class="separator:a16c93c61e795bb8f058dad9d457db1db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:aa23f15cca7bb2db9821982965d969773"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02d94944c1a9ade34a530c7e13503327" id="r_a02d94944c1a9ade34a530c7e13503327"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a02d94944c1a9ade34a530c7e13503327">ntfyUpdDsply</a> ()</td></tr>
-<tr class="memdesc:a02d94944c1a9ade34a530c7e13503327"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifies the object of a change of content available in the display buffer, the object must update the display. <br  />
+<tr class="memdesc:a02d94944c1a9ade34a530c7e13503327"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifies the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> component object of a change of content available in the display buffer, so that the object proceeds to update the display. <br  />
   <br /></td></tr>
 <tr class="separator:a02d94944c1a9ade34a530c7e13503327"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8494bc6061172e6604be159cd78ebd24" id="r_a8494bc6061172e6604be159cd78ebd24"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8494bc6061172e6604be159cd78ebd24">setBrghtnssLvl</a> (const uint8_t &amp;newBrghtnssLvl)</td></tr>
-<tr class="memdesc:a8494bc6061172e6604be159cd78ebd24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the brightness level for the display. <br  />
+<tr class="memitem:a25007a1b33093e4c055446010e254d63" id="r_a25007a1b33093e4c055446010e254d63"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a25007a1b33093e4c055446010e254d63">setBrghtnssLvl</a> (const uint8_t &amp;newBrghtnssLvl)</td></tr>
+<tr class="memdesc:a25007a1b33093e4c055446010e254d63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the brightness level for the display. <br  />
   <br /></td></tr>
-<tr class="separator:a8494bc6061172e6604be159cd78ebd24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a25007a1b33093e4c055446010e254d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee6d67c3bdd719b05ac6e7d8d250d43f" id="r_aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aee6d67c3bdd719b05ac6e7d8d250d43f">setDigitsOrder</a> (uint8_t *newOrderPtr)</td></tr>
 <tr class="memdesc:aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mapping to relate the display buffer positions to the display port assigned to exhibit it's contents. <br  />
   <br /></td></tr>
 <tr class="separator:aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc7402bad588be4ea2c7aedaf870f9ff" id="r_afc7402bad588be4ea2c7aedaf870f9ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc7402bad588be4ea2c7aedaf870f9ff">setDspBuffPtr</a> (uint8_t *newDspBuffPtr)</td></tr>
-<tr class="memdesc:afc7402bad588be4ea2c7aedaf870f9ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the pointer to the Display Buffer.  <br /></td></tr>
+<tr class="memdesc:afc7402bad588be4ea2c7aedaf870f9ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the pointer to the Display Buffer memory area. <br  />
+  <br /></td></tr>
 <tr class="separator:afc7402bad588be4ea2c7aedaf870f9ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e43097203738e6e058be20287be7a12" id="r_a1e43097203738e6e058be20287be7a12"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e43097203738e6e058be20287be7a12">turnOff</a> ()</td></tr>
-<tr class="memdesc:a1e43097203738e6e058be20287be7a12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module off. <br  />
+<tr class="memitem:a086ccd4d4966fa28a51d6b8f250b6c20" id="r_a086ccd4d4966fa28a51d6b8f250b6c20"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a086ccd4d4966fa28a51d6b8f250b6c20">turnOff</a> ()</td></tr>
+<tr class="memdesc:a086ccd4d4966fa28a51d6b8f250b6c20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module off. <br  />
   <br /></td></tr>
-<tr class="separator:a1e43097203738e6e058be20287be7a12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99f4c0e60a9da8d5548e13b9cbe9ba71" id="r_a99f4c0e60a9da8d5548e13b9cbe9ba71"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a99f4c0e60a9da8d5548e13b9cbe9ba71">turnOn</a> ()</td></tr>
-<tr class="memdesc:a99f4c0e60a9da8d5548e13b9cbe9ba71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module on. <br  />
+<tr class="separator:a086ccd4d4966fa28a51d6b8f250b6c20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c72695666e9611e0c3dc2583df382af" id="r_a8c72695666e9611e0c3dc2583df382af"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8c72695666e9611e0c3dc2583df382af">turnOn</a> ()</td></tr>
+<tr class="memdesc:a8c72695666e9611e0c3dc2583df382af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module on. <br  />
   <br /></td></tr>
-<tr class="separator:a99f4c0e60a9da8d5548e13b9cbe9ba71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a8c72695666e9611e0c3dc2583df382af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b8a85569987f67008d5323fcea52d0c" id="r_a5b8a85569987f67008d5323fcea52d0c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b8a85569987f67008d5323fcea52d0c">turnOn</a> (const uint8_t &amp;newBrghtnssLvl)</td></tr>
+<tr class="memdesc:a5b8a85569987f67008d5323fcea52d0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module on set at the provided brightness level. <br  />
+  <br /></td></tr>
+<tr class="separator:a5b8a85569987f67008d5323fcea52d0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a3766aca6533be7b0b416229ebfe4cf49" id="r_a3766aca6533be7b0b416229ebfe4cf49"><td class="memItemLeft" align="right" valign="top"><a id="a3766aca6533be7b0b416229ebfe4cf49" name="a3766aca6533be7b0b416229ebfe4cf49"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td></tr>
+<tr class="memdesc:a3766aca6533be7b0b416229ebfe4cf49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current display status: On/Off. <br /></td></tr>
+<tr class="separator:a3766aca6533be7b0b416229ebfe4cf49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base abstract class models a generic Seven Segment display hardware. </p>
@@ -253,7 +278,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
   </table>
   </dd>
 </dl>
-<dl class="section attention"><dt>Attention</dt><dd>The dspDigits parameter indicating the quantity of digits of the display module is a <b>basic fundamental</b> parameter passed at instantiation time. This information provides the value to be used to generate the data buffer, the digits order table, auxiliary buffers and even the required information to generate a valid left or right aligned display. Obviously the quantity is bigger than 0, and must be less than or equal to the hardware maximum display digits capability. <br  />
+<dl class="section attention"><dt>Attention</dt><dd>The dspDigits parameter indicating the quantity of digits of the display module is a <b>basic fundamental</b> parameter passed at instantiation time. This information provides the value to be used to create a data buffer of the right size, the digits order table, auxiliary buffers and even the required information to calculate the range of values displayable and to generate a valid left or right aligned display. Obviously the quantity is bigger than 0, and must be less than or equal to the hardware maximum display digits capability. <br  />
+</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>The dspDigits parameter value must not be confused with the maximum display digits a display controller component can handle. Many displays are designed using part of the controller's digits management for real seven segment displays digits, while using non used digits to manage some other display elements, like leds, special backlighting elements, etc. The class instantiated object needs the right amount of display digits available as such, the exceeding digits/ports is another issue. <br  />
  </dd></dl>
 
 </div>
@@ -286,15 +313,15 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
  </p>
 <p>Depending on the display technology and the resources it needs to work with, this method takes care of those preparations. That means that each specific subclass of display will provide it's own version of <code><a class="el" href="#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities.">begin()</a></code> that will take care of: <br  />
 </p><ul>
-<li>Configuring timers or interrupts. <br  />
+<li>Configuring timers or interrupts required. <br  />
 </li>
 <li>Setup tasks and unblocking procedures to get new contents from the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object. <br  />
 </li>
-<li>Setup communications parameters. <br  />
+<li>Setup communications parameters and establish communications with the display hardware. <br  />
 </li>
-<li>Establish communications with the display. <br  />
+<li>Other specific services configuration and setups. <br  />
 </li>
-<li>Other specific services configuration and starting. <br  />
+<li>Turn On the display. <br  />
 </li>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -341,15 +368,125 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 </table>
 </div><div class="memdoc">
 
-<p>Reverts the <a class="el" href="#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities.">begin(uint32_t)</a> actions, stopping the display activities and freeing the resources used by the Seven Segment display hardware object. <br  />
+<p>Reverts the <a class="el" href="#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities.">begin(uint32_t)</a> actions, stopping the display activities, turning the display off and freeing the resources used by the Seven Segment display hardware object. <br  />
  </p>
 <dl class="section return"><dt>Returns</dt><dd>true The display activities could be stopped and resources freed with no problems. <br  />
  </dd>
 <dd>
 false The display activities couldn't be stopped. The method failed. <br  />
+</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The <code><a class="el" href="#a10ef7e4db6af3dbbcdeb48331d94f2e2" title="Reverts the begin(uint32_t) actions, stopping the display activities, turning the display off and fre...">end()</a></code> method does not destroy the object, and it's effect can be reverted by invoking a new <code><a class="el" href="#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities.">begin(uint32_t)</a></code> method for the object. <br  />
  </dd></dl>
 
 <p>Reimplemented in <a class="el" href="class_seven_seg_dynamic.html#ad33484426e9171966895857c9b7afcc4">SevenSegDynamic</a>, <a class="el" href="class_seven_seg_dyn_dummy.html#a2ca50c8a0dd4ff2d52caa0332119ce05">SevenSegDynDummy</a>, <a class="el" href="class_seven_seg_dyn_h_c595.html#add611b927a735ea74809379a0ecb8533">SevenSegDynHC595</a>, <a class="el" href="class_seven_seg_max7219.html#a5870af7127dcf97df29cfb8d07bb4a7f">SevenSegMax7219</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#aa698084ab67b3d6c6b324fa00d1f5e35">SevenSegTM163X</a>.</p>
+
+</div>
+</div>
+<a id="a0c5d2d46808b3194bd248d133d3117bf" name="a0c5d2d46808b3194bd248d133d3117bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c5d2d46808b3194bd248d133d3117bf">&#9670;&#160;</a></span>getBrghtnssLvl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t SevenSegDispHw::getBrghtnssLvl </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the current display brightness level setting for the display. <br  />
+ </p>
+<p>For displays with variable display brighness levels this method will return the current brightness level. The returned value will be in the range <b><a class="el" href="#aa098a72fb84ffbec783e0c38f130f2c3" title="Returns the minimum display brightness level setting for the display.">getBrghtnssMinLvl()</a> &lt;= <a class="el" href="#a0c5d2d46808b3194bd248d133d3117bf" title="Returns the current display brightness level setting for the display.">getBrghtnssLvl()</a> &lt;= <a class="el" href="#a75b0eb720bddb4e467814e41dd958575" title="Returns the maximum display brightness level setting allowed for the display.">getBrghtnssMaxLvl()</a></b>, see <a class="el" href="#a25007a1b33093e4c055446010e254d63" title="Sets the brightness level for the display.">setBrghtnssLvl(const uint8_t &amp;)</a> for more details. <br  />
+</p>
+<dl class="section note"><dt>Note</dt><dd>For display classes that models object without the capacity of changing brightness levels, <a class="el" href="#aa098a72fb84ffbec783e0c38f130f2c3" title="Returns the minimum display brightness level setting for the display.">getBrghtnssMinLvl()</a> = <a class="el" href="#a0c5d2d46808b3194bd248d133d3117bf" title="Returns the current display brightness level setting for the display.">getBrghtnssLvl()</a> = <a class="el" href="#a75b0eb720bddb4e467814e41dd958575" title="Returns the maximum display brightness level setting allowed for the display.">getBrghtnssMaxLvl()</a> = 0, this implies that using (<a class="el" href="#aa098a72fb84ffbec783e0c38f130f2c3" title="Returns the minimum display brightness level setting for the display.">getBrghtnssMinLvl()</a> == <a class="el" href="#a75b0eb720bddb4e467814e41dd958575" title="Returns the maximum display brightness level setting allowed for the display.">getBrghtnssMaxLvl()</a>) condition is enough to identify if a given display has or has not the capacity of changing brightness levels. <br  />
+</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The current display brightness level setting, as long as the display has the capacity of changing brightness levels. <br  />
+ </dd></dl>
+
+<p>Reimplemented in <a class="el" href="class_seven_seg_static.html#a5714c53e7d5f8d1bf27fc1eb21bfb97d">SevenSegStatic</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#a484553b3cf9c8e60bc87e944d07fecde">SevenSegTM163X</a>.</p>
+
+</div>
+</div>
+<a id="a75b0eb720bddb4e467814e41dd958575" name="a75b0eb720bddb4e467814e41dd958575"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75b0eb720bddb4e467814e41dd958575">&#9670;&#160;</a></span>getBrghtnssMaxLvl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t SevenSegDispHw::getBrghtnssMaxLvl </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the maximum display brightness level setting allowed for the display. <br  />
+ </p>
+<p>For displays with variable display brightness levels this method will return the maximum brightness level value valid setting. See <a class="el" href="#a25007a1b33093e4c055446010e254d63" title="Sets the brightness level for the display.">setBrghtnssLvl(const uint8_t &amp;)</a> for more details. <br  />
+</p>
+<dl class="section note"><dt>Note</dt><dd>For display classes that models object without the capacity of changing brightness levels, <a class="el" href="#aa098a72fb84ffbec783e0c38f130f2c3" title="Returns the minimum display brightness level setting for the display.">getBrghtnssMinLvl()</a> = <a class="el" href="#a0c5d2d46808b3194bd248d133d3117bf" title="Returns the current display brightness level setting for the display.">getBrghtnssLvl()</a> = <a class="el" href="#a75b0eb720bddb4e467814e41dd958575" title="Returns the maximum display brightness level setting allowed for the display.">getBrghtnssMaxLvl()</a> = 0, this implies that using (<a class="el" href="#aa098a72fb84ffbec783e0c38f130f2c3" title="Returns the minimum display brightness level setting for the display.">getBrghtnssMinLvl()</a> == <a class="el" href="#a75b0eb720bddb4e467814e41dd958575" title="Returns the maximum display brightness level setting allowed for the display.">getBrghtnssMaxLvl()</a>) condition is enough to identify if a given display has or has not the capacity of changing brightness levels. <br  />
+</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The display brightness level maximum value setting as long as the display has the capacity of changing brightness levels. <br  />
+ </dd></dl>
+
+<p>Reimplemented in <a class="el" href="class_seven_seg_static.html#a07a95ebb4bb124f5f39172fd1e86247a">SevenSegStatic</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#a4b12ba68a4ed1738bbf0457a4dbec33e">SevenSegTM163X</a>.</p>
+
+</div>
+</div>
+<a id="aa098a72fb84ffbec783e0c38f130f2c3" name="aa098a72fb84ffbec783e0c38f130f2c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa098a72fb84ffbec783e0c38f130f2c3">&#9670;&#160;</a></span>getBrghtnssMinLvl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t SevenSegDispHw::getBrghtnssMinLvl </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the minimum display brightness level setting for the display. <br  />
+ </p>
+<p>For displays with variable display brightness levels this method will return the minimum brightness level value setting. See <a class="el" href="#a25007a1b33093e4c055446010e254d63" title="Sets the brightness level for the display.">setBrghtnssLvl(const uint8_t &amp;)</a> for more details. <br  />
+</p>
+<dl class="section note"><dt>Note</dt><dd>For display classes that models object without the capacity of changing brightness levels, <a class="el" href="#aa098a72fb84ffbec783e0c38f130f2c3" title="Returns the minimum display brightness level setting for the display.">getBrghtnssMinLvl()</a> = <a class="el" href="#a0c5d2d46808b3194bd248d133d3117bf" title="Returns the current display brightness level setting for the display.">getBrghtnssLvl()</a> = <a class="el" href="#a75b0eb720bddb4e467814e41dd958575" title="Returns the maximum display brightness level setting allowed for the display.">getBrghtnssMaxLvl()</a> = 0, this implies that using <code>(<a class="el" href="#aa098a72fb84ffbec783e0c38f130f2c3" title="Returns the minimum display brightness level setting for the display.">getBrghtnssMinLvl()</a> == <a class="el" href="#a75b0eb720bddb4e467814e41dd958575" title="Returns the maximum display brightness level setting allowed for the display.">getBrghtnssMaxLvl()</a>)</code> condition is enough to identify if a given display has or has not the capacity of changing brightness levels. <br  />
+</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The display brightness level minimum value setting, as long as the display has the capacity of changing brightness levels. <br  />
+ </dd></dl>
+
+<p>Reimplemented in <a class="el" href="class_seven_seg_static.html#aee631491c0e0ab09eb9f3d9b8575cce9">SevenSegStatic</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#a4cf3e667babba4a13292cb2124c7d60e">SevenSegTM163X</a>.</p>
 
 </div>
 </div>
@@ -368,9 +505,10 @@ false The display activities couldn't be stopped. The method failed. <br  />
       </table>
 </div><div class="memdoc">
 
-<p>Returns a value indicating if the display module component uses a common anode or a common cathode led wiring. <br  />
+<p>Returns a value indicating if the <b>display module component</b> of the display hardware uses a common anode or a common cathode led wiring. <br  />
  </p>
-<p>The <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> instantiated objects will compose the values corresponding to each character it can display according to the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> _commAnode attribute. Each <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> instantiable subclass will have that constant attribute set by the subclass developer to correspond to the technical specifications of the display module component.</p>
+<p>The <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> instantiated objects will compose the values corresponding to each character it displays according to the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> _commAnode attribute. Each <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> instantiable subclass will have that constant attribute set by the subclass developer to correspond to the technical specifications of the display module component, unless the display module has the capacity to work with both technologies, in wich case the subclass constructor will include a _commAnode boolean parameter to set that attribute. <br  />
+</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">true</td><td>The display is built with a Common Anode display module component. <br  />
@@ -400,11 +538,11 @@ false The display activities couldn't be stopped. The method failed. <br  />
 
 <p>Returns a pointer to the display buffer. <br  />
  </p>
-<p>The display buffer is a memory area set by the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> class object instantiated to hold the data to be displayed, and so it's shared by that object and the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> subclass object component. When the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object is constructed it sets the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> subclass object buffer pointer to the memory area it set for that purpose. This method retrieves that memory pointer. <br  />
+<p>The display buffer is the memory area set by the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> class object instantiated to hold the data to be displayed, and so it's shared by that object and it's <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> subclass object component. When the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object is constructed it sets the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> subclass object buffer pointer to the memory area it set for that purpose. This method retrieves that memory pointer. <br  />
 </p>
 <dl class="section return"><dt>Returns</dt><dd>uint8_t* The pointer to the buffer area used by the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> to get the data to display. <br  />
 </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>If <a class="el" href="#a17e903934d148f0d2c47da7ceb0982c7" title="Returns a pointer to the display buffer.">getDspBuffPtr()</a> returns a nullptr it means the <a class="el" href="#afc7402bad588be4ea2c7aedaf870f9ff" title="Returns the pointer to the Display Buffer.">setDspBuffPtr(uint8_t*)</a> invoked by the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> constructor failed and the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> object has no source for the data to be displayed. <br  />
+<dl class="section warning"><dt>Warning</dt><dd>If <a class="el" href="#a17e903934d148f0d2c47da7ceb0982c7" title="Returns a pointer to the display buffer.">getDspBuffPtr()</a> returns a nullptr it means the <a class="el" href="#afc7402bad588be4ea2c7aedaf870f9ff" title="Sets the pointer to the Display Buffer memory area.">setDspBuffPtr(uint8_t*)</a> invoked by the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> constructor failed and the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> object has no source for the data to be displayed. <br  />
  </dd></dl>
 
 </div>
@@ -429,7 +567,8 @@ false The display activities couldn't be stopped. The method failed. <br  />
 <p>The value returned correspond to the dspDigits parameter passed at instantiation time. <br  />
 </p>
 <dl class="section return"><dt>Returns</dt><dd>uint8_t The <b>display module component</b> digits quantity. <br  />
- </dd></dl>
+</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>The dspDigits parameter value return by this method must not be confused with the maximum display digits a display controller component can handle. For more information see <a class="el" href="#a8dd283533f1deddffdd679c7e12c7c7d" title="Class constructor.">SevenSegDispHw(uint8_t*, uint8_t, bool commAnode)</a> </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -443,8 +582,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a16c93c61e795bb8f058dad9d457db1db" name="a16c93c61e795bb8f058dad9d457db1db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a16c93c61e795bb8f058dad9d457db1db">&#9670;&#160;</a></span>getIsOn()</h2>
+<a id="aa23f15cca7bb2db9821982965d969773" name="aa23f15cca7bb2db9821982965d969773"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa23f15cca7bb2db9821982965d969773">&#9670;&#160;</a></span>getIsOn()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -453,7 +592,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool SevenSegDispHw::getIsOn </td>
+          <td class="memname">bool SevenSegDispHw::getIsOn </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -461,7 +600,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -504,17 +643,19 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>Notifies the object of a change of content available in the display buffer, the object must update the display. <br  />
+<p>Notifies the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> component object of a change of content available in the display buffer, so that the object proceeds to update the display. <br  />
  </p>
-<p>While the dynamic displays must periodically refresh the data displayed, and so they get the most updated content from the display buffer without the need to send them any notification, the data displayed by the static displays remains constant even if it's data buffer or registers are loaded with new data. This method notifies the display that the data buffer content has changed and it must load the new contents of it's registers or buffers to display the new information. <br  />
- </p>
+<p>While the dynamic displays must periodically refresh the data displayed, and so they get the most updated content from the display buffer without the need to receive any notification, the data displayed by the static displays internal buffer to hold the displayed data. The internal buffer contents remain constant until it's data buffer or registers are loaded with new data. This method notifies the display that the data buffer content has changed and it must load the new contents of it's internal registers or buffers to display the new information. <br  />
+</p>
+<dl class="section note"><dt>Note</dt><dd>The usual possibilities to work in these cases are two: exception notification or constant polling. The exception notification mechanism has been selected for economy of resources and usual considerations of similar cases. <br  />
+ </dd></dl>
 
 <p>Reimplemented in <a class="el" href="class_seven_seg_max7219.html#a559f2c5cca5eb5a806720359efd99788">SevenSegMax7219</a>, <a class="el" href="class_seven_seg_stat_h_c595.html#af430da3b0859f74693dd0ee71c28d071">SevenSegStatHC595</a>, <a class="el" href="class_seven_seg_static.html#a31006d4f4f5a4019f0aed380e01b0d17">SevenSegStatic</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#ae45f5f1772b93dca12ccaef3e652d7b0">SevenSegTM163X</a>.</p>
 
 </div>
 </div>
-<a id="a8494bc6061172e6604be159cd78ebd24" name="a8494bc6061172e6604be159cd78ebd24"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8494bc6061172e6604be159cd78ebd24">&#9670;&#160;</a></span>setBrghtnssLvl()</h2>
+<a id="a25007a1b33093e4c055446010e254d63" name="a25007a1b33093e4c055446010e254d63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25007a1b33093e4c055446010e254d63">&#9670;&#160;</a></span>setBrghtnssLvl()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -523,7 +664,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool SevenSegDispHw::setBrghtnssLvl </td>
+          <td class="memname">bool SevenSegDispHw::setBrghtnssLvl </td>
           <td>(</td>
           <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>newBrghtnssLvl</em></span></td><td>)</td>
           <td></td>
@@ -531,28 +672,28 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p>Sets the brightness level for the display. <br  />
  </p>
-<p>Although dummy dynamic and smart static brightness displays might be dimmed using PWM management, the dummy dynamic displays require MCU intervention, added to the regular required cinematic effect load, making the brightness control very expensive in resources use. For this reason the brightness control in this library will be available for the <b>smart static</b> displays equiped with a display controller unit specifically providing the option. Each class description and documentation will detail if the service is available or not, and in case the method is invoked in an object instantiated from a class with no brightness control capabilities, the value returned will be false, avoiding the need of a error handling mechanism. <br  />
+<p>Although dummy dynamic and dummy static displays brightness might be dimmed using PWM management, both displays require MCU intervention, added to the regular required cinematic effect generation workload, making the brightness control very expensive in resources use. For this reason the brightness control in this library will be available for the <b>smart static</b> displays equiped with a display controller unit specifically providing the option. Each class description and documentation will detail if the service is available or not, and in case the method is invoked in an object instantiated from a class with no brightness control capabilities, the value returned will be false, avoiding the need of a error handling mechanism. <br  />
 </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">newBrghtnssLvl</td><td>The new brightness level for the display. The value must be in the range <b>getBrghtnssMinLvl() &lt;= newBrghtnssLvl &lt;= getBrghtnssMaxLvl()</b></td></tr>
+    <tr><td class="paramname">newBrghtnssLvl</td><td>The new brightness level for the display. The value must be in the range <b><a class="el" href="#aa098a72fb84ffbec783e0c38f130f2c3" title="Returns the minimum display brightness level setting for the display.">getBrghtnssMinLvl()</a> &lt;= newBrghtnssLvl &lt;= <a class="el" href="#a75b0eb720bddb4e467814e41dd958575" title="Returns the maximum display brightness level setting allowed for the display.">getBrghtnssMaxLvl()</a></b></td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>The parameter was in the acceptable range, the display will be set to the new brightness level (or keep it's brightness level if the parameter passed is equal to the current brightness level) </td></tr>
+    <tr><td class="paramname">true</td><td>The parameter was in the valid range, the display will be set to the new brightness level (or keep it's brightness level if the parameter passed is equal to the current brightness level) </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>false The display module does not support brightness level setting, or the parameter passed is outside the acceptable range, no brightness level changes will be done. <br  />
+<dl class="section return"><dt>Returns</dt><dd>false The display module does not support brightness level setting, or the parameter passed is outside the valid range, no brightness level changes could be made. <br  />
  </dd></dl>
 
 <p>Reimplemented in <a class="el" href="class_seven_seg_max7219.html#a00e46d6be95a02bd6d20de36bf671080">SevenSegMax7219</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#a4e74de34810a89ff8409e277e962e09f">SevenSegTM163X</a>.</p>
@@ -611,19 +752,22 @@ false At least one of the values of the array passed were out of range. The chan
       </table>
 </div><div class="memdoc">
 
-<p>Returns the pointer to the Display Buffer. </p>
-<p>When a <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object is instantiated it's constructor sets a display buffer memory area to store the contents ready to be displayed. Part of the constructor execution includes passing to the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> subclass component that pointer, as the underlying hardware display object will be taking the information to display from that memory buffer. The resource to set the pointer is this method.</p>
-<dl class="section return"><dt>Returns</dt><dd>uint8_t* The pointer to the <b>Display Buffer Memory Area</b> <br  />
+<p>Sets the pointer to the Display Buffer memory area. <br  />
+ </p>
+<p>When a <b><a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a></b> object is instantiated it's constructor sets a display buffer memory area to store the contents ready to be displayed. Part of the constructor execution includes passing to the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> subclass component that pointer, as the underlying hardware display object will be taking the information to display from that memory buffer. The resource to set the pointer is this method.</p>
+<dl class="section return"><dt>Returns</dt><dd>uint8_t* The pointer to the <b>Display Buffer Memory Area</b>. <br  />
 </dd></dl>
-<dl class="section attention"><dt>Attention</dt><dd>Using this method is a resource to generate "animations" by changing the memory area from with the hardware displays takes it's contents, to some other area with ready to display information</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>The dspBuffPtr attribute might be changed to use a temporary different source of data to be displayed.</dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>Using this method is a resource to generate "animations" by changing the memory area from with the hardware displays takes it's contents, to some other area with ready to display information. <br  />
+</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The dspBuffPtr attribute might be changed to use a temporary different source of data to be displayed. <br  />
+</dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Setting the display buffer pointer to an address not coinciding with the one configured in the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> will <b>disable</b> the possibility for it to get new <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> generated content displayed!! Handle with extreme care, first saving the original provided pointer, changing it as needed, and reseting the _dspBuffPtr to the saved value!! </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_disp_hw_afc7402bad588be4ea2c7aedaf870f9ff_icgraph.png" border="0" usemap="#aclass_seven_seg_disp_hw_afc7402bad588be4ea2c7aedaf870f9ff_icgraph" alt=""/></div>
 <map name="aclass_seven_seg_disp_hw_afc7402bad588be4ea2c7aedaf870f9ff_icgraph" id="aclass_seven_seg_disp_hw_afc7402bad588be4ea2c7aedaf870f9ff_icgraph">
-<area shape="rect" title="Returns the pointer to the Display Buffer." alt="" coords="254,13,472,40"/>
+<area shape="rect" title="Sets the pointer to the Display Buffer memory area." alt="" coords="254,13,472,40"/>
 <area shape="rect" href="class_seven_seg_displays.html#ada6d89fb083fd8a5a2ce603b3b1f5e43" title="Class constructor." alt="" coords="5,5,206,48"/>
 <area shape="poly" title=" " alt="" coords="238,29,206,29,206,24,238,24"/>
 </map>
@@ -631,8 +775,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a1e43097203738e6e058be20287be7a12" name="a1e43097203738e6e058be20287be7a12"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e43097203738e6e058be20287be7a12">&#9670;&#160;</a></span>turnOff()</h2>
+<a id="a086ccd4d4966fa28a51d6b8f250b6c20" name="a086ccd4d4966fa28a51d6b8f250b6c20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a086ccd4d4966fa28a51d6b8f250b6c20">&#9670;&#160;</a></span>turnOff()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -641,7 +785,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void SevenSegDispHw::turnOff </td>
+          <td class="memname">void SevenSegDispHw::turnOff </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -649,24 +793,25 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p>Turns the display module off. <br  />
  </p>
-<p>The display module will be cleared and will keep that status until a <a class="el" href="#a99f4c0e60a9da8d5548e13b9cbe9ba71" title="Turns the display module on.">turnOn()</a>, or turnOn(const uint8_t &amp;) is invoked. <br  />
+<p>The display module will be cleared and will keep that status until a <a class="el" href="#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on.">turnOn()</a>, or <a class="el" href="#a5b8a85569987f67008d5323fcea52d0c" title="Turns the display module on set at the provided brightness level.">turnOn(const uint8_t &amp;)</a> is invoked. <br  />
 </p>
 <dl class="section note"><dt>Note</dt><dd>Turning the display Off is not the same as clearing the display -see clear() method- as clearing the display implies changing the display data buffer content to fill it with spaces. Some of the display modules managed by display controllers have the hability to turn off the leds display while keeping it's buffer contents unmodified. So turning On/Off those displays will have the effect of holding the data displayed and even receiving and filling their buffer with new data while keeping their display with no leds turned on. <br  />
- </dd></dl>
+</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo</a></b></dt><dd>For the seven segment displays with controller components that does not implement On and Off commands, the class will provide a propietary solution to achieve similar features. While there are not implemented the <a class="el" href="#a086ccd4d4966fa28a51d6b8f250b6c20" title="Turns the display module off.">turnOff()</a>, <a class="el" href="#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on.">turnOn()</a> and <a class="el" href="#a5b8a85569987f67008d5323fcea52d0c" title="Turns the display module on set at the provided brightness level.">turnOn(const uint8_t &amp;)</a> will be ignored and will produce no effect in the object behavior. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="class_seven_seg_max7219.html#a0007a5a290087062e5595fa065be4ad6">SevenSegMax7219</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#acd8804278138008c6f94996ee44b8afd">SevenSegTM163X</a>.</p>
 
 </div>
 </div>
-<a id="a99f4c0e60a9da8d5548e13b9cbe9ba71" name="a99f4c0e60a9da8d5548e13b9cbe9ba71"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99f4c0e60a9da8d5548e13b9cbe9ba71">&#9670;&#160;</a></span>turnOn()</h2>
+<a id="a8c72695666e9611e0c3dc2583df382af" name="a8c72695666e9611e0c3dc2583df382af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c72695666e9611e0c3dc2583df382af">&#9670;&#160;</a></span>turnOn() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -675,7 +820,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void SevenSegDispHw::turnOn </td>
+          <td class="memname">void SevenSegDispHw::turnOn </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -683,17 +828,57 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p>Turns the display module on. <br  />
  </p>
-<p>The display module will be turned on, making visible the contents of the display buffer. <br  />
+<p>The display module will be turned on, making visible the contents of the display buffer. For more reference see <a class="el" href="#a086ccd4d4966fa28a51d6b8f250b6c20" title="Turns the display module off.">turnOff()</a> method. <br  />
  </p>
 
 <p>Reimplemented in <a class="el" href="class_seven_seg_max7219.html#a7dfe9eb652fec8a06f5d126654f47883">SevenSegMax7219</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#a0469f1b57c14141db8a290e8ce7bb35a">SevenSegTM163X</a>.</p>
+
+</div>
+</div>
+<a id="a5b8a85569987f67008d5323fcea52d0c" name="a5b8a85569987f67008d5323fcea52d0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b8a85569987f67008d5323fcea52d0c">&#9670;&#160;</a></span>turnOn() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SevenSegDispHw::turnOn </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>newBrghtnssLvl</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Turns the display module on set at the provided brightness level. <br  />
+ </p>
+<p>For correct execution and visual response, this method executes a <a class="el" href="#a25007a1b33093e4c055446010e254d63" title="Sets the brightness level for the display.">setBrghtnssLvl(const uint8_t &amp;)</a> method followed by a <a class="el" href="#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on.">turnOn()</a> method execution. <br  />
+</p>
+<dl class="section warning"><dt>Warning</dt><dd>If the <a class="el" href="#a25007a1b33093e4c055446010e254d63" title="Sets the brightness level for the display.">setBrghtnssLvl(const uint8_t &amp;)</a> method returns false indicating it has failed, this method will go on invoking the <a class="el" href="#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on.">turnOn()</a> method instead of failing altogether, as it gives more priority to the turning on of the display than to the brightness level setting. If the developer is not ok with this scheme he can always use the two methods independently in the sequence he decides better fits his needs and act as his own criteria dictates after the <a class="el" href="#a25007a1b33093e4c055446010e254d63" title="Sets the brightness level for the display.">setBrghtnssLvl(const uint8_t &amp;)</a> fails. <br  />
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newBrghtnssLvl</td><td>The new brightness level for the display. The value must be in the range <b><a class="el" href="#aa098a72fb84ffbec783e0c38f130f2c3" title="Returns the minimum display brightness level setting for the display.">getBrghtnssMinLvl()</a> &lt;= newBrghtnssLvl &lt;= <a class="el" href="#a75b0eb720bddb4e467814e41dd958575" title="Returns the maximum display brightness level setting allowed for the display.">getBrghtnssMaxLvl()</a></b> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented in <a class="el" href="class_seven_seg_max7219.html#abff2d6deb86f12e4ca7a0bd17a444cc1">SevenSegMax7219</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#a820e93c70fe532132b1d1117c84af7e6">SevenSegTM163X</a>.</p>
 
 </div>
 </div>

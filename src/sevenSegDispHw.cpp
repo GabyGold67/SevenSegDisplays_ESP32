@@ -66,6 +66,21 @@ bool SevenSegDispHw::end(){
    return true;
 }
 
+uint8_t SevenSegDispHw::getBrghtnssLvl(){
+   
+   return 0;
+}
+
+uint8_t SevenSegDispHw::getBrghtnssMaxLvl(){
+   
+   return 0;
+}
+
+uint8_t SevenSegDispHw::getBrghtnssMinLvl(){
+ 
+   return 0;
+}
+
 bool SevenSegDispHw::getCommAnode(){
 
    return _commAnode;
@@ -81,15 +96,30 @@ uint8_t SevenSegDispHw::getHwDspDigitsQty(){
    return _dspDigitsQty;
 }
 
-void SevenSegDispHw::send(uint8_t *digitsBuffer){
+bool SevenSegDispHw::getIsOn(){
+   
+   return true;
+}
+
+void SevenSegDispHw::ntfyUpdDsply(){
 
    return;
 }
 
-void SevenSegDispHw::send(const uint8_t &segments, const uint8_t &port){
+void SevenSegDispHw::_send(uint8_t *digitsBuffer){
 
    return;
 }
+
+void SevenSegDispHw::_send(const uint8_t &segments, const uint8_t &port){
+
+   return;
+}
+
+bool SevenSegDispHw::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
+   
+   return true;
+} 
 
 bool SevenSegDispHw::setDigitsOrder(uint8_t* newOrderPtr){
    bool result{true};
@@ -112,7 +142,17 @@ void SevenSegDispHw::setDspBuffPtr(uint8_t* newDspBuffPtr){
    return;
 }
 
-void SevenSegDispHw::ntfyUpdDsply(){
+void SevenSegDispHw::turnOff(){
+
+   return;
+}
+
+void SevenSegDispHw::turnOn(){
+
+   return;
+}
+
+void SevenSegDispHw::turnOn(const uint8_t &newBrghtnssLvl){
 
    return;
 }
@@ -1104,28 +1144,3 @@ void HT16K33::turnOn(const uint8_t &newBrghtnssLvl){
 void HT16K33::_unAbstract(){return;}
 
 //============================================================> Class methods separator
-
-template<typename T>
-void pushElmnt(T* &elmntLstPtr, T elmntToPush, uint8_t &elmntQty){
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
-	T* tmpArrPtr{nullptr};
-
-   taskENTER_CRITICAL(&mux);
-   if(elmntLstPtr == nullptr){	// There are no array previously created			
-		elmntLstPtr = new T [1];
-	}
-
-   tmpArrPtr = new T [elmntQty + 1];
-   for (int i{0}; i < elmntQty; ++i){
-      *(tmpArrPtr + i) = *(elmntLstPtr + i);
-   }
-   *(tmpArrPtr + elmntQty) = elmntToPush;
-   if(elmntLstPtr != nullptr)
-      delete [] elmntLstPtr;
-   elmntLstPtr = tmpArrPtr;
-   elmntQty++;
-
-   taskEXIT_CRITICAL(&mux);
-
-   return;
-}

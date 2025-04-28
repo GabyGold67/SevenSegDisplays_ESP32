@@ -145,8 +145,20 @@ Collaboration diagram for SevenSegStatic:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a5714c53e7d5f8d1bf27fc1eb21bfb97d" id="r_a5714c53e7d5f8d1bf27fc1eb21bfb97d"><td class="memItemLeft" align="right" valign="top">virtual uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5714c53e7d5f8d1bf27fc1eb21bfb97d">getBrghtnssLvl</a> ()</td></tr>
+<tr class="memdesc:a5714c53e7d5f8d1bf27fc1eb21bfb97d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current display brightness level setting for the display. <br  />
+  <br /></td></tr>
+<tr class="separator:a5714c53e7d5f8d1bf27fc1eb21bfb97d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07a95ebb4bb124f5f39172fd1e86247a" id="r_a07a95ebb4bb124f5f39172fd1e86247a"><td class="memItemLeft" align="right" valign="top">virtual uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a07a95ebb4bb124f5f39172fd1e86247a">getBrghtnssMaxLvl</a> ()</td></tr>
+<tr class="memdesc:a07a95ebb4bb124f5f39172fd1e86247a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the maximum display brightness level setting allowed for the display. <br  />
+  <br /></td></tr>
+<tr class="separator:a07a95ebb4bb124f5f39172fd1e86247a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee631491c0e0ab09eb9f3d9b8575cce9" id="r_aee631491c0e0ab09eb9f3d9b8575cce9"><td class="memItemLeft" align="right" valign="top">virtual uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aee631491c0e0ab09eb9f3d9b8575cce9">getBrghtnssMinLvl</a> ()</td></tr>
+<tr class="memdesc:aee631491c0e0ab09eb9f3d9b8575cce9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the minimum display brightness level setting for the display. <br  />
+  <br /></td></tr>
+<tr class="separator:aee631491c0e0ab09eb9f3d9b8575cce9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a31006d4f4f5a4019f0aed380e01b0d17" id="r_a31006d4f4f5a4019f0aed380e01b0d17"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a31006d4f4f5a4019f0aed380e01b0d17">ntfyUpdDsply</a> ()</td></tr>
-<tr class="memdesc:a31006d4f4f5a4019f0aed380e01b0d17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifies the object of a change of content available in the display buffer, the object must update the display. <br  />
+<tr class="memdesc:a31006d4f4f5a4019f0aed380e01b0d17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifies the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> component object of a change of content available in the display buffer, so that the object proceeds to update the display. <br  />
   <br /></td></tr>
 <tr class="separator:a31006d4f4f5a4019f0aed380e01b0d17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_seven_seg_disp_hw"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_seven_seg_disp_hw')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a></td></tr>
@@ -166,11 +178,11 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
   <br /></td></tr>
 <tr class="separator:a5f3a59bcc54ddd20445e049359753ab6 inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10ef7e4db6af3dbbcdeb48331d94f2e2 inherit pub_methods_class_seven_seg_disp_hw" id="r_a10ef7e4db6af3dbbcdeb48331d94f2e2"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a10ef7e4db6af3dbbcdeb48331d94f2e2">end</a> ()</td></tr>
-<tr class="memdesc:a10ef7e4db6af3dbbcdeb48331d94f2e2 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverts the <a class="el" href="class_seven_seg_disp_hw.html#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities.">begin(uint32_t)</a> actions, stopping the display activities and freeing the resources used by the Seven Segment display hardware object. <br  />
+<tr class="memdesc:a10ef7e4db6af3dbbcdeb48331d94f2e2 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverts the <a class="el" href="class_seven_seg_disp_hw.html#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities.">begin(uint32_t)</a> actions, stopping the display activities, turning the display off and freeing the resources used by the Seven Segment display hardware object. <br  />
   <br /></td></tr>
 <tr class="separator:a10ef7e4db6af3dbbcdeb48331d94f2e2 inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b9379b7b6ca6946813fd643d28d74f4 inherit pub_methods_class_seven_seg_disp_hw" id="r_a5b9379b7b6ca6946813fd643d28d74f4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a5b9379b7b6ca6946813fd643d28d74f4">getCommAnode</a> ()</td></tr>
-<tr class="memdesc:a5b9379b7b6ca6946813fd643d28d74f4 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a value indicating if the display module component uses a common anode or a common cathode led wiring. <br  />
+<tr class="memdesc:a5b9379b7b6ca6946813fd643d28d74f4 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a value indicating if the <b>display module component</b> of the display hardware uses a common anode or a common cathode led wiring. <br  />
   <br /></td></tr>
 <tr class="separator:a5b9379b7b6ca6946813fd643d28d74f4 inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a17e903934d148f0d2c47da7ceb0982c7 inherit pub_methods_class_seven_seg_disp_hw" id="r_a17e903934d148f0d2c47da7ceb0982c7"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a17e903934d148f0d2c47da7ceb0982c7">getDspBuffPtr</a> ()</td></tr>
@@ -181,29 +193,34 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 <tr class="memdesc:ac6544795ed8c9b44211424c8b5ef216f inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the quantity of digits of the display module. <br  />
   <br /></td></tr>
 <tr class="separator:ac6544795ed8c9b44211424c8b5ef216f inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16c93c61e795bb8f058dad9d457db1db inherit pub_methods_class_seven_seg_disp_hw" id="r_a16c93c61e795bb8f058dad9d457db1db"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a16c93c61e795bb8f058dad9d457db1db">getIsOn</a> ()</td></tr>
-<tr class="memdesc:a16c93c61e795bb8f058dad9d457db1db inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the state of the display. <br  />
+<tr class="memitem:aa23f15cca7bb2db9821982965d969773 inherit pub_methods_class_seven_seg_disp_hw" id="r_aa23f15cca7bb2db9821982965d969773"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#aa23f15cca7bb2db9821982965d969773">getIsOn</a> ()</td></tr>
+<tr class="memdesc:aa23f15cca7bb2db9821982965d969773 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the state of the display. <br  />
   <br /></td></tr>
-<tr class="separator:a16c93c61e795bb8f058dad9d457db1db inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8494bc6061172e6604be159cd78ebd24 inherit pub_methods_class_seven_seg_disp_hw" id="r_a8494bc6061172e6604be159cd78ebd24"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a8494bc6061172e6604be159cd78ebd24">setBrghtnssLvl</a> (const uint8_t &amp;newBrghtnssLvl)</td></tr>
-<tr class="memdesc:a8494bc6061172e6604be159cd78ebd24 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the brightness level for the display. <br  />
+<tr class="separator:aa23f15cca7bb2db9821982965d969773 inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25007a1b33093e4c055446010e254d63 inherit pub_methods_class_seven_seg_disp_hw" id="r_a25007a1b33093e4c055446010e254d63"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a25007a1b33093e4c055446010e254d63">setBrghtnssLvl</a> (const uint8_t &amp;newBrghtnssLvl)</td></tr>
+<tr class="memdesc:a25007a1b33093e4c055446010e254d63 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the brightness level for the display. <br  />
   <br /></td></tr>
-<tr class="separator:a8494bc6061172e6604be159cd78ebd24 inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a25007a1b33093e4c055446010e254d63 inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw" id="r_aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#aee6d67c3bdd719b05ac6e7d8d250d43f">setDigitsOrder</a> (uint8_t *newOrderPtr)</td></tr>
 <tr class="memdesc:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mapping to relate the display buffer positions to the display port assigned to exhibit it's contents. <br  />
   <br /></td></tr>
 <tr class="separator:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc7402bad588be4ea2c7aedaf870f9ff inherit pub_methods_class_seven_seg_disp_hw" id="r_afc7402bad588be4ea2c7aedaf870f9ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff">setDspBuffPtr</a> (uint8_t *newDspBuffPtr)</td></tr>
-<tr class="memdesc:afc7402bad588be4ea2c7aedaf870f9ff inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the pointer to the Display Buffer.  <br /></td></tr>
+<tr class="memdesc:afc7402bad588be4ea2c7aedaf870f9ff inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the pointer to the Display Buffer memory area. <br  />
+  <br /></td></tr>
 <tr class="separator:afc7402bad588be4ea2c7aedaf870f9ff inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e43097203738e6e058be20287be7a12 inherit pub_methods_class_seven_seg_disp_hw" id="r_a1e43097203738e6e058be20287be7a12"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a1e43097203738e6e058be20287be7a12">turnOff</a> ()</td></tr>
-<tr class="memdesc:a1e43097203738e6e058be20287be7a12 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module off. <br  />
+<tr class="memitem:a086ccd4d4966fa28a51d6b8f250b6c20 inherit pub_methods_class_seven_seg_disp_hw" id="r_a086ccd4d4966fa28a51d6b8f250b6c20"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a086ccd4d4966fa28a51d6b8f250b6c20">turnOff</a> ()</td></tr>
+<tr class="memdesc:a086ccd4d4966fa28a51d6b8f250b6c20 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module off. <br  />
   <br /></td></tr>
-<tr class="separator:a1e43097203738e6e058be20287be7a12 inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99f4c0e60a9da8d5548e13b9cbe9ba71 inherit pub_methods_class_seven_seg_disp_hw" id="r_a99f4c0e60a9da8d5548e13b9cbe9ba71"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a99f4c0e60a9da8d5548e13b9cbe9ba71">turnOn</a> ()</td></tr>
-<tr class="memdesc:a99f4c0e60a9da8d5548e13b9cbe9ba71 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module on. <br  />
+<tr class="separator:a086ccd4d4966fa28a51d6b8f250b6c20 inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c72695666e9611e0c3dc2583df382af inherit pub_methods_class_seven_seg_disp_hw" id="r_a8c72695666e9611e0c3dc2583df382af"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a8c72695666e9611e0c3dc2583df382af">turnOn</a> ()</td></tr>
+<tr class="memdesc:a8c72695666e9611e0c3dc2583df382af inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module on. <br  />
   <br /></td></tr>
-<tr class="separator:a99f4c0e60a9da8d5548e13b9cbe9ba71 inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a8c72695666e9611e0c3dc2583df382af inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b8a85569987f67008d5323fcea52d0c inherit pub_methods_class_seven_seg_disp_hw" id="r_a5b8a85569987f67008d5323fcea52d0c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a5b8a85569987f67008d5323fcea52d0c">turnOn</a> (const uint8_t &amp;newBrghtnssLvl)</td></tr>
+<tr class="memdesc:a5b8a85569987f67008d5323fcea52d0c inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module on set at the provided brightness level. <br  />
+  <br /></td></tr>
+<tr class="separator:a5b8a85569987f67008d5323fcea52d0c inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -219,11 +236,11 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvlMax</b
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvlMin</b> {0}</td></tr>
 <tr class="memdesc:a63f29aeda0fed5f5024ae5b48cf51b66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum display brightness level. <br /></td></tr>
 <tr class="separator:a63f29aeda0fed5f5024ae5b48cf51b66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4dc3b3c09e20a30b6042a2be8bdd1909" id="r_a4dc3b3c09e20a30b6042a2be8bdd1909"><td class="memItemLeft" align="right" valign="top"><a id="a4dc3b3c09e20a30b6042a2be8bdd1909" name="a4dc3b3c09e20a30b6042a2be8bdd1909"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td></tr>
-<tr class="memdesc:a4dc3b3c09e20a30b6042a2be8bdd1909"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current display status: On/Off. <br /></td></tr>
-<tr class="separator:a4dc3b3c09e20a30b6042a2be8bdd1909"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_seven_seg_disp_hw"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_seven_seg_disp_hw')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a></td></tr>
+<tr class="memitem:a3766aca6533be7b0b416229ebfe4cf49 inherit pro_attribs_class_seven_seg_disp_hw" id="r_a3766aca6533be7b0b416229ebfe4cf49"><td class="memItemLeft" align="right" valign="top">
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td></tr>
+<tr class="memdesc:a3766aca6533be7b0b416229ebfe4cf49 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current display status: On/Off. <br /></td></tr>
+<tr class="separator:a3766aca6533be7b0b416229ebfe4cf49 inherit pro_attribs_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract class that models displays that don't need permanent MCU data updating to keep the data correctly displayed. </p>
@@ -248,6 +265,120 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
 <dl class="section warning"><dt>Warning</dt><dd>Using displays that implement the colon/s and/or icon/s through the DP segments of the active ports make the display unfit to display decimal non integer values, as no DP might be used. Verify the display module characteristics to setup the corresponding class with the right parameters. <br  />
  </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a5714c53e7d5f8d1bf27fc1eb21bfb97d" name="a5714c53e7d5f8d1bf27fc1eb21bfb97d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5714c53e7d5f8d1bf27fc1eb21bfb97d">&#9670;&#160;</a></span>getBrghtnssLvl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t SevenSegStatic::getBrghtnssLvl </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the current display brightness level setting for the display. <br  />
+ </p>
+<p>For displays with variable display brighness levels this method will return the current brightness level. The returned value will be in the range <b><a class="el" href="#aee631491c0e0ab09eb9f3d9b8575cce9" title="Returns the minimum display brightness level setting for the display.">getBrghtnssMinLvl()</a> &lt;= <a class="el" href="#a5714c53e7d5f8d1bf27fc1eb21bfb97d" title="Returns the current display brightness level setting for the display.">getBrghtnssLvl()</a> &lt;= <a class="el" href="#a07a95ebb4bb124f5f39172fd1e86247a" title="Returns the maximum display brightness level setting allowed for the display.">getBrghtnssMaxLvl()</a></b>, see <a class="el" href="class_seven_seg_disp_hw.html#a25007a1b33093e4c055446010e254d63" title="Sets the brightness level for the display.">setBrghtnssLvl(const uint8_t &amp;)</a> for more details. <br  />
+</p>
+<dl class="section note"><dt>Note</dt><dd>For display classes that models object without the capacity of changing brightness levels, <a class="el" href="#aee631491c0e0ab09eb9f3d9b8575cce9" title="Returns the minimum display brightness level setting for the display.">getBrghtnssMinLvl()</a> = <a class="el" href="#a5714c53e7d5f8d1bf27fc1eb21bfb97d" title="Returns the current display brightness level setting for the display.">getBrghtnssLvl()</a> = <a class="el" href="#a07a95ebb4bb124f5f39172fd1e86247a" title="Returns the maximum display brightness level setting allowed for the display.">getBrghtnssMaxLvl()</a> = 0, this implies that using (<a class="el" href="#aee631491c0e0ab09eb9f3d9b8575cce9" title="Returns the minimum display brightness level setting for the display.">getBrghtnssMinLvl()</a> == <a class="el" href="#a07a95ebb4bb124f5f39172fd1e86247a" title="Returns the maximum display brightness level setting allowed for the display.">getBrghtnssMaxLvl()</a>) condition is enough to identify if a given display has or has not the capacity of changing brightness levels. <br  />
+</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The current display brightness level setting, as long as the display has the capacity of changing brightness levels. <br  />
+ </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_seven_seg_disp_hw.html#a0c5d2d46808b3194bd248d133d3117bf">SevenSegDispHw</a>.</p>
+
+<p>Reimplemented in <a class="el" href="class_seven_seg_t_m163_x.html#a484553b3cf9c8e60bc87e944d07fecde">SevenSegTM163X</a>.</p>
+
+</div>
+</div>
+<a id="a07a95ebb4bb124f5f39172fd1e86247a" name="a07a95ebb4bb124f5f39172fd1e86247a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07a95ebb4bb124f5f39172fd1e86247a">&#9670;&#160;</a></span>getBrghtnssMaxLvl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t SevenSegStatic::getBrghtnssMaxLvl </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the maximum display brightness level setting allowed for the display. <br  />
+ </p>
+<p>For displays with variable display brightness levels this method will return the maximum brightness level value valid setting. See <a class="el" href="class_seven_seg_disp_hw.html#a25007a1b33093e4c055446010e254d63" title="Sets the brightness level for the display.">setBrghtnssLvl(const uint8_t &amp;)</a> for more details. <br  />
+</p>
+<dl class="section note"><dt>Note</dt><dd>For display classes that models object without the capacity of changing brightness levels, <a class="el" href="#aee631491c0e0ab09eb9f3d9b8575cce9" title="Returns the minimum display brightness level setting for the display.">getBrghtnssMinLvl()</a> = <a class="el" href="#a5714c53e7d5f8d1bf27fc1eb21bfb97d" title="Returns the current display brightness level setting for the display.">getBrghtnssLvl()</a> = <a class="el" href="#a07a95ebb4bb124f5f39172fd1e86247a" title="Returns the maximum display brightness level setting allowed for the display.">getBrghtnssMaxLvl()</a> = 0, this implies that using (<a class="el" href="#aee631491c0e0ab09eb9f3d9b8575cce9" title="Returns the minimum display brightness level setting for the display.">getBrghtnssMinLvl()</a> == <a class="el" href="#a07a95ebb4bb124f5f39172fd1e86247a" title="Returns the maximum display brightness level setting allowed for the display.">getBrghtnssMaxLvl()</a>) condition is enough to identify if a given display has or has not the capacity of changing brightness levels. <br  />
+</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The display brightness level maximum value setting as long as the display has the capacity of changing brightness levels. <br  />
+ </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_seven_seg_disp_hw.html#a75b0eb720bddb4e467814e41dd958575">SevenSegDispHw</a>.</p>
+
+<p>Reimplemented in <a class="el" href="class_seven_seg_t_m163_x.html#a4b12ba68a4ed1738bbf0457a4dbec33e">SevenSegTM163X</a>.</p>
+
+</div>
+</div>
+<a id="aee631491c0e0ab09eb9f3d9b8575cce9" name="aee631491c0e0ab09eb9f3d9b8575cce9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee631491c0e0ab09eb9f3d9b8575cce9">&#9670;&#160;</a></span>getBrghtnssMinLvl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t SevenSegStatic::getBrghtnssMinLvl </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the minimum display brightness level setting for the display. <br  />
+ </p>
+<p>For displays with variable display brightness levels this method will return the minimum brightness level value setting. See <a class="el" href="class_seven_seg_disp_hw.html#a25007a1b33093e4c055446010e254d63" title="Sets the brightness level for the display.">setBrghtnssLvl(const uint8_t &amp;)</a> for more details. <br  />
+</p>
+<dl class="section note"><dt>Note</dt><dd>For display classes that models object without the capacity of changing brightness levels, <a class="el" href="#aee631491c0e0ab09eb9f3d9b8575cce9" title="Returns the minimum display brightness level setting for the display.">getBrghtnssMinLvl()</a> = <a class="el" href="#a5714c53e7d5f8d1bf27fc1eb21bfb97d" title="Returns the current display brightness level setting for the display.">getBrghtnssLvl()</a> = <a class="el" href="#a07a95ebb4bb124f5f39172fd1e86247a" title="Returns the maximum display brightness level setting allowed for the display.">getBrghtnssMaxLvl()</a> = 0, this implies that using <code>(<a class="el" href="#aee631491c0e0ab09eb9f3d9b8575cce9" title="Returns the minimum display brightness level setting for the display.">getBrghtnssMinLvl()</a> == <a class="el" href="#a07a95ebb4bb124f5f39172fd1e86247a" title="Returns the maximum display brightness level setting allowed for the display.">getBrghtnssMaxLvl()</a>)</code> condition is enough to identify if a given display has or has not the capacity of changing brightness levels. <br  />
+</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The display brightness level minimum value setting, as long as the display has the capacity of changing brightness levels. <br  />
+ </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_seven_seg_disp_hw.html#aa098a72fb84ffbec783e0c38f130f2c3">SevenSegDispHw</a>.</p>
+
+<p>Reimplemented in <a class="el" href="class_seven_seg_t_m163_x.html#a4cf3e667babba4a13292cb2124c7d60e">SevenSegTM163X</a>.</p>
+
+</div>
+</div>
 <a id="a31006d4f4f5a4019f0aed380e01b0d17" name="a31006d4f4f5a4019f0aed380e01b0d17"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a31006d4f4f5a4019f0aed380e01b0d17">&#9670;&#160;</a></span>ntfyUpdDsply()</h2>
 
@@ -271,10 +402,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
 </table>
 </div><div class="memdoc">
 
-<p>Notifies the object of a change of content available in the display buffer, the object must update the display. <br  />
+<p>Notifies the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> component object of a change of content available in the display buffer, so that the object proceeds to update the display. <br  />
  </p>
-<p>While the dynamic displays must periodically refresh the data displayed, and so they get the most updated content from the display buffer without the need to send them any notification, the data displayed by the static displays remains constant even if it's data buffer or registers are loaded with new data. This method notifies the display that the data buffer content has changed and it must load the new contents of it's registers or buffers to display the new information. <br  />
- </p>
+<p>While the dynamic displays must periodically refresh the data displayed, and so they get the most updated content from the display buffer without the need to receive any notification, the data displayed by the static displays internal buffer to hold the displayed data. The internal buffer contents remain constant until it's data buffer or registers are loaded with new data. This method notifies the display that the data buffer content has changed and it must load the new contents of it's internal registers or buffers to display the new information. <br  />
+</p>
+<dl class="section note"><dt>Note</dt><dd>The usual possibilities to work in these cases are two: exception notification or constant polling. The exception notification mechanism has been selected for economy of resources and usual considerations of similar cases. <br  />
+ </dd></dl>
 
 <p>Reimplemented from <a class="el" href="class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327">SevenSegDispHw</a>.</p>
 

@@ -4,6 +4,6 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="201,53,285,33,287,39,203,58"/>
 <area shape="rect" id="Node000003" href="$class_seven_seg_disp_hw.html#ac6544795ed8c9b44211424c8b5ef216f" title="Returns the quantity of digits of the display module." alt="" coords="264,56,462,99"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="206,75,248,75,248,80,206,80"/>
-<area shape="rect" id="Node000004" href="$class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff" title="Returns the pointer to the Display Buffer." alt="" coords="254,123,472,149"/>
+<area shape="rect" id="Node000004" href="$class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff" title="Sets the pointer to the Display Buffer memory area." alt="" coords="254,123,472,149"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="203,97,287,116,285,121,201,102"/>
 </map>
