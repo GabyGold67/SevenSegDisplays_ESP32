@@ -57,12 +57,14 @@ SevenSegDispHw::~SevenSegDispHw() {
 }
 
 bool SevenSegDispHw::begin(uint32_t updtLps){
-   
+   turnOn();
+
    return true;
 }
 
 bool SevenSegDispHw::end(){
-   
+   turnOff();
+
    return true;
 }
 
@@ -143,16 +145,20 @@ void SevenSegDispHw::setDspBuffPtr(uint8_t* newDspBuffPtr){
 }
 
 void SevenSegDispHw::turnOff(){
+   _isOn = false;
 
    return;
 }
 
 void SevenSegDispHw::turnOn(){
+   _isOn = true;
 
    return;
 }
 
 void SevenSegDispHw::turnOn(const uint8_t &newBrghtnssLvl){
+   setBrghtnssLvl(newBrghtnssLvl);
+   _isOn = true;
 
    return;
 }
@@ -165,7 +171,17 @@ SevenSegDynamic::SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAn
 {
 }
 
-SevenSegDynamic::~SevenSegDynamic(){}
+SevenSegDynamic::~SevenSegDynamic(){
+   BaseType_t tmrModResult {pdFAIL};
+
+   if(_dynDspRfrshTmrHndl){
+      end();
+      tmrModResult = xTimerDelete(_dynDspRfrshTmrHndl, portMAX_DELAY);
+      if(tmrModResult == pdPASS){
+         _dynDspRfrshTmrHndl = NULL;
+      }
+   }
+}
 
 bool SevenSegDynamic::begin(uint32_t updtLps){
    bool result {false};
@@ -188,10 +204,32 @@ bool SevenSegDynamic::begin(uint32_t updtLps){
          NULL,   //TimerID, data to be passed to the callback function
          SevenSegDynamic::tmrCbRfrshDyn  //Callback function
       );
-      if((_dynDspRfrshTmrHndl != nullptr) && (!xTimerIsTimerActive(_dynDspRfrshTmrHndl))){
+   }
+
+   if(_dynDspRfrshTmrHndl != NULL){
+      if(!xTimerIsTimerActive(_dynDspRfrshTmrHndl)){
          tmrModResult = xTimerStart(_dynDspRfrshTmrHndl, portMAX_DELAY);
          if (tmrModResult == pdPASS)
             result = true;
+      }
+      else{
+         result = true;
+      }   
+   }
+   turnOn();
+
+   return result;
+}
+
+bool SevenSegDynamic::end() {
+   bool result {false};
+   BaseType_t tmrModResult {pdFAIL};
+
+   turnOff();
+   if(_dynDspRfrshTmrHndl){   //if the timer still exists and is running, stop and delete
+      tmrModResult = xTimerStop(_dynDspRfrshTmrHndl, portMAX_DELAY);
+      if(tmrModResult == pdPASS){
+         result = true;
       }
    }
 
@@ -223,18 +261,6 @@ void SevenSegDynamic::send(const uint8_t &segments, const uint8_t &port){
    return;
 }
 
-bool SevenSegDynamic::end() {
-    bool result {false};
-
-    if(_dynDspRfrshTmrHndl){   //if the timer still exists and is running, stop and delete
-        xTimerStop(_dynDspRfrshTmrHndl, portMAX_DELAY);
-        xTimerDelete(_dynDspRfrshTmrHndl, portMAX_DELAY);
-        _dynDspRfrshTmrHndl = nullptr;
-    }
-
-    return result;
-}
-
 void SevenSegDynamic::tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg){
    // No need for specific executable code in this callback function at this stage
 
@@ -255,8 +281,15 @@ SevenSegDynHC595::SevenSegDynHC595(uint8_t* ioPins, uint8_t dspDigits, bool comm
 }
 
 SevenSegDynHC595::~SevenSegDynHC595(){
-   if(_dynHC595DspRfrshTmrHndl)
+   BaseType_t tmrModResult {pdFAIL};
+
+   if(_dynHC595DspRfrshTmrHndl){
       end();
+      tmrModResult = xTimerDelete(_dynHC595DspRfrshTmrHndl, portMAX_DELAY);
+      if(tmrModResult == pdPASS){
+         _dynHC595DspRfrshTmrHndl = NULL;
+      }
+   }
    delete _drvrShftRegPtr;
    delete _drvrShftRegSndPtr;
 }
@@ -282,33 +315,22 @@ bool SevenSegDynHC595::begin(uint32_t updtLps){
          this,   // TimerID, data to be passed to the callback function
          tmrCbRfrshDynHC595  //Callback function
       );
-      if((_dynHC595DspRfrshTmrHndl != NULL) && (!xTimerIsTimerActive(_dynHC595DspRfrshTmrHndl))){
+   }
+
+   if(_dynHC595DspRfrshTmrHndl != NULL){
+      if(!xTimerIsTimerActive(_dynHC595DspRfrshTmrHndl)){
          tmrModResult = xTimerStart(_dynHC595DspRfrshTmrHndl, portMAX_DELAY);
          if (tmrModResult == pdPASS)
             result = true;
       }
+      else{
+         result = true;
+      }   
    }
 
-    return result;
+   return result;
 }
 
-//FFDR Split this end() as the noWait(): 1)Check if the timer is running and just stop it. 2) Place the end() call at the destructor, and delete the timer if existed. Before that ensure the begin checks for existence and status before creating new timer.
-
-/**
- * @brief Stops the active display updating.  
- * 
- * Stops the display Timer Service which takes care of refreshing the display regularly. The method will not destroy the timer nor the timerHandle to work faster if a begin(uint32_t) is invoked again.
- * 
- * @return true The instance of the display was found and it's timer stopped.  
- * @return false The instance of the display wasn't found attached to a running software timer, no action was carried out as it wasn't needed.  
- * 
- * Use example
- * 
- * @code {.cpp}
- * myLedDisp.end();
- * @endcode
- * 
- */
 bool SevenSegDynHC595::end() {
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
@@ -316,11 +338,7 @@ bool SevenSegDynHC595::end() {
    if(_dynHC595DspRfrshTmrHndl){   //if the timer still exists and is running, stop and delete
       tmrModResult = xTimerStop(_dynHC595DspRfrshTmrHndl, portMAX_DELAY);
       if(tmrModResult == pdPASS){
-         tmrModResult = xTimerDelete(_dynHC595DspRfrshTmrHndl, portMAX_DELAY);
-         if(tmrModResult == pdPASS){
-            _dynHC595DspRfrshTmrHndl = NULL;
-            result = true;
-         }
+         result = true;
       }   
    }
 
@@ -366,9 +384,15 @@ SevenSegDynDummy::SevenSegDynDummy(uint8_t dspDigits, bool commAnode)
 }
 
 SevenSegDynDummy::~SevenSegDynDummy(){
-   if(_dynDummyDspRfrshTmrHndl)
-      end();
+   BaseType_t tmrModResult {pdFAIL};
 
+   if(_dynDummyDspRfrshTmrHndl){
+      end();
+      tmrModResult = xTimerDelete(_dynDummyDspRfrshTmrHndl, portMAX_DELAY);
+      if(tmrModResult == pdPASS){
+         _dynDummyDspRfrshTmrHndl = NULL;
+      }
+   }
 }
 
 bool SevenSegDynDummy::begin(uint32_t updtLps){
@@ -396,10 +420,15 @@ bool SevenSegDynDummy::begin(uint32_t updtLps){
          this,   // TimerID, data to be passed to the callback function
          tmrCbRfrshDynDummy  //Callback function
       );
-      if((_dynDummyDspRfrshTmrHndl != NULL) && (!xTimerIsTimerActive(_dynDummyDspRfrshTmrHndl))){
+   }
+   if(_dynDummyDspRfrshTmrHndl != NULL){
+      if(!xTimerIsTimerActive(_dynDummyDspRfrshTmrHndl)){
          tmrModResult = xTimerStart(_dynDummyDspRfrshTmrHndl, portMAX_DELAY);
          if (tmrModResult == pdPASS)
             result = true;
+      }
+      else{
+         result = true;
       }
    }
 
@@ -413,11 +442,7 @@ bool SevenSegDynDummy::end(){
    if(_dynDummyDspRfrshTmrHndl){   //if the timer still exists and is running, stop and delete
       tmrModResult = xTimerStop(_dynDummyDspRfrshTmrHndl, portMAX_DELAY);
       if(tmrModResult == pdPASS){
-         tmrModResult = xTimerDelete(_dynDummyDspRfrshTmrHndl, portMAX_DELAY);
-         if(tmrModResult == pdPASS){
-            _dynDummyDspRfrshTmrHndl = NULL;
-            result = true;
-         }
+         result = true;
       }   
    }
    if(result){
@@ -762,7 +787,6 @@ void SevenSegTM163X::_txStop(){  // void I2CStop (void)
 	return;
 }
 
-//FFDR change the sliding part from the data to a mask to keep the data unaltered!!
 void SevenSegTM163X::_txWrByte(uint8_t data){   // void I2CWrByte (unsigned char oneByte)
    uint8_t  mask{0x01};
    

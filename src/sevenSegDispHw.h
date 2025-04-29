@@ -66,6 +66,7 @@ private:
 protected:
    bool _commAnode {true}; // SevenSegDisplays objects need this info to build the right segments to represent each character
    uint8_t* _digitPosPtr{nullptr};
+   uint8_t* _dspBlankBuffPtr{nullptr};  
    uint8_t* _dspBuffPtr{nullptr};  
    uint8_t _dspDigitsQty{}; // Display size in digits    
    SevenSegDispHw* _dspHwInstance{nullptr};
@@ -244,15 +245,15 @@ public:
     * 
     * The display module will be cleared and will keep that status until a turnOn(), or turnOn(const uint8_t &) is invoked.  
     * 
-    * @note Turning the display Off is not the same as clearing the display -see clear() method- as clearing the display implies changing the display data buffer content to fill it with spaces. Some of the display modules managed by display controllers have the hability to turn off the leds display while keeping it's buffer contents unmodified. So turning On/Off those displays will have the effect of holding the data displayed and even receiving and filling their buffer with new data while keeping their display with no leds turned on.  
+    * @note Turning the display Off is not the same as clearing the display -see clear() method- as clearing the display implies changing the display data buffer content to fill it with spaces, while turning it off implies keeping the display data buffer updated, while showing the display leds turned off. Some of the display modules managed by display controllers have the hability to turn off the leds display while keeping it's buffer contents unmodified. So turning On/Off those displays will have the effect of holding the data displayed and even receiving and filling their buffer with updated data while keeping their display with no leds turned on.  
     * 
-    * @todo For the seven segment displays with controller components that does not implement On and Off commands, the class will provide a propietary solution to achieve similar features. While there are not implemented the turnOff(), turnOn() and turnOn(const uint8_t &) will be ignored and will produce no effect in the object behavior. 
+    * @todo For the seven segment displays without controller components to implement On and Off commands, the class will provide a propietary solution to achieve similar features. While there are not implemented the turnOff(), turnOn() and turnOn(const uint8_t &) will be ignored and will produce no effect in the object behavior. 
     */
     virtual void turnOff();
    /**
     * @brief Turns the display module on.  
     * 
-    * The display module will be turned on, making visible the contents of the display buffer. For more reference see turnOff() method.   
+    * The display module will be turned on, making visible the contents of the display buffer. For more information see turnOff() method.   
     */
    virtual void turnOn();
    /**
@@ -260,7 +261,7 @@ public:
     * 
     * For correct execution and visual response, this method executes a setBrghtnssLvl(const uint8_t &) method followed by a turnOn() method execution.  
     * 
-    * @warning If the setBrghtnssLvl(const uint8_t &) method returns false indicating it has failed, this method will go on invoking the turnOn() method instead of failing altogether, as it gives more priority to the turning on of the display than to the brightness level setting. If the developer is not ok with this scheme he can always use the two methods independently in the sequence he decides better fits his needs and act as his own criteria dictates after the setBrghtnssLvl(const uint8_t &) fails.  
+    * @warning If the setBrghtnssLvl(const uint8_t &) method returns false indicating it has failed, this method will go on invoking the turnOn() method instead of failing altogether, as it gives higher priority to the turning on of the display than to the brightness level setting. If the developer is not ok with this scheme he can always use the two methods independently in the sequence he decides better fits his needs and act as his own criteria dictates after the setBrghtnssLvl(const uint8_t &) fails.  
     * 
     * @param newBrghtnssLvl The new brightness level for the display. The value must be in the range **getBrghtnssMinLvl() <= newBrghtnssLvl <= getBrghtnssMaxLvl()**
     */
@@ -377,22 +378,22 @@ public:
      * @endcode
      */
     virtual bool begin(uint32_t updtLps = 0);
-    /**
-     * @brief Stops the active display updating.  
-     * 
-     * Detaches the display from the Software Timer Service which takes care of refreshing the display regularly. To restart de display update timer a new begin() method must be executed.  
-     * 
-     * @return true The instance of the display was found and detached from the STS.  
-     * @return false The instance of the display wasn't found attached to the STS, no detach was carried as it wasn't needed.  
-     * 
-     * Use example
-     * 
-     * @code {.cpp}
-     * myLedDisp.end();
-     * @endcode
-     * 
-     */
-    bool end();
+   /**
+    * @brief Stops the active display updating.  
+    * 
+    * Stops the display Timer Service which takes care of refreshing the display regularly. The method will not destroy the timer nor the timerHandle to work faster if a begin(uint32_t) is invoked again.
+    * 
+    * @return true The instance of the display was found and it's timer stopped.  
+    * @return false The instance of the display wasn't found attached to a running software timer, no action was carried out as it wasn't needed.  
+    * 
+    * Use example
+    * 
+    * @code {.cpp}
+    * myLedDisp.end();
+    * @endcode
+    * 
+    */
+   bool end();
 };
 
 //============================================================> Class declarations separator

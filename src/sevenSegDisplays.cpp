@@ -397,7 +397,7 @@ bool SevenSegDisplays::noBlink(){
       taskENTER_CRITICAL(&mux);
       _isBlinking = false;
 
-      // tmrModResult = xTimerStop(_blinkTmrHndl, portMAX_DELAY); //FFDR The method fails when stopping the timer as it retrieves the buffer nos correctly modified for a write while blinkin. Check for the auxiliary buffer being modified if a write is executed while blinking!!!
+      // tmrModResult = xTimerStop(_blinkTmrHndl, portMAX_DELAY); //FFDR The method fails when stopping the timer as it retrieves the buffer not correctly modified for a write while blinkin. Check for the auxiliary buffer being modified if a write is executed while blinking!!!
       // if (tmrModResult == pdPASS){
       //    result = true;
       // }
