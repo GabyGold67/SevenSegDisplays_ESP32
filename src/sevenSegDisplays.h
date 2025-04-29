@@ -399,6 +399,9 @@ public:
     * @endcode
     */
    bool gauge(const double &level, char label = ' ');
+
+   uint8_t getCurBrghtnssLvl();   
+
    /**
     * @brief Return the number of digits of the display hardware.  
     * 
@@ -421,12 +424,7 @@ public:
     */
    uint8_t getDspCount();
 
-//====================================>> New addition WIP
    bool getDspIsDmmbl();
-   uint8_t getCurBrghtnssLvl();
-   uint8_t getMaxBrghtnssLvl();
-   uint8_t getMinBrghtnssLvl();
-//====================================>> New addition WIP
 
    /**
     * @brief Returns a pointer to the underlying hardware display object
@@ -488,6 +486,9 @@ public:
     * @endcode
     */
    uint32_t getMaxBlinkRate();
+
+   uint8_t getMaxBrghtnssLvl();
+
    /**
     * @brief Returns the minimum rate the display can be configured to blink at. 
     * 
@@ -506,6 +507,9 @@ public:
     * @endcode
     */
    uint32_t getMinBlinkRate();
+
+   uint8_t getMinBrghtnssLvl();
+
    /**
     * @brief Returns a unique numeric identification of the object
     * 
@@ -765,6 +769,15 @@ public:
     * @endcode
     */
    bool setWaitRate(const uint32_t &newWaitRate);
+   
+   //====================================>> New addition WIP
+   //FFDR Next methods to implement
+   void turnOff();
+   void turnOn();
+   void turnOn(const uint8_t &newBrghtnssLvl);
+   //====================================>> New addition WIP
+
+
    /**
     * @brief Makes the display enter the "Waiting mode"  
     * 

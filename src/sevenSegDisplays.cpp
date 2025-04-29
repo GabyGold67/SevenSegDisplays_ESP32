@@ -276,7 +276,6 @@ bool SevenSegDisplays::end(){
    return getDspUndrlHwPtr()->end();
 }
 
-
 bool SevenSegDisplays::gauge(const int &level, char label){
    bool displayable{true};
    String readOut{_spacePadding};
@@ -325,6 +324,11 @@ bool SevenSegDisplays::gauge(const double &level, char label) {
    return displayable;
 }
 
+uint8_t SevenSegDisplays::getCurBrghtnssLvl(){
+
+   return getDspUndrlHwPtr()->getBrghtnssLvl();
+}
+
 uint8_t SevenSegDisplays::getDigitsQty(){
 
    return _dspDigitsQty;
@@ -333,6 +337,11 @@ uint8_t SevenSegDisplays::getDigitsQty(){
 uint8_t SevenSegDisplays::getDspCount(){
 
    return _displaysCount;
+}
+
+bool SevenSegDisplays::getDspIsDmmbl(){
+
+   return !(getMinBrghtnssLvl()==getMaxBrghtnssLvl());
 }
 
 SevenSegDispHw* SevenSegDisplays::getDspUndrlHwPtr(){
@@ -348,6 +357,16 @@ int32_t SevenSegDisplays::getDspValMax(){
 int32_t SevenSegDisplays::getDspValMin(){
 
    return _dspValMin;
+}
+
+uint8_t SevenSegDisplays::getMaxBrghtnssLvl(){
+
+   return getDspUndrlHwPtr()->getBrghtnssMaxLvl();
+}
+
+uint8_t SevenSegDisplays::getMinBrghtnssLvl(){
+
+   return getDspUndrlHwPtr()->getBrghtnssMinLvl();
 }
 
 uint16_t SevenSegDisplays::getSerialNbr(){

@@ -50,20 +50,22 @@ SevenSegDispHw::SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits, bool commAnod
    _dspHwInstance = this;
    for (uint8_t i{0}; i < _dspDigitsQty; i++)
       *(_digitPosPtr + i) = i;
+   _allLedsOff = (_commAnode)?0xFF:0x00;
 }
 
 SevenSegDispHw::~SevenSegDispHw() {
-   delete [] _digitPosPtr;
+   if(_digitPosPtr!=nullptr)
+      delete [] _digitPosPtr;
+   if(_dspBlankBuffPtr!=nullptr)
+      delete [] _dspBlankBuffPtr;   
 }
 
 bool SevenSegDispHw::begin(uint32_t updtLps){
-   turnOn();
 
    return true;
 }
 
 bool SevenSegDispHw::end(){
-   turnOff();
 
    return true;
 }
@@ -100,7 +102,7 @@ uint8_t SevenSegDispHw::getHwDspDigitsQty(){
 
 bool SevenSegDispHw::getIsOn(){
    
-   return true;
+   return _isOn;
 }
 
 void SevenSegDispHw::ntfyUpdDsply(){
@@ -120,7 +122,7 @@ void SevenSegDispHw::_send(const uint8_t &segments, const uint8_t &port){
 
 bool SevenSegDispHw::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
    
-   return true;
+   return false;
 } 
 
 bool SevenSegDispHw::setDigitsOrder(uint8_t* newOrderPtr){
@@ -140,25 +142,42 @@ bool SevenSegDispHw::setDigitsOrder(uint8_t* newOrderPtr){
 
 void SevenSegDispHw::setDspBuffPtr(uint8_t* newDspBuffPtr){
    _dspBuffPtr = newDspBuffPtr;
+   _dspBuffPtrBkp = newDspBuffPtr;
 
    return;
 }
 
 void SevenSegDispHw::turnOff(){
-   _isOn = false;
+   if(_isOn){
+      if(_dspBlankBuffPtr == nullptr){
+         _dspBlankBuffPtr = new uint8_t[_dspDigitsQty];
+         memset(_dspBlankBuffPtr, _allLedsOff, _dspDigitsQty);
+      }
+      _dspBuffPtr = _dspBlankBuffPtr;
+      ntfyUpdDsply();
+      _isOn = false;
+   }
 
    return;
 }
 
 void SevenSegDispHw::turnOn(){
-   _isOn = true;
-
+   if(!_isOn){
+      if(_dspBlankBuffPtr != nullptr){
+         _dspBuffPtr = _dspBuffPtrBkp;
+         delete [] _dspBlankBuffPtr;
+         _dspBlankBuffPtr = nullptr;
+      }
+      ntfyUpdDsply();
+      _isOn = true;
+   }
+   
    return;
 }
 
 void SevenSegDispHw::turnOn(const uint8_t &newBrghtnssLvl){
    setBrghtnssLvl(newBrghtnssLvl);
-   _isOn = true;
+   turnOn();
 
    return;
 }

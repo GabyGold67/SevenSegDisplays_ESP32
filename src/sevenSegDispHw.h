@@ -64,10 +64,12 @@ private:
    virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
 
 protected:
+   uint8_t _allLedsOff{};
    bool _commAnode {true}; // SevenSegDisplays objects need this info to build the right segments to represent each character
    uint8_t* _digitPosPtr{nullptr};
    uint8_t* _dspBlankBuffPtr{nullptr};  
    uint8_t* _dspBuffPtr{nullptr};  
+   uint8_t* _dspBuffPtrBkp{nullptr};  
    uint8_t _dspDigitsQty{}; // Display size in digits    
    SevenSegDispHw* _dspHwInstance{nullptr};
    uint8_t _dspHwInstNbr{0};
