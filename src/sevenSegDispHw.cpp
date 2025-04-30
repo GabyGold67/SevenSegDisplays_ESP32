@@ -32,7 +32,7 @@ const uint8_t stdRtoLx4 [4] {3, 2, 1, 0};
 
 //-------------------------------------->> Static variables initialization BEGIN
 uint8_t SevenSegDispHw::_dspHwSerialNum = 0;
-TwoWire* HT16K33::i2cGenCommPtr = nullptr;
+TwoWire* SevenSegHT16K33::i2cGenCommPtr = nullptr;
 
 // TimerHandle_t SevenSegDynamic::_dynDspRfrshTmrHndl = nullptr;
 // TimerHandle_t SevenSegDynHC595::_dynHC595DspRfrshTmrHndl = nullptr;
@@ -61,6 +61,7 @@ SevenSegDispHw::~SevenSegDispHw() {
 }
 
 bool SevenSegDispHw::begin(uint32_t updtLps){
+   turnOn();
 
    return true;
 }
@@ -346,6 +347,7 @@ bool SevenSegDynHC595::begin(uint32_t updtLps){
          result = true;
       }   
    }
+   turnOn();
 
    return result;
 }
@@ -450,6 +452,7 @@ bool SevenSegDynDummy::begin(uint32_t updtLps){
          result = true;
       }
    }
+   turnOn();
 
    return result;
 }
@@ -620,7 +623,7 @@ SevenSegTM163X::~SevenSegTM163X(){
       delete [] _xcdDspBuffPtr;
 }
 
-bool SevenSegTM163X::begin(){
+bool SevenSegTM163X::begin(uint32_t updtLps){
    turnOn();
 
 	return true;
@@ -842,7 +845,6 @@ SevenSegTM1636::SevenSegTM1636(){}
 SevenSegTM1636::SevenSegTM1636(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
 :SevenSegTM163X(ioPins, dspDigits, commAnode, 4)
 {
-   begin();
 }
 
 SevenSegTM1636::~SevenSegTM1636(){}
@@ -859,7 +861,6 @@ SevenSegTM1637::SevenSegTM1637(){};
 SevenSegTM1637::SevenSegTM1637(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
 :SevenSegTM163X(ioPins, dspDigits, commAnode, 6)
 {
-   begin();
 }
 
 SevenSegTM1637::~SevenSegTM1637(){}
@@ -876,7 +877,6 @@ SevenSegTM1639::SevenSegTM1639(){}
 SevenSegTM1639::SevenSegTM1639(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
 :SevenSegTM163X(ioPins, dspDigits, commAnode, 8)
 {
-   begin();
 }
 
 SevenSegTM1639::~SevenSegTM1639(){}
@@ -912,8 +912,6 @@ SevenSegMax7219::SevenSegMax7219(uint8_t* ioPins, uint8_t dspDigits)
    digitalWrite(_din, LOW);
    digitalWrite(_cs, HIGH);
 
-   begin();
-   setBrghtnssLvl(_brghtnssLvlMax);
 }
 
 SevenSegMax7219::~SevenSegMax7219()
@@ -921,14 +919,13 @@ SevenSegMax7219::~SevenSegMax7219()
    delete [] _lclDspBuffPtr;
 }
 
-bool SevenSegMax7219::begin()
+bool SevenSegMax7219::begin(uint32_t updtLps)
 {
-   // Set Not in test mode!
-   send(_DspTestAddr, _NormalOp);   
-   // Set Scan Limit
-   send(_ScanLimitAddr, (_dspDigitsQty - 1), true);   //!< Register data 0x00 to 0x07: quantity of digits to keep updated
-   // Set No Decode format
-   send(_DecodeModeAddr, _NoDecode);   
+   
+   send(_DspTestAddr, _NormalOp);   // Set Not in test mode!
+   send(_ScanLimitAddr, (_dspDigitsQty - 1), true);   //!< Set Scan Limit: Register data 0x00 to 0x07: quantity of digits to keep updated
+   send(_DecodeModeAddr, _NoDecode);   // Set No Decode format
+   setBrghtnssLvl(_brghtnssLvlMax);
    turnOn();
 
 	return true;
@@ -1048,9 +1045,9 @@ void SevenSegMax7219::_unAbstract(){return;}
 
 //============================================================> Class methods separator
 
-HT16K33::HT16K33(){};
+SevenSegHT16K33::SevenSegHT16K33(){};
 
-HT16K33::HT16K33(uint8_t i2cPortNum, uint8_t dspDigits, uint8_t i2cAddress, bool commAnode)
+SevenSegHT16K33::SevenSegHT16K33(uint8_t i2cPortNum, uint8_t dspDigits, uint8_t i2cAddress, bool commAnode)
 :SevenSegStatic(nullptr, dspDigits, commAnode), _i2cPortNum{i2cPortNum}, _i2cAddress{i2cAddress}
 {
    _brghtnssLvlMax = _hwBrghtnssLvlMax;
@@ -1061,7 +1058,7 @@ HT16K33::HT16K33(uint8_t i2cPortNum, uint8_t dspDigits, uint8_t i2cAddress, bool
       _dspDigitsQty = _dspDigitsQtyMax;
 }
 
-/*HT16K33::HT16K33(uint8_t* ioPins, uint8_t dspDigits, uint8_t i2cAddress, bool commAnode)
+/*SevenSegHT16K33::SevenSegHT16K33(uint8_t* ioPins, uint8_t dspDigits, uint8_t i2cAddress, bool commAnode)
 :SevenSegStatic(ioPins, dspDigits, commAnode), _i2cAddress{i2cAddress}
 {
    _brghtnssLvlMax = _hwBrghtnssLvlMax;
@@ -1081,10 +1078,9 @@ HT16K33::HT16K33(uint8_t i2cPortNum, uint8_t dspDigits, uint8_t i2cAddress, bool
 }*/
 
 
+SevenSegHT16K33::~SevenSegHT16K33(){};
 
-HT16K33::~HT16K33(){};
-
-bool HT16K33::begin(){
+bool SevenSegHT16K33::begin(uint32_t updtLps){
    bool result {false};
 
    TwoWire tmpI2C{TwoWire(_i2cPortNum)};
@@ -1102,7 +1098,7 @@ bool HT16K33::begin(){
    return result;
 }
 
-bool HT16K33::end(){
+bool SevenSegHT16K33::end(){
    #ifdef WIRE_HAS_END
       i2cGenCommPtr->end();   // Set I2C port Inactive
    #endif
@@ -1110,18 +1106,18 @@ bool HT16K33::end(){
    return true;
 }
 
-bool HT16K33::getIsOn(){
+bool SevenSegHT16K33::getIsOn(){
 
    return _isOn;
 }
 
-void HT16K33::ntfyUpdDsply(){
+void SevenSegHT16K33::ntfyUpdDsply(){
    _sendMssg(_dspBuffPtr, _dspDigitsQty);
 
    return;
 }
 
-bool HT16K33::_sendByte(uint8_t data){
+bool SevenSegHT16K33::_sendByte(uint8_t data){
    int result{0};
 
    i2cGenCommPtr->beginTransmission(_i2cAddress);  
@@ -1131,7 +1127,7 @@ bool HT16K33::_sendByte(uint8_t data){
    return (result == 0);
 }
 
-bool HT16K33::_sendMssg(uint8_t* data, uint8_t mssgLngth){
+bool SevenSegHT16K33::_sendMssg(uint8_t* data, uint8_t mssgLngth){
    int result{0};
 
    i2cGenCommPtr->beginTransmission(_i2cAddress);  
@@ -1142,7 +1138,7 @@ bool HT16K33::_sendMssg(uint8_t* data, uint8_t mssgLngth){
    return (result == 0);
 }
 
-bool HT16K33::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
+bool SevenSegHT16K33::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
    bool result{false};
    uint8_t mssgData{0};
 
@@ -1160,7 +1156,7 @@ bool HT16K33::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
    return result;
 }
 
-void HT16K33::turnOff(){
+void SevenSegHT16K33::turnOff(){
    if(_isOn){
       if(_sendByte(_TurnOffDsp))
          _isOn = false;
@@ -1168,7 +1164,7 @@ void HT16K33::turnOff(){
 
    return;
 }
-void HT16K33::turnOn(){
+void SevenSegHT16K33::turnOn(){
    if(!_isOn){
       if(_sendByte(_TurnOnBlnkNo))
          _isOn = true;
@@ -1177,13 +1173,13 @@ void HT16K33::turnOn(){
    return;
 }
 
-void HT16K33::turnOn(const uint8_t &newBrghtnssLvl){
+void SevenSegHT16K33::turnOn(const uint8_t &newBrghtnssLvl){
    setBrghtnssLvl(newBrghtnssLvl);
    turnOn();
 
    return;
 }
 
-void HT16K33::_unAbstract(){return;}
+void SevenSegHT16K33::_unAbstract(){return;}
 
 //============================================================> Class methods separator

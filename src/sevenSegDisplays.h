@@ -221,7 +221,7 @@ public:
      */
     ~SevenSegDisplays();
    
-   bool begin();
+   virtual bool begin(uint32_t updtLps = 0);
 
     /**
     * @brief Makes the display blink the contents it is showing.
@@ -468,6 +468,9 @@ public:
     * @endcode
     */
    int32_t getDspValMin();
+
+   bool getIsOn();
+
    /**
     * @brief Returns the maximum rate the display can be configured to blink at. 
     * 
@@ -734,6 +737,9 @@ public:
     * @endcode
     */
    bool setBlinkRate(const uint32_t &newOnRate, const uint32_t &newOffRate = 0);
+
+   bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl); 
+   
    /**
     * @brief Sets the "Waiting" character.  
     * 
@@ -770,13 +776,11 @@ public:
     */
    bool setWaitRate(const uint32_t &newWaitRate);
    
-   //====================================>> New addition WIP
-   //FFDR Next methods to implement
    void turnOff();
-   void turnOn();
-   void turnOn(const uint8_t &newBrghtnssLvl);
-   //====================================>> New addition WIP
 
+   void turnOn();
+
+   void turnOn(const uint8_t &newBrghtnssLvl);
 
    /**
     * @brief Makes the display enter the "Waiting mode"  

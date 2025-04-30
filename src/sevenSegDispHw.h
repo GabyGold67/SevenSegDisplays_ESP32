@@ -488,7 +488,6 @@ protected:
    uint8_t _brghtnssLvl{0};  //!< Current display brightness level
    uint8_t _brghtnssLvlMax{0};   //!< Maximum display brightness level
    uint8_t _brghtnssLvlMin{0};   //!< Minimum display brightness level
-   // bool _isOn{false};   //!< Current display status: On/Off
      
 public:
     SevenSegStatic();
@@ -628,7 +627,7 @@ protected:
     * 
     * @note The class constructor invokes the begin() method as it's last statement, the begin() method is kept for ease of modifications to developers interested in modifying the class.  
     */
-   bool begin();
+   bool begin(uint32_t updtLps = 0);
    /**
     * @brief Turns Off the display.  
     * 
@@ -906,7 +905,7 @@ public:
 	 * 
 	 * @return true Always
 	*/
-	bool begin();
+	bool begin(uint32_t updtLps = 0);
 	/**
 	 * @brief Ends the active mode of the display by shutting it off.  
 	 * 
@@ -957,7 +956,7 @@ public:
 };
 
 //============================================================> Class declarations separator
-class HT16K33: public SevenSegStatic{
+class SevenSegHT16K33: public SevenSegStatic{
    static TwoWire* i2cGenCommPtr;
    // Command/Address Map Constants
 	const uint8_t _DspPortsBaseAddr{0x00}; //!< Last address depends on digitsQty, maximum will be 0x0F
@@ -998,10 +997,10 @@ private:
 	void _updLclBffrCntnt();
 
 public:
-   HT16K33();
-   // HT16K33(uint8_t* ioPins, uint8_t dspDigits, uint8_t i2cAddress, bool commAnode = false);
-   HT16K33(uint8_t i2cPortNum, uint8_t dspDigits, uint8_t i2cAddress, bool commAnode = false);
-   virtual ~HT16K33();
+   SevenSegHT16K33();
+   // SevenSegHT16K33(uint8_t* ioPins, uint8_t dspDigits, uint8_t i2cAddress, bool commAnode = false);
+   SevenSegHT16K33(uint8_t i2cPortNum, uint8_t dspDigits, uint8_t i2cAddress, bool commAnode = false);
+   virtual ~SevenSegHT16K33();
 	/**
 	 * @brief Sets up the hardware display to work, and starts the display activities.  
 	 * 
@@ -1013,7 +1012,7 @@ public:
 	 * 
 	 * @return true Always
 	*/
-bool begin();
+bool begin(uint32_t updtLps = 0);
 /**
  * @brief Ends the active mode of the display by shutting it off.  
  * 

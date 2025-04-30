@@ -86,9 +86,9 @@ SevenSegDisplays::~SevenSegDisplays(){
    --_displaysCount;
 }
 
-bool SevenSegDisplays::begin(){
+bool SevenSegDisplays::begin(uint32_t updtLps){
 
-   return getDspUndrlHwPtr()->begin();
+   return getDspUndrlHwPtr()->begin(updtLps);
 }
 
 bool SevenSegDisplays::blink(){
@@ -344,6 +344,11 @@ bool SevenSegDisplays::getDspIsDmmbl(){
    return !(getMinBrghtnssLvl()==getMaxBrghtnssLvl());
 }
 
+bool SevenSegDisplays::getIsOn(){
+
+   return getDspUndrlHwPtr()->getIsOn();
+}
+
 SevenSegDispHw* SevenSegDisplays::getDspUndrlHwPtr(){
    
    return _dspUndrlHwPtr;
@@ -455,7 +460,7 @@ bool SevenSegDisplays::noWait(){
 
    return result;
 }
-//FFDR Gaby checked up to here
+
 void SevenSegDisplays::_ntfyToHwBuffChng(){
    _dspUndrlHwPtr->ntfyUpdDsply();
 
@@ -801,6 +806,11 @@ bool SevenSegDisplays::setBlinkRate(const uint32_t &newOnRate, const uint32_t &n
    return result;  
 }
 
+bool SevenSegDisplays::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
+
+   return getDspUndrlHwPtr()->setBrghtnssLvl(newBrghtnssLvl);
+}
+
 void SevenSegDisplays::_setDspBuffChng(){//FFDR Include in this method all the actions triggered by the change of the display buffer contents: Unblocking underlying hardware display renewal, fill message FIFOs, etc.
    _ntfyToHwBuffChng();
 
@@ -860,6 +870,24 @@ void SevenSegDisplays::tmrCbBlink(TimerHandle_t blinkTmrCbArg){
 void SevenSegDisplays::tmrCbWait(TimerHandle_t waitTmrCbArg){
    SevenSegDisplays* thisDisplay = (SevenSegDisplays*)pvTimerGetTimerID(waitTmrCbArg);
    thisDisplay-> _updWaitState();
+
+   return;
+}
+
+void SevenSegDisplays::turnOff(){
+   getDspUndrlHwPtr()->turnOff();
+
+   return;
+}
+
+void SevenSegDisplays::turnOn(){
+   getDspUndrlHwPtr()->turnOn();
+
+   return;
+}
+
+void SevenSegDisplays::turnOn(const uint8_t &newBrghtnssLvl){
+   getDspUndrlHwPtr()->turnOn(newBrghtnssLvl);
 
    return;
 }
