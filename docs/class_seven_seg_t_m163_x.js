@@ -3,7 +3,7 @@ var class_seven_seg_t_m163_x =
     [ "SevenSegTM163X", "class_seven_seg_t_m163_x.html#a6f511a29dcacfa8be9d2a8778dc2d05d", null ],
     [ "SevenSegTM163X", "class_seven_seg_t_m163_x.html#a6812a6d00def57aaace41ad2a15da7f8", null ],
     [ "~SevenSegTM163X", "class_seven_seg_t_m163_x.html#a15cd5793c8ad4dd0c5207874d4fc2de4", null ],
-    [ "begin", "class_seven_seg_t_m163_x.html#ad7ac775f2dce63087d3e4548a36e874c", null ],
+    [ "begin", "class_seven_seg_t_m163_x.html#a08b6551f172597a88fa78215cde05c7e", null ],
     [ "end", "class_seven_seg_t_m163_x.html#aa698084ab67b3d6c6b324fa00d1f5e35", null ],
     [ "getBrghtnssLvl", "class_seven_seg_t_m163_x.html#a484553b3cf9c8e60bc87e944d07fecde", null ],
     [ "getBrghtnssMaxLvl", "class_seven_seg_t_m163_x.html#a4b12ba68a4ed1738bbf0457a4dbec33e", null ],

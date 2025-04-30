@@ -1,0 +1,5 @@
+<map id="SevenSegDispHw::setBrghtnssLvl" name="SevenSegDispHw::setBrghtnssLvl">
+<area shape="rect" id="Node000001" title="Sets the brightness level for the display." alt="" coords="229,5,452,32"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_disp_hw.html#a5b8a85569987f67008d5323fcea52d0c" title="Turns the display module on set at the provided brightness level." alt="" coords="5,5,181,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="213,21,181,21,181,16,213,16"/>
+</map>

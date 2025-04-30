@@ -228,6 +228,34 @@ Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_methods_class_seven_seg_disp_hw"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_class_seven_seg_disp_hw')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a></td></tr>
 <tr class="inherit_header pro_attribs_class_seven_seg_dynamic"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_seven_seg_dynamic')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_seven_seg_dynamic.html">SevenSegDynamic</a></td></tr>
 <tr class="inherit_header pro_attribs_class_seven_seg_disp_hw"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_seven_seg_disp_hw')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a></td></tr>
+<tr class="memitem:a9d1b19191790068b303f28d5c7efe17d inherit pro_attribs_class_seven_seg_disp_hw" id="r_a9d1b19191790068b303f28d5c7efe17d"><td class="memItemLeft" align="right" valign="top">
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_allLedsOff</b> {}</td></tr>
+<tr class="memdesc:a9d1b19191790068b303f28d5c7efe17d inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value to set in the display port to set all leds off, dependent of _commAnode. <br /></td></tr>
+<tr class="separator:a9d1b19191790068b303f28d5c7efe17d inherit pro_attribs_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75a3304095307da5652f745b7472ed75 inherit pro_attribs_class_seven_seg_disp_hw" id="r_a75a3304095307da5652f745b7472ed75"><td class="memItemLeft" align="right" valign="top">
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvl</b> {0}</td></tr>
+<tr class="memdesc:a75a3304095307da5652f745b7472ed75 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current display brightness level. <br /></td></tr>
+<tr class="separator:a75a3304095307da5652f745b7472ed75 inherit pro_attribs_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd984a492fe643d97943e3354546fd17 inherit pro_attribs_class_seven_seg_disp_hw" id="r_afd984a492fe643d97943e3354546fd17"><td class="memItemLeft" align="right" valign="top">
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvlMax</b> {0}</td></tr>
+<tr class="memdesc:afd984a492fe643d97943e3354546fd17 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum display brightness level. <br /></td></tr>
+<tr class="separator:afd984a492fe643d97943e3354546fd17 inherit pro_attribs_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3d66d15f4eed1c1881b4121de41c9af inherit pro_attribs_class_seven_seg_disp_hw" id="r_ac3d66d15f4eed1c1881b4121de41c9af"><td class="memItemLeft" align="right" valign="top">
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvlMin</b> {0}</td></tr>
+<tr class="memdesc:ac3d66d15f4eed1c1881b4121de41c9af inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum display brightness level. <br /></td></tr>
+<tr class="separator:ac3d66d15f4eed1c1881b4121de41c9af inherit pro_attribs_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ccc9149931302708fc61446a6ff0c46 inherit pro_attribs_class_seven_seg_disp_hw" id="r_a3ccc9149931302708fc61446a6ff0c46"><td class="memItemLeft" align="right" valign="top">
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_dspBlankBuffPtr</b> {nullptr}</td></tr>
+<tr class="memdesc:a3ccc9149931302708fc61446a6ff0c46 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to a display buffer filled with _allLedsOff ("spaces") to use as display buffer while in "Off State". <br /></td></tr>
+<tr class="separator:a3ccc9149931302708fc61446a6ff0c46 inherit pro_attribs_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95b6978ec791ce44c93e826c3bb1d870 inherit pro_attribs_class_seven_seg_disp_hw" id="r_a95b6978ec791ce44c93e826c3bb1d870"><td class="memItemLeft" align="right" valign="top">
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_dspBuffPtr</b> {nullptr}</td></tr>
+<tr class="memdesc:a95b6978ec791ce44c93e826c3bb1d870 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the display buffer, will be provided by the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object when it's instantiated. <br /></td></tr>
+<tr class="separator:a95b6978ec791ce44c93e826c3bb1d870 inherit pro_attribs_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73f7ed1aa03a57762c51bfb6e29db011 inherit pro_attribs_class_seven_seg_disp_hw" id="r_a73f7ed1aa03a57762c51bfb6e29db011"><td class="memItemLeft" align="right" valign="top">
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_dspBuffPtrBkp</b> {nullptr}</td></tr>
+<tr class="memdesc:a73f7ed1aa03a57762c51bfb6e29db011 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the display buffer, copy of the original **_dspBuffPtr** to be used as backup when is a need to change the _dspBuffPtr. <br /></td></tr>
+<tr class="separator:a73f7ed1aa03a57762c51bfb6e29db011 inherit pro_attribs_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3766aca6533be7b0b416229ebfe4cf49 inherit pro_attribs_class_seven_seg_disp_hw" id="r_a3766aca6533be7b0b416229ebfe4cf49"><td class="memItemLeft" align="right" valign="top">
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td></tr>
 <tr class="memdesc:a3766aca6533be7b0b416229ebfe4cf49 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current display status: On/Off. <br /></td></tr>
@@ -328,6 +356,21 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
 false </dd></dl>
 
 <p>Reimplemented from <a class="el" href="class_seven_seg_dynamic.html#a1184cb8662e12921f635c13b19a9df7b">SevenSegDynamic</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_dyn_dummy_ac0f6ac50ac26d402d96e2a689eb724d7_cgraph.png" border="0" usemap="#aclass_seven_seg_dyn_dummy_ac0f6ac50ac26d402d96e2a689eb724d7_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_dyn_dummy_ac0f6ac50ac26d402d96e2a689eb724d7_cgraph" id="aclass_seven_seg_dyn_dummy_ac0f6ac50ac26d402d96e2a689eb724d7_cgraph">
+<area shape="rect" title="Sets up the required resources for the &quot;dummy hardware display&quot; to work." alt="" coords="5,31,196,57"/>
+<area shape="rect" href="class_seven_seg_dynamic.html#a1184cb8662e12921f635c13b19a9df7b" title="Sets up the hardware display to work." alt="" coords="244,5,416,32"/>
+<area shape="poly" title=" " alt="" coords="196,31,228,27,229,33,196,36"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on." alt="" coords="464,31,639,57"/>
+<area shape="poly" title=" " alt="" coords="196,41,448,41,448,47,196,47"/>
+<area shape="poly" title=" " alt="" coords="417,26,449,30,448,35,416,31"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,..." alt="" coords="687,31,904,57"/>
+<area shape="poly" title=" " alt="" coords="640,41,672,41,672,47,640,47"/>
+</map>
+</div>
 
 </div>
 </div>

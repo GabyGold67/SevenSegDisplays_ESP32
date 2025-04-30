@@ -1,0 +1,14 @@
+<map id="SevenSegDispHw::turnOn" name="SevenSegDispHw::turnOn">
+<area shape="rect" id="Node000001" title="Turns the display module on." alt="" coords="477,107,652,133"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_disp_hw.html#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="253,5,420,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="529,100,482,73,428,46,395,35,397,30,430,42,484,68,531,96"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_dynamic.html#a1184cb8662e12921f635c13b19a9df7b" title="Sets up the hardware display to work." alt="" coords="250,56,422,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="486,105,399,86,400,81,487,100"/>
+<area shape="rect" id="Node000004" href="$class_seven_seg_dyn_dummy.html#ac0f6ac50ac26d402d96e2a689eb724d7" title="Sets up the required resources for the &quot;dummy hardware display&quot; to work." alt="" coords="5,81,196,108"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="461,117,196,103,196,97,462,112"/>
+<area shape="rect" id="Node000005" href="$class_seven_seg_dyn_h_c595.html#acae65548bebc819a38ce07c07c140ef2" title="Sets up the required resources for the hardware display to work." alt="" coords="244,157,429,184"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="487,140,400,159,399,154,486,135"/>
+<area shape="rect" id="Node000006" href="$class_seven_seg_disp_hw.html#a5b8a85569987f67008d5323fcea52d0c" title="Turns the display module on set at the provided brightness level." alt="" coords="249,208,424,235"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="531,144,484,172,430,198,397,210,395,205,428,194,482,167,529,140"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="235,83,196,87,196,82,234,78"/>
+</map>

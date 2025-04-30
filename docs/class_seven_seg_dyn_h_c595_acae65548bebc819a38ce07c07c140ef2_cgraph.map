@@ -1,0 +1,7 @@
+<map id="SevenSegDynHC595::begin" name="SevenSegDynHC595::begin">
+<area shape="rect" id="Node000001" title="Sets up the required resources for the hardware display to work." alt="" coords="5,5,191,32"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_disp_hw.html#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on." alt="" coords="239,5,414,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="191,16,223,16,223,21,191,21"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,..." alt="" coords="462,5,678,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="414,16,446,16,446,21,414,21"/>
+</map>

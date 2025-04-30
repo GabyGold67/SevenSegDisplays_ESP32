@@ -67,23 +67,24 @@ bool SevenSegDispHw::begin(uint32_t updtLps){
 }
 
 bool SevenSegDispHw::end(){
+   turnOff();
 
    return true;
 }
 
 uint8_t SevenSegDispHw::getBrghtnssLvl(){
    
-   return 0;
+   return _brghtnssLvl;
 }
 
 uint8_t SevenSegDispHw::getBrghtnssMaxLvl(){
    
-   return 0;
+   return _brghtnssLvlMax;
 }
 
 uint8_t SevenSegDispHw::getBrghtnssMinLvl(){
  
-   return 0;
+   return _brghtnssLvlMin;
 }
 
 bool SevenSegDispHw::getCommAnode(){
@@ -184,6 +185,7 @@ void SevenSegDispHw::turnOn(const uint8_t &newBrghtnssLvl){
 }
 
 //============================================================> Class methods separator
+
 SevenSegDynamic::SevenSegDynamic(){}
 
 SevenSegDynamic::SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
@@ -262,7 +264,7 @@ void SevenSegDynamic::_refresh(){
 
     for (int i {0}; i < _dspDigitsQty; i++){
         tmpDigToSend = *(_dspBuffPtr + ((i + _firstRefreshed) % _dspDigitsQty));
-        send(tmpDigToSend, uint8_t(1) << *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty)));
+        _send(tmpDigToSend, uint8_t(1) << *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty)));
     }
     ++_firstRefreshed;
     if (_firstRefreshed == _dspDigitsQty)
@@ -271,18 +273,17 @@ void SevenSegDynamic::_refresh(){
     return;
 }
 
-void SevenSegDynamic::send(uint8_t content){ // Implementation is hardware dependant (subclasses) protocol!!
+void SevenSegDynamic::_send(uint8_t content){ // Implementation is hardware dependant (subclasses) protocol!!
 
    return;
 }
 
-void SevenSegDynamic::send(const uint8_t &segments, const uint8_t &port){
+void SevenSegDynamic::_send(const uint8_t &segments, const uint8_t &port){
 
    return;
 }
 
 void SevenSegDynamic::tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg){
-   // No need for specific executable code in this callback function at this stage
 
    return;
 }
@@ -356,6 +357,7 @@ bool SevenSegDynHC595::end() {
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
    
+   turnOff();
    if(_dynHC595DspRfrshTmrHndl){   //if the timer still exists and is running, stop and delete
       tmrModResult = xTimerStop(_dynHC595DspRfrshTmrHndl, portMAX_DELAY);
       if(tmrModResult == pdPASS){

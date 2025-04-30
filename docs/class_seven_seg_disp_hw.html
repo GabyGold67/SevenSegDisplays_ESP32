@@ -227,6 +227,34 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
+<tr class="memitem:a9d1b19191790068b303f28d5c7efe17d" id="r_a9d1b19191790068b303f28d5c7efe17d"><td class="memItemLeft" align="right" valign="top"><a id="a9d1b19191790068b303f28d5c7efe17d" name="a9d1b19191790068b303f28d5c7efe17d"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_allLedsOff</b> {}</td></tr>
+<tr class="memdesc:a9d1b19191790068b303f28d5c7efe17d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value to set in the display port to set all leds off, dependent of _commAnode. <br /></td></tr>
+<tr class="separator:a9d1b19191790068b303f28d5c7efe17d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75a3304095307da5652f745b7472ed75" id="r_a75a3304095307da5652f745b7472ed75"><td class="memItemLeft" align="right" valign="top"><a id="a75a3304095307da5652f745b7472ed75" name="a75a3304095307da5652f745b7472ed75"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvl</b> {0}</td></tr>
+<tr class="memdesc:a75a3304095307da5652f745b7472ed75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current display brightness level. <br /></td></tr>
+<tr class="separator:a75a3304095307da5652f745b7472ed75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd984a492fe643d97943e3354546fd17" id="r_afd984a492fe643d97943e3354546fd17"><td class="memItemLeft" align="right" valign="top"><a id="afd984a492fe643d97943e3354546fd17" name="afd984a492fe643d97943e3354546fd17"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvlMax</b> {0}</td></tr>
+<tr class="memdesc:afd984a492fe643d97943e3354546fd17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum display brightness level. <br /></td></tr>
+<tr class="separator:afd984a492fe643d97943e3354546fd17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3d66d15f4eed1c1881b4121de41c9af" id="r_ac3d66d15f4eed1c1881b4121de41c9af"><td class="memItemLeft" align="right" valign="top"><a id="ac3d66d15f4eed1c1881b4121de41c9af" name="ac3d66d15f4eed1c1881b4121de41c9af"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvlMin</b> {0}</td></tr>
+<tr class="memdesc:ac3d66d15f4eed1c1881b4121de41c9af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum display brightness level. <br /></td></tr>
+<tr class="separator:ac3d66d15f4eed1c1881b4121de41c9af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ccc9149931302708fc61446a6ff0c46" id="r_a3ccc9149931302708fc61446a6ff0c46"><td class="memItemLeft" align="right" valign="top"><a id="a3ccc9149931302708fc61446a6ff0c46" name="a3ccc9149931302708fc61446a6ff0c46"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_dspBlankBuffPtr</b> {nullptr}</td></tr>
+<tr class="memdesc:a3ccc9149931302708fc61446a6ff0c46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to a display buffer filled with _allLedsOff ("spaces") to use as display buffer while in "Off State". <br /></td></tr>
+<tr class="separator:a3ccc9149931302708fc61446a6ff0c46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95b6978ec791ce44c93e826c3bb1d870" id="r_a95b6978ec791ce44c93e826c3bb1d870"><td class="memItemLeft" align="right" valign="top"><a id="a95b6978ec791ce44c93e826c3bb1d870" name="a95b6978ec791ce44c93e826c3bb1d870"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_dspBuffPtr</b> {nullptr}</td></tr>
+<tr class="memdesc:a95b6978ec791ce44c93e826c3bb1d870"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the display buffer, will be provided by the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object when it's instantiated. <br /></td></tr>
+<tr class="separator:a95b6978ec791ce44c93e826c3bb1d870"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73f7ed1aa03a57762c51bfb6e29db011" id="r_a73f7ed1aa03a57762c51bfb6e29db011"><td class="memItemLeft" align="right" valign="top"><a id="a73f7ed1aa03a57762c51bfb6e29db011" name="a73f7ed1aa03a57762c51bfb6e29db011"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_dspBuffPtrBkp</b> {nullptr}</td></tr>
+<tr class="memdesc:a73f7ed1aa03a57762c51bfb6e29db011"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the display buffer, copy of the original **_dspBuffPtr** to be used as backup when is a need to change the _dspBuffPtr. <br /></td></tr>
+<tr class="separator:a73f7ed1aa03a57762c51bfb6e29db011"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3766aca6533be7b0b416229ebfe4cf49" id="r_a3766aca6533be7b0b416229ebfe4cf49"><td class="memItemLeft" align="right" valign="top"><a id="a3766aca6533be7b0b416229ebfe4cf49" name="a3766aca6533be7b0b416229ebfe4cf49"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td></tr>
 <tr class="memdesc:a3766aca6533be7b0b416229ebfe4cf49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current display status: On/Off. <br /></td></tr>
@@ -269,7 +297,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
 <p>Class constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ioPins</td><td>A pointer to an array holding the identifiers for the MCU GPIO pins required to send the data to be displayed to the <b>Display controller</b>. The correlation between the array positions and the pin function is given as in-class defined constants for each subclass. <br  />
+    <tr><td class="paramname">ioPins</td><td>A pointer to an array holding the identifiers for the MCU GPIO pins required to send the data to be displayed to the <b>Display controller</b>. The correlation between the array positions and the pin function is given as in-class defined constants for each instantiable subclass. <br  />
  </td></tr>
     <tr><td class="paramname">dspDigits</td><td>Quantity of digits/ports of the display. This value is directly related to the <b>display module component</b> quantity of ports and characteristics. <br  />
  </td></tr>
@@ -278,9 +306,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
   </table>
   </dd>
 </dl>
-<dl class="section attention"><dt>Attention</dt><dd>The dspDigits parameter indicating the quantity of digits of the display module is a <b>basic fundamental</b> parameter passed at instantiation time. This information provides the value to be used to create a data buffer of the right size, the digits order table, auxiliary buffers and even the required information to calculate the range of values displayable and to generate a valid left or right aligned display. Obviously the quantity is bigger than 0, and must be less than or equal to the hardware maximum display digits capability. <br  />
+<dl class="section attention"><dt>Attention</dt><dd>The dspDigits parameter, indicating the quantity of digits of the display module, is a <b>basic fundamental</b> parameter passed at instantiation time. This information provides the value to be used to create the data buffer of the right size, the digits order table, auxiliary buffers and the required information to calculate the range of values displayable and to generate a valid left or right aligned display. Obviously the quantity is bigger than 0, and must be less than or equal to the hardware maximum display digits capability. <br  />
 </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>The dspDigits parameter value must not be confused with the maximum display digits a display controller component can handle. Many displays are designed using part of the controller's digits management for real seven segment displays digits, while using non used digits to manage some other display elements, like leds, special backlighting elements, etc. The class instantiated object needs the right amount of display digits available as such, the exceeding digits/ports is another issue. <br  />
+<dl class="section warning"><dt>Warning</dt><dd>The dspDigits parameter value must not be confused with the maximum display digits a display controller component can handle. Many displays are designed using part of the controller's digits management for real seven segment displays digits while using non connected to ports pins to manage some other display elements, like individual leds, icons, special backlighting elements, etc. The class instantiated object needs the right amount of display digits available as such, the exceeding digits/ports is currently out of the libray management scope. <br  />
  </dd></dl>
 
 </div>
@@ -341,7 +369,19 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
 <dl class="section return"><dt>Returns</dt><dd>false One or more of the specific configurations or startups failed. <br  />
  </dd></dl>
 
-<p>Reimplemented in <a class="el" href="class_seven_seg_dynamic.html#a1184cb8662e12921f635c13b19a9df7b">SevenSegDynamic</a>, <a class="el" href="class_seven_seg_dyn_dummy.html#ac0f6ac50ac26d402d96e2a689eb724d7">SevenSegDynDummy</a>, and <a class="el" href="class_seven_seg_dyn_h_c595.html#acae65548bebc819a38ce07c07c140ef2">SevenSegDynHC595</a>.</p>
+<p>Reimplemented in <a class="el" href="class_seven_seg_dynamic.html#a1184cb8662e12921f635c13b19a9df7b">SevenSegDynamic</a>, <a class="el" href="class_seven_seg_dyn_dummy.html#ac0f6ac50ac26d402d96e2a689eb724d7">SevenSegDynDummy</a>, <a class="el" href="class_seven_seg_dyn_h_c595.html#acae65548bebc819a38ce07c07c140ef2">SevenSegDynHC595</a>, <a class="el" href="class_seven_seg_max7219.html#a7145d4d218c7b8469a13c6a1780d8ce7">SevenSegMax7219</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#a08b6551f172597a88fa78215cde05c7e">SevenSegTM163X</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_disp_hw_a5f3a59bcc54ddd20445e049359753ab6_cgraph.png" border="0" usemap="#aclass_seven_seg_disp_hw_a5f3a59bcc54ddd20445e049359753ab6_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_disp_hw_a5f3a59bcc54ddd20445e049359753ab6_cgraph" id="aclass_seven_seg_disp_hw_a5f3a59bcc54ddd20445e049359753ab6_cgraph">
+<area shape="rect" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="5,5,173,32"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on." alt="" coords="221,5,396,32"/>
+<area shape="poly" title=" " alt="" coords="173,16,205,16,205,21,173,21"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,..." alt="" coords="444,5,660,32"/>
+<area shape="poly" title=" " alt="" coords="396,16,428,16,428,21,396,21"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -379,6 +419,18 @@ false The display activities couldn't be stopped. The method failed. <br  />
  </dd></dl>
 
 <p>Reimplemented in <a class="el" href="class_seven_seg_dynamic.html#ad33484426e9171966895857c9b7afcc4">SevenSegDynamic</a>, <a class="el" href="class_seven_seg_dyn_dummy.html#a2ca50c8a0dd4ff2d52caa0332119ce05">SevenSegDynDummy</a>, <a class="el" href="class_seven_seg_dyn_h_c595.html#add611b927a735ea74809379a0ecb8533">SevenSegDynHC595</a>, <a class="el" href="class_seven_seg_max7219.html#a5870af7127dcf97df29cfb8d07bb4a7f">SevenSegMax7219</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#aa698084ab67b3d6c6b324fa00d1f5e35">SevenSegTM163X</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_disp_hw_a10ef7e4db6af3dbbcdeb48331d94f2e2_cgraph.png" border="0" usemap="#aclass_seven_seg_disp_hw_a10ef7e4db6af3dbbcdeb48331d94f2e2_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_disp_hw_a10ef7e4db6af3dbbcdeb48331d94f2e2_cgraph" id="aclass_seven_seg_disp_hw_a10ef7e4db6af3dbbcdeb48331d94f2e2_cgraph">
+<area shape="rect" title="Reverts the begin(uint32_t) actions, stopping the display activities, turning the display off and fre..." alt="" coords="5,5,163,32"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a086ccd4d4966fa28a51d6b8f250b6c20" title="Turns the display module off." alt="" coords="211,5,386,32"/>
+<area shape="poly" title=" " alt="" coords="163,16,195,16,195,21,163,21"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,..." alt="" coords="434,5,650,32"/>
+<area shape="poly" title=" " alt="" coords="386,16,418,16,418,21,386,21"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -651,6 +703,37 @@ Here is the caller graph for this function:</div>
  </dd></dl>
 
 <p>Reimplemented in <a class="el" href="class_seven_seg_max7219.html#a559f2c5cca5eb5a806720359efd99788">SevenSegMax7219</a>, <a class="el" href="class_seven_seg_stat_h_c595.html#af430da3b0859f74693dd0ee71c28d071">SevenSegStatHC595</a>, <a class="el" href="class_seven_seg_static.html#a31006d4f4f5a4019f0aed380e01b0d17">SevenSegStatic</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#ae45f5f1772b93dca12ccaef3e652d7b0">SevenSegTM163X</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_disp_hw_a02d94944c1a9ade34a530c7e13503327_icgraph.png" border="0" usemap="#aclass_seven_seg_disp_hw_a02d94944c1a9ade34a530c7e13503327_icgraph" alt=""/></div>
+<map name="aclass_seven_seg_disp_hw_a02d94944c1a9ade34a530c7e13503327_icgraph" id="aclass_seven_seg_disp_hw_a02d94944c1a9ade34a530c7e13503327_icgraph">
+<area shape="rect" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,..." alt="" coords="700,183,917,209"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a086ccd4d4966fa28a51d6b8f250b6c20" title="Turns the display module off." alt="" coords="477,81,652,108"/>
+<area shape="poly" title=" " alt="" coords="759,179,598,111,600,106,761,174"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on." alt="" coords="477,233,652,260"/>
+<area shape="poly" title=" " alt="" coords="727,216,633,235,632,230,725,210"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a10ef7e4db6af3dbbcdeb48331d94f2e2" title="Reverts the begin(uint32_t) actions, stopping the display activities, turning the display off and fre..." alt="" coords="258,5,415,32"/>
+<area shape="poly" title=" " alt="" coords="514,78,428,47,390,35,392,30,430,41,516,73"/>
+<area shape="rect" href="class_seven_seg_dynamic.html#ad33484426e9171966895857c9b7afcc4" title="Reverts the begin(uint32_t) actions, stopping the display activities, stopping and deleting the timer..." alt="" coords="255,56,418,83"/>
+<area shape="poly" title=" " alt="" coords="461,86,418,81,418,76,462,81"/>
+<area shape="rect" href="class_seven_seg_dyn_h_c595.html#add611b927a735ea74809379a0ecb8533" title="Stops the active display updating." alt="" coords="249,107,424,133"/>
+<area shape="poly" title=" " alt="" coords="462,109,425,113,424,108,461,103"/>
+<area shape="rect" href="class_seven_seg_dyn_h_c595.html#a7cba0a6a5ecb438a8b633167c119e4bc" title="Class destructor." alt="" coords="23,99,178,141"/>
+<area shape="poly" title=" " alt="" coords="233,123,178,123,178,117,233,117"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="253,157,420,184"/>
+<area shape="poly" title=" " alt="" coords="514,230,428,199,390,187,392,182,430,193,516,225"/>
+<area shape="rect" href="class_seven_seg_dynamic.html#a1184cb8662e12921f635c13b19a9df7b" title="Sets up the hardware display to work." alt="" coords="250,208,422,235"/>
+<area shape="poly" title=" " alt="" coords="461,238,423,234,423,228,462,233"/>
+<area shape="rect" href="class_seven_seg_dyn_dummy.html#ac0f6ac50ac26d402d96e2a689eb724d7" title="Sets up the required resources for the &quot;dummy hardware display&quot; to work." alt="" coords="5,233,196,260"/>
+<area shape="poly" title=" " alt="" coords="462,249,196,249,196,244,462,244"/>
+<area shape="rect" href="class_seven_seg_dyn_h_c595.html#acae65548bebc819a38ce07c07c140ef2" title="Sets up the required resources for the hardware display to work." alt="" coords="244,309,429,336"/>
+<area shape="poly" title=" " alt="" coords="508,268,380,311,378,306,507,263"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a5b8a85569987f67008d5323fcea52d0c" title="Turns the display module on set at the provided brightness level." alt="" coords="249,360,424,387"/>
+<area shape="poly" title=" " alt="" coords="539,273,491,312,430,350,401,362,399,357,428,346,488,308,536,269"/>
+<area shape="poly" title=" " alt="" coords="235,235,196,239,196,234,234,230"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -697,6 +780,16 @@ Here is the caller graph for this function:</div>
  </dd></dl>
 
 <p>Reimplemented in <a class="el" href="class_seven_seg_max7219.html#a00e46d6be95a02bd6d20de36bf671080">SevenSegMax7219</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#a4e74de34810a89ff8409e277e962e09f">SevenSegTM163X</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_disp_hw_a25007a1b33093e4c055446010e254d63_icgraph.png" border="0" usemap="#aclass_seven_seg_disp_hw_a25007a1b33093e4c055446010e254d63_icgraph" alt=""/></div>
+<map name="aclass_seven_seg_disp_hw_a25007a1b33093e4c055446010e254d63_icgraph" id="aclass_seven_seg_disp_hw_a25007a1b33093e4c055446010e254d63_icgraph">
+<area shape="rect" title="Sets the brightness level for the display." alt="" coords="229,5,452,32"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a5b8a85569987f67008d5323fcea52d0c" title="Turns the display module on set at the provided brightness level." alt="" coords="5,5,181,32"/>
+<area shape="poly" title=" " alt="" coords="213,21,181,21,181,16,213,16"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -802,11 +895,37 @@ Here is the caller graph for this function:</div>
  </p>
 <p>The display module will be cleared and will keep that status until a <a class="el" href="#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on.">turnOn()</a>, or <a class="el" href="#a5b8a85569987f67008d5323fcea52d0c" title="Turns the display module on set at the provided brightness level.">turnOn(const uint8_t &amp;)</a> is invoked. <br  />
 </p>
-<dl class="section note"><dt>Note</dt><dd>Turning the display Off is not the same as clearing the display -see clear() method- as clearing the display implies changing the display data buffer content to fill it with spaces. Some of the display modules managed by display controllers have the hability to turn off the leds display while keeping it's buffer contents unmodified. So turning On/Off those displays will have the effect of holding the data displayed and even receiving and filling their buffer with new data while keeping their display with no leds turned on. <br  />
+<dl class="section note"><dt>Note</dt><dd>Turning the display Off is not the same as clearing the display -see clear() method- as clearing the display implies changing the display data buffer content to fill it with spaces, while turning it off implies keeping the display data buffer updated, while showing the display leds turned off. Some of the display modules managed by display controllers have the hability to turn off the leds display while keeping it's buffer contents unmodified. So turning On/Off those displays will have the effect of holding the data displayed and even receiving and filling their buffer with updated data while keeping their display with no leds turned on. <br  />
 </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo</a></b></dt><dd>For the seven segment displays with controller components that does not implement On and Off commands, the class will provide a propietary solution to achieve similar features. While there are not implemented the <a class="el" href="#a086ccd4d4966fa28a51d6b8f250b6c20" title="Turns the display module off.">turnOff()</a>, <a class="el" href="#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on.">turnOn()</a> and <a class="el" href="#a5b8a85569987f67008d5323fcea52d0c" title="Turns the display module on set at the provided brightness level.">turnOn(const uint8_t &amp;)</a> will be ignored and will produce no effect in the object behavior. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo</a></b></dt><dd>For the seven segment displays without controller components to implement On and Off commands, the class will provide a propietary solution to achieve similar features. While there are not implemented the <a class="el" href="#a086ccd4d4966fa28a51d6b8f250b6c20" title="Turns the display module off.">turnOff()</a>, <a class="el" href="#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on.">turnOn()</a> and <a class="el" href="#a5b8a85569987f67008d5323fcea52d0c" title="Turns the display module on set at the provided brightness level.">turnOn(const uint8_t &amp;)</a> will be ignored and will produce no effect in the object behavior. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="class_seven_seg_max7219.html#a0007a5a290087062e5595fa065be4ad6">SevenSegMax7219</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#acd8804278138008c6f94996ee44b8afd">SevenSegTM163X</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_disp_hw_a086ccd4d4966fa28a51d6b8f250b6c20_cgraph.png" border="0" usemap="#aclass_seven_seg_disp_hw_a086ccd4d4966fa28a51d6b8f250b6c20_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_disp_hw_a086ccd4d4966fa28a51d6b8f250b6c20_cgraph" id="aclass_seven_seg_disp_hw_a086ccd4d4966fa28a51d6b8f250b6c20_cgraph">
+<area shape="rect" title="Turns the display module off." alt="" coords="5,5,181,32"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,..." alt="" coords="229,5,445,32"/>
+<area shape="poly" title=" " alt="" coords="181,16,213,16,213,21,181,21"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_disp_hw_a086ccd4d4966fa28a51d6b8f250b6c20_icgraph.png" border="0" usemap="#aclass_seven_seg_disp_hw_a086ccd4d4966fa28a51d6b8f250b6c20_icgraph" alt=""/></div>
+<map name="aclass_seven_seg_disp_hw_a086ccd4d4966fa28a51d6b8f250b6c20_icgraph" id="aclass_seven_seg_disp_hw_a086ccd4d4966fa28a51d6b8f250b6c20_icgraph">
+<area shape="rect" title="Turns the display module off." alt="" coords="431,56,606,83"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a10ef7e4db6af3dbbcdeb48331d94f2e2" title="Reverts the begin(uint32_t) actions, stopping the display activities, turning the display off and fre..." alt="" coords="217,5,374,32"/>
+<area shape="poly" title=" " alt="" coords="441,55,357,35,358,30,442,49"/>
+<area shape="rect" href="class_seven_seg_dynamic.html#ad33484426e9171966895857c9b7afcc4" title="Reverts the begin(uint32_t) actions, stopping the display activities, stopping and deleting the timer..." alt="" coords="214,56,376,83"/>
+<area shape="poly" title=" " alt="" coords="416,72,377,72,377,67,416,67"/>
+<area shape="rect" href="class_seven_seg_dyn_h_c595.html#add611b927a735ea74809379a0ecb8533" title="Stops the active display updating." alt="" coords="208,107,383,133"/>
+<area shape="poly" title=" " alt="" coords="442,89,358,109,357,103,441,84"/>
+<area shape="rect" href="class_seven_seg_dyn_h_c595.html#a7cba0a6a5ecb438a8b633167c119e4bc" title="Class destructor." alt="" coords="5,99,160,141"/>
+<area shape="poly" title=" " alt="" coords="192,123,160,123,160,117,192,117"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -835,10 +954,39 @@ Here is the caller graph for this function:</div>
 
 <p>Turns the display module on. <br  />
  </p>
-<p>The display module will be turned on, making visible the contents of the display buffer. For more reference see <a class="el" href="#a086ccd4d4966fa28a51d6b8f250b6c20" title="Turns the display module off.">turnOff()</a> method. <br  />
+<p>The display module will be turned on, making visible the contents of the display buffer. For more information see <a class="el" href="#a086ccd4d4966fa28a51d6b8f250b6c20" title="Turns the display module off.">turnOff()</a> method. <br  />
  </p>
 
 <p>Reimplemented in <a class="el" href="class_seven_seg_max7219.html#a7dfe9eb652fec8a06f5d126654f47883">SevenSegMax7219</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#a0469f1b57c14141db8a290e8ce7bb35a">SevenSegTM163X</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_disp_hw_a8c72695666e9611e0c3dc2583df382af_cgraph.png" border="0" usemap="#aclass_seven_seg_disp_hw_a8c72695666e9611e0c3dc2583df382af_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_disp_hw_a8c72695666e9611e0c3dc2583df382af_cgraph" id="aclass_seven_seg_disp_hw_a8c72695666e9611e0c3dc2583df382af_cgraph">
+<area shape="rect" title="Turns the display module on." alt="" coords="5,5,181,32"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,..." alt="" coords="229,5,445,32"/>
+<area shape="poly" title=" " alt="" coords="181,16,213,16,213,21,181,21"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_disp_hw_a8c72695666e9611e0c3dc2583df382af_icgraph.png" border="0" usemap="#aclass_seven_seg_disp_hw_a8c72695666e9611e0c3dc2583df382af_icgraph" alt=""/></div>
+<map name="aclass_seven_seg_disp_hw_a8c72695666e9611e0c3dc2583df382af_icgraph" id="aclass_seven_seg_disp_hw_a8c72695666e9611e0c3dc2583df382af_icgraph">
+<area shape="rect" title="Turns the display module on." alt="" coords="477,107,652,133"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="253,5,420,32"/>
+<area shape="poly" title=" " alt="" coords="529,100,482,73,428,46,395,35,397,30,430,42,484,68,531,96"/>
+<area shape="rect" href="class_seven_seg_dynamic.html#a1184cb8662e12921f635c13b19a9df7b" title="Sets up the hardware display to work." alt="" coords="250,56,422,83"/>
+<area shape="poly" title=" " alt="" coords="486,105,399,86,400,81,487,100"/>
+<area shape="rect" href="class_seven_seg_dyn_dummy.html#ac0f6ac50ac26d402d96e2a689eb724d7" title="Sets up the required resources for the &quot;dummy hardware display&quot; to work." alt="" coords="5,81,196,108"/>
+<area shape="poly" title=" " alt="" coords="461,117,196,103,196,97,462,112"/>
+<area shape="rect" href="class_seven_seg_dyn_h_c595.html#acae65548bebc819a38ce07c07c140ef2" title="Sets up the required resources for the hardware display to work." alt="" coords="244,157,429,184"/>
+<area shape="poly" title=" " alt="" coords="487,140,400,159,399,154,486,135"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a5b8a85569987f67008d5323fcea52d0c" title="Turns the display module on set at the provided brightness level." alt="" coords="249,208,424,235"/>
+<area shape="poly" title=" " alt="" coords="531,144,484,172,430,198,397,210,395,205,428,194,482,167,529,140"/>
+<area shape="poly" title=" " alt="" coords="235,83,196,87,196,82,234,78"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -869,7 +1017,7 @@ Here is the caller graph for this function:</div>
  </p>
 <p>For correct execution and visual response, this method executes a <a class="el" href="#a25007a1b33093e4c055446010e254d63" title="Sets the brightness level for the display.">setBrghtnssLvl(const uint8_t &amp;)</a> method followed by a <a class="el" href="#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on.">turnOn()</a> method execution. <br  />
 </p>
-<dl class="section warning"><dt>Warning</dt><dd>If the <a class="el" href="#a25007a1b33093e4c055446010e254d63" title="Sets the brightness level for the display.">setBrghtnssLvl(const uint8_t &amp;)</a> method returns false indicating it has failed, this method will go on invoking the <a class="el" href="#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on.">turnOn()</a> method instead of failing altogether, as it gives more priority to the turning on of the display than to the brightness level setting. If the developer is not ok with this scheme he can always use the two methods independently in the sequence he decides better fits his needs and act as his own criteria dictates after the <a class="el" href="#a25007a1b33093e4c055446010e254d63" title="Sets the brightness level for the display.">setBrghtnssLvl(const uint8_t &amp;)</a> fails. <br  />
+<dl class="section warning"><dt>Warning</dt><dd>If the <a class="el" href="#a25007a1b33093e4c055446010e254d63" title="Sets the brightness level for the display.">setBrghtnssLvl(const uint8_t &amp;)</a> method returns false indicating it has failed, this method will go on invoking the <a class="el" href="#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on.">turnOn()</a> method instead of failing altogether, as it gives higher priority to the turning on of the display than to the brightness level setting. If the developer is not ok with this scheme he can always use the two methods independently in the sequence he decides better fits his needs and act as his own criteria dictates after the <a class="el" href="#a25007a1b33093e4c055446010e254d63" title="Sets the brightness level for the display.">setBrghtnssLvl(const uint8_t &amp;)</a> fails. <br  />
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -879,6 +1027,20 @@ Here is the caller graph for this function:</div>
 </dl>
 
 <p>Reimplemented in <a class="el" href="class_seven_seg_max7219.html#abff2d6deb86f12e4ca7a0bd17a444cc1">SevenSegMax7219</a>, and <a class="el" href="class_seven_seg_t_m163_x.html#a820e93c70fe532132b1d1117c84af7e6">SevenSegTM163X</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_disp_hw_a5b8a85569987f67008d5323fcea52d0c_cgraph.png" border="0" usemap="#aclass_seven_seg_disp_hw_a5b8a85569987f67008d5323fcea52d0c_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_disp_hw_a5b8a85569987f67008d5323fcea52d0c_cgraph" id="aclass_seven_seg_disp_hw_a5b8a85569987f67008d5323fcea52d0c_cgraph">
+<area shape="rect" title="Turns the display module on set at the provided brightness level." alt="" coords="5,31,181,57"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a25007a1b33093e4c055446010e254d63" title="Sets the brightness level for the display." alt="" coords="229,5,452,32"/>
+<area shape="poly" title=" " alt="" coords="181,32,213,29,213,34,182,38"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on." alt="" coords="253,56,428,83"/>
+<area shape="poly" title=" " alt="" coords="182,50,238,56,237,61,181,56"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,..." alt="" coords="500,56,716,83"/>
+<area shape="poly" title=" " alt="" coords="428,67,484,67,484,72,428,72"/>
+</map>
+</div>
 
 </div>
 </div>

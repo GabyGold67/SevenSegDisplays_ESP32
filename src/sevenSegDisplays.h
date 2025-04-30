@@ -70,9 +70,10 @@ class SevenSegDisplays {
    static const uint32_t _maxBlinkRate{2000};   //unsigned long for ESP32 in Arduino enviornment
 
 private:
+   bool _begun{false};
+   bool _isWaiting {false};
    uint8_t _waitChar {0xBF};
    uint8_t _waitCount {0};
-   bool _isWaiting {false};
    uint32_t _waitRate {250};
    uint32_t _waitTimer {0};
 
@@ -87,13 +88,6 @@ protected:
    int32_t _dspValMax{};
    int32_t _dspValMin{};
    bool _dspUndrlHwCommAnode{};
-   
-//====================================>> New addition WIP
-   bool _dspUndrlHwDimmable{};
-   uint8_t _dspUndrlHwCurBrghtnss{0};
-   uint8_t _dspUndrlHwMaxBrghtnss{0};
-   uint8_t _dspUndrlHwMinBrghtnss{0};
-//====================================>> New addition WIP
     
    bool _isBlinking{false};
    bool _blinkShowOn{false};

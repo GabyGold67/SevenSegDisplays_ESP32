@@ -1,0 +1,7 @@
+<map id="SevenSegDynHC595::end" name="SevenSegDynHC595::end">
+<area shape="rect" id="Node000001" title="Stops the active display updating." alt="" coords="5,5,181,32"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_disp_hw.html#a086ccd4d4966fa28a51d6b8f250b6c20" title="Turns the display module off." alt="" coords="229,5,404,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="181,16,213,16,213,21,181,21"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,..." alt="" coords="452,5,668,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="404,16,436,16,436,21,404,21"/>
+</map>

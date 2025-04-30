@@ -64,16 +64,20 @@ private:
    virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
 
 protected:
-   uint8_t _allLedsOff{};
-   bool _commAnode {true}; // SevenSegDisplays objects need this info to build the right segments to represent each character
+   uint8_t* _ioPins{};
    uint8_t* _digitPosPtr{nullptr};
-   uint8_t* _dspBlankBuffPtr{nullptr};  
-   uint8_t* _dspBuffPtr{nullptr};  
-   uint8_t* _dspBuffPtrBkp{nullptr};  
    uint8_t _dspDigitsQty{}; // Display size in digits    
+   bool _commAnode {true}; // SevenSegDisplays objects need this info to build the right segments to represent each character
+
+   uint8_t _allLedsOff{};  //!< Value to set in the display port to set all leds off, dependent of _commAnode
+   uint8_t _brghtnssLvl{0};  //!< Current display brightness level
+   uint8_t _brghtnssLvlMax{0};   //!< Maximum display brightness level
+   uint8_t _brghtnssLvlMin{0};   //!< Minimum display brightness level
+   uint8_t* _dspBlankBuffPtr{nullptr}; //!< Pointer to a display buffer filled with _allLedsOff ("spaces") to use as display buffer while in "Off State"
+   uint8_t* _dspBuffPtr{nullptr};   //!< Pointer to the display buffer, will be provided by the SevenSegDisplays object when it's instantiated
+   uint8_t* _dspBuffPtrBkp{nullptr};  //!< Pointer to the display buffer, copy of the original **_dspBuffPtr** to be used as backup when is a need to change the _dspBuffPtr
    SevenSegDispHw* _dspHwInstance{nullptr};
    uint8_t _dspHwInstNbr{0};
-   uint8_t* _ioPins{};
    bool _isOn{false};   //!< Current display status: On/Off
 
    virtual void _send(uint8_t* digitsBuffer);
@@ -87,13 +91,13 @@ public:
    /**
      * @brief Class constructor
      * 
-     * @param ioPins A pointer to an array holding the identifiers for the MCU GPIO pins required to send the data to be displayed to the **Display controller**. The correlation between the array positions and the pin function is given as in-class defined constants for each subclass.  
+     * @param ioPins A pointer to an array holding the identifiers for the MCU GPIO pins required to send the data to be displayed to the **Display controller**. The correlation between the array positions and the pin function is given as in-class defined constants for each instantiable subclass.  
      * @param dspDigits Quantity of digits/ports of the display. This value is directly related to the **display module component** quantity of ports and characteristics.  
      * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).  
      *      
-     * @attention The dspDigits parameter indicating the quantity of digits of the display module is a **basic fundamental** parameter passed at instantiation time. This information provides the value to be used to create a data buffer of the right size, the digits order table, auxiliary buffers and even the required information to calculate the range of values displayable and to generate a valid left or right aligned display. Obviously the quantity is bigger than 0, and must be less than or equal to the hardware maximum display digits capability.  
+     * @attention The dspDigits parameter, indicating the quantity of digits of the display module, is a **basic fundamental** parameter passed at instantiation time. This information provides the value to be used to create the data buffer of the right size, the digits order table, auxiliary buffers and the required information to calculate the range of values displayable and to generate a valid left or right aligned display. Obviously the quantity is bigger than 0, and must be less than or equal to the hardware maximum display digits capability.  
      * 
-     * @warning The dspDigits parameter value must not be confused with the maximum display digits a display controller component can handle. Many displays are designed using part of the controller's digits management for real seven segment displays digits, while using non used digits to manage some other display elements, like leds, special backlighting elements, etc. The class instantiated object needs the right amount of display digits available as such, the exceeding digits/ports is another issue.  
+     * @warning The dspDigits parameter value must not be confused with the maximum display digits a display controller component can handle. Many displays are designed using part of the controller's digits management for real seven segment displays digits while using non connected to ports pins to manage some other display elements, like individual leds, icons, special backlighting elements, etc. The class instantiated object needs the right amount of display digits available as such, the exceeding digits/ports is currently out of the libray management scope.  
      */
    SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
    /**
@@ -278,7 +282,7 @@ public:
  * @brief Abstract class models a generic dynamically updated **Seven Segment display hardware**
  */
 class SevenSegDynamic: public SevenSegDispHw{    
-    static void tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg);
+   static void tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg);
     
 private:
    virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
@@ -288,8 +292,8 @@ protected:
    TimerHandle_t _dynDspRfrshTmrHndl{NULL};
    uint8_t _firstRefreshed{0};
    void _refresh();
-   virtual void send(uint8_t content);
-   virtual void send(const uint8_t &segments, const uint8_t &port);
+   virtual void _send(uint8_t content);
+   virtual void _send(const uint8_t &segments, const uint8_t &port);
    TimerHandle_t _svnSgDynTmrHndl{NULL};
 
 public:
@@ -328,7 +332,7 @@ public:
  * As detailed in the **SevenSegDynamic** abstract class, this wiring arrange requires the display to be refreshed periodically to generate a cinematic effect or animation showing the full contents of all the digits at the same time, while the hardware is capable of lightning on just one at a time. This cinematic effect is also managed by the library.  
  */
 class SevenSegDynHC595: public SevenSegDynamic{
-    static void tmrCbRfrshDynHC595(TimerHandle_t rfrshTmrCbArg);
+   static void tmrCbRfrshDynHC595(TimerHandle_t rfrshTmrCbArg);
 
 private:
    const uint8_t _sclkIndx {0};
@@ -413,7 +417,7 @@ public:
  *      - The content for that position as a **hexadecimal** value.  
  */
 class SevenSegDynDummy: public SevenSegDynamic{
-    static void tmrCbRfrshDynDummy(TimerHandle_t rfrshTmrCbArg);
+   static void tmrCbRfrshDynDummy(TimerHandle_t rfrshTmrCbArg);
     
 private:    
    virtual void _unAbstract();
@@ -485,9 +489,6 @@ private:
    virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
 
 protected:
-   uint8_t _brghtnssLvl{0};  //!< Current display brightness level
-   uint8_t _brghtnssLvlMax{0};   //!< Maximum display brightness level
-   uint8_t _brghtnssLvlMin{0};   //!< Minimum display brightness level
      
 public:
     SevenSegStatic();

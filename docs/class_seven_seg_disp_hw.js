@@ -19,5 +19,12 @@ var class_seven_seg_disp_hw =
     [ "turnOff", "class_seven_seg_disp_hw.html#a086ccd4d4966fa28a51d6b8f250b6c20", null ],
     [ "turnOn", "class_seven_seg_disp_hw.html#a8c72695666e9611e0c3dc2583df382af", null ],
     [ "turnOn", "class_seven_seg_disp_hw.html#a5b8a85569987f67008d5323fcea52d0c", null ],
+    [ "_allLedsOff", "class_seven_seg_disp_hw.html#a9d1b19191790068b303f28d5c7efe17d", null ],
+    [ "_brghtnssLvl", "class_seven_seg_disp_hw.html#a75a3304095307da5652f745b7472ed75", null ],
+    [ "_brghtnssLvlMax", "class_seven_seg_disp_hw.html#afd984a492fe643d97943e3354546fd17", null ],
+    [ "_brghtnssLvlMin", "class_seven_seg_disp_hw.html#ac3d66d15f4eed1c1881b4121de41c9af", null ],
+    [ "_dspBlankBuffPtr", "class_seven_seg_disp_hw.html#a3ccc9149931302708fc61446a6ff0c46", null ],
+    [ "_dspBuffPtr", "class_seven_seg_disp_hw.html#a95b6978ec791ce44c93e826c3bb1d870", null ],
+    [ "_dspBuffPtrBkp", "class_seven_seg_disp_hw.html#a73f7ed1aa03a57762c51bfb6e29db011", null ],
     [ "_isOn", "class_seven_seg_disp_hw.html#a3766aca6533be7b0b416229ebfe4cf49", null ]
 ];

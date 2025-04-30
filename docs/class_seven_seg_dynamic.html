@@ -217,6 +217,34 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_methods_class_seven_seg_disp_hw"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_class_seven_seg_disp_hw')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a></td></tr>
 <tr class="inherit_header pro_attribs_class_seven_seg_disp_hw"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_seven_seg_disp_hw')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a></td></tr>
+<tr class="memitem:a9d1b19191790068b303f28d5c7efe17d inherit pro_attribs_class_seven_seg_disp_hw" id="r_a9d1b19191790068b303f28d5c7efe17d"><td class="memItemLeft" align="right" valign="top">
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_allLedsOff</b> {}</td></tr>
+<tr class="memdesc:a9d1b19191790068b303f28d5c7efe17d inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value to set in the display port to set all leds off, dependent of _commAnode. <br /></td></tr>
+<tr class="separator:a9d1b19191790068b303f28d5c7efe17d inherit pro_attribs_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75a3304095307da5652f745b7472ed75 inherit pro_attribs_class_seven_seg_disp_hw" id="r_a75a3304095307da5652f745b7472ed75"><td class="memItemLeft" align="right" valign="top">
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvl</b> {0}</td></tr>
+<tr class="memdesc:a75a3304095307da5652f745b7472ed75 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current display brightness level. <br /></td></tr>
+<tr class="separator:a75a3304095307da5652f745b7472ed75 inherit pro_attribs_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd984a492fe643d97943e3354546fd17 inherit pro_attribs_class_seven_seg_disp_hw" id="r_afd984a492fe643d97943e3354546fd17"><td class="memItemLeft" align="right" valign="top">
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvlMax</b> {0}</td></tr>
+<tr class="memdesc:afd984a492fe643d97943e3354546fd17 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum display brightness level. <br /></td></tr>
+<tr class="separator:afd984a492fe643d97943e3354546fd17 inherit pro_attribs_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3d66d15f4eed1c1881b4121de41c9af inherit pro_attribs_class_seven_seg_disp_hw" id="r_ac3d66d15f4eed1c1881b4121de41c9af"><td class="memItemLeft" align="right" valign="top">
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_brghtnssLvlMin</b> {0}</td></tr>
+<tr class="memdesc:ac3d66d15f4eed1c1881b4121de41c9af inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum display brightness level. <br /></td></tr>
+<tr class="separator:ac3d66d15f4eed1c1881b4121de41c9af inherit pro_attribs_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ccc9149931302708fc61446a6ff0c46 inherit pro_attribs_class_seven_seg_disp_hw" id="r_a3ccc9149931302708fc61446a6ff0c46"><td class="memItemLeft" align="right" valign="top">
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_dspBlankBuffPtr</b> {nullptr}</td></tr>
+<tr class="memdesc:a3ccc9149931302708fc61446a6ff0c46 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to a display buffer filled with _allLedsOff ("spaces") to use as display buffer while in "Off State". <br /></td></tr>
+<tr class="separator:a3ccc9149931302708fc61446a6ff0c46 inherit pro_attribs_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95b6978ec791ce44c93e826c3bb1d870 inherit pro_attribs_class_seven_seg_disp_hw" id="r_a95b6978ec791ce44c93e826c3bb1d870"><td class="memItemLeft" align="right" valign="top">
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_dspBuffPtr</b> {nullptr}</td></tr>
+<tr class="memdesc:a95b6978ec791ce44c93e826c3bb1d870 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the display buffer, will be provided by the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object when it's instantiated. <br /></td></tr>
+<tr class="separator:a95b6978ec791ce44c93e826c3bb1d870 inherit pro_attribs_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73f7ed1aa03a57762c51bfb6e29db011 inherit pro_attribs_class_seven_seg_disp_hw" id="r_a73f7ed1aa03a57762c51bfb6e29db011"><td class="memItemLeft" align="right" valign="top">
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_dspBuffPtrBkp</b> {nullptr}</td></tr>
+<tr class="memdesc:a73f7ed1aa03a57762c51bfb6e29db011 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the display buffer, copy of the original **_dspBuffPtr** to be used as backup when is a need to change the _dspBuffPtr. <br /></td></tr>
+<tr class="separator:a73f7ed1aa03a57762c51bfb6e29db011 inherit pro_attribs_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3766aca6533be7b0b416229ebfe4cf49 inherit pro_attribs_class_seven_seg_disp_hw" id="r_a3766aca6533be7b0b416229ebfe4cf49"><td class="memItemLeft" align="right" valign="top">
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td></tr>
 <tr class="memdesc:a3766aca6533be7b0b416229ebfe4cf49 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current display status: On/Off. <br /></td></tr>
@@ -267,6 +295,28 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
 <p>Reimplemented from <a class="el" href="class_seven_seg_disp_hw.html#a5f3a59bcc54ddd20445e049359753ab6">SevenSegDispHw</a>.</p>
 
 <p>Reimplemented in <a class="el" href="class_seven_seg_dyn_dummy.html#ac0f6ac50ac26d402d96e2a689eb724d7">SevenSegDynDummy</a>, and <a class="el" href="class_seven_seg_dyn_h_c595.html#acae65548bebc819a38ce07c07c140ef2">SevenSegDynHC595</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_dynamic_a1184cb8662e12921f635c13b19a9df7b_cgraph.png" border="0" usemap="#aclass_seven_seg_dynamic_a1184cb8662e12921f635c13b19a9df7b_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_dynamic_a1184cb8662e12921f635c13b19a9df7b_cgraph" id="aclass_seven_seg_dynamic_a1184cb8662e12921f635c13b19a9df7b_cgraph">
+<area shape="rect" title="Sets up the hardware display to work." alt="" coords="5,5,178,32"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on." alt="" coords="226,5,401,32"/>
+<area shape="poly" title=" " alt="" coords="178,16,210,16,210,21,178,21"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,..." alt="" coords="449,5,665,32"/>
+<area shape="poly" title=" " alt="" coords="401,16,433,16,433,21,401,21"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_dynamic_a1184cb8662e12921f635c13b19a9df7b_icgraph.png" border="0" usemap="#aclass_seven_seg_dynamic_a1184cb8662e12921f635c13b19a9df7b_icgraph" alt=""/></div>
+<map name="aclass_seven_seg_dynamic_a1184cb8662e12921f635c13b19a9df7b_icgraph" id="aclass_seven_seg_dynamic_a1184cb8662e12921f635c13b19a9df7b_icgraph">
+<area shape="rect" title="Sets up the hardware display to work." alt="" coords="244,5,416,32"/>
+<area shape="rect" href="class_seven_seg_dyn_dummy.html#ac0f6ac50ac26d402d96e2a689eb724d7" title="Sets up the required resources for the &quot;dummy hardware display&quot; to work." alt="" coords="5,5,196,32"/>
+<area shape="poly" title=" " alt="" coords="228,21,196,21,196,16,228,16"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -304,6 +354,18 @@ false The display activities couldn't be stopped. The method failed. <br  />
 <p>Reimplemented from <a class="el" href="class_seven_seg_disp_hw.html#a10ef7e4db6af3dbbcdeb48331d94f2e2">SevenSegDispHw</a>.</p>
 
 <p>Reimplemented in <a class="el" href="class_seven_seg_dyn_dummy.html#a2ca50c8a0dd4ff2d52caa0332119ce05">SevenSegDynDummy</a>, and <a class="el" href="class_seven_seg_dyn_h_c595.html#add611b927a735ea74809379a0ecb8533">SevenSegDynHC595</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_dynamic_ad33484426e9171966895857c9b7afcc4_cgraph.png" border="0" usemap="#aclass_seven_seg_dynamic_ad33484426e9171966895857c9b7afcc4_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_dynamic_ad33484426e9171966895857c9b7afcc4_cgraph" id="aclass_seven_seg_dynamic_ad33484426e9171966895857c9b7afcc4_cgraph">
+<area shape="rect" title="Reverts the begin(uint32_t) actions, stopping the display activities, stopping and deleting the timer..." alt="" coords="5,5,168,32"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a086ccd4d4966fa28a51d6b8f250b6c20" title="Turns the display module off." alt="" coords="216,5,391,32"/>
+<area shape="poly" title=" " alt="" coords="168,16,200,16,200,21,168,21"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,..." alt="" coords="439,5,655,32"/>
+<area shape="poly" title=" " alt="" coords="391,16,423,16,423,21,391,21"/>
+</map>
+</div>
 
 </div>
 </div>

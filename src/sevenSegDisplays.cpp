@@ -87,8 +87,17 @@ SevenSegDisplays::~SevenSegDisplays(){
 }
 
 bool SevenSegDisplays::begin(uint32_t updtLps){
+   bool result{false};
 
-   return getDspUndrlHwPtr()->begin(updtLps);
+   if(!_begun){
+      result = getDspUndrlHwPtr()->begin(updtLps);
+      if(result)
+         _begun = true;   
+   }
+   else
+      result = true;
+
+   return result;
 }
 
 bool SevenSegDisplays::blink(){
@@ -272,8 +281,17 @@ bool SevenSegDisplays::doubleGauge(const int &levelLeft, const int &levelRight, 
 }
 
 bool SevenSegDisplays::end(){
+   bool result{false};
 
-   return getDspUndrlHwPtr()->end();
+   if(_begun){
+      result = getDspUndrlHwPtr()->end();
+      if (result)
+         _begun = false;
+   }
+   else
+      result = true;
+
+   return result;
 }
 
 bool SevenSegDisplays::gauge(const int &level, char label){
