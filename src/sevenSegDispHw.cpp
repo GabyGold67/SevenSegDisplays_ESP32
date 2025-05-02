@@ -486,26 +486,6 @@ SevenSegStatic::SevenSegStatic(uint8_t* ioPins, uint8_t dspDigits, bool commAnod
 
 SevenSegStatic::~SevenSegStatic() {}
 
-uint8_t SevenSegStatic::getBrghtnssLvl(){
-
-   return _brghtnssLvl;
-}
-
-uint8_t SevenSegStatic::getBrghtnssMaxLvl(){
-
-   return _brghtnssLvlMax;
-}
-
-uint8_t SevenSegStatic::getBrghtnssMinLvl(){
-
-   return _brghtnssLvlMin;
-}
-
-void SevenSegStatic::ntfyUpdDsply(){
-
-   return;
-}
-
 //============================================================> Class methods separator
 
 SevenSegStatHC595::SevenSegStatHC595(){}
@@ -556,7 +536,7 @@ SevenSegTM163X::SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnod
 
    if(_dspDigitsQty > _dspDigitsQtyMax)
       _dspDigitsQty = _dspDigitsQtyMax;
-   _lclDspBuffPtr = new uint8_t[_dspDigitsQty];
+   _lclDspBuffPtr = new uint8_t[_dspDigitsQty]; //FFDR The display buffer shared with SevenSegDisplays need no manipulation, use mutex to avoid overwriting while operatin it from both sides and eliminate this uneeded buffer
    _xcdDspDigitsQty = _dspDigitsQtyMax  - _dspDigitsQty;
 
    if(_xcdDspDigitsQty > 0){
@@ -595,16 +575,6 @@ bool SevenSegTM163X::end(){
 uint8_t SevenSegTM163X::getBrghtnssLvl(){
 
    return _brghtnssLvl;
-}
-
-uint8_t SevenSegTM163X::getBrghtnssMaxLvl(){
-
-   return _brghtnssLvlMax;
-}
-
-uint8_t SevenSegTM163X::getBrghtnssMinLvl(){
-
-   return _brghtnssLvlMin;
 }
 
 void SevenSegTM163X::ntfyUpdDsply(){
@@ -691,7 +661,7 @@ bool SevenSegTM163X::_sendByte(uint8_t data){
 bool SevenSegTM163X::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
    bool result{false};
 
-   if((newBrghtnssLvl >=_brghtnssLvlMin)&&(newBrghtnssLvl<=_brghtnssLvlMax)){
+   if((newBrghtnssLvl >=_brghtnssLvlMin) && (newBrghtnssLvl<=_brghtnssLvlMax)){
       if(newBrghtnssLvl != _brghtnssLvl){
          _sendByte((_isOn?0x88:0x80) | newBrghtnssLvl);  // Keep display on/of state, set new brightness
          _brghtnssLvl = newBrghtnssLvl;
@@ -721,12 +691,10 @@ void SevenSegTM163X::turnOn(){
 }
 
 void SevenSegTM163X::turnOn(const uint8_t &newBrghtnssLvl){
-   if(!_isOn){
-      if(newBrghtnssLvl != _brghtnssLvl){
-         setBrghtnssLvl(newBrghtnssLvl);
-      }
+   if(newBrghtnssLvl != _brghtnssLvl)
+      setBrghtnssLvl(newBrghtnssLvl);
+   if(!_isOn)
       turnOn();
-   }
 
    return;
 }
@@ -771,7 +739,7 @@ void SevenSegTM163X::_txWrByte(uint8_t data){   // void I2CWrByte (unsigned char
    
    for(uint8_t i{0}; i < 8; i++){
       digitalWrite(_clk, LOW);
-      digitalWrite(_dio, (data & mask)?HIGH:LOW); //Equivalent single line ternary operation
+      digitalWrite(_dio, (data & mask)?HIGH:LOW);
       delayMicroseconds(3 * _txClkTckTm);
       mask = mask << 1;
       digitalWrite(_clk, HIGH);
@@ -856,7 +824,7 @@ SevenSegMax7219::SevenSegMax7219(uint8_t* ioPins, uint8_t dspDigits)
 
    if(_dspDigitsQty > _dspDigitsQtyMax)
       _dspDigitsQty = _dspDigitsQtyMax;
-   _lclDspBuffPtr = new uint8_t[_dspDigitsQty];
+   _lclDspBuffPtr = new uint8_t[_dspDigitsQty]; //FFDR this local buffer is needed as it keeps the shared buffer contents into MAX7219 format, protect the shared buffer with mutex to avoid changing while loading
    
    _clk = *(ioPins + _clkIndx);
    _din = *(ioPins + _dinIndx);
@@ -868,7 +836,6 @@ SevenSegMax7219::SevenSegMax7219(uint8_t* ioPins, uint8_t dspDigits)
    digitalWrite(_clk, LOW);
    digitalWrite(_din, LOW);
    digitalWrite(_cs, HIGH);
-
 }
 
 SevenSegMax7219::~SevenSegMax7219()
@@ -919,7 +886,7 @@ void SevenSegMax7219::ntfyUpdDsply(){
    return;
 }
 
-void SevenSegMax7219::send(const uint8_t &val, const  bool &MSbFrst) {
+void SevenSegMax7219::_sendByte(const uint8_t &val, const  bool &MSbFrst) {
    for(uint8_t i {0}; i < 8; i++) {
       if(MSbFrst)
          digitalWrite(_din, (val & (1 << (7 - i)))?HIGH:LOW);
@@ -937,8 +904,8 @@ void SevenSegMax7219::send(const uint8_t &address, const uint8_t &data, const  b
 
    taskENTER_CRITICAL(&mux);
    digitalWrite(_cs, LOW);
-   send(address, MSbFrst);
-   send(data, MSbFrst);
+   _sendByte(address, MSbFrst);
+   _sendByte(data, MSbFrst);
    digitalWrite(_cs, HIGH);
    taskEXIT_CRITICAL(&mux);
 
@@ -1121,6 +1088,7 @@ void SevenSegHT16K33::turnOff(){
 
    return;
 }
+
 void SevenSegHT16K33::turnOn(){
    if(!_isOn){
       if(_sendByte(_TurnOnBlnkNo))

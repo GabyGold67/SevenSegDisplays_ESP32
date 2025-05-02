@@ -498,7 +498,7 @@ public:
  */
 class SevenSegStatic: public SevenSegDispHw{
 private:
-   virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
+   virtual void _unAbstract() = 0; // Makes this an Abstract class.  
 
 protected:
      
@@ -506,10 +506,6 @@ public:
     SevenSegStatic();
     SevenSegStatic(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
     virtual ~SevenSegStatic();
-    virtual uint8_t getBrghtnssLvl();
-    virtual uint8_t getBrghtnssMaxLvl();
-    virtual uint8_t getBrghtnssMinLvl();
-    virtual void ntfyUpdDsply();
 };
 
 //============================================================> Class declarations separator
@@ -652,27 +648,11 @@ protected:
     * 
     * The TM163X series display drivers have the capability of changing the led display brightness level by using PWM on it's output pins. The resulting brightness levels are not perceived as linear, and the minimum and maximum brightness values don't reach the levels of totally turning the display off, neither turning the display to it's maximum possible brightness.
     * 
-    * @note The SevenSegTM163X abstract class is instrumented so that any subclass must incorporate the minimum and maximum values for that specific display subclass. All the members of the TM163X family I could check at this point share the minimum and the maximum brightness values: 0 for the minimum, 7 for the maximum, resulting in 8 brightness levels. But this is not taken for granted. See setBrghtnssLvl(const uint8_t &) for more details.  
+    * @note The SevenSegTM163X abstract class is instrumented so that any subclass must incorporate the minimum and maximum values for that specific display subclass. All the members of the TM163X family currently checked at this point share the minimum and the maximum brightness values: 0 for the minimum, 7 for the maximum, resulting in 8 brightness levels. But this is not taken for granted. See setBrghtnssLvl(const uint8_t &) for more details.  
     * 
     * @return The current brightness level setting.  
     */
-   uint8_t getBrghtnssLvl();
-   /**
-    * @brief Returns the maximum brightness level for the instantiated object.  
-    * 
-    * The value returned is the maximum brightness level setting available for the object's class.  
-    * 
-    * @return The uint8_t value of the maximum brightness setting available for the object's class.  
-    */
-   virtual uint8_t getBrghtnssMaxLvl();
-   /**
-    * @brief Returns the minimum brightness level for the instantiated object.  
-    * 
-    * The value returned is the minimum brightness level setting available for the object's class.  
-    * 
-    * @return The uint8_t value of the minimum brightness setting available for the object's class.  
-    */
-   uint8_t getBrghtnssMinLvl();
+   virtual uint8_t getBrghtnssLvl();
    /**
     * @brief See SevenSegDispHw::ntfyUpdDsply() for description
     */
@@ -885,7 +865,7 @@ private:
 protected:
 	uint8_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to _dspDigitsQty, the local buffer differs from the shared _dspBuffPtr because it holds the data of the _dspBuffPtr formatted and ready to be sent to the display controller    
     
-	virtual void send(const uint8_t &val, const bool &MSbFrst = true);
+	virtual void _sendByte(const uint8_t &val, const bool &MSbFrst = true);
 	virtual void send(const uint8_t &address, const uint8_t &data, const bool &MSbFrst = true);
 	virtual void _sendBffr();
     
