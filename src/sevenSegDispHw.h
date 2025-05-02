@@ -69,19 +69,22 @@ protected:
    uint8_t _dspDigitsQty{}; // Display size in digits    
    bool _commAnode {true}; // SevenSegDisplays objects need this info to build the right segments to represent each character
 
-   uint8_t _allLedsOff{};  //!< Value to set in the display port to set all leds off, dependent of _commAnode
+   uint8_t _allLedsOff{};  //!< Value to set in the display port to set all leds off (a "space"), dependent of _commAnode
    uint8_t _brghtnssLvl{0};  //!< Current display brightness level
    uint8_t _brghtnssLvlMax{0};   //!< Maximum display brightness level
    uint8_t _brghtnssLvlMin{0};   //!< Minimum display brightness level
    uint8_t* _dspBlankBuffPtr{nullptr}; //!< Pointer to a display buffer filled with _allLedsOff ("spaces") to use as display buffer while in "Off State"
    uint8_t* _dspBuffPtr{nullptr};   //!< Pointer to the display buffer, will be provided by the SevenSegDisplays object when it's instantiated
-   uint8_t* _dspBuffPtrBkp{nullptr};  //!< Pointer to the display buffer, copy of the original **_dspBuffPtr** to be used as backup when is a need to change the _dspBuffPtr
+   uint8_t* _dspBuffPtrBkp{nullptr};  //!< Pointer to the display buffer, copy of the original **_dspBuffPtr** to be used as backup
    SevenSegDispHw* _dspHwInstance{nullptr};
    uint8_t _dspHwInstNbr{0};
    bool _isOn{false};   //!< Current display status: On/Off
 
    virtual void _send(uint8_t* digitsBuffer);
    virtual void _send(const uint8_t &segments, const uint8_t &port);
+   
+   virtual void _sendDataUnit(void* dataUnit);  //FFDR unify send methods using void*
+   virtual void _sendMssg(void* dataMssg);   //FFDR unify send methods using void*
 
 public:
    /**
@@ -227,9 +230,13 @@ public:
      * 
    * Use example:  
    * @code {.cpp}
-   * uint8_t diyMore8Bits[8] {3, 2, 1, 0, 7, 6, 5, 4}; //Builds an array with the port order of the "DIY MORE 8-bit LED Display".
+   * const uint8_t diyMore8Bits[8] {3, 2, 1, 0, 7, 6, 5, 4}; //Builds an array with the port order of the "DIY MORE 8-bit LED Display".
+   * const uint8_t stdLtoRx4 [4] {0, 1, 2, 3};  // Simple left to right 4 digits order
+   * const uint8_t stdRtoLx4 [4] {3, 2, 1, 0};  // Simple right to left 4 digits order (default)
+   * 
    * myLedDisp.setDigitsOrder(diyMore8Bits); //Changes the display bit to port mapping according to the display characteristics.  
    * @endcode
+   * 
 */
     bool setDigitsOrder(uint8_t* newOrderPtr);
     /**
@@ -285,16 +292,16 @@ class SevenSegDynamic: public SevenSegDispHw{
    static void tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg);
     
 private:
-   virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
+   virtual void _unAbstract() = 0; // Makes this an Abstract class.
 
 protected:
-   // static TimerHandle_t _dynDspRfrshTmrHndl;
    TimerHandle_t _dynDspRfrshTmrHndl{NULL};
    uint8_t _firstRefreshed{0};
+   String _rfrshTmrName{""};
+
    void _refresh();
    virtual void _send(uint8_t content);
    virtual void _send(const uint8_t &segments, const uint8_t &port);
-   TimerHandle_t _svnSgDynTmrHndl{NULL};
 
 public:
    SevenSegDynamic();

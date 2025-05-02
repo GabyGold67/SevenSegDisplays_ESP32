@@ -25,9 +25,6 @@
 #include "Arduino.h"
 #include "sevenSegDispHw.h"
 //----------------------------------------->> Global constants declaration BEGIN
-const uint8_t diyMore8Bits[8] {3, 2, 1, 0, 7, 6, 5, 4};
-const uint8_t stdLtoRx4 [4] {0, 1, 2, 3};
-const uint8_t stdRtoLx4 [4] {3, 2, 1, 0};
 //------------------------------------------->> Global constants declaration END
 
 //-------------------------------------->> Static variables initialization BEGIN
@@ -54,10 +51,11 @@ SevenSegDispHw::SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits, bool commAnod
 }
 
 SevenSegDispHw::~SevenSegDispHw() {
-   if(_digitPosPtr!=nullptr)
-      delete [] _digitPosPtr;
-   if(_dspBlankBuffPtr!=nullptr)
+   end();
+   if(_dspBlankBuffPtr != nullptr)
       delete [] _dspBlankBuffPtr;   
+   if(_digitPosPtr != nullptr)
+      delete [] _digitPosPtr;
 }
 
 bool SevenSegDispHw::begin(uint32_t updtLps){
@@ -67,7 +65,12 @@ bool SevenSegDispHw::begin(uint32_t updtLps){
 }
 
 bool SevenSegDispHw::end(){
-   turnOff();
+   // Execute subset of turnOff()
+   if(_isOn){
+      memset(_dspBuffPtr, _allLedsOff, _dspDigitsQty);
+      ntfyUpdDsply();
+      _isOn = false;
+   }
 
    return true;
 }
@@ -118,6 +121,16 @@ void SevenSegDispHw::_send(uint8_t *digitsBuffer){
 }
 
 void SevenSegDispHw::_send(const uint8_t &segments, const uint8_t &port){
+
+   return;
+}
+
+void SevenSegDispHw::_sendDataUnit(void* dataUnit){   //FFDR unify send methods using void*
+
+   return;
+}  
+
+void SevenSegDispHw::_sendMssg(void* dataMssg){   //FFDR unify send methods using void*
 
    return;
 }
@@ -191,84 +204,24 @@ SevenSegDynamic::SevenSegDynamic(){}
 SevenSegDynamic::SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
 :SevenSegDispHw(ioPins, dspDigits, commAnode)
 {
+   String dspSerialNumStr {"000" + String(_dspHwInstNbr)};
+   dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length());
+   _rfrshTmrName = "DynDsp" + dspSerialNumStr + "rfrsh_tmr";
 }
 
-SevenSegDynamic::~SevenSegDynamic(){
-   BaseType_t tmrModResult {pdFAIL};
-
-   if(_dynDspRfrshTmrHndl){
-      end();
-      tmrModResult = xTimerDelete(_dynDspRfrshTmrHndl, portMAX_DELAY);
-      if(tmrModResult == pdPASS){
-         _dynDspRfrshTmrHndl = NULL;
-      }
-   }
-}
+SevenSegDynamic::~SevenSegDynamic(){}
 
 bool SevenSegDynamic::begin(uint32_t updtLps){
-   bool result {false};
-   BaseType_t tmrModResult {pdFAIL};
 
-   //Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)
-   if (!_svnSgDynTmrHndl){
-      //Create a valid unique Name for identifying the timer created
-      String rfrshTmrName{""};
-      String dspSerialNumStr {"000" + String(_dspHwInstNbr)};
-      dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length());
-      rfrshTmrName = "DynDsp" + dspSerialNumStr + "rfrsh_tmr";
-
-      //Initialize the Display refresh timer. Considering each digit to be refreshed at 30 Hz in turn, the freq might be (Max qty of digits * 30Hz)
-      _dynDspRfrshTmrHndl = xTimerCreate(
-         rfrshTmrName.c_str(),
-         pdMS_TO_TICKS((int)(1000/(30 * _dspDigitsQty))),
-         // pdMS_TO_TICKS(100),
-         pdTRUE,  //Auto-reload
-         NULL,   //TimerID, data to be passed to the callback function
-         SevenSegDynamic::tmrCbRfrshDyn  //Callback function
-      );
-   }
-
-   if(_dynDspRfrshTmrHndl != NULL){
-      if(!xTimerIsTimerActive(_dynDspRfrshTmrHndl)){
-         tmrModResult = xTimerStart(_dynDspRfrshTmrHndl, portMAX_DELAY);
-         if (tmrModResult == pdPASS)
-            result = true;
-      }
-      else{
-         result = true;
-      }   
-   }
-   turnOn();
-
-   return result;
+   return true;
 }
 
 bool SevenSegDynamic::end() {
-   bool result {false};
-   BaseType_t tmrModResult {pdFAIL};
 
-   turnOff();
-   if(_dynDspRfrshTmrHndl){   //if the timer still exists and is running, stop and delete
-      tmrModResult = xTimerStop(_dynDspRfrshTmrHndl, portMAX_DELAY);
-      if(tmrModResult == pdPASS){
-         result = true;
-      }
-   }
-
-   return result;
+   return true;
 }
 
 void SevenSegDynamic::_refresh(){
-   bool tmpLogic {true};
-   uint8_t tmpDigToSend{0};
-
-    for (int i {0}; i < _dspDigitsQty; i++){
-        tmpDigToSend = *(_dspBuffPtr + ((i + _firstRefreshed) % _dspDigitsQty));
-        _send(tmpDigToSend, uint8_t(1) << *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty)));
-    }
-    ++_firstRefreshed;
-    if (_firstRefreshed == _dspDigitsQty)
-        _firstRefreshed = 0;
 
     return;
 }
@@ -322,22 +275,15 @@ bool SevenSegDynHC595::begin(uint32_t updtLps){
    _firstRefreshed = 0;
    //Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)
    if (!_dynHC595DspRfrshTmrHndl){
-      //Create a valid unique Name for identifying the timer created
-      String rfrshTmrName{""};
-      String dspSerialNumStr {"000" + String(_dspHwInstNbr)};
-      dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length());
-      rfrshTmrName = "DynHC595Dsp" + dspSerialNumStr + "rfrsh_tmr";
-
       //Initialize the Display refresh timer. Considering each digit to be refreshed at 30 Hz in turn, the freq might be (Qty of digits * 30Hz)
       _dynHC595DspRfrshTmrHndl = xTimerCreate(
-         rfrshTmrName.c_str(),   // Timer human readable name
+         _rfrshTmrName.c_str(),   // Timer human readable name
          pdMS_TO_TICKS((updtLps > 0)?updtLps:((int)(1000/(30 * _dspDigitsQty)))),
          pdTRUE,  // Autoreload
          this,   // TimerID, data to be passed to the callback function
          tmrCbRfrshDynHC595  //Callback function
       );
    }
-
    if(_dynHC595DspRfrshTmrHndl != NULL){
       if(!xTimerIsTimerActive(_dynHC595DspRfrshTmrHndl)){
          tmrModResult = xTimerStart(_dynHC595DspRfrshTmrHndl, portMAX_DELAY);
@@ -357,7 +303,7 @@ bool SevenSegDynHC595::end() {
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
    
-   turnOff();
+   SevenSegDispHw::end();
    if(_dynHC595DspRfrshTmrHndl){   //if the timer still exists and is running, stop and delete
       tmrModResult = xTimerStop(_dynHC595DspRfrshTmrHndl, portMAX_DELAY);
       if(tmrModResult == pdPASS){
@@ -429,15 +375,9 @@ bool SevenSegDynDummy::begin(uint32_t updtLps){
    _firstRefreshed = 0;
    //Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)
    if (!_dynDummyDspRfrshTmrHndl){
-      //Create a valid unique Name for identifying the timer created
-      String rfrshTmrName{""};
-      String dspSerialNumStr {"000" + String(_dspHwInstNbr)};
-      dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length());
-      rfrshTmrName = "DynDummyDsp" + dspSerialNumStr + "rfrsh_tmr";
-
       //Initialize the Display refresh timer. Considering each digit to be refreshed at 30 Hz in turn, the freq might be (Qty of digits * 30Hz)
       _dynDummyDspRfrshTmrHndl = xTimerCreate(
-         rfrshTmrName.c_str(),   // Timer human readable name
+         _rfrshTmrName.c_str(),   // Timer human readable name
          pdMS_TO_TICKS((updtLps > 0)?updtLps:2000),
          pdTRUE,  // Autoreload
          this,   // TimerID, data to be passed to the callback function
