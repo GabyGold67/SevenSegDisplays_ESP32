@@ -4,7 +4,7 @@
  * 
  * @brief Code example file to demonstrate SevenSegDisplays_ESP32 library use with SevenSegDispHw::SevenSegStatHC595 class
  * 
- * @details 
+ * @details This example is specific for a 4 digits/ports 74HC595 display module, setting the corresponding parameters for the constructor, blink mask array and digits order array for that specific number of digits. The number of display ports also sets specific attibutes for the instantiated object, like the maximum and minimum values the display can show. For the use of the same library and class with a different amount of ports see the SSD_ESP32-StatHC595x3.ino and SSD_ESP32-StatHC595x2.ino examples.  
  *
  * Repository: https://github.com/GabyGold67/SevenSegDisplays_ESP32  
  * 
@@ -94,38 +94,12 @@ void mainCtrlTsk(void *pvParameters){
    const long testTime{2000};
    bool myBlinkMask[4] {true, true, true, true};
 
-   const uint8_t dio {GPIO_NUM_33};  // Pin connected to DS of 74HC595 AKA DIO  
-   const uint8_t rclk {GPIO_NUM_25}; // Pin connected to ST_CP of 74HC595 AKA RCLK  
+   const uint8_t dio {GPIO_NUM_33};  // Pin connected to DS of 74HC595 AKA DIO AKA SDI
+   const uint8_t rclk {GPIO_NUM_25}; // Pin connected to ST_CP of 74HC595 AKA RCLK AKA LOAD
    const uint8_t sclk {GPIO_NUM_26}; // Pin connected to SH_CP of 74HC595 AKA SCLK
    
    static uint8_t myDispIOPins[3] {sclk, rclk, dio}; // Pins set as an array as required by hw constructor
 
-
-/* Instantiation examples, different possibilities for use according to developer preferences*/
-/* A three lines step by step code example:  
-SevenSegDynHC595 myLedDispHw(myDispIOPins, 4, true);
-SevenSegDispHw* myLedDispHwPtr = &myLedDispHw;
-SevenSegDisplays myLedDisp(myLedDispHwPtr);
-*/
-
-/* A two lines example using the & operand to pass the pointer
-SevenSegDynHC595 myLedDispHw(myDispIOPins, 4, true);
-SevenSegDisplays myLedDisp(&myLedDispHw);
-*/
-
-/* A two lines example using a sub-class pointer to a dynamic instantiated object
-SevenSegDynHC595* myLedDispPtr {new SevenSegDynHC595 (myDispIOPins, 4, true)};
-SevenSegDisplays myLedDisp(myLedDispPtr);
-*/
-
-/* A two lines example using a base class pointer to a dynamic instantiated object
-SevenSegDispHw* myLedDispPtr {new SevenSegDynHC595 (myDispIOPins, 4, true)};
-SevenSegDisplays myLedDisp(myLedDispPtr);
-*/
-
-/* A one liner example using as argument the pointer returned from dynamic instantiated object
-SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
-*/
    uint8_t theNewOrder [4] {3, 2, 1, 0};
 
    SevenSegDispHw* myLedDispPtr {new SevenSegStatHC595 (myDispIOPins, 4, true)};

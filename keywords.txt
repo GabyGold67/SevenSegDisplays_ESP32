@@ -8,6 +8,7 @@
 SevenSegDisplays  KEYWORD1
 SevenSegDynHC595  KEYWORD1
 SevenSegDynDummy  KEYWORD1
+SevenSegHT16K33   KEYWORD1
 SevenSegMax7219   KEYWORD1
 SevenSegStatHC595 KEYWORD1
 SevenSegTM1636 KEYWORD1
@@ -23,18 +24,24 @@ SevenSegTM163X KEYWORD1
 ################################################
 #SevenSegDisplays class
 #######################
+begin KEYWORD2
 blink       KEYWORD2
 clear	    KEYWORD2
 doubleGauge KEYWORD2
+end  KEYWORD2
 gauge       KEYWORD2
+getCurBrghtnssLvl KEYWORD2
 getDigitsQty   KEYWORD2
 getDspCount KEYWORD2
+getDspIsDmmbl KEYWORD2
 getDspUndrlHwPtr  KEYWORD2
 getDspValMax   KEYWORD2
 getDspValMin   KEYWORD2
-getInstanceNbr  KEYWORD2
+getIsOn  KEYWORD2
 getMaxBlinkRate KEYWORD2
+getMaxBrghtnssLvl KEYWORD2
 getMinBlinkRate KEYWORD2
+getMinBrghtnssLvl KEYWORD2
 getSerialNbr   KEYWORD2
 isBlank  KEYWORD2
 isBlinking  KEYWORD2
@@ -45,28 +52,24 @@ print	    KEYWORD2
 resetBlinkMask KEYWORD2
 setBlinkMask   KEYWORD2
 setBlinkRate    KEYWORD2
+setBrghtnssLvl KEYWORD2
 setWaitChar KEYWORD2
 setWaitRate KEYWORD2
+turnOff  KEYWORD2
+turnOn   KEYWORD2
 wait    KEYWORD2
 write   KEYWORD2
 ##########################
 #SevenSegDispHw subclasses
 ##########################
-begin KEYWORD2
-end  KEYWORD2
-getBrghtnssLvl KEYWORD2
 getBrghtnssMaxLvl KEYWORD2
 getBrghtnssMinLvl KEYWORD2
 getCommAnode   KEYWORD2
 getDspBuffPtr  KEYWORD2
 getHwDspDigitsQty KEYWORD2
-getIsOn  KEYWORD2
 ntfyUpdDsply   KEYWORD2
-setBrghtnssLvl KEYWORD2
 setDigitsOrder KEYWORD2
 setDspBuffPtr  KEYWORD2
-turnOff  KEYWORD2
-turnOn  KEYWORD2
 ###############################################
 # Constants (LITERAL1)
 ###############################################

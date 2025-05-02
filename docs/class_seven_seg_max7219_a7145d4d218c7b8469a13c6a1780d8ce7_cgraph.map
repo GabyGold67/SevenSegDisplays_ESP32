@@ -1,0 +1,7 @@
+<map id="SevenSegMax7219::begin" name="SevenSegMax7219::begin">
+<area shape="rect" id="Node000001" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="5,31,179,57"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_max7219.html#a00e46d6be95a02bd6d20de36bf671080" title="Sets the brightness level for the display module." alt="" coords="227,5,456,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="179,33,211,29,211,35,180,38"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_max7219.html#a7dfe9eb652fec8a06f5d126654f47883" title="Turns the display module on." alt="" coords="251,56,432,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="180,50,236,56,235,61,179,55"/>
+</map>

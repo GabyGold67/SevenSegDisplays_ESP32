@@ -15,10 +15,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.0.1
+ * @version 3.1.0
  * 
  * @date First release: 20/12/2023  
- *       Last update:   17/04/2025 17:50 (GMT+0200) DST  
+ *       Last update:   27/04/2025 17:10 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -84,6 +84,20 @@ SevenSegDisplays::~SevenSegDisplays(){
    delete [] _dspBuffPtr;  // Free the resources of the display digits buffer
    _popSsd(_ssdInstancesLstPtr, _dspInstance);
    --_displaysCount;
+}
+
+bool SevenSegDisplays::begin(uint32_t updtLps){
+   bool result{false};
+
+   if(!_begun){
+      result = getDspUndrlHwPtr()->begin(updtLps);
+      if(result)
+         _begun = true;   
+   }
+   else
+      result = true;
+
+   return result;
 }
 
 bool SevenSegDisplays::blink(){
@@ -266,6 +280,20 @@ bool SevenSegDisplays::doubleGauge(const int &levelLeft, const int &levelRight, 
     return displayable;
 }
 
+bool SevenSegDisplays::end(){
+   bool result{false};
+
+   if(_begun){
+      result = getDspUndrlHwPtr()->end();
+      if (result)
+         _begun = false;
+   }
+   else
+      result = true;
+
+   return result;
+}
+
 bool SevenSegDisplays::gauge(const int &level, char label){
    bool displayable{true};
    String readOut{_spacePadding};
@@ -314,6 +342,11 @@ bool SevenSegDisplays::gauge(const double &level, char label) {
    return displayable;
 }
 
+uint8_t SevenSegDisplays::getCurBrghtnssLvl(){
+
+   return getDspUndrlHwPtr()->getBrghtnssLvl();
+}
+
 uint8_t SevenSegDisplays::getDigitsQty(){
 
    return _dspDigitsQty;
@@ -322,6 +355,16 @@ uint8_t SevenSegDisplays::getDigitsQty(){
 uint8_t SevenSegDisplays::getDspCount(){
 
    return _displaysCount;
+}
+
+bool SevenSegDisplays::getDspIsDmmbl(){
+
+   return !(getMinBrghtnssLvl()==getMaxBrghtnssLvl());
+}
+
+bool SevenSegDisplays::getIsOn(){
+
+   return getDspUndrlHwPtr()->getIsOn();
 }
 
 SevenSegDispHw* SevenSegDisplays::getDspUndrlHwPtr(){
@@ -337,6 +380,16 @@ int32_t SevenSegDisplays::getDspValMax(){
 int32_t SevenSegDisplays::getDspValMin(){
 
    return _dspValMin;
+}
+
+uint8_t SevenSegDisplays::getMaxBrghtnssLvl(){
+
+   return getDspUndrlHwPtr()->getBrghtnssMaxLvl();
+}
+
+uint8_t SevenSegDisplays::getMinBrghtnssLvl(){
+
+   return getDspUndrlHwPtr()->getBrghtnssMinLvl();
 }
 
 uint16_t SevenSegDisplays::getSerialNbr(){
@@ -386,7 +439,7 @@ bool SevenSegDisplays::noBlink(){
       taskENTER_CRITICAL(&mux);
       _isBlinking = false;
 
-      // tmrModResult = xTimerStop(_blinkTmrHndl, portMAX_DELAY); //FFDR The method fails when stopping the timer as it retrieves the buffer nos correctly modified for a write while blinkin. Check for the auxiliary buffer being modified if a write is executed while blinking!!!
+      // tmrModResult = xTimerStop(_blinkTmrHndl, portMAX_DELAY); //FFDR The method fails when stopping the timer as it retrieves the buffer not correctly modified for a write while blinkin. Check for the auxiliary buffer being modified if a write is executed while blinking!!!
       // if (tmrModResult == pdPASS){
       //    result = true;
       // }
@@ -425,7 +478,7 @@ bool SevenSegDisplays::noWait(){
 
    return result;
 }
-//FFDR Gaby checked up to here
+
 void SevenSegDisplays::_ntfyToHwBuffChng(){
    _dspUndrlHwPtr->ntfyUpdDsply();
 
@@ -771,6 +824,11 @@ bool SevenSegDisplays::setBlinkRate(const uint32_t &newOnRate, const uint32_t &n
    return result;  
 }
 
+bool SevenSegDisplays::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
+
+   return getDspUndrlHwPtr()->setBrghtnssLvl(newBrghtnssLvl);
+}
+
 void SevenSegDisplays::_setDspBuffChng(){//FFDR Include in this method all the actions triggered by the change of the display buffer contents: Unblocking underlying hardware display renewal, fill message FIFOs, etc.
    _ntfyToHwBuffChng();
 
@@ -830,6 +888,24 @@ void SevenSegDisplays::tmrCbBlink(TimerHandle_t blinkTmrCbArg){
 void SevenSegDisplays::tmrCbWait(TimerHandle_t waitTmrCbArg){
    SevenSegDisplays* thisDisplay = (SevenSegDisplays*)pvTimerGetTimerID(waitTmrCbArg);
    thisDisplay-> _updWaitState();
+
+   return;
+}
+
+void SevenSegDisplays::turnOff(){
+   getDspUndrlHwPtr()->turnOff();
+
+   return;
+}
+
+void SevenSegDisplays::turnOn(){
+   getDspUndrlHwPtr()->turnOn();
+
+   return;
+}
+
+void SevenSegDisplays::turnOn(const uint8_t &newBrghtnssLvl){
+   getDspUndrlHwPtr()->turnOn(newBrghtnssLvl);
 
    return;
 }

@@ -20,10 +20,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.0.1
+ * @version 3.1.0
  * 
  * @date First release: 20/12/2023  
- *       Last update:   31/03/2025 18:10 (GMT+0200) DST  
+ *       Last update:   27/04/2025 17:10 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license  
  *******************************************************************************
@@ -70,9 +70,10 @@ class SevenSegDisplays {
    static const uint32_t _maxBlinkRate{2000};   //unsigned long for ESP32 in Arduino enviornment
 
 private:
+   bool _begun{false};
+   bool _isWaiting {false};
    uint8_t _waitChar {0xBF};
    uint8_t _waitCount {0};
-   bool _isWaiting {false};
    uint32_t _waitRate {250};
    uint32_t _waitTimer {0};
 
@@ -213,7 +214,10 @@ public:
      * @brief Class destructor
      */
     ~SevenSegDisplays();
-   /**
+   
+   virtual bool begin(uint32_t updtLps = 0);
+
+    /**
     * @brief Makes the display blink the contents it is showing.
     * 
     * The display will blink the contents it is showing until a **`noBlink()`** method is invoked. The display will continue blinking even if the contents are changed.  
@@ -229,7 +233,6 @@ public:
     * @code {.cpp}
     * myLedDisp.blink(); // Begin blinking at the already set rate
     * @endcode
-    * 
     */
    bool blink();
    /**
@@ -258,8 +261,6 @@ public:
    * unsigned long rateTooBig {myLedDisp.getMaxBlinkRate() + 10} // Saves in a variable a blinking rate out of accepted range
    * myLedDisp.blink(rateTooBig); //Returns false and the display stays without change.  
    * @endcode
-   * 
-   * 
    */
    bool blink(const uint32_t &onRate, const uint32_t &offRate = 0);
    /**
@@ -312,6 +313,9 @@ public:
     * @endcode
     */
    bool doubleGauge(const int &levelLeft, const int &levelRight, char labelLeft = ' ', char labelRight = ' ');
+
+   bool end();
+
    /**
     * @brief Displays a basic graphical representation of the level of fulfillment or completeness of a segmented value or task.
     * 
@@ -389,6 +393,9 @@ public:
     * @endcode
     */
    bool gauge(const double &level, char label = ' ');
+
+   uint8_t getCurBrghtnssLvl();   
+
    /**
     * @brief Return the number of digits of the display hardware.  
     * 
@@ -410,6 +417,9 @@ public:
     * @return The quantity of instantiated displays.  
     */
    uint8_t getDspCount();
+
+   bool getDspIsDmmbl();
+
    /**
     * @brief Returns a pointer to the underlying hardware display object
     * 
@@ -452,6 +462,9 @@ public:
     * @endcode
     */
    int32_t getDspValMin();
+
+   bool getIsOn();
+
    /**
     * @brief Returns the maximum rate the display can be configured to blink at. 
     * 
@@ -470,6 +483,9 @@ public:
     * @endcode
     */
    uint32_t getMaxBlinkRate();
+
+   uint8_t getMaxBrghtnssLvl();
+
    /**
     * @brief Returns the minimum rate the display can be configured to blink at. 
     * 
@@ -488,6 +504,9 @@ public:
     * @endcode
     */
    uint32_t getMinBlinkRate();
+
+   uint8_t getMinBrghtnssLvl();
+
    /**
     * @brief Returns a unique numeric identification of the object
     * 
@@ -712,6 +731,9 @@ public:
     * @endcode
     */
    bool setBlinkRate(const uint32_t &newOnRate, const uint32_t &newOffRate = 0);
+
+   bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl); 
+   
    /**
     * @brief Sets the "Waiting" character.  
     * 
@@ -747,6 +769,13 @@ public:
     * @endcode
     */
    bool setWaitRate(const uint32_t &newWaitRate);
+   
+   void turnOff();
+
+   void turnOn();
+
+   void turnOn(const uint8_t &newBrghtnssLvl);
+
    /**
     * @brief Makes the display enter the "Waiting mode"  
     * 

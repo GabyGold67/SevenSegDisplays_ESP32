@@ -1,7 +1,7 @@
 <map id="SevenSegMax7219::setBrghtnssLvl" name="SevenSegMax7219::setBrghtnssLvl">
-<area shape="rect" id="Node000001" title="Sets the brightness level for the display module." alt="" coords="256,43,485,69"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_max7219.html#adfd8f4ad5a8b82598409b952163b9a4f" title="Class constructor." alt="" coords="5,5,208,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="240,44,208,41,208,35,240,39"/>
-<area shape="rect" id="Node000003" href="$class_seven_seg_max7219.html#abff2d6deb86f12e4ca7a0bd17a444cc1" title="Turns the display module on." alt="" coords="16,72,197,99"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="241,73,198,78,197,73,240,68"/>
+<area shape="rect" id="Node000001" title="Sets the brightness level for the display module." alt="" coords="235,31,464,57"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_max7219.html#a7145d4d218c7b8469a13c6a1780d8ce7" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="9,5,183,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="219,34,183,30,184,25,219,28"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_max7219.html#abff2d6deb86f12e4ca7a0bd17a444cc1" title="Turns the display module on." alt="" coords="5,56,187,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="219,60,187,63,187,58,219,54"/>
 </map>
