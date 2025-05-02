@@ -29,11 +29,8 @@
 
 //-------------------------------------->> Static variables initialization BEGIN
 uint8_t SevenSegDispHw::_dspHwSerialNum = 0;
-TwoWire* SevenSegHT16K33::i2cGenCommPtr = nullptr;
+// TwoWire* SevenSegHT16K33::i2cGenCommPtr = nullptr;
 
-// TimerHandle_t SevenSegDynamic::_dynDspRfrshTmrHndl = nullptr;
-// TimerHandle_t SevenSegDynHC595::_dynHC595DspRfrshTmrHndl = nullptr;
-// TimerHandle_t SevenSegDynDummy::_dynDummyDspRfrshTmrHndl = nullptr;
 //---------------------------------------->> Static variables initialization END
 
 //============================================================> Class methods separator
@@ -965,146 +962,8 @@ void SevenSegMax7219::_updLclBffrCntnt(){
 	return;
 }
 
-void SevenSegMax7219::_unAbstract(){return;}
-
-//============================================================> Class methods separator
-
-SevenSegHT16K33::SevenSegHT16K33(){};
-
-SevenSegHT16K33::SevenSegHT16K33(uint8_t i2cPortNum, uint8_t dspDigits, uint8_t i2cAddress, bool commAnode)
-:SevenSegStatic(nullptr, dspDigits, commAnode), _i2cPortNum{i2cPortNum}, _i2cAddress{i2cAddress}
-{
-   _brghtnssLvlMax = _hwBrghtnssLvlMax;
-   _brghtnssLvlMin = _hwBrghtnssLvlMin;
-   _brghtnssLvl = _brghtnssLvlMin;
-
-   if(_dspDigitsQty > _dspDigitsQtyMax)
-      _dspDigitsQty = _dspDigitsQtyMax;
-}
-
-/*SevenSegHT16K33::SevenSegHT16K33(uint8_t* ioPins, uint8_t dspDigits, uint8_t i2cAddress, bool commAnode)
-:SevenSegStatic(ioPins, dspDigits, commAnode), _i2cAddress{i2cAddress}
-{
-   _brghtnssLvlMax = _hwBrghtnssLvlMax;
-   _brghtnssLvlMin = _hwBrghtnssLvlMin;
-   _brghtnssLvl = _brghtnssLvlMin;
-
-   if(_dspDigitsQty > _dspDigitsQtyMax)
-      _dspDigitsQty = _dspDigitsQtyMax;   
-   if(ioPins != nullptr){
-      _sda = *(ioPins + _sdaIndx);
-      _scl = *(ioPins + _sclIndx);
-   }
-   else{
-      _sda = SDA;
-      _scl = SCL;
-   }
-}*/
-
-
-SevenSegHT16K33::~SevenSegHT16K33(){};
-
-bool SevenSegHT16K33::begin(uint32_t updtLps){
-   bool result {false};
-
-   TwoWire tmpI2C{TwoWire(_i2cPortNum)};
-   i2cGenCommPtr = &tmpI2C;
-
-   i2cGenCommPtr->begin(); // Set I2C port active
-   i2cGenCommPtr->setClock(400000); // Set I2C port speed
-
-   _sendByte(_ExitStndBy);  // Activate display
-   _sendByte(_SetRowOtpt);  // Display Row/Int output pin = Row
-   setBrghtnssLvl(_brghtnssLvlMax); // Set display brightness level to maximum
-   ntfyUpdDsply();   // Force to fill the display with the current display buffer content
-   turnOn();   // Turn display On
-
-   return result;
-}
-
-bool SevenSegHT16K33::end(){
-   #ifdef WIRE_HAS_END
-      i2cGenCommPtr->end();   // Set I2C port Inactive
-   #endif
-
-   return true;
-}
-
-bool SevenSegHT16K33::getIsOn(){
-
-   return _isOn;
-}
-
-void SevenSegHT16K33::ntfyUpdDsply(){
-   _sendMssg(_dspBuffPtr, _dspDigitsQty);
-
+void SevenSegMax7219::_unAbstract(){
    return;
 }
-
-bool SevenSegHT16K33::_sendByte(uint8_t data){
-   int result{0};
-
-   i2cGenCommPtr->beginTransmission(_i2cAddress);  
-   i2cGenCommPtr->write(data);   // Single data byte to send
-   result = i2cGenCommPtr->endTransmission(true);
-
-   return (result == 0);
-}
-
-bool SevenSegHT16K33::_sendMssg(uint8_t* data, uint8_t mssgLngth){
-   int result{0};
-
-   i2cGenCommPtr->beginTransmission(_i2cAddress);  
-   for(uint8_t mssgPtrOffset{0}; mssgPtrOffset < mssgLngth; mssgPtrOffset++)
-      i2cGenCommPtr->write(*(data + mssgPtrOffset));   // Single data byte to send
-   result = i2cGenCommPtr->endTransmission(true);
-   
-   return (result == 0);
-}
-
-bool SevenSegHT16K33::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
-   bool result{false};
-   uint8_t mssgData{0};
-
-   if((newBrghtnssLvl >= _brghtnssLvlMin) && (newBrghtnssLvl <= _brghtnssLvlMax)){
-      if(newBrghtnssLvl != _brghtnssLvl){
-         mssgData = _SetBrghtnssCmd | newBrghtnssLvl;
-         result = _sendByte(mssgData);   
-         if(result)
-            _brghtnssLvl = newBrghtnssLvl;
-      }
-      else
-         result = true;
-   }
-
-   return result;
-}
-
-void SevenSegHT16K33::turnOff(){
-   if(_isOn){
-      if(_sendByte(_TurnOffDsp))
-         _isOn = false;
-   }
-
-   return;
-}
-
-void SevenSegHT16K33::turnOn(){
-   if(!_isOn){
-      if(_sendByte(_TurnOnBlnkNo))
-         _isOn = true;
-   }
-
-   return;
-}
-
-void SevenSegHT16K33::turnOn(const uint8_t &newBrghtnssLvl){
-   setBrghtnssLvl(newBrghtnssLvl);
-   turnOn();
-
-   return;
-}
-
-void SevenSegHT16K33::_unAbstract(){return;}
 
 //============================================================> Class methods separator

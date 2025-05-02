@@ -1,9 +1,9 @@
 var searchData=
 [
   ['gauge_0',['gauge',['../class_seven_seg_displays.html#aa00c8c2fbca4a0068590ef62de28f198',1,'SevenSegDisplays::gauge(const int &amp;level, char label=&apos; &apos;)'],['../class_seven_seg_displays.html#a6fea06785902000457c1105c78d85093',1,'SevenSegDisplays::gauge(const double &amp;level, char label=&apos; &apos;)']]],
-  ['getbrghtnsslvl_1',['getBrghtnssLvl',['../class_seven_seg_disp_hw.html#a0c5d2d46808b3194bd248d133d3117bf',1,'SevenSegDispHw::getBrghtnssLvl()'],['../class_seven_seg_static.html#a5714c53e7d5f8d1bf27fc1eb21bfb97d',1,'SevenSegStatic::getBrghtnssLvl()'],['../class_seven_seg_t_m163_x.html#a484553b3cf9c8e60bc87e944d07fecde',1,'SevenSegTM163X::getBrghtnssLvl()']]],
-  ['getbrghtnssmaxlvl_2',['getBrghtnssMaxLvl',['../class_seven_seg_disp_hw.html#a75b0eb720bddb4e467814e41dd958575',1,'SevenSegDispHw::getBrghtnssMaxLvl()'],['../class_seven_seg_static.html#a07a95ebb4bb124f5f39172fd1e86247a',1,'SevenSegStatic::getBrghtnssMaxLvl()'],['../class_seven_seg_t_m163_x.html#a4b12ba68a4ed1738bbf0457a4dbec33e',1,'SevenSegTM163X::getBrghtnssMaxLvl()']]],
-  ['getbrghtnssminlvl_3',['getBrghtnssMinLvl',['../class_seven_seg_disp_hw.html#aa098a72fb84ffbec783e0c38f130f2c3',1,'SevenSegDispHw::getBrghtnssMinLvl()'],['../class_seven_seg_static.html#aee631491c0e0ab09eb9f3d9b8575cce9',1,'SevenSegStatic::getBrghtnssMinLvl()'],['../class_seven_seg_t_m163_x.html#a4cf3e667babba4a13292cb2124c7d60e',1,'SevenSegTM163X::getBrghtnssMinLvl()']]],
+  ['getbrghtnsslvl_1',['getBrghtnssLvl',['../class_seven_seg_disp_hw.html#a0c5d2d46808b3194bd248d133d3117bf',1,'SevenSegDispHw::getBrghtnssLvl()'],['../class_seven_seg_t_m163_x.html#a484553b3cf9c8e60bc87e944d07fecde',1,'SevenSegTM163X::getBrghtnssLvl()']]],
+  ['getbrghtnssmaxlvl_2',['getBrghtnssMaxLvl',['../class_seven_seg_disp_hw.html#a75b0eb720bddb4e467814e41dd958575',1,'SevenSegDispHw']]],
+  ['getbrghtnssminlvl_3',['getBrghtnssMinLvl',['../class_seven_seg_disp_hw.html#aa098a72fb84ffbec783e0c38f130f2c3',1,'SevenSegDispHw']]],
   ['getcommanode_4',['getCommAnode',['../class_seven_seg_disp_hw.html#a5b9379b7b6ca6946813fd643d28d74f4',1,'SevenSegDispHw']]],
   ['getdigitsqty_5',['getDigitsQty',['../class_seven_seg_displays.html#a05ddffe49e505638382affaa0426b272',1,'SevenSegDisplays']]],
   ['getdspbuffptr_6',['getDspBuffPtr',['../class_seven_seg_disp_hw.html#a17e903934d148f0d2c47da7ceb0982c7',1,'SevenSegDispHw']]],
