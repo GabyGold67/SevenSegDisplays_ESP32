@@ -403,6 +403,7 @@ bool SevenSegDynDummy::end(){
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
+   SevenSegDispHw::end();
    if(_dynDummyDspRfrshTmrHndl){   //if the timer still exists and is running, stop and delete
       tmrModResult = xTimerStop(_dynDummyDspRfrshTmrHndl, portMAX_DELAY);
       if(tmrModResult == pdPASS){
@@ -454,6 +455,20 @@ void SevenSegDynDummy::tmrCbRfrshDynDummy(TimerHandle_t rfrshTmrCbArg){
    //Timer Callback to keep the dynamic display lit by calling this display's refresh() method
    SevenSegDynDummy* SevenSegUndrlDummy = (SevenSegDynDummy*) pvTimerGetTimerID(rfrshTmrCbArg);
    SevenSegUndrlDummy->_refresh();
+
+   return;
+}
+
+void SevenSegDynDummy::turnOff(){
+   SevenSegDispHw::turnOff();
+   Serial.println("\n\rSeven Segment Dynamic Dummy Display Turned Off");
+
+   return;
+}
+
+void SevenSegDynDummy::turnOn(){
+   SevenSegDispHw::turnOn();
+   Serial.println("\n\rSeven Segment Dynamic Dummy Display Turned On");
 
    return;
 }

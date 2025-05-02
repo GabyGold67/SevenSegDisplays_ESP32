@@ -469,6 +469,11 @@ public:
      * See SevenSegDynHC595::end() for details.  
      */
     bool end();
+
+    virtual void turnOff();
+
+    virtual void turnOn();
+
 };
 
 //============================================================> Class declarations separator
