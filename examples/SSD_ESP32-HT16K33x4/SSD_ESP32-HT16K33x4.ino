@@ -92,14 +92,20 @@ void mainCtrlTsk(void *pvParameters){
 
    uint8_t theNewOrder [4] {3, 2, 1, 0};
 
-   SevenSegDispHw* myLedDispPtr {new HT16K33 (0, 4, 0x70, true)};
+   const uint8_t sda {GPIO_NUM_21};  // Pin connected to DIO of TM1637
+   const uint8_t scl {GPIO_NUM_22}; // Pin connected to CLK of TM1637
+   
+   static uint8_t myDispIOPins[2] {scl, sda}; // Pins set as an array as required by hw constructor
+
+
+   SevenSegDispHw* myLedDispPtr {new SevenSegHT16K33 (myDispIOPins, 4, 0x70, true)};
    myLedDispPtr -> setDigitsOrder(theNewOrder);
    SevenSegDisplays myLedDisp(myLedDispPtr);
-   myLedDisp.begin();
+   // myLedDisp.begin();
 
    for(;;){
       {
-         myLedDisp.getDspUndrlHwPtr()->begin();
+         myLedDisp.begin();
          Serial.println("Service Started");
          vTaskDelay(250);
       }
@@ -385,7 +391,7 @@ void mainCtrlTsk(void *pvParameters){
       }
 
       {
-         myLedDisp.getDspUndrlHwPtr()->end();
+         myLedDisp.end();
          Serial.println("Service stopped");
          vTaskDelay(testTime);
       }

@@ -29,7 +29,6 @@
 
 //-------------------------------------->> Static variables initialization BEGIN
 uint8_t SevenSegDispHw::_dspHwSerialNum = 0;
-// TwoWire* SevenSegHT16K33::i2cGenCommPtr = nullptr;
 
 //---------------------------------------->> Static variables initialization END
 
@@ -532,8 +531,8 @@ SevenSegTM163X::SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnod
    _brghtnssLvl = _brghtnssLvlMax;
 
    if(_dspDigitsQty > _dspDigitsQtyMax)
-      _dspDigitsQty = _dspDigitsQtyMax;
-   _lclDspBuffPtr = new uint8_t[_dspDigitsQty]; //FFDR The display buffer shared with SevenSegDisplays need no manipulation, use mutex to avoid overwriting while operatin it from both sides and eliminate this uneeded buffer
+      _dspDigitsQty = _dspDigitsQtyMax;   //FFDR Move the checking to the base class constructor and allocate the correct amount of memory there!!
+   _lclDspBuffPtr = new uint8_t[_dspDigitsQty]; //FFDR The display buffer shared with SevenSegDisplays need no manipulation, use mutex to avoid overwriting while operating it from both sides and eliminate this uneeded buffer
    _xcdDspDigitsQty = _dspDigitsQtyMax  - _dspDigitsQty;
 
    if(_xcdDspDigitsQty > 0){
@@ -820,7 +819,7 @@ SevenSegMax7219::SevenSegMax7219(uint8_t* ioPins, uint8_t dspDigits)
    _brghtnssLvl = _brghtnssLvlMin;
 
    if(_dspDigitsQty > _dspDigitsQtyMax)
-      _dspDigitsQty = _dspDigitsQtyMax;
+      _dspDigitsQty = _dspDigitsQtyMax;   //FFDR Move the checking to the base class constructor and allocate the correct amount of memory there!!
    _lclDspBuffPtr = new uint8_t[_dspDigitsQty]; //FFDR this local buffer is needed as it keeps the shared buffer contents into MAX7219 format, protect the shared buffer with mutex to avoid changing while loading
    
    _clk = *(ioPins + _clkIndx);
@@ -843,9 +842,9 @@ SevenSegMax7219::~SevenSegMax7219()
 bool SevenSegMax7219::begin(uint32_t updtLps)
 {
    
-   send(_DspTestAddr, _NormalOp);   // Set Not in test mode!
-   send(_ScanLimitAddr, (_dspDigitsQty - 1), true);   //!< Set Scan Limit: Register data 0x00 to 0x07: quantity of digits to keep updated
-   send(_DecodeModeAddr, _NoDecode);   // Set No Decode format
+   _sendAddrData(_DspTestAddr, _NormalOp, true);   // Set Not in test mode!
+   _sendAddrData(_ScanLimitAddr, (_dspDigitsQty - 1), true);   //!< Set Scan Limit: Register data 0x00 to 0x07: quantity of digits to keep updated
+   _sendAddrData(_DecodeModeAddr, _NoDecode, true);   // Set No Decode format
    setBrghtnssLvl(_brghtnssLvlMax);
    turnOn();
 
@@ -896,7 +895,7 @@ void SevenSegMax7219::_sendByte(const uint8_t &val, const  bool &MSbFrst) {
    return;
 }
 
-void SevenSegMax7219::send(const uint8_t &address, const uint8_t &data, const  bool &MSbFrst){
+void SevenSegMax7219::_sendAddrData(const uint8_t &address, const uint8_t &data, const  bool &MSbFrst){
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
    taskENTER_CRITICAL(&mux);
@@ -911,7 +910,7 @@ void SevenSegMax7219::send(const uint8_t &address, const uint8_t &data, const  b
 
 void SevenSegMax7219::_sendBffr(){
    for(uint8_t dspPrt{0}; dspPrt < _dspDigitsQty; dspPrt++)
-      send((_DspPortsBaseAddr + dspPrt), *(_lclDspBuffPtr + dspPrt));
+   _sendAddrData((_DspPortsBaseAddr + dspPrt), *(_lclDspBuffPtr + dspPrt), true);
 
    return;
 }
@@ -921,7 +920,7 @@ bool SevenSegMax7219::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
 
    if((newBrghtnssLvl >= _brghtnssLvlMin) && (newBrghtnssLvl <= _brghtnssLvlMax)){
       if(newBrghtnssLvl != _brghtnssLvl){
-         send(_BrghtnsSettAddr, newBrghtnssLvl, true);   
+         _sendAddrData(_BrghtnsSettAddr, newBrghtnssLvl, true);   
          _brghtnssLvl = newBrghtnssLvl;
       }
       result = true;
@@ -932,7 +931,7 @@ bool SevenSegMax7219::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
 
 void SevenSegMax7219::turnOff(){
    if(_isOn){
-      send(_ShutDownAddr, _TurnOff, true);   
+      _sendAddrData(_ShutDownAddr, _TurnOff, true);   
       _isOn = false;
    }
 
@@ -941,7 +940,7 @@ void SevenSegMax7219::turnOff(){
 
 void SevenSegMax7219::turnOn(){
    if(!_isOn){
-      send(_ShutDownAddr, _TurnOn, true);   
+      _sendAddrData(_ShutDownAddr, _TurnOn, true);   
       _isOn = true;
    }
 
@@ -963,7 +962,155 @@ void SevenSegMax7219::_updLclBffrCntnt(){
 }
 
 void SevenSegMax7219::_unAbstract(){
+
    return;
 }
+
+//============================================================> Class methods separator
+
+SevenSegHT16K33::SevenSegHT16K33(){};
+
+SevenSegHT16K33::SevenSegHT16K33(uint8_t* ioPins, uint8_t dspDigits, uint8_t i2cAddress, bool commAnode)
+:SevenSegStatic(ioPins, dspDigits, commAnode), _i2cAddress{i2cAddress}
+{
+   _brghtnssLvlMax = _hwBrghtnssLvlMax;
+   _brghtnssLvlMin = _hwBrghtnssLvlMin;
+   _brghtnssLvl = _brghtnssLvlMin;
+
+   if(_dspDigitsQty > _dspDigitsQtyMax)
+      _dspDigitsQty = _dspDigitsQtyMax;  //FFDR Move the checking to the base class constructor and allocate the correct amount of memory there!! 
+   
+   if(ioPins == nullptr){
+      _sda = SDA;
+      _scl = SCL;
+   }
+   else{
+      _scl = *(ioPins + _sclIndx);
+      _sda = *(ioPins + _sdaIndx);
+   }
+}
+
+
+SevenSegHT16K33::~SevenSegHT16K33(){};
+
+bool SevenSegHT16K33::begin(uint32_t updtLps){
+   bool result {false};
+
+   Serial.println("\n\nEntering begin()");
+   Serial.println("================");
+
+   Wire.begin(static_cast<int>(_sda), static_cast<int>(_scl));
+   Wire.setClock(static_cast<uint32_t>(400000));
+   _sendByte(_ExitStndBy);  // Activate display
+   _sendByte(_SetRowOtpt);  // Display Row/Int output pin = Row
+   turnOn();
+   setBrghtnssLvl(_brghtnssLvlMax); // Set display brightness level to maximum
+   // ntfyUpdDsply();   // Force to fill the display with the current display buffer content
+
+   result = true;
+
+   Serial.println("Exiting begin()");
+   Serial.println("===============");
+
+
+   return result;
+}
+
+bool SevenSegHT16K33::end(){
+   Serial.println("Entering end()");
+   Serial.println("================");
+
+   #ifdef WIRE_HAS_END
+   Wire.end();   // Set I2C port Inactive
+   #endif
+
+   Serial.println("Exiting end()");
+   Serial.println("=============");
+
+   return true;
+}
+
+bool SevenSegHT16K33::getIsOn(){
+
+   return _isOn;
+}
+
+void SevenSegHT16K33::ntfyUpdDsply(){
+   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+
+   taskENTER_CRITICAL(&mux);
+   _sendMssg(_dspBuffPtr, _dspDigitsQty);
+   taskEXIT_CRITICAL(&mux);
+
+   return;
+}
+
+bool SevenSegHT16K33::_sendByte(uint8_t data){
+   int result{0};
+
+   Wire.beginTransmission(_i2cAddress);  
+   Wire.write(data);   // Single data byte to send
+   // result = Wire.endTransmission(true);
+   result = Wire.endTransmission();
+
+   return (result == 0);
+}
+
+bool SevenSegHT16K33::_sendMssg(uint8_t* data, uint8_t mssgLngth){
+   int result{0};
+
+   Wire.beginTransmission(_i2cAddress); 
+   Wire.write(_DspPortsBaseAddr); 
+   for(uint8_t mssgPtrOffset{0}; mssgPtrOffset < mssgLngth; mssgPtrOffset++)
+      Wire.write(*(data + mssgPtrOffset));   // Single data byte to send
+   result = Wire.endTransmission(true);
+   
+   return (result == 0);
+}
+
+bool SevenSegHT16K33::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
+   bool result{false};
+   uint8_t mssgData{0};
+
+   if((newBrghtnssLvl >= _brghtnssLvlMin) && (newBrghtnssLvl <= _brghtnssLvlMax)){
+      if(newBrghtnssLvl != _brghtnssLvl){
+         mssgData = _SetBrghtnssCmd | newBrghtnssLvl;
+         result = _sendByte(mssgData);   
+         if(result)
+            _brghtnssLvl = newBrghtnssLvl;
+      }
+      else
+         result = true;
+   }
+
+   return result;
+}
+
+void SevenSegHT16K33::turnOff(){
+   if(_isOn){
+      if(_sendByte(_TurnOffDsp))
+         _isOn = false;
+   }
+
+   return;
+}
+
+void SevenSegHT16K33::turnOn(){
+   if(!_isOn){
+      if(_sendByte(_TurnOnBlnkNo))
+         _isOn = true;
+   }
+   
+   return;
+}
+
+void SevenSegHT16K33::turnOn(const uint8_t &newBrghtnssLvl){
+   setBrghtnssLvl(newBrghtnssLvl);
+   turnOn();
+
+   return;
+}
+
+void SevenSegHT16K33::_unAbstract(){return;}
 
 //============================================================> Class methods separator
