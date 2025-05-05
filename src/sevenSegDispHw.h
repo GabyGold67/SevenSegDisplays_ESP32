@@ -594,7 +594,7 @@ private:
    uint8_t _dio {}; 
 
    virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
-   void _updDsplyCntnt();
+   void _updLclBffrCntnt();
 
 protected:
    uint8_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to or less than **display module component** digits ports, will be equal to or less than **display controller component** maximum digits/ports. The need for a divided display buffer comes from the fact that some **Seven Segment display hardware** use controllers with larger digits management capabilities than the display module digits, and the exceeding digits are used for proprietary amenities, as colons, icons, etc.
@@ -971,7 +971,7 @@ private:
    const uint8_t _sclIndx {0};
    const uint8_t _sdaIndx {1};
 
-   const uint8_t _dspDigitsQtyMax{16};
+   const uint8_t _dspDigitsQtyMax{8};
    const uint8_t _hwBrghtnssLvlMax{0x0F};
    const uint8_t _hwBrghtnssLvlMin{0x00};
 
@@ -980,16 +980,18 @@ private:
 	uint8_t _i2cAddress {};
    uint32_t _i2cRate{400000}; //!< max. rate will depend on the board's hardware capabilities, standards are 100KHz and 400KHz. Data is shifted into the chip on **clk rising edge**
 
-   // TwoWire I2C_HT16K33 = TwoWire(0);   //FTPO Maybe some failure in the library version for ESP32
+	uint8_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to _dspDigitsQty, the local buffer differs from the shared _dspBuffPtr because it holds the data of the _dspBuffPtr formatted and ready to be sent to the display controller    
 
    virtual bool _sendByte(uint8_t data);
    virtual bool _sendMssg(uint8_t* data, uint8_t mssgLngth);
    virtual void _unAbstract();
-	void _updLclBffrCntnt();
+
+   void _lclClear();
+   void _updLclBffrCntnt();
 
 public:
    SevenSegHT16K33();
-   SevenSegHT16K33(uint8_t* ioPins, uint8_t dspDigits, uint8_t i2cAddress = 0x70, bool commAnode = false);
+   SevenSegHT16K33(uint8_t* ioPins, uint8_t dspDigits, uint8_t i2cAddress = 0x70);
    virtual ~SevenSegHT16K33();
 	/**
 	 * @brief Sets up the hardware display to work, and starts the display activities.  
@@ -1020,7 +1022,7 @@ bool end();
  * @retval true The display controller is in working/On mode.  
  * @retval false The display controller is in shutdown/Off mode.  
  */
-virtual bool getIsOn();
+// virtual bool getIsOn();
 /**
  * @brief See SevenSegDispHw::ntfyUpdDsply() for description
  */
@@ -1053,6 +1055,7 @@ virtual void turnOn();
  * @param newBrghtnssLvl The new brightness level for the display. The value must be in the range **getBrghtnssMinLvl() <= newBrghtnssLvl <= getBrghtnssMaxLvl()**
  */
 virtual void turnOn(const uint8_t &newBrghtnssLvl);
+
 };    
 
 //============================================================> Class declarations separator

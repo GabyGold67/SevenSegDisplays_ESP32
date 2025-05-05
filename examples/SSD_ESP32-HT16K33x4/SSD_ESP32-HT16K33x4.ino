@@ -98,7 +98,7 @@ void mainCtrlTsk(void *pvParameters){
    static uint8_t myDispIOPins[2] {scl, sda}; // Pins set as an array as required by hw constructor
 
 
-   SevenSegDispHw* myLedDispPtr {new SevenSegHT16K33 (myDispIOPins, 4, 0x70, true)};
+   SevenSegDispHw* myLedDispPtr {new SevenSegHT16K33 (myDispIOPins, 4, 0x70)};
    myLedDispPtr -> setDigitsOrder(theNewOrder);
    SevenSegDisplays myLedDisp(myLedDispPtr);
    // myLedDisp.begin();
@@ -106,7 +106,7 @@ void mainCtrlTsk(void *pvParameters){
    for(;;){
       {
          myLedDisp.begin();
-         Serial.println("Service Started");
+         // Serial.println("Service Started");
          vTaskDelay(250);
       }
 
@@ -392,7 +392,7 @@ void mainCtrlTsk(void *pvParameters){
 
       {
          myLedDisp.end();
-         Serial.println("Service stopped");
+         // Serial.println("Service stopped");
          vTaskDelay(testTime);
       }
    
