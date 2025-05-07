@@ -76,15 +76,17 @@ protected:
    uint8_t* _dspBlankBuffPtr{nullptr}; //!< Pointer to a display buffer filled with _allLedsOff ("spaces") to use as display buffer while in "Off State"
    uint8_t* _dspBuffPtr{nullptr};   //!< Pointer to the display buffer, will be provided by the SevenSegDisplays object when it's instantiated
    uint8_t* _dspBuffPtrBkp{nullptr};  //!< Pointer to the display buffer, copy of the original **_dspBuffPtr** to be used as backup
+	const uint8_t _dspDigitsQtyMax{0};
    SevenSegDispHw* _dspHwInstance{nullptr};
    uint8_t _dspHwInstNbr{0};
    bool _isOn{false};   //!< Current display status: On/Off
 
-   virtual void _send(uint8_t* digitsBuffer);
+   /*virtual void _send(uint8_t* digitsBuffer);
    virtual void _send(const uint8_t &segments, const uint8_t &port);
    
    virtual void _sendDataUnit(void* dataUnit);  //FFDR unify send methods using void*
-   virtual void _sendMssg(void* dataMssg);   //FFDR unify send methods using void*
+   virtual void _sendMssg(void* dataMssg);   //FFDR unify send methods using void* 
+   */
 
 public:
    /**
@@ -300,8 +302,8 @@ protected:
    String _rfrshTmrName{""};
 
    void _refresh();
-   virtual void _send(uint8_t content);
-   virtual void _send(const uint8_t &segments, const uint8_t &port);
+   /*virtual void _send(uint8_t content);
+   virtual void _send(const uint8_t &segments, const uint8_t &port);*/
 
 public:
    SevenSegDynamic();
@@ -355,11 +357,12 @@ private:
    virtual void _unAbstract();
 
 protected:
+   const uint8_t _dspDigitsQtyMax{8};
    TimerHandle_t _dynHC595DspRfrshTmrHndl{NULL};  
 
    void _refresh();
-   virtual void send(uint8_t content){};
-   virtual void send(const uint8_t &segments, const uint8_t &port){};
+   /*virtual void send(uint8_t content){};
+   virtual void send(const uint8_t &segments, const uint8_t &port){};*/
 
 public:
     /**
@@ -705,7 +708,7 @@ private:
    virtual void _unAbstract();
 
 protected:
-   const uint8_t _dspDigitsQtyMax{4}; // Maximum display size in digits
+   const uint8_t _dspDigitsQtyMax{4}; // Maximum display controller managing digits capabilities
 
 public:
    /**

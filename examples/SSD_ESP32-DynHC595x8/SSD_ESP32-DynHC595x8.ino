@@ -1,9 +1,9 @@
 /**
  ******************************************************************************
- * @file SSD_ESP32-HT16K33x4.ino
+ * @file SSD_ESP32-DynHC595x8.ino
  * 
- * @brief Code example file to demonstrate SevenSegDisplays_ESP32 library use with SevenSegDispHw::HT16K33 class
- * 
+ * @brief Example file to demonstrate SevenSegDisplays_ESP32 class use with SevenSegDispHw::SevenSegDynHC595 class composition
+ *
  * @details 
  *
  * Repository: https://github.com/GabyGold67/SevenSegDisplays_ESP32  
@@ -11,25 +11,25 @@
  * Framework: Arduino
  * Platform: ESP32
  * 
- * @author	: Gabriel D. Goldman
+ * @author Gabriel D. Goldman
  * mail <gdgoldman67@hotmail.com>
  * Github <https://github.com/GabyGold67>
  *
- * @date First release: 15/05/2023  
- *       Last update:   27/04/2025 17:00 GMT+0200 DST  
+ * @date First release: 15/05/2023 
+ *       Last update:   07/05/2025 18:50 GMT+0200
  ******************************************************************************
- * @warning **Use of this library is under your own responsibility**
- * 
- * @warning The use of this library falls in the category described by The Alan 
- * Parsons Project (c) 1980 "Games People play" disclaimer:
- * 
- * Games people play, you take it or you leave it
- * Things that they say aren't alright
- * If I promised you the moon and the stars, would you believe it?
- * 
- ******************************************************************************
- * Released into the public domain in accordance with "GPL-3.0-or-later" license terms.
- ******************************************************************************
+  * @warning **Use of this library is under your own responsibility**
+  * 
+  * @warning The use of this library falls in the category described by The Alan 
+  * Parsons Project (c) 1980 "Games People play" disclaimer:
+  * 
+  * Games people play, you take it or you leave it
+  * Things that they say aren't alright
+  * If I promised you the moon and the stars, would you believe it?
+  * 
+  ******************************************************************************
+  * Released into the public domain in accordance with "GPL-3.0-or-later" license terms.
+  ******************************************************************************
 */
 #include <Arduino.h>
 #include <SevenSegDisplays.h>
@@ -85,28 +85,55 @@ void loop() {
 void mainCtrlTsk(void *pvParameters){
    delay(10);  //FTPO Part of the WOKWI simulator additions, for simulation startup needs
 
+   TickType_t loopTmrStrtTm{0};
+   TickType_t* loopTmrStrtTmPtr{&loopTmrStrtTm};
+   TickType_t totalDelay {LoopDlyTtlTm};
+
    //Set of variables and constants needed for the tests
    bool testResult{};
    const long testTime{2000};
    bool myBlinkMask[4] {true, true, true, true};
 
-   uint8_t theNewOrder [4] {3, 2, 1, 0};
-
-   const uint8_t sda {GPIO_NUM_21};  // Pin connected to DIO of TM1637
-   const uint8_t scl {GPIO_NUM_22}; // Pin connected to CLK of TM1637
+   const uint8_t dio {GPIO_NUM_33};  // Pin connected to DS of 74HC595 AKA DIO  
+   const uint8_t rclk {GPIO_NUM_25}; // Pin connected to ST_CP of 74HC595 AKA RCLK  
+   const uint8_t sclk {GPIO_NUM_26}; // Pin connected to SH_CP of 74HC595 AKA SCLK
    
-   static uint8_t myDispIOPins[2] {scl, sda}; // Pins set as an array as required by hw constructor
+   static uint8_t myDispIOPins[3] {sclk, rclk, dio}; // Pins set as an array as required by hw constructor
 
+   const uint8_t diyMore8Bits[8] {3, 2, 1, 0, 7, 6, 5, 4}; //Builds an array with the port order of the "DIY MORE 8-bit LED Display".
 
-   SevenSegDispHw* myLedDispPtr {new SevenSegHT16K33 (myDispIOPins, 4, 0x70)};
-   myLedDispPtr -> setDigitsOrder(theNewOrder);
-   SevenSegDisplays myLedDisp(myLedDispPtr);
-   // myLedDisp.begin();
+/* Instantiation examples, different possibilities for use according to developer preferences*/
+/* A three lines step by step code example:  
+SevenSegDynHC595 myLedDispHw(myDispIOPins, 4, true);
+SevenSegDispHw* myLedDispHwPtr = &myLedDispHw;
+SevenSegDisplays myLedDisp(myLedDispHwPtr);
+*/
+
+/* A two lines example using the & operand to pass the pointer
+SevenSegDynHC595 myLedDispHw(myDispIOPins, 4, true);
+SevenSegDisplays myLedDisp(&myLedDispHw);
+*/
+
+/* A two lines example using a sub-class pointer to a dynamic instantiated object
+SevenSegDynHC595* myLedDispPtr {new SevenSegDynHC595 (myDispIOPins, 4, true)};
+SevenSegDisplays myLedDisp(myLedDispPtr);
+*/
+
+/* A two lines example using a base class pointer to a dynamic instantiated object
+SevenSegDispHw* myLedDispPtr {new SevenSegDynHC595 (myDispIOPins, 4, true)};
+SevenSegDisplays myLedDisp(myLedDispPtr);
+*/
+
+/* A one liner example using as argument the pointer returned from dynamic instantiated object
+SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
+*/
+
+   SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 8, true));
 
    for(;;){
       {
-         myLedDisp.begin();
-         // Serial.println("Service Started");
+         myLedDisp.getDspUndrlHwPtr()->begin();
+         Serial.println("Service Started");
          vTaskDelay(250);
       }
 
@@ -391,8 +418,8 @@ void mainCtrlTsk(void *pvParameters){
       }
 
       {
-         myLedDisp.end();
-         // Serial.println("Service stopped");
+         myLedDisp.getDspUndrlHwPtr()->end();
+         Serial.println("Service stopped");
          vTaskDelay(testTime);
       }
    

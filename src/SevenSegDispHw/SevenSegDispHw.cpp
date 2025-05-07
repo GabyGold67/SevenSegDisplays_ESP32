@@ -111,7 +111,7 @@ void SevenSegDispHw::ntfyUpdDsply(){
    return;
 }
 
-void SevenSegDispHw::_send(uint8_t *digitsBuffer){
+/*void SevenSegDispHw::_send(uint8_t *digitsBuffer){
 
    return;
 }
@@ -130,7 +130,7 @@ void SevenSegDispHw::_sendMssg(void* dataMssg){   //FFDR unify send methods usin
 
    return;
 }
-
+*/
 bool SevenSegDispHw::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
    
    return false;
@@ -138,14 +138,29 @@ bool SevenSegDispHw::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
 
 bool SevenSegDispHw::setDigitsOrder(uint8_t* newOrderPtr){
    bool result{true};
+   uint8_t maxDspPos{(_dspDigitsQtyMax == 0)?_dspDigitsQty:_dspDigitsQtyMax};
 
    for(int i {0}; i < _dspDigitsQty; i++){
-      if (*(newOrderPtr + i) >= _dspDigitsQty){
+      if (*(newOrderPtr + i) >= maxDspPos){
          result = false;
          break;
       }   
    }
-   if (result)
+   if(result){
+      uint8_t* posUseChkArry = new uint8_t [maxDspPos];
+      memset(posUseChkArry, 0X00, maxDspPos);
+      for(int i {0}; i < _dspDigitsQty; i++){
+         if (*(posUseChkArry + *(newOrderPtr + i)) = 0x00){
+            *(posUseChkArry + *(newOrderPtr + i)) = 0x01;   // Mark position as used
+         }
+         else{ // The position was already set to be used, check failed, leave method
+            result = false;
+            break;
+         }            
+      }
+      delete [] posUseChkArry;
+   }
+   if(result)
       memcpy(_digitPosPtr, newOrderPtr, _dspDigitsQty);
 
    return result;
@@ -222,7 +237,7 @@ void SevenSegDynamic::_refresh(){
     return;
 }
 
-void SevenSegDynamic::_send(uint8_t content){ // Implementation is hardware dependant (subclasses) protocol!!
+/*void SevenSegDynamic::_send(uint8_t content){ // Implementation is hardware dependant (subclasses) protocol!!
 
    return;
 }
@@ -230,7 +245,7 @@ void SevenSegDynamic::_send(uint8_t content){ // Implementation is hardware depe
 void SevenSegDynamic::_send(const uint8_t &segments, const uint8_t &port){
 
    return;
-}
+}*/
 
 void SevenSegDynamic::tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg){
 
