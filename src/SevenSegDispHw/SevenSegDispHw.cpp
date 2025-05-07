@@ -14,7 +14,7 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.1.0  
+ * @version 3.2.0  
  * 
  * @date First release: 20/12/2023  
  *       Last update:   27/04/2025 20:10 (GMT+0200) DSP
@@ -22,8 +22,8 @@
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
  */
-#include "Arduino.h"
-#include "sevenSegDispHw.h"
+#include <Arduino.h>
+#include <./SevenSegDispHw/SevenSegDispHw.h>
 //----------------------------------------->> Global constants declaration BEGIN
 //------------------------------------------->> Global constants declaration END
 
@@ -962,173 +962,6 @@ void SevenSegMax7219::_updLclBffrCntnt(){
 }
 
 void SevenSegMax7219::_unAbstract(){
-
-   return;
-}
-
-//============================================================> Class methods separator
-
-SevenSegHT16K33::SevenSegHT16K33(){};
-
-SevenSegHT16K33::SevenSegHT16K33(uint8_t* ioPins, uint8_t dspDigits, uint8_t i2cAddress)
-:SevenSegStatic(ioPins, dspDigits, false), _i2cAddress{i2cAddress}
-{
-   _brghtnssLvlMax = _hwBrghtnssLvlMax;
-   _brghtnssLvlMin = _hwBrghtnssLvlMin;
-   _brghtnssLvl = _brghtnssLvlMin;
-
-   if(_dspDigitsQty > _dspDigitsQtyMax)
-      _dspDigitsQty = _dspDigitsQtyMax;  //FFDR Move the checking to the base class constructor and allocate the correct amount of memory there!! 
-   _lclDspBuffPtr = new uint8_t[_dspDigitsQty]; //FFDR this local buffer is needed as it keeps the shared buffer contents intoHT16K33 format, protect the shared buffer with mutex to avoid changing while loading
-
-   if(ioPins == nullptr){
-      _sda = SDA;
-      _scl = SCL;
-   }
-   else{
-      _scl = *(ioPins + _sclIndx);
-      _sda = *(ioPins + _sdaIndx);
-   }
-}
-
-SevenSegHT16K33::~SevenSegHT16K33(){
-   delete [] _lclDspBuffPtr;
-};
-
-bool SevenSegHT16K33::begin(uint32_t updtLps){
-   bool result {false};
-
-   // Wire.begin(static_cast<int>(_sda), static_cast<int>(_scl));
-   // Wire.setClock(_i2cRate);
-   Wire.begin(static_cast<int>(_sda), static_cast<int>(_scl), _i2cRate);
-   _sendByte(_ExitStndBy);  // Activate display
-   _sendByte(_SetRowOtpt);  // Display Row/Int output pin = Row
-   setBrghtnssLvl(_brghtnssLvlMax); // Set display brightness level to maximum
-   _lclClear();
-   turnOn();
-
-   result = true;
-
-   return result;
-}
-
-bool SevenSegHT16K33::end(){
-   Serial.println("Entering end()");
-   Serial.println("================");
-
-   _lclClear();
-   #ifdef WIRE_HAS_END
-      Wire.end();   // Set I2C port Inactive
-   #endif
-
-   Serial.println("Exiting end()");
-   Serial.println("=============");
-
-   return true;
-}
-
-// bool SevenSegHT16K33::getIsOn(){
-
-//    return _isOn;
-// }
-
-void SevenSegHT16K33::_lclClear(){
-   int result{0};
-
-   Wire.beginTransmission(_i2cAddress); 
-   Wire.write(_DspPortsBaseAddr); 
-   for(uint8_t mssgPtrOffset{0}; mssgPtrOffset <= 0x0F; mssgPtrOffset++)
-      Wire.write(0x00);   // Single data byte to send
-   result = Wire.endTransmission(true);
-   
-   return;
-}
-
-void SevenSegHT16K33::ntfyUpdDsply(){
-   _updLclBffrCntnt();
-   _sendMssg(_lclDspBuffPtr, _dspDigitsQty);
-
-   return;
-}
-
-bool SevenSegHT16K33::_sendByte(uint8_t data){
-   int result{0};
-
-   Wire.beginTransmission(_i2cAddress);  
-   Wire.write(data);   // Single data byte to send
-   // result = Wire.endTransmission(true);
-   result = Wire.endTransmission();
-
-   return (result == 0);
-}
-
-bool SevenSegHT16K33::_sendMssg(uint8_t* data, uint8_t mssgLngth){
-   int result{0};
-
-   Wire.beginTransmission(_i2cAddress); 
-   Wire.write(_DspPortsBaseAddr); 
-   for(uint8_t mssgPtrOffset{0}; mssgPtrOffset < (mssgLngth * 2); mssgPtrOffset += 2){
-      Wire.write(*(data + mssgPtrOffset));   // Single data byte to send
-      Wire.write(0x00);   // Send empty data to MSB of the 16-bits display data register
-   }
-   result = Wire.endTransmission(true);
-   
-   return (result == 0);
-}
-
-bool SevenSegHT16K33::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
-   bool result{false};
-   uint8_t mssgData{0};
-
-   if((newBrghtnssLvl >= _brghtnssLvlMin) && (newBrghtnssLvl <= _brghtnssLvlMax)){
-      if(newBrghtnssLvl != _brghtnssLvl){
-         mssgData = _SetBrghtnssCmd | newBrghtnssLvl;
-         result = _sendByte(mssgData);   
-         if(result)
-            _brghtnssLvl = newBrghtnssLvl;
-      }
-      else
-         result = true;
-   }
-
-   return result;
-}
-
-void SevenSegHT16K33::turnOff(){
-   if(_isOn){
-      if(_sendByte(_TurnOffDsp))
-         _isOn = false;
-   }
-
-   return;
-}
-
-void SevenSegHT16K33::turnOn(){
-   if(!_isOn){
-      if(_sendByte(_TurnOnBlnkNo))
-         _isOn = true;
-   }
-   
-   return;
-}
-
-void SevenSegHT16K33::turnOn(const uint8_t &newBrghtnssLvl){
-   setBrghtnssLvl(newBrghtnssLvl);
-   turnOn();
-
-   return;
-}
-
-void SevenSegHT16K33::_unAbstract(){return;}
-
-void SevenSegHT16K33::_updLclBffrCntnt(){
-   uint8_t dspBuffPtrOffset{0};
-
-   for (int i {0}; i < _dspDigitsQty; i++){
-      // dspBuffPtrOffset = *(_digitPosPtr + i);
-      // *(_lclDspBuffPtr + i) = *(_dspBuffPtr + dspBuffPtrOffset);
-      *(_lclDspBuffPtr + i) = *(_dspBuffPtr + i);
-   }
 
    return;
 }

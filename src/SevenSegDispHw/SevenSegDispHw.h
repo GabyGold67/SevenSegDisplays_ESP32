@@ -12,7 +12,7 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.1.0
+ * @version 3.2.0
  * 
  * @date First release: 20/12/2023  
  *       Last update:   27/04/2025 20:10 (GMT+0200) DST  
@@ -238,7 +238,7 @@ public:
    * @endcode
    * 
 */
-    bool setDigitsOrder(uint8_t* newOrderPtr);
+   virtual bool setDigitsOrder(uint8_t* newOrderPtr); //FFDR modify to make it less error prone, check redundand port numbers, check non repeated port numbers
     /**
      * @brief Sets the pointer to the Display Buffer memory area.  
      * 
@@ -506,6 +506,8 @@ public:
     SevenSegStatic();
     SevenSegStatic(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
     virtual ~SevenSegStatic();
+   // virtual bool setDigitsOrder(uint8_t* newOrderPtr); //FFDR Due to proprietary display wiring for static displays asigning display digits to port numbers above dspDigits in the range 0 - _dspDigitsQtyMax this method needs to be refactored for a polymorphic version for this classes taking this into account
+
 };
 
 //============================================================> Class declarations separator
@@ -586,7 +588,6 @@ class SevenSegTM163X: public SevenSegStatic{
 private:
    const uint8_t _clkIndx {0};
    const uint8_t _dioIndx {1};
-   const uint8_t _dspDigitsQtyMax{}; //!< Maximum display digits supported by the controller: 4 for TM1636, 6 for TM1637, 8 for TM1639
    const uint8_t _hwBrghtnssLvlMax{0x07};
    const uint8_t _hwBrghtnssLvlMin{0x00};
    uint32_t _txClkTckTm{2};
@@ -596,18 +597,19 @@ private:
    virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
    void _updLclBffrCntnt();
 
+
 protected:
    uint8_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to or less than **display module component** digits ports, will be equal to or less than **display controller component** maximum digits/ports. The need for a divided display buffer comes from the fact that some **Seven Segment display hardware** use controllers with larger digits management capabilities than the display module digits, and the exceeding digits are used for proprietary amenities, as colons, icons, etc.
    uint8_t* _xcdDspBuffPtr{nullptr};    //!< A pointer to a buffer the size of the exceeding digits used to control display specific amenities.
    uint8_t _xcdDspDigitsQty{};  //!<  Number of unused available display ports, its the difference  (_dspDigitsQtyMax  - _dspDigitsQty), being the size of the array pointed by _xcdDspBuffPtr
+   uint8_t _dspDigitsQtyMax{}; // Maximum display size in digits
 
    void _txStart();
    void _txAsk();
    void _txStop();
    void _txWrByte(uint8_t data);
    virtual void _sendBffr();
-   virtual bool _sendByte(uint8_t data);
-   
+   virtual bool _sendByte(uint8_t data);   
    
  public:
    /**
@@ -700,9 +702,11 @@ protected:
  */
 class SevenSegTM1636: public SevenSegTM163X{
 private:
-   const uint8_t _dspDigitsQtyMax{4}; // Maximum display size in digits
    virtual void _unAbstract();
-    
+
+protected:
+   const uint8_t _dspDigitsQtyMax{4}; // Maximum display size in digits
+
 public:
    /**
     * @brief Default constructor
@@ -947,116 +951,6 @@ public:
     */
    virtual void turnOn(const uint8_t &newBrghtnssLvl);
 };
-
-//============================================================> Class declarations separator
-
-class SevenSegHT16K33: public SevenSegStatic{
-   // Command/Address Map Constants
-	const uint8_t _DspPortsBaseAddr{0x00}; //!< Last address depends on digitsQty, maximum is 0x0F   
-   const uint8_t _StndByCmnd = (uint8_t)0x20;   //!< System setup register
-      const uint8_t _EnterStndBy = _StndByCmnd|0x00;  //!< System setup - Standby mode, oscilator stopped
-	   const uint8_t _ExitStndBy = _StndByCmnd|0x01;   //!< System setup register - Normal mode, oscilator running
-   const uint8_t _DspSetupCmnd = (uint8_t)0x80;   //!< Display setup register
-      const uint8_t _TurnOffDsp = _DspSetupCmnd|0x00;   //!< Display setup register - Display Off
-   	const uint8_t _TurnOnDsp = _DspSetupCmnd|0x01; //!< Display setup register - Display On
-         const uint8_t _TurnOnBlnkNo = _TurnOnDsp|0x00;   //!< Turn on and blink NOT
-         const uint8_t _TurnOnBlnk2 = _TurnOnDsp|0x02; //!< Turn on and blink 2Hz
-         const uint8_t _TurnOnBlnk1 = _TurnOnDsp|0x04; //!< Turn on and blink 1Hz
-         const uint8_t _TurnOnBlnk0 = _TurnOnDsp|0x06; //!< Turn on and blink 0.5Hz
-	const uint8_t _KbdRowIntSetCmnd = (uint8_t)0xA0;   //!< Keys scan ROW/INT mode register
-      const uint8_t _SetRowOtpt = _KbdRowIntSetCmnd|0x00;   //!< Keys by Row driver output   
-   const uint8_t _SetBrghtnssCmd = (uint8_t)0xE0;  //!< Display Dimming level register (_SetBrghtnssCmd|0x00) -> (off) ~ (_SetBrghtnssCmd|0x0F) -> (brightest)
-
-private:
-   const uint8_t _sclIndx {0};
-   const uint8_t _sdaIndx {1};
-
-   const uint8_t _dspDigitsQtyMax{8};
-   const uint8_t _hwBrghtnssLvlMax{0x0F};
-   const uint8_t _hwBrghtnssLvlMin{0x00};
-
-   uint8_t _scl {};	//! Serial clock pin
-	uint8_t _sda {};	// Data I/O pin, for a value to get into the chip reg, must be set before the scl rising edge to be accepted.
-	uint8_t _i2cAddress {};
-   uint32_t _i2cRate{400000}; //!< max. rate will depend on the board's hardware capabilities, standards are 100KHz and 400KHz. Data is shifted into the chip on **clk rising edge**
-
-	uint8_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to _dspDigitsQty, the local buffer differs from the shared _dspBuffPtr because it holds the data of the _dspBuffPtr formatted and ready to be sent to the display controller    
-
-   virtual bool _sendByte(uint8_t data);
-   virtual bool _sendMssg(uint8_t* data, uint8_t mssgLngth);
-   virtual void _unAbstract();
-
-   void _lclClear();
-   void _updLclBffrCntnt();
-
-public:
-   SevenSegHT16K33();
-   SevenSegHT16K33(uint8_t* ioPins, uint8_t dspDigits, uint8_t i2cAddress = 0x70);
-   virtual ~SevenSegHT16K33();
-	/**
-	 * @brief Sets up the hardware display to work, and starts the display activities.  
-	 * 
-	 * For the SevenSegHT16K33 display controllers this setup includes:
-    * - Setting up the I2C communication
-    *    - Create the comm object. 
-    *    - begin() the comm object operation
-    *    - Set the comm speed with setclock()
-	 * - Turning on the Display controller's oscilator (shutdown register setting).  
-	 * - Setting the display in "Display Row/Int output pin = Row mode"
-	 * - Setting the display brightness level (in our case to maximum level).  
-	 * 
-	 * @return true Always
-	*/
-bool begin(uint32_t updtLps = 0);   //FFDR This begin() doesn't need any parameter, replace and check 
-/**
- * @brief Ends the active mode of the display by shutting it off.  
- * 
- * While the control module will keep receiving and updating it's registers, while the display controller is in shutdown mode the display module will be turned off and no activity will be executed in the corresponding led powering lines.  
- * 
- * @return true Always
- */
-bool end();
-/**
- * @brief Returns a value indicating if the display controller is in working/On or shutdown/Off mode
- * 
- * @retval true The display controller is in working/On mode.  
- * @retval false The display controller is in shutdown/Off mode.  
- */
-// virtual bool getIsOn();
-/**
- * @brief See SevenSegDispHw::ntfyUpdDsply() for description
- */
-virtual void ntfyUpdDsply();
-/**
- * @brief Sets the brightness level for the display module
- * 
- * See SevenSegTM163X::setBrghtnssLvl(const uint8_t &) for details.  
- */
-virtual bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl); 
- /**
- * @brief Turns the display module off.  
- * 
- * The display module will be cleared and will keep that status until a turnOn(), or turnOn(const uint8_t &) is invoked. 
- * 
- * @note While the display is Off, it will keep receiving display data and commands, but will keep the leds turned off. When it receives a turnOn command the display will show the data it received while turned off, or the same it was showing at turnOff if no change to the contents was done.  
- */
-virtual void turnOff();
-/**
- * @brief Turns the display module on.  
- * 
- * The display module will be turned on and it's content displayed, and will keep that status until a turnOff() is invoked.  
- */
-virtual void turnOn();
-/**
- * @brief Turns the display module on.  
- * 
- * The display module will be turned on, it's brightness level set to the requested level, it's content displayed, and will keep that status until a turnOff() is invoked. 
- * 
- * @param newBrghtnssLvl The new brightness level for the display. The value must be in the range **getBrghtnssMinLvl() <= newBrghtnssLvl <= getBrghtnssMaxLvl()**
- */
-virtual void turnOn(const uint8_t &newBrghtnssLvl);
-
-};    
 
 //============================================================> Class declarations separator
 

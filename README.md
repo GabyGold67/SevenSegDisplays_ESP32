@@ -1,16 +1,45 @@
 # **SevenSegDisplays_ESP32: A Seven Segments displays easy to use library**  
 
-# "One library to rule them all..."  
-**(At least as many as I could put my hands on)**  
-
 This library goal is to provide a common consistent API to display data on **seven segments LED displays** independently of the hardware used: the display modules and the driving electronics.  
 
-With a very long time in the market, **many** different techniques and technologies have been developed to display information in seven segment displays, but like any other technical resource, massification contributed to the development of specific standard hardware, both for the display and the display driving sides.  
+With a very long time in the market, **many** different techniques and technologies have been developed to display information in seven segment displays, but like any other technical resource, massification contributed to the development of specific standard hardware, both for the display module and the display driving sides.  
 
 This library is oriented to the management of the most usual combinations of those components, **even providing management for displays with one of the components missing** (see the "dummy" and "PinDrv" SevenSegHw subclasses).  
 
 ## [Complete SevenSegDisplays_ESP32 library documentation HERE!](https://gabygold67.github.io/SevenSegDisplays_ESP32/)
 
+### For an immediate start these are the required steps:  
+
+1. Include the library in your code:  
+`#include <SevenSegDisplays.h>`  
+
+2. Create an int8_t array holding the pins assigned to be used to connect to the display module, each class documentation describes the quantity and position of each pin
+`static uint8_t myDispIOPins[3] {sclk, rclk, dio};`  
+
+3. Instantiate the display hardware you'll be using:  
+`SevenSegDynHC595 myDisplayHw (myDispIOPins, 4, true)` For a 4 digits Common Annode display controlled by two 74HC595 shift registers dynamically.  
+
+4. Create a pointer to the instantiated hardware object:  
+`SevenSegDispHw* myDisplayHwPtr = &myDisplayHw;`  
+
+5. Instantiate the SevenSegmentDisplay object to start using the object through the API:  
+`SevenSegDisplays myLedDisplay(myDisplayHwPtr);`  
+
+These last three steps migh be simplified to two steps or even one: 
+`SevenSegDisplays myLedDisplay(new SevenSegDynHC595 (myDispIOPins, 4, true));`
+
+The display hardware actually implemented include:  
+- SevenSegDynHC595  
+- SevenSegDynDummy  
+- SevenSegStatHC595  
+- SevenSegTM1636  
+- SevenSegTM1637  
+- SevenSegTM1639  
+- SevenSegMAX7219  
+
+Others are expected to be added in a near future.  
+
+## Evolution:  
 Originally developed to easily display numeric and text data in unattended manner on the cheap and popular "4-Bits LED Digital Tube Module", **a 7-segment 4 digits led display dynamically driven by two 74HC595 shift register**, the main focus was set on:  
 - Ease of use.  
 - Flexibility.
