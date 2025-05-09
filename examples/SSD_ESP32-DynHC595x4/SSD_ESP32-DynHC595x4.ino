@@ -16,7 +16,7 @@
  * Github <https://github.com/GabyGold67>
  *
  * @date First release: 15/05/2023 
- *       Last update:   26/03/2025 14:50 GMT+0200
+ *       Last update:   09/05/2025 17:40 GMT+0200
  ******************************************************************************
   * @warning **Use of this library is under your own responsibility**
   * 
@@ -128,6 +128,10 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
 */
 
    SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
+
+   uint8_t dspMaxDig = myLedDisp.getDspUndrlHwPtr()->getctrllrMaxDgts();
+   Serial.print("Max. digits qty.: ");
+   Serial.println(dspMaxDig);
 
    for(;;){
       {

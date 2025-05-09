@@ -598,7 +598,7 @@ protected:
    uint8_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to or less than **display module component** digits ports, will be equal to or less than **display controller component** maximum digits/ports. The need for a divided display buffer comes from the fact that some **Seven Segment display hardware** use controllers with larger digits management capabilities than the display module digits, and the exceeding digits are used for proprietary amenities, as colons, icons, etc.
    uint8_t* _xcdDspBuffPtr{nullptr};    //!< A pointer to a buffer the size of the exceeding digits used to control display specific amenities.
    uint8_t _xcdDspDigitsQty{};  //!<  Number of unused available display ports, its the difference  (_dspCtrllrMaxDgts  - _dspDigitsQty), being the size of the array pointed by _xcdDspBuffPtr
-   uint8_t _MaxDgts{}; // Maximum display size in digits
+   // uint8_t _MaxDgts{}; // Maximum display size in digits
 
    void _txStart();
    void _txAsk();
