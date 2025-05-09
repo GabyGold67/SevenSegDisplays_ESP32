@@ -7,6 +7,7 @@
  * 
  * Framework: Arduino  
  * Platform: ESP32  
+ * Check https://github.com/GabyGold67 for other Frameworks and Platforms versions of this library availability.  
  * 
  * @author Gabriel D. Goldman  
  * mail <gdgoldman67@hotmail.com>  
@@ -42,7 +43,6 @@
 
 #include "Arduino.h"
 #include <stdint.h>
-#include <Wire.h>
 #include <ShiftRegGPIOXpander_ESP32.h>
 
 //============================================================> Class declarations separator
@@ -53,10 +53,9 @@
  * @brief Base abstract class models a generic Seven Segment display hardware
  * 
  * @note This library, from it's base class to the last of it's subclasses, adhere to the following concepts: 
- * **Seven Segment display hardware**: is a hardware construction capable of receiving data in 8-bits units, each unit corresponding to a segment or decimal point of a seven segment display digit, as it is already normalized across the electronic industry. The Seven Segment display is composed of two basic elements:  
- * - The **display controller component**: Is conformed by the electronics receiving the data to be displayed and send the needed signals to turn on the corresponding segments to show the data at the display module. The display controller component might be as autonomous and complex as a specific "display controller chip", as simple as a "SIPO Shift Register" or as "non physical existent" as a "cable connector to the MCU", so that the MCU will have to take care of the data update and display logic, making the MCU the "display controller component". 
- * - The **display module component**: Is conformed by the seven segments led display unit or units if more than one is required. This units include the leds to be lit as segments and decimal point, and some include colons to represent time values, or special icons in very specific use models. Each display module component will have it's internal wiring, the seven segment part pretty standard, the other components wired differently. As for this library the only display module characteristic considered essential is if the digit leds are connected in common anode or common cathode way. This required information is provided by each display module datasheet, the corresponding display module code is usually found printed in one side or at the bottom of the module.  
- * 
+ * **Seven Segment display**: is a hardware construction capable of receiving data in a pre-stablished format through a pre-stablished communication protocol and display it in a "Seven Segment industry standard LEDs display format". The standard **Seven Segment display** can be usually be separated into two components:  
+ * - The **display controller component**: Is conformed by the electronics receiving the data to be displayed, decode it and send the needed signals to turn on the corresponding segments to show the data at the **display module component**. The display controller component might be as autonomous and complex as a specific "display controller chip", as simple as a "SIPO Shift Register" or as "non physical existent" as a "cable connector to the MCU", so that the MCU will have to take care of the data update and display logic, making the MCU the "display controller component". 
+ * - The **display module component**: Is conformed by the seven segments led display unit or units if more than one is required. This units include the leds to be lit as segments and most of them the decimal point, some include colons to represent time values, some include special icons in very specific use models. Each display module component will have it's internal wiring, the seven segment part pretty standard, the other components wired differently according to it's needs or targeted market. As for this library the only display module characteristic considered essential is if the digit leds are connected in common anode or common cathode way. This required information is provided by each display module's datasheet, the corresponding display module code is usually found printed in one side or at the bottom of the module.  
  */
 class SevenSegDispHw{
     static uint8_t _dspHwSerialNum;
@@ -75,18 +74,11 @@ protected:
    uint8_t _brghtnssLvlMin{0};   //!< Minimum display brightness level
    uint8_t* _dspBlankBuffPtr{nullptr}; //!< Pointer to a display buffer filled with _allLedsOff ("spaces") to use as display buffer while in "Off State"
    uint8_t* _dspBuffPtr{nullptr};   //!< Pointer to the display buffer, will be provided by the SevenSegDisplays object when it's instantiated
-   uint8_t* _dspBuffPtrBkp{nullptr};  //!< Pointer to the display buffer, copy of the original **_dspBuffPtr** to be used as backup
-	const uint8_t _dspDigitsQtyMax{0};
+   uint8_t* _dspBuffPtrBkp{nullptr};  //!< Pointer to the display buffer, copy of the original **_dspBuffPtr** to be used as backup, is not a pointer to a new generated memory portion
+	uint8_t _dspCtrllrMaxDgts{0};
    SevenSegDispHw* _dspHwInstance{nullptr};
    uint8_t _dspHwInstNbr{0};
-   bool _isOn{false};   //!< Current display status: On/Off
-
-   /*virtual void _send(uint8_t* digitsBuffer);
-   virtual void _send(const uint8_t &segments, const uint8_t &port);
-   
-   virtual void _sendDataUnit(void* dataUnit);  //FFDR unify send methods using void*
-   virtual void _sendMssg(void* dataMssg);   //FFDR unify send methods using void* 
-   */
+   bool _isOn{false};   //!< Current display status: On/Off => Starts OFF
 
 public:
    /**
@@ -100,9 +92,9 @@ public:
      * @param dspDigits Quantity of digits/ports of the display. This value is directly related to the **display module component** quantity of ports and characteristics.  
      * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).  
      *      
-     * @attention The dspDigits parameter, indicating the quantity of digits of the display module, is a **basic fundamental** parameter passed at instantiation time. This information provides the value to be used to create the data buffer of the right size, the digits order table, auxiliary buffers and the required information to calculate the range of values displayable and to generate a valid left or right aligned display. Obviously the quantity is bigger than 0, and must be less than or equal to the hardware maximum display digits capability.  
+     * @attention The dspDigits parameter, indicating the quantity of digits of the display module, is a **basic fundamental** parameter passed at instantiation time. This information provides the value to be used to create a data buffer of the right size, the digits order table, auxiliary buffers and the required information to calculate the range of values displayable and to generate a valid left or right aligned display. Obviously the quantity is bigger than 0, and must be less than or equal to the hardware maximum display digits capability.  
      * 
-     * @warning The dspDigits parameter value must not be confused with the maximum display digits a display controller component can handle. Many displays are designed using part of the controller's digits management for real seven segment displays digits while using non connected to ports pins to manage some other display elements, like individual leds, icons, special backlighting elements, etc. The class instantiated object needs the right amount of display digits available as such, the exceeding digits/ports is currently out of the libray management scope.  
+     * @warning The dspDigits parameter value must not be confused with the maximum display digits a display controller component can handle. Many displays are designed using part of the controller's digits management for real seven segment display digits while using non connected to ports pins to manage some other display elements, like individual leds, icons, special backlighting elements, etc. The class instantiated object needs the right amount of display digits available as such, the exceeding digits/ports is currently out of the libray management scope.  
      */
    SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
    /**
@@ -193,13 +185,21 @@ public:
      * @warning The dspDigits parameter value return by this method must not be confused with the maximum display digits a display controller component can handle. For more information see SevenSegDispHw(uint8_t*, uint8_t, bool commAnode)
      */
     uint8_t getHwDspDigitsQty();
+   /**
+    * @brief Returns the maximum number of digits/ports the display controller is able to manage.  
+    * 
+    * The SevenSegDispHw subclasses objects instantiated are based on the class modeling of a certain **Display controller** hardware. Each of these models, depending on the display controller characteristics, have a construction inherent maximum number of display ports management limit. Either as a single display controller unit, or a number of display controllers interconnected, once the object is instantiated the maximum numer of display ports the object will be able to manage will be a constant value, setting and limiting some of the most important attributes for the instantiated object. This method returns that attribute value.  
+    * 
+    * @return uint8_t Value of the _dspCtrllrMaxDgts attribute, indicating the maximum quantity of display ports the object might handle.  
+    */
+   virtual uint8_t getctrllrMaxDgts();
     /**
      * @brief Returns the state of the display.  
      * 
-     * Returns a boolean value indicating if the display is turned On or Off
+     * Returns a boolean value indicating if the display is turned On or turned Off.  
      * 
-     * @retval true The display is turned On
-     * @retval false The display is turned Off 
+     * @retval true The display is turned On.  
+     * @retval false The display is turned Off.  
      */
     virtual bool getIsOn();
     /**
@@ -240,7 +240,7 @@ public:
    * @endcode
    * 
 */
-   virtual bool setDigitsOrder(uint8_t* newOrderPtr); //FFDR modify to make it less error prone, check redundand port numbers, check non repeated port numbers
+   virtual bool setDigitsOrder(uint8_t* newOrderPtr);
     /**
      * @brief Sets the pointer to the Display Buffer memory area.  
      * 
@@ -291,7 +291,6 @@ public:
  * @brief Abstract class models a generic dynamically updated **Seven Segment display hardware**
  */
 class SevenSegDynamic: public SevenSegDispHw{    
-   static void tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg);
     
 private:
    virtual void _unAbstract() = 0; // Makes this an Abstract class.
@@ -302,8 +301,6 @@ protected:
    String _rfrshTmrName{""};
 
    void _refresh();
-   /*virtual void _send(uint8_t content);
-   virtual void _send(const uint8_t &segments, const uint8_t &port);*/
 
 public:
    SevenSegDynamic();
@@ -357,12 +354,10 @@ private:
    virtual void _unAbstract();
 
 protected:
-   const uint8_t _dspDigitsQtyMax{8};
+   const uint8_t _MaxDgts{8};
    TimerHandle_t _dynHC595DspRfrshTmrHndl{NULL};  
 
    void _refresh();
-   /*virtual void send(uint8_t content){};
-   virtual void send(const uint8_t &segments, const uint8_t &port){};*/
 
 public:
     /**
@@ -433,7 +428,6 @@ private:
    virtual void _unAbstract();
 
 protected:
-   // static TimerHandle_t _dynDummyDspRfrshTmrHndl;
    TimerHandle_t _dynDummyDspRfrshTmrHndl{NULL};
 
    void _refresh();
@@ -509,7 +503,6 @@ public:
     SevenSegStatic();
     SevenSegStatic(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
     virtual ~SevenSegStatic();
-   // virtual bool setDigitsOrder(uint8_t* newOrderPtr); //FFDR Due to proprietary display wiring for static displays asigning display digits to port numbers above dspDigits in the range 0 - _dspDigitsQtyMax this method needs to be refactored for a polymorphic version for this classes taking this into account
 
 };
 
@@ -604,8 +597,8 @@ private:
 protected:
    uint8_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to or less than **display module component** digits ports, will be equal to or less than **display controller component** maximum digits/ports. The need for a divided display buffer comes from the fact that some **Seven Segment display hardware** use controllers with larger digits management capabilities than the display module digits, and the exceeding digits are used for proprietary amenities, as colons, icons, etc.
    uint8_t* _xcdDspBuffPtr{nullptr};    //!< A pointer to a buffer the size of the exceeding digits used to control display specific amenities.
-   uint8_t _xcdDspDigitsQty{};  //!<  Number of unused available display ports, its the difference  (_dspDigitsQtyMax  - _dspDigitsQty), being the size of the array pointed by _xcdDspBuffPtr
-   uint8_t _dspDigitsQtyMax{}; // Maximum display size in digits
+   uint8_t _xcdDspDigitsQty{};  //!<  Number of unused available display ports, its the difference  (_dspCtrllrMaxDgts  - _dspDigitsQty), being the size of the array pointed by _xcdDspBuffPtr
+   uint8_t _MaxDgts{}; // Maximum display size in digits
 
    void _txStart();
    void _txAsk();
@@ -708,7 +701,7 @@ private:
    virtual void _unAbstract();
 
 protected:
-   const uint8_t _dspDigitsQtyMax{4}; // Maximum display controller managing digits capabilities
+   const uint8_t _MaxDgts{4}; // Maximum display controller managing digits capabilities
 
 public:
    /**
@@ -741,7 +734,7 @@ public:
  */
 class SevenSegTM1637: public SevenSegTM163X{
 private:
-   const uint8_t _dspDigitsQtyMax{6}; // Maximum display size in digits
+   const uint8_t _MaxDgts{6}; // Maximum display size in digits
    virtual void _unAbstract();
 
 public:
@@ -775,7 +768,7 @@ public:
  */
 class SevenSegTM1639: public SevenSegTM163X{
 private:
-   const uint8_t _dspDigitsQtyMax{8}; // Maximum display size in digits
+   const uint8_t _MaxDgts{8}; // Maximum display size in digits
    virtual void _unAbstract();
 
 public:
@@ -857,7 +850,7 @@ private:
 	const uint8_t _dinIndx {1};
 	const uint8_t _csIndx {2};
 
-	const uint8_t _dspDigitsQtyMax{8};
+	const uint8_t _MaxDgts{8};
 	const uint8_t _hwBrghtnssLvlMax{0x0F};
 	const uint8_t _hwBrghtnssLvlMin{0x00};
 

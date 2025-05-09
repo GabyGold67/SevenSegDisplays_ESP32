@@ -3,12 +3,13 @@
  * @file SevenSegDispHw.cpp
  * @brief Code file for the SevenSegDisplays_ESP32 library
  * 
- * @details This code files includes the SevenSegDispHw class and subclasses, including one class for each specific **Display controller** managed by the library/  
+ * @details This code files includes the SevenSegDispHw class and subclasses, including one class for each specific **Display controller** managed by the library.  
  * 
  * Repository: https://github.com/GabyGold67/SevenSegDisplays_ESP32  
  * 
  * Framework: Arduino  
- * Platform: ESP32  
+ * Platform: ESP32
+ * Check https://github.com/GabyGold67 for other Frameworks and Platforms versions of this library availability.  
  * 
  * @author Gabriel D. Goldman  
  * mail <gdgoldman67@hotmail.com>  
@@ -29,7 +30,6 @@
 
 //-------------------------------------->> Static variables initialization BEGIN
 uint8_t SevenSegDispHw::_dspHwSerialNum = 0;
-
 //---------------------------------------->> Static variables initialization END
 
 //============================================================> Class methods separator
@@ -41,7 +41,10 @@ SevenSegDispHw::SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits, bool commAnod
 {
    _dspHwInstNbr = _dspHwSerialNum++;
    _dspHwInstance = this;
-   for (uint8_t i{0}; i < _dspDigitsQty; i++)
+   //FFDR Remove _digitPosPtr creation out from initialization list
+   //FFDR create _initPosPtr()method with: 1) High limit checking and/or modification, 2) Creation of the array pointed by _digitPosPtr 3) Set the default order (LtoR or RtoL might be a parameter)
+   //FFDR ALWAYS create an array for the non used ports of a controller, sort them to know wich posititions of the controller buffer are involved and build methods to use them as alternate display artifacts
+   for (uint8_t i{0}; i < _dspDigitsQty; i++)   
       *(_digitPosPtr + i) = i;
    _allLedsOff = (_commAnode)?0xFF:0x00;
 }
@@ -61,7 +64,7 @@ bool SevenSegDispHw::begin(uint32_t updtLps){
 }
 
 bool SevenSegDispHw::end(){
-   // Execute subset of turnOff()
+   // Execute a subset of turnOff()
    if(_isOn){
       memset(_dspBuffPtr, _allLedsOff, _dspDigitsQty);
       ntfyUpdDsply();
@@ -91,6 +94,11 @@ bool SevenSegDispHw::getCommAnode(){
    return _commAnode;
 }
 
+uint8_t SevenSegDispHw::getctrllrMaxDgts(){
+
+   return _dspCtrllrMaxDgts;
+}
+
 uint8_t* SevenSegDispHw::getDspBuffPtr(){
     
    return _dspBuffPtr;
@@ -111,26 +119,6 @@ void SevenSegDispHw::ntfyUpdDsply(){
    return;
 }
 
-/*void SevenSegDispHw::_send(uint8_t *digitsBuffer){
-
-   return;
-}
-
-void SevenSegDispHw::_send(const uint8_t &segments, const uint8_t &port){
-
-   return;
-}
-
-void SevenSegDispHw::_sendDataUnit(void* dataUnit){   //FFDR unify send methods using void*
-
-   return;
-}  
-
-void SevenSegDispHw::_sendMssg(void* dataMssg){   //FFDR unify send methods using void*
-
-   return;
-}
-*/
 bool SevenSegDispHw::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
    
    return false;
@@ -138,7 +126,7 @@ bool SevenSegDispHw::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
 
 bool SevenSegDispHw::setDigitsOrder(uint8_t* newOrderPtr){
    bool result{true};
-   uint8_t maxDspPos{(_dspDigitsQtyMax == 0)?_dspDigitsQty:_dspDigitsQtyMax};
+   uint8_t maxDspPos{(_dspCtrllrMaxDgts == 0)?_dspDigitsQty:_dspCtrllrMaxDgts};
 
    for(int i {0}; i < _dspDigitsQty; i++){
       if (*(newOrderPtr + i) >= maxDspPos){
@@ -237,21 +225,6 @@ void SevenSegDynamic::_refresh(){
     return;
 }
 
-/*void SevenSegDynamic::_send(uint8_t content){ // Implementation is hardware dependant (subclasses) protocol!!
-
-   return;
-}
-
-void SevenSegDynamic::_send(const uint8_t &segments, const uint8_t &port){
-
-   return;
-}*/
-
-void SevenSegDynamic::tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg){
-
-   return;
-}
-
 //============================================================> Class methods separator
 
 SevenSegDynHC595::SevenSegDynHC595(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
@@ -263,6 +236,8 @@ SevenSegDynHC595::SevenSegDynHC595(uint8_t* ioPins, uint8_t dspDigits, bool comm
     
    _drvrShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, 2, nullptr);
    _drvrShftRegSndPtr = new uint8_t[2];
+
+   _dspCtrllrMaxDgts = _MaxDgts;
 }
 
 SevenSegDynHC595::~SevenSegDynHC595(){
@@ -510,6 +485,9 @@ SevenSegStatHC595::SevenSegStatHC595(uint8_t *ioPins, uint8_t dspDigits, bool co
     
     _dsplyHwShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, _dspDigitsQty, nullptr);
     _lclDspBuffPtr = new uint8_t[_dspDigitsQty];
+
+    _dspCtrllrMaxDgts = dspDigits;
+
 }
 
 SevenSegStatHC595::~SevenSegStatHC595() {}
@@ -539,16 +517,16 @@ void SevenSegStatHC595::_updDsplyCntnt(){
 SevenSegTM163X::SevenSegTM163X(){}
 
 SevenSegTM163X::SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspContMaxDigits)
-:SevenSegStatic(ioPins, dspDigits, commAnode), _dspDigitsQtyMax{dspContMaxDigits}
+:SevenSegStatic(ioPins, dspDigits, commAnode), _MaxDgts{dspContMaxDigits}
 {
    _brghtnssLvlMax = _hwBrghtnssLvlMax;
    _brghtnssLvlMin = _hwBrghtnssLvlMin;
    _brghtnssLvl = _brghtnssLvlMax;
 
-   if(_dspDigitsQty > _dspDigitsQtyMax)
-      _dspDigitsQty = _dspDigitsQtyMax;   //FFDR Move the checking to the base class constructor and allocate the correct amount of memory there!!
+   if(_dspDigitsQty > _MaxDgts)
+      _dspDigitsQty = _MaxDgts;   //FFDR Move the checking to the base class constructor and allocate the correct amount of memory there!!
    _lclDspBuffPtr = new uint8_t[_dspDigitsQty]; //FFDR The display buffer shared with SevenSegDisplays need no manipulation, use mutex to avoid overwriting while operating it from both sides and eliminate this uneeded buffer
-   _xcdDspDigitsQty = _dspDigitsQtyMax  - _dspDigitsQty;
+   _xcdDspDigitsQty = _dspCtrllrMaxDgts  - _dspDigitsQty;
 
    if(_xcdDspDigitsQty > 0){
       _xcdDspBuffPtr = new uint8_t[_xcdDspDigitsQty];
@@ -648,7 +626,7 @@ void SevenSegTM163X::_sendBffr(){
       _txWrByte(*(_lclDspBuffPtr + i));
       _txAsk();
    }
-   for(uint8_t i{_dspDigitsQty}; i < _dspDigitsQtyMax ; i++){// Send the contents for the non visible display ports
+   for(uint8_t i{_dspDigitsQty}; i < _dspCtrllrMaxDgts ; i++){// Send the contents for the non visible display ports
       _txWrByte(*(_xcdDspBuffPtr + i));
       _txAsk();
    }
@@ -779,8 +757,9 @@ void SevenSegTM163X::_updLclBffrCntnt(){
 SevenSegTM1636::SevenSegTM1636(){}
 
 SevenSegTM1636::SevenSegTM1636(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
-:SevenSegTM163X(ioPins, dspDigits, commAnode, 4)
+:SevenSegTM163X(ioPins, dspDigits, commAnode, 4) //FFDR replace the last constant value with the local value of _MaxDgts
 {
+   //FFDR put here the _dspCtrllrMaxDgts value assignement
 }
 
 SevenSegTM1636::~SevenSegTM1636(){}
@@ -795,7 +774,7 @@ void SevenSegTM1636::_unAbstract(){
 SevenSegTM1637::SevenSegTM1637(){};
 
 SevenSegTM1637::SevenSegTM1637(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
-:SevenSegTM163X(ioPins, dspDigits, commAnode, 6)
+:SevenSegTM163X(ioPins, dspDigits, commAnode, 6)//FFDR replace the last constant value with the local value of _MaxDgts
 {
 }
 
@@ -811,7 +790,7 @@ void SevenSegTM1637::_unAbstract(){
 SevenSegTM1639::SevenSegTM1639(){}
 
 SevenSegTM1639::SevenSegTM1639(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
-:SevenSegTM163X(ioPins, dspDigits, commAnode, 8)
+:SevenSegTM163X(ioPins, dspDigits, commAnode, 8)//FFDR replace the last constant value with the local value of _MaxDgts
 {
 }
 
@@ -833,8 +812,8 @@ SevenSegMax7219::SevenSegMax7219(uint8_t* ioPins, uint8_t dspDigits)
    _brghtnssLvlMin = _hwBrghtnssLvlMin;
    _brghtnssLvl = _brghtnssLvlMin;
 
-   if(_dspDigitsQty > _dspDigitsQtyMax)
-      _dspDigitsQty = _dspDigitsQtyMax;   //FFDR Move the checking to the base class constructor and allocate the correct amount of memory there!!
+   if(_dspDigitsQty > _dspCtrllrMaxDgts)
+      _dspDigitsQty = _dspCtrllrMaxDgts;   //FFDR Move the checking to the base class constructor and allocate the correct amount of memory there!!
    _lclDspBuffPtr = new uint8_t[_dspDigitsQty]; //FFDR this local buffer is needed as it keeps the shared buffer contents into MAX7219 format, protect the shared buffer with mutex to avoid changing while loading
    
    _clk = *(ioPins + _clkIndx);
