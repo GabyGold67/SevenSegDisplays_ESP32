@@ -9,7 +9,7 @@ var searchData=
   ['setwaitchar_6',['setWaitChar',['../class_seven_seg_displays.html#a806a5ed32988ec7d82b65157b56b538e',1,'SevenSegDisplays']]],
   ['setwaitrate_7',['setWaitRate',['../class_seven_seg_displays.html#a38948554f7ff5967e9cc563874754f57',1,'SevenSegDisplays']]],
   ['seven_20segments_20displays_20easy_20to_20use_20library_20strong_8',['&lt;strong&gt;SevenSegDisplays_ESP32: A Seven Segments displays easy to use library&lt;/strong&gt;',['../index.html',1,'']]],
-  ['sevensegdisphw_9',['SevenSegDispHw',['../class_seven_seg_disp_hw.html',1,'SevenSegDispHw'],['../class_seven_seg_disp_hw.html#a31e3b1f101170f21c7d247f72536ff8c',1,'SevenSegDispHw::SevenSegDispHw()'],['../class_seven_seg_disp_hw.html#a8dd283533f1deddffdd679c7e12c7c7d',1,'SevenSegDispHw::SevenSegDispHw(uint8_t *ioPins, uint8_t dspDigits=4, bool commAnode=true)']]],
+  ['sevensegdisphw_9',['SevenSegDispHw',['../class_seven_seg_disp_hw.html',1,'SevenSegDispHw'],['../class_seven_seg_disp_hw.html#a31e3b1f101170f21c7d247f72536ff8c',1,'SevenSegDispHw::SevenSegDispHw()'],['../class_seven_seg_disp_hw.html#a85dfe5b62f3135f472f79c99103761ca',1,'SevenSegDispHw::SevenSegDispHw(uint8_t *ioPins, uint8_t dspDigits=4, bool commAnode=true, uint8_t dspDigitsQtyMax=0)']]],
   ['sevensegdisphw_2ecpp_10',['SevenSegDispHw.cpp',['../_seven_seg_disp_hw_8cpp.html',1,'']]],
   ['sevensegdisphw_2eh_11',['SevenSegDispHw.h',['../_seven_seg_disp_hw_8h.html',1,'']]],
   ['sevensegdisplays_12',['SevenSegDisplays',['../class_seven_seg_displays.html',1,'SevenSegDisplays'],['../class_seven_seg_displays.html#ada6d89fb083fd8a5a2ce603b3b1f5e43',1,'SevenSegDisplays::SevenSegDisplays()']]],

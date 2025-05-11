@@ -9,6 +9,6 @@ var searchData=
   ['_5fdspbuffptrbkp_6',['_dspBuffPtrBkp',['../class_seven_seg_disp_hw.html#a73f7ed1aa03a57762c51bfb6e29db011',1,'SevenSegDispHw']]],
   ['_5fison_7',['_isOn',['../class_seven_seg_disp_hw.html#a3766aca6533be7b0b416229ebfe4cf49',1,'SevenSegDispHw']]],
   ['_5flcldspbuffptr_8',['_lclDspBuffPtr',['../class_seven_seg_t_m163_x.html#ac15a9132e32747ba1cab6b13495b9eb2',1,'SevenSegTM163X::_lclDspBuffPtr'],['../class_seven_seg_max7219.html#a79583f354ea2df08f1a45fea1ec23a37',1,'SevenSegMax7219::_lclDspBuffPtr']]],
-  ['_5fxcddspbuffptr_9',['_xcdDspBuffPtr',['../class_seven_seg_t_m163_x.html#a6085a13a7d24c8bf67ecd94a307fec2c',1,'SevenSegTM163X']]],
-  ['_5fxcddspdigitsqty_10',['_xcdDspDigitsQty',['../class_seven_seg_t_m163_x.html#aa6bcf57af3fb44db0565e987f4ef7b9c',1,'SevenSegTM163X']]]
+  ['_5fxcddspbuffptr_9',['_xcdDspBuffPtr',['../class_seven_seg_disp_hw.html#af6bacaac69559e6788101ee45d3cff0e',1,'SevenSegDispHw']]],
+  ['_5fxcddspdigitsqty_10',['_xcdDspDigitsQty',['../class_seven_seg_disp_hw.html#a87f090d25ccf0c245990c59041658629',1,'SevenSegDispHw']]]
 ];

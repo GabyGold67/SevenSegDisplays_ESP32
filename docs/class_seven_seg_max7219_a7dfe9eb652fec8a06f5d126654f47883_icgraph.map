@@ -1,5 +1,7 @@
 <map id="SevenSegMax7219::turnOn" name="SevenSegMax7219::turnOn">
-<area shape="rect" id="Node000001" title="Turns the display module on." alt="" coords="227,5,408,32"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_max7219.html#a7145d4d218c7b8469a13c6a1780d8ce7" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="5,5,179,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="211,21,179,21,179,16,211,16"/>
+<area shape="rect" id="Node000001" title="Turns the display module on." alt="" coords="235,31,416,57"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_max7219.html#a7145d4d218c7b8469a13c6a1780d8ce7" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="9,5,183,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="219,35,183,31,184,26,220,30"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_max7219.html#abff2d6deb86f12e4ca7a0bd17a444cc1" title="Turns the display module on." alt="" coords="5,56,187,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="220,58,187,62,187,57,219,53"/>
 </map>

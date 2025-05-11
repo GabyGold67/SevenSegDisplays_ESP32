@@ -1,7 +1,7 @@
 var class_seven_seg_disp_hw =
 [
     [ "SevenSegDispHw", "class_seven_seg_disp_hw.html#a31e3b1f101170f21c7d247f72536ff8c", null ],
-    [ "SevenSegDispHw", "class_seven_seg_disp_hw.html#a8dd283533f1deddffdd679c7e12c7c7d", null ],
+    [ "SevenSegDispHw", "class_seven_seg_disp_hw.html#a85dfe5b62f3135f472f79c99103761ca", null ],
     [ "~SevenSegDispHw", "class_seven_seg_disp_hw.html#a148b7eb20201e4dd6b7841857de93145", null ],
     [ "begin", "class_seven_seg_disp_hw.html#a5f3a59bcc54ddd20445e049359753ab6", null ],
     [ "end", "class_seven_seg_disp_hw.html#a10ef7e4db6af3dbbcdeb48331d94f2e2", null ],
@@ -12,6 +12,7 @@ var class_seven_seg_disp_hw =
     [ "getDspBuffPtr", "class_seven_seg_disp_hw.html#a17e903934d148f0d2c47da7ceb0982c7", null ],
     [ "getHwDspDigitsQty", "class_seven_seg_disp_hw.html#ac6544795ed8c9b44211424c8b5ef216f", null ],
     [ "getIsOn", "class_seven_seg_disp_hw.html#aa23f15cca7bb2db9821982965d969773", null ],
+    [ "getxcdDspBuffPtr", "class_seven_seg_disp_hw.html#a9c6f61ddd69a41abb055aefe2958385f", null ],
     [ "ntfyUpdDsply", "class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327", null ],
     [ "setBrghtnssLvl", "class_seven_seg_disp_hw.html#a25007a1b33093e4c055446010e254d63", null ],
     [ "setDigitsOrder", "class_seven_seg_disp_hw.html#aee6d67c3bdd719b05ac6e7d8d250d43f", null ],
@@ -26,5 +27,7 @@ var class_seven_seg_disp_hw =
     [ "_dspBlankBuffPtr", "class_seven_seg_disp_hw.html#a3ccc9149931302708fc61446a6ff0c46", null ],
     [ "_dspBuffPtr", "class_seven_seg_disp_hw.html#a95b6978ec791ce44c93e826c3bb1d870", null ],
     [ "_dspBuffPtrBkp", "class_seven_seg_disp_hw.html#a73f7ed1aa03a57762c51bfb6e29db011", null ],
-    [ "_isOn", "class_seven_seg_disp_hw.html#a3766aca6533be7b0b416229ebfe4cf49", null ]
+    [ "_isOn", "class_seven_seg_disp_hw.html#a3766aca6533be7b0b416229ebfe4cf49", null ],
+    [ "_xcdDspBuffPtr", "class_seven_seg_disp_hw.html#af6bacaac69559e6788101ee45d3cff0e", null ],
+    [ "_xcdDspDigitsQty", "class_seven_seg_disp_hw.html#a87f090d25ccf0c245990c59041658629", null ]
 ];

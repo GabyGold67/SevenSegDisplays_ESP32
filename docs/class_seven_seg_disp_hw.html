@@ -153,9 +153,9 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>SevenSegDispHw</b> ()</td></tr>
 <tr class="memdesc:a31e3b1f101170f21c7d247f72536ff8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default class constructor. <br /></td></tr>
 <tr class="separator:a31e3b1f101170f21c7d247f72536ff8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8dd283533f1deddffdd679c7e12c7c7d" id="r_a8dd283533f1deddffdd679c7e12c7c7d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8dd283533f1deddffdd679c7e12c7c7d">SevenSegDispHw</a> (uint8_t *ioPins, uint8_t dspDigits=4, bool commAnode=true)</td></tr>
-<tr class="memdesc:a8dd283533f1deddffdd679c7e12c7c7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor.  <br /></td></tr>
-<tr class="separator:a8dd283533f1deddffdd679c7e12c7c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85dfe5b62f3135f472f79c99103761ca" id="r_a85dfe5b62f3135f472f79c99103761ca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a85dfe5b62f3135f472f79c99103761ca">SevenSegDispHw</a> (uint8_t *ioPins, uint8_t dspDigits=4, bool commAnode=true, uint8_t dspDigitsQtyMax=0)</td></tr>
+<tr class="memdesc:a85dfe5b62f3135f472f79c99103761ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor.  <br /></td></tr>
+<tr class="separator:a85dfe5b62f3135f472f79c99103761ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a148b7eb20201e4dd6b7841857de93145" id="r_a148b7eb20201e4dd6b7841857de93145"><td class="memItemLeft" align="right" valign="top"><a id="a148b7eb20201e4dd6b7841857de93145" name="a148b7eb20201e4dd6b7841857de93145"></a>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b> ()</td></tr>
 <tr class="memdesc:a148b7eb20201e4dd6b7841857de93145"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class destructor. <br /></td></tr>
@@ -196,6 +196,10 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 <tr class="memdesc:aa23f15cca7bb2db9821982965d969773"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the state of the display. <br  />
   <br /></td></tr>
 <tr class="separator:aa23f15cca7bb2db9821982965d969773"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c6f61ddd69a41abb055aefe2958385f" id="r_a9c6f61ddd69a41abb055aefe2958385f"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9c6f61ddd69a41abb055aefe2958385f">getxcdDspBuffPtr</a> ()</td></tr>
+<tr class="memdesc:a9c6f61ddd69a41abb055aefe2958385f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to an array holding the contents for the digits/ports available from the display controller but not used for plain digits display. <br  />
+  <br /></td></tr>
+<tr class="separator:a9c6f61ddd69a41abb055aefe2958385f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02d94944c1a9ade34a530c7e13503327" id="r_a02d94944c1a9ade34a530c7e13503327"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a02d94944c1a9ade34a530c7e13503327">ntfyUpdDsply</a> ()</td></tr>
 <tr class="memdesc:a02d94944c1a9ade34a530c7e13503327"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifies the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> component object of a change of content available in the display buffer, so that the object proceeds to update the display. <br  />
   <br /></td></tr>
@@ -259,6 +263,14 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_dspBuffPtrBkp</
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td></tr>
 <tr class="memdesc:a3766aca6533be7b0b416229ebfe4cf49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current display status: On/Off. <br /></td></tr>
 <tr class="separator:a3766aca6533be7b0b416229ebfe4cf49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6bacaac69559e6788101ee45d3cff0e" id="r_af6bacaac69559e6788101ee45d3cff0e"><td class="memItemLeft" align="right" valign="top"><a id="af6bacaac69559e6788101ee45d3cff0e" name="af6bacaac69559e6788101ee45d3cff0e"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_xcdDspBuffPtr</b> {nullptr}</td></tr>
+<tr class="memdesc:af6bacaac69559e6788101ee45d3cff0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to a buffer the size of the exceeding digits used to control display specific amenities. <br /></td></tr>
+<tr class="separator:af6bacaac69559e6788101ee45d3cff0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87f090d25ccf0c245990c59041658629" id="r_a87f090d25ccf0c245990c59041658629"><td class="memItemLeft" align="right" valign="top"><a id="a87f090d25ccf0c245990c59041658629" name="a87f090d25ccf0c245990c59041658629"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_xcdDspDigitsQty</b> {}</td></tr>
+<tr class="memdesc:a87f090d25ccf0c245990c59041658629"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of unused available display ports, its the difference (_dspDigitsQtyMax - _dspDigitsQty), being the size of the array pointed by _xcdDspBuffPtr. <br /></td></tr>
+<tr class="separator:a87f090d25ccf0c245990c59041658629"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base abstract class models a generic Seven Segment display hardware. </p>
@@ -270,8 +282,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
 </ul>
 </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a8dd283533f1deddffdd679c7e12c7c7d" name="a8dd283533f1deddffdd679c7e12c7c7d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8dd283533f1deddffdd679c7e12c7c7d">&#9670;&#160;</a></span>SevenSegDispHw()</h2>
+<a id="a85dfe5b62f3135f472f79c99103761ca" name="a85dfe5b62f3135f472f79c99103761ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85dfe5b62f3135f472f79c99103761ca">&#9670;&#160;</a></span>SevenSegDispHw()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -289,7 +301,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>commAnode</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>&#160;)</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>commAnode</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>dspDigitsQtyMax</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -302,10 +319,14 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
     <tr><td class="paramname">dspDigits</td><td>Quantity of digits/ports of the display. This value is directly related to the <b>display module component</b> quantity of ports and characteristics. <br  />
  </td></tr>
     <tr><td class="paramname">commAnode</td><td>Boolean indicating if the hardware uses a <b>display module component</b> wired as common anode (true) or common cathode (false). <br  />
+ </td></tr>
+    <tr><td class="paramname">dspDigitsQtyMax</td><td>Maximum quantity of digits/ports the display controller is able to manage. Sometimes <b>display module components</b> are attached to <b>display controller component</b> able to manage more than the display digits/ports. <br  />
 </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>In the case the there are remaining display controller unused positions, they might be reasigned for special uses or artifacts, see the complete documentation for access to those positions. <br  />
+</dd></dl>
 <dl class="section attention"><dt>Attention</dt><dd>The dspDigits parameter, indicating the quantity of digits of the display module, is a <b>basic fundamental</b> parameter passed at instantiation time. This information provides the value to be used to create the data buffer of the right size, the digits order table, auxiliary buffers and the required information to calculate the range of values displayable and to generate a valid left or right aligned display. Obviously the quantity is bigger than 0, and must be less than or equal to the hardware maximum display digits capability. <br  />
 </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>The dspDigits parameter value must not be confused with the maximum display digits a display controller component can handle. Many displays are designed using part of the controller's digits management for real seven segment displays digits while using non connected to ports pins to manage some other display elements, like individual leds, icons, special backlighting elements, etc. The class instantiated object needs the right amount of display digits available as such, the exceeding digits/ports is currently out of the libray management scope. <br  />
@@ -632,7 +653,7 @@ Here is the caller graph for this function:</div>
 </p>
 <dl class="section return"><dt>Returns</dt><dd>uint8_t The <b>display module component</b> digits quantity. <br  />
 </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>The dspDigits parameter value return by this method must not be confused with the maximum display digits a display controller component can handle. For more information see <a class="el" href="#a8dd283533f1deddffdd679c7e12c7c7d" title="Class constructor.">SevenSegDispHw(uint8_t*, uint8_t, bool commAnode)</a> </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>The dspDigits parameter value return by this method must not be confused with the maximum display digits a display controller component can handle. For more information see <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw(uint8_t*, uint8_t, bool commAnode)</a> </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -681,6 +702,28 @@ Here is the caller graph for this function:</div>
 </dl>
 
 <p>Reimplemented in <a class="el" href="class_seven_seg_max7219.html#a0dca0ec94329140f654383ddee5bc142">SevenSegMax7219</a>.</p>
+
+</div>
+</div>
+<a id="a9c6f61ddd69a41abb055aefe2958385f" name="a9c6f61ddd69a41abb055aefe2958385f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c6f61ddd69a41abb055aefe2958385f">&#9670;&#160;</a></span>getxcdDspBuffPtr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t * SevenSegDispHw::getxcdDspBuffPtr </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a pointer to an array holding the contents for the digits/ports available from the display controller but not used for plain digits display. <br  />
+ </p>
+<dl class="section return"><dt>Returns</dt><dd>uint8_t* The pointer to the array holding the contents for the exceeding display controller ports. <br  />
+ </dd></dl>
 
 </div>
 </div>

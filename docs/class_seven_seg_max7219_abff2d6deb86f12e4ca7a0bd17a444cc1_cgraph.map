@@ -1,6 +1,7 @@
 <map id="SevenSegMax7219::turnOn" name="SevenSegMax7219::turnOn">
-<area shape="rect" id="Node000001" title="Turns the display module on." alt="" coords="5,29,187,56"/>
-<area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="54,31,46,21,51,11,68,5,96,3,127,5,142,12,140,17,125,10,96,8,69,10,55,15,51,20,58,27"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_max7219.html#a00e46d6be95a02bd6d20de36bf671080" title="Sets the brightness level for the display module." alt="" coords="235,29,464,56"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,40,219,40,219,45,187,45"/>
+<area shape="rect" id="Node000001" title="Turns the display module on." alt="" coords="5,31,187,57"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_max7219.html#a00e46d6be95a02bd6d20de36bf671080" title="Sets the brightness level for the display module." alt="" coords="235,5,464,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,32,219,29,219,34,187,38"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_max7219.html#a7dfe9eb652fec8a06f5d126654f47883" title="Turns the display module on." alt="" coords="259,56,440,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="187,50,244,56,243,61,187,56"/>
 </map>

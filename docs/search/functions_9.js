@@ -7,7 +7,7 @@ var searchData=
   ['setdspbuffptr_4',['setDspBuffPtr',['../class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff',1,'SevenSegDispHw']]],
   ['setwaitchar_5',['setWaitChar',['../class_seven_seg_displays.html#a806a5ed32988ec7d82b65157b56b538e',1,'SevenSegDisplays']]],
   ['setwaitrate_6',['setWaitRate',['../class_seven_seg_displays.html#a38948554f7ff5967e9cc563874754f57',1,'SevenSegDisplays']]],
-  ['sevensegdisphw_7',['SevenSegDispHw',['../class_seven_seg_disp_hw.html#a31e3b1f101170f21c7d247f72536ff8c',1,'SevenSegDispHw::SevenSegDispHw()'],['../class_seven_seg_disp_hw.html#a8dd283533f1deddffdd679c7e12c7c7d',1,'SevenSegDispHw::SevenSegDispHw(uint8_t *ioPins, uint8_t dspDigits=4, bool commAnode=true)']]],
+  ['sevensegdisphw_7',['SevenSegDispHw',['../class_seven_seg_disp_hw.html#a31e3b1f101170f21c7d247f72536ff8c',1,'SevenSegDispHw::SevenSegDispHw()'],['../class_seven_seg_disp_hw.html#a85dfe5b62f3135f472f79c99103761ca',1,'SevenSegDispHw::SevenSegDispHw(uint8_t *ioPins, uint8_t dspDigits=4, bool commAnode=true, uint8_t dspDigitsQtyMax=0)']]],
   ['sevensegdisplays_8',['SevenSegDisplays',['../class_seven_seg_displays.html#ada6d89fb083fd8a5a2ce603b3b1f5e43',1,'SevenSegDisplays']]],
   ['sevensegdyndummy_9',['SevenSegDynDummy',['../class_seven_seg_dyn_dummy.html#a24acbe9310933715d67b880034a75141',1,'SevenSegDynDummy']]],
   ['sevensegdynhc595_10',['SevenSegDynHC595',['../class_seven_seg_dyn_h_c595.html#a3fc30faf73816ce59fb459de3dacebae',1,'SevenSegDynHC595']]],
