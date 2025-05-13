@@ -28,7 +28,7 @@ This library is oriented to the management of the most usual combinations of tho
 These last three steps migh be simplified to two steps or even one: 
 `SevenSegDisplays myLedDisplay(new SevenSegDynHC595 (myDispIOPins, 4, true));`
 
-The display hardware actually implemented include:  
+The display hardware currently implemented include:  
 - SevenSegDynHC595  
 - SevenSegDynDummy  
 - SevenSegStatHC595  
