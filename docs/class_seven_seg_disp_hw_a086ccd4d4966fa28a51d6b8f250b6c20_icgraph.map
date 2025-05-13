@@ -1,5 +1,7 @@
 <map id="SevenSegDispHw::turnOff" name="SevenSegDispHw::turnOff">
-<area shape="rect" id="Node000001" title="Turns the display module off." alt="" coords="252,5,427,32"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_dyn_dummy.html#ae668a030792563f416e42696511b42ed" title="Turns the display module off." alt="" coords="5,5,204,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="236,21,204,21,204,16,236,16"/>
+<area shape="rect" id="Node000001" title="Turns the display module off." alt="" coords="252,31,427,57"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#a1749aad8e3f3d97271d32629602875c0" title="Turns the display module off." alt="" coords="15,5,194,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="236,36,194,31,195,26,237,30"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_dyn_dummy.html#ae668a030792563f416e42696511b42ed" title="Turns the display module off." alt="" coords="5,56,204,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="237,58,204,61,204,56,236,52"/>
 </map>

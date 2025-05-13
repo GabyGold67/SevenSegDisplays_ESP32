@@ -1,0 +1,9 @@
+<map id="SevenSegDisplays::begin" name="SevenSegDisplays::begin">
+<area shape="rect" id="Node000001" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="5,5,177,32"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_disp_hw.html#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="225,5,392,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="177,16,209,16,209,21,177,21"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_disp_hw.html#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on." alt="" coords="440,5,615,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="392,16,424,16,424,21,392,21"/>
+<area shape="rect" id="Node000004" href="$class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,..." alt="" coords="663,5,880,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="616,16,648,16,648,21,616,21"/>
+</map>

@@ -15,7 +15,7 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.1.0
+ * @version 3.2.0
  * 
  * @date First release: 20/12/2023  
  *       Last update:   27/04/2025 17:10 (GMT+0200) DST  
@@ -90,7 +90,7 @@ bool SevenSegDisplays::begin(uint32_t updtLps){
    bool result{false};
 
    if(!_begun){
-      result = getDspUndrlHwPtr()->begin(updtLps);
+      result = _dspUndrlHwPtr->begin(updtLps);
       if(result)
          _begun = true;   
    }
@@ -284,7 +284,7 @@ bool SevenSegDisplays::end(){
    bool result{false};
 
    if(_begun){
-      result = getDspUndrlHwPtr()->end();
+      result = _dspUndrlHwPtr->end();
       if (result)
          _begun = false;
    }
@@ -344,7 +344,7 @@ bool SevenSegDisplays::gauge(const double &level, char label) {
 
 uint8_t SevenSegDisplays::getCurBrghtnssLvl(){
 
-   return getDspUndrlHwPtr()->getBrghtnssLvl();
+   return _dspUndrlHwPtr->getBrghtnssLvl();
 }
 
 uint8_t SevenSegDisplays::getDigitsQty(){
@@ -364,7 +364,7 @@ bool SevenSegDisplays::getDspIsDmmbl(){
 
 bool SevenSegDisplays::getIsOn(){
 
-   return getDspUndrlHwPtr()->getIsOn();
+   return _dspUndrlHwPtr->getIsOn();
 }
 
 SevenSegDispHw* SevenSegDisplays::getDspUndrlHwPtr(){
@@ -384,12 +384,12 @@ int32_t SevenSegDisplays::getDspValMin(){
 
 uint8_t SevenSegDisplays::getMaxBrghtnssLvl(){
 
-   return getDspUndrlHwPtr()->getBrghtnssMaxLvl();
+   return _dspUndrlHwPtr->getBrghtnssMaxLvl();
 }
 
 uint8_t SevenSegDisplays::getMinBrghtnssLvl(){
 
-   return getDspUndrlHwPtr()->getBrghtnssMinLvl();
+   return _dspUndrlHwPtr->getBrghtnssMinLvl();
 }
 
 uint16_t SevenSegDisplays::getSerialNbr(){
@@ -825,11 +825,15 @@ bool SevenSegDisplays::setBlinkRate(const uint32_t &newOnRate, const uint32_t &n
 }
 
 bool SevenSegDisplays::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
+   bool result{false};
 
-   return getDspUndrlHwPtr()->setBrghtnssLvl(newBrghtnssLvl);
+   if(getDspIsDmmbl())
+      result = _dspUndrlHwPtr->setBrghtnssLvl(newBrghtnssLvl);
+   
+   return result;
 }
 
-void SevenSegDisplays::_setDspBuffChng(){//FFDR Include in this method all the actions triggered by the change of the display buffer contents: Unblocking underlying hardware display renewal, fill message FIFOs, etc.
+void SevenSegDisplays::_setDspBuffChng(){
    _ntfyToHwBuffChng();
 
    return;
@@ -893,19 +897,19 @@ void SevenSegDisplays::tmrCbWait(TimerHandle_t waitTmrCbArg){
 }
 
 void SevenSegDisplays::turnOff(){
-   getDspUndrlHwPtr()->turnOff();
+   _dspUndrlHwPtr->turnOff();
 
    return;
 }
 
 void SevenSegDisplays::turnOn(){
-   getDspUndrlHwPtr()->turnOn();
+   _dspUndrlHwPtr->turnOn();
 
    return;
 }
 
 void SevenSegDisplays::turnOn(const uint8_t &newBrghtnssLvl){
-   getDspUndrlHwPtr()->turnOn(newBrghtnssLvl);
+   _dspUndrlHwPtr->turnOn(newBrghtnssLvl);
 
    return;
 }

@@ -2,12 +2,12 @@ var searchData=
 [
   ['setblinkmask_0',['setBlinkMask',['../class_seven_seg_displays.html#adbf4a53a706c00d9a237991e234a9353',1,'SevenSegDisplays']]],
   ['setblinkrate_1',['setBlinkRate',['../class_seven_seg_displays.html#aa96b5cde05602ba58624b103c852ad71',1,'SevenSegDisplays']]],
-  ['setbrghtnsslvl_2',['setBrghtnssLvl',['../class_seven_seg_disp_hw.html#a25007a1b33093e4c055446010e254d63',1,'SevenSegDispHw::setBrghtnssLvl()'],['../class_seven_seg_t_m163_x.html#a4e74de34810a89ff8409e277e962e09f',1,'SevenSegTM163X::setBrghtnssLvl()'],['../class_seven_seg_max7219.html#a00e46d6be95a02bd6d20de36bf671080',1,'SevenSegMax7219::setBrghtnssLvl()']]],
+  ['setbrghtnsslvl_2',['setBrghtnssLvl',['../class_seven_seg_disp_hw.html#a25007a1b33093e4c055446010e254d63',1,'SevenSegDispHw::setBrghtnssLvl()'],['../class_seven_seg_t_m163_x.html#a4e74de34810a89ff8409e277e962e09f',1,'SevenSegTM163X::setBrghtnssLvl()'],['../class_seven_seg_max7219.html#a00e46d6be95a02bd6d20de36bf671080',1,'SevenSegMax7219::setBrghtnssLvl()'],['../class_seven_seg_displays.html#a2574a617f1d317b3abe3806c4608fd5b',1,'SevenSegDisplays::setBrghtnssLvl()']]],
   ['setdigitsorder_3',['setDigitsOrder',['../class_seven_seg_disp_hw.html#aee6d67c3bdd719b05ac6e7d8d250d43f',1,'SevenSegDispHw']]],
   ['setdspbuffptr_4',['setDspBuffPtr',['../class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff',1,'SevenSegDispHw']]],
   ['setwaitchar_5',['setWaitChar',['../class_seven_seg_displays.html#a806a5ed32988ec7d82b65157b56b538e',1,'SevenSegDisplays']]],
   ['setwaitrate_6',['setWaitRate',['../class_seven_seg_displays.html#a38948554f7ff5967e9cc563874754f57',1,'SevenSegDisplays']]],
-  ['sevensegdisphw_7',['SevenSegDispHw',['../class_seven_seg_disp_hw.html#a31e3b1f101170f21c7d247f72536ff8c',1,'SevenSegDispHw::SevenSegDispHw()'],['../class_seven_seg_disp_hw.html#a8dd283533f1deddffdd679c7e12c7c7d',1,'SevenSegDispHw::SevenSegDispHw(uint8_t *ioPins, uint8_t dspDigits=4, bool commAnode=true)']]],
+  ['sevensegdisphw_7',['SevenSegDispHw',['../class_seven_seg_disp_hw.html#a31e3b1f101170f21c7d247f72536ff8c',1,'SevenSegDispHw::SevenSegDispHw()'],['../class_seven_seg_disp_hw.html#a85dfe5b62f3135f472f79c99103761ca',1,'SevenSegDispHw::SevenSegDispHw(uint8_t *ioPins, uint8_t dspDigits=4, bool commAnode=true, uint8_t dspDigitsQtyMax=0)']]],
   ['sevensegdisplays_8',['SevenSegDisplays',['../class_seven_seg_displays.html#ada6d89fb083fd8a5a2ce603b3b1f5e43',1,'SevenSegDisplays']]],
   ['sevensegdyndummy_9',['SevenSegDynDummy',['../class_seven_seg_dyn_dummy.html#a24acbe9310933715d67b880034a75141',1,'SevenSegDynDummy']]],
   ['sevensegdynhc595_10',['SevenSegDynHC595',['../class_seven_seg_dyn_h_c595.html#a3fc30faf73816ce59fb459de3dacebae',1,'SevenSegDynHC595']]],
@@ -16,5 +16,5 @@ var searchData=
   ['sevensegtm1636_13',['SevenSegTM1636',['../class_seven_seg_t_m1636.html#a77ea015b566e32d02986abe999ab5dcd',1,'SevenSegTM1636::SevenSegTM1636()'],['../class_seven_seg_t_m1636.html#a157ea30fa804573b8fbedfca16b65ee6',1,'SevenSegTM1636::SevenSegTM1636(uint8_t *ioPins, uint8_t dspDigits, bool commAnode)']]],
   ['sevensegtm1637_14',['SevenSegTM1637',['../class_seven_seg_t_m1637.html#a15e7702fdbe3b6bd6fd31b081fffa149',1,'SevenSegTM1637::SevenSegTM1637()'],['../class_seven_seg_t_m1637.html#a0df4df18dd6e69963a5ff6abada18786',1,'SevenSegTM1637::SevenSegTM1637(uint8_t *ioPins, uint8_t dspDigits, bool commAnode)']]],
   ['sevensegtm1639_15',['SevenSegTM1639',['../class_seven_seg_t_m1639.html#afb178737c345c1a241c793db60d43dd3',1,'SevenSegTM1639::SevenSegTM1639()'],['../class_seven_seg_t_m1639.html#a01088a4cf7a6cd4260c91f45e947083a',1,'SevenSegTM1639::SevenSegTM1639(uint8_t *ioPins, uint8_t dspDigits, bool commAnode)']]],
-  ['sevensegtm163x_16',['SevenSegTM163X',['../class_seven_seg_t_m163_x.html#a6f511a29dcacfa8be9d2a8778dc2d05d',1,'SevenSegTM163X::SevenSegTM163X()'],['../class_seven_seg_t_m163_x.html#a6812a6d00def57aaace41ad2a15da7f8',1,'SevenSegTM163X::SevenSegTM163X(uint8_t *ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspContMaxDigits)']]]
+  ['sevensegtm163x_16',['SevenSegTM163X',['../class_seven_seg_t_m163_x.html#a6f511a29dcacfa8be9d2a8778dc2d05d',1,'SevenSegTM163X::SevenSegTM163X()'],['../class_seven_seg_t_m163_x.html#af4bc9ef8decc6ff39f275150f738bd35',1,'SevenSegTM163X::SevenSegTM163X(uint8_t *ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspDigitsQtyMax=0)']]]
 ];

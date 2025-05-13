@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Seven Segments Displays Agnostic Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.1.0</span>
+   <div id="projectname">Seven Segments Displays Agnostic Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.2.0</span>
    </div>
    <div id="projectbrief">A library that provides a class that models a Seven Segment Display and provides an unified API through it&#39;s members independently of the display technology.</div>
   </td>
@@ -101,16 +101,51 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md__c_1_2_users_2_dev_padawan_2_documents_2_my_01_projects_2_training_01_projects_2_libs_dev___e_s_p32_2lib_2_seven_seg_displays___e_s_p32_2_r_e_a_d_m_e"></a></p>
-<h1>"One library to rule them all..."</h1>
-<p><b>(At least as many as I could put my hands on)</b> <br  />
-</p>
 <p>This library goal is to provide a common consistent API to display data on <b>seven segments LED displays</b> independently of the hardware used: the display modules and the driving electronics. <br  />
 </p>
-<p>With a very long time in the market, <b>many</b> different techniques and technologies have been developed to display information in seven segment displays, but like any other technical resource, massification contributed to the development of specific standard hardware, both for the display and the display driving sides. <br  />
+<p>With a very long time in the market, <b>many</b> different techniques and technologies have been developed to display information in seven segment displays, but like any other technical resource, massification contributed to the development of specific standard hardware, both for the display module and the display driving sides. <br  />
 </p>
 <p>This library is oriented to the management of the most usual combinations of those components, <b>even providing management for displays with one of the components missing</b> (see the "dummy" and "PinDrv" SevenSegHw subclasses). <br  />
 </p>
-<h2><a href="https://gabygold67.github.io/SevenSegDisplays_ESP32/">Complete SevenSegDisplays_ESP32 library documentation HERE!</a></h2>
+<h1><a href="https://gabygold67.github.io/SevenSegDisplays_ESP32/">Complete SevenSegDisplays_ESP32 library documentation HERE!</a></h1>
+<h2>For an immediate start these are the required steps:</h2>
+<ol type="1">
+<li>Include the library in your code: <br  />
+ <code>#include &lt;<a class="el" href="_seven_seg_displays_8h.html" title="Header file for the SevenSegDisplays_ESP32 library.">SevenSegDisplays.h</a>&gt;</code> <br  />
+</li>
+<li>Create an int8_t array holding the pins assigned to be used to connect to the display module, each class documentation describes the quantity and position of each pin <code>static uint8_t myDispIOPins[3] {sclk, rclk, dio};</code> <br  />
+</li>
+<li>Instantiate the display hardware you'll be using: <br  />
+ <code><a class="el" href="class_seven_seg_dyn_h_c595.html" title="Models seven segment displays driven by two 74HC595 shift registers.">SevenSegDynHC595</a> myDisplayHw (myDispIOPins, 4, true)</code> For a 4 digits Common Annode display controlled by two 74HC595 shift registers dynamically. <br  />
+</li>
+<li>Create a pointer to the instantiated hardware object: <br  />
+ <code>SevenSegDispHw* myDisplayHwPtr = &amp;myDisplayHw;</code> <br  />
+</li>
+<li>Instantiate the SevenSegmentDisplay object to start using the object through the API: <br  />
+ <code><a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> myLedDisplay(myDisplayHwPtr);</code> <br  />
+</li>
+</ol>
+<p>These last three steps migh be simplified to two steps or even one: <code><a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> myLedDisplay(new SevenSegDynHC595 (myDispIOPins, 4, true));</code></p>
+<p>The display hardware actually implemented include: <br  />
+</p><ul>
+<li><a class="el" href="class_seven_seg_dyn_h_c595.html" title="Models seven segment displays driven by two 74HC595 shift registers.">SevenSegDynHC595</a> <br  />
+</li>
+<li><a class="el" href="class_seven_seg_dyn_dummy.html" title="Models a dynamic display with no screen, for tests or remote display of the data.">SevenSegDynDummy</a> <br  />
+</li>
+<li><a class="el" href="class_seven_seg_stat_h_c595.html" title="Models displays driven by 74HC595 or similar shift registers, one shift register per display port,...">SevenSegStatHC595</a> <br  />
+</li>
+<li><a class="el" href="class_seven_seg_t_m1636.html" title="Models a Seven Segment display hardware controlled by a TM1636 display controller component.">SevenSegTM1636</a> <br  />
+</li>
+<li><a class="el" href="class_seven_seg_t_m1637.html" title="Models a Seven Segment display hardware controlled by a TM1637 display controller component.">SevenSegTM1637</a> <br  />
+</li>
+<li><a class="el" href="class_seven_seg_t_m1639.html" title="Models a Seven Segment display hardware controlled by a TM1639 display controller component.">SevenSegTM1639</a> <br  />
+</li>
+<li>SevenSegMAX7219 <br  />
+</li>
+</ul>
+<p>Others are expected to be added in a near future. <br  />
+</p>
+<h1>Evolution:</h1>
 <p>Originally developed to easily display numeric and text data in unattended manner on the cheap and popular "4-Bits LED Digital Tube Module", <b>a 7-segment 4 digits led display dynamically driven by two 74HC595 shift register</b>, the main focus was set on: <br  />
 </p><ul>
 <li>Ease of use. <br  />

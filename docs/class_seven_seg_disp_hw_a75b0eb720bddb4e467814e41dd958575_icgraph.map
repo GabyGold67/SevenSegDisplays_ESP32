@@ -1,0 +1,9 @@
+<map id="SevenSegDispHw::getBrghtnssMaxLvl" name="SevenSegDispHw::getBrghtnssMaxLvl">
+<area shape="rect" id="Node000001" title="Returns the maximum display brightness level setting allowed for the display." alt="" coords="742,5,949,48"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#ab34dd4e41682c8849c83b15332cbfa63" title="Returns the maximum brightness value setting for the display." alt="" coords="511,5,694,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="727,29,695,29,695,24,727,24"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#a5168f4d1cbdb8faab2b87b1689c182b2" title="Returns the logic value indicating if the display is dimmable." alt="" coords="281,5,463,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="495,29,463,29,463,24,495,24"/>
+<area shape="rect" id="Node000004" href="$class_seven_seg_displays.html#a2574a617f1d317b3abe3806c4608fd5b" title="Set the brightness level for the display." alt="" coords="5,13,233,40"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="265,29,233,29,233,24,265,24"/>
+</map>

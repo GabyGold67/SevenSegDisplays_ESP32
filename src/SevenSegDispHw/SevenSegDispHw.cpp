@@ -3,33 +3,33 @@
  * @file SevenSegDispHw.cpp
  * @brief Code file for the SevenSegDisplays_ESP32 library
  * 
- * @details This code files includes the SevenSegDispHw class and subclasses, including one class for each specific **Display controller** managed by the library/  
+ * @details This code files includes the SevenSegDispHw class and subclasses, including one class for each specific **Display controller** managed by the library.  
  * 
  * Repository: https://github.com/GabyGold67/SevenSegDisplays_ESP32  
  * 
  * Framework: Arduino  
- * Platform: ESP32  
+ * Platform: ESP32
+ * Check https://github.com/GabyGold67 for other Frameworks and Platforms versions of this library availability.  
  * 
  * @author Gabriel D. Goldman  
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.1.0  
+ * @version 3.2.0  
  * 
  * @date First release: 20/12/2023  
- *       Last update:   27/04/2025 20:10 (GMT+0200) DSP
+ *       Last update:   08/05/2025 10:40 (GMT+0200) DSP
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
  */
-#include "Arduino.h"
-#include "sevenSegDispHw.h"
+#include <Arduino.h>
+#include <./SevenSegDispHw/SevenSegDispHw.h>
 //----------------------------------------->> Global constants declaration BEGIN
 //------------------------------------------->> Global constants declaration END
 
 //-------------------------------------->> Static variables initialization BEGIN
 uint8_t SevenSegDispHw::_dspHwSerialNum = 0;
-// TwoWire* SevenSegHT16K33::i2cGenCommPtr = nullptr;
 
 //---------------------------------------->> Static variables initialization END
 
@@ -37,14 +37,24 @@ uint8_t SevenSegDispHw::_dspHwSerialNum = 0;
 
 SevenSegDispHw::SevenSegDispHw() {}
 
-SevenSegDispHw::SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
-:_ioPins{ioPins}, _digitPosPtr{new uint8_t[dspDigits]}, _dspDigitsQty {dspDigits}, _commAnode {commAnode}
+SevenSegDispHw::SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspDigitsQtyMax)
+:_ioPins{ioPins}, _digitPosPtr{new uint8_t[dspDigits]}, _dspDigitsQty {dspDigits}, _commAnode {commAnode},_dspDigitsQtyMax {(dspDigitsQtyMax>0)?dspDigitsQtyMax:dspDigits}
 {
    _dspHwInstNbr = _dspHwSerialNum++;
    _dspHwInstance = this;
+   _allLedsOff = (_commAnode)?0xFF:0x00;
+
+   if(_dspDigitsQty > _dspDigitsQtyMax)   //!> Warning, this may instantiate a non expected size display, instead of simply failing the construction
+      _dspDigitsQty = _dspDigitsQtyMax;
+
    for (uint8_t i{0}; i < _dspDigitsQty; i++)
       *(_digitPosPtr + i) = i;
-   _allLedsOff = (_commAnode)?0xFF:0x00;
+
+   _xcdDspDigitsQty = _dspDigitsQtyMax - _dspDigitsQty;
+   if(_xcdDspDigitsQty > 0){
+      _xcdDspBuffPtr = new uint8_t[_xcdDspDigitsQty];
+      memset(_xcdDspBuffPtr, _allLedsOff, _xcdDspDigitsQty);
+   }
 }
 
 SevenSegDispHw::~SevenSegDispHw() {
@@ -53,6 +63,8 @@ SevenSegDispHw::~SevenSegDispHw() {
       delete [] _dspBlankBuffPtr;   
    if(_digitPosPtr != nullptr)
       delete [] _digitPosPtr;
+   if(_xcdDspBuffPtr != nullptr)
+      delete [] _xcdDspBuffPtr;
 }
 
 bool SevenSegDispHw::begin(uint32_t updtLps){
@@ -62,8 +74,7 @@ bool SevenSegDispHw::begin(uint32_t updtLps){
 }
 
 bool SevenSegDispHw::end(){
-   // Execute subset of turnOff()
-   if(_isOn){
+   if(_isOn){  // Execute subset of turnOff()
       memset(_dspBuffPtr, _allLedsOff, _dspDigitsQty);
       ntfyUpdDsply();
       _isOn = false;
@@ -107,27 +118,12 @@ bool SevenSegDispHw::getIsOn(){
    return _isOn;
 }
 
+uint8_t* SevenSegDispHw::getxcdDspBuffPtr(){
+
+   return _xcdDspBuffPtr;
+}
+
 void SevenSegDispHw::ntfyUpdDsply(){
-
-   return;
-}
-
-void SevenSegDispHw::_send(uint8_t *digitsBuffer){
-
-   return;
-}
-
-void SevenSegDispHw::_send(const uint8_t &segments, const uint8_t &port){
-
-   return;
-}
-
-void SevenSegDispHw::_sendDataUnit(void* dataUnit){   //FFDR unify send methods using void*
-
-   return;
-}  
-
-void SevenSegDispHw::_sendMssg(void* dataMssg){   //FFDR unify send methods using void*
 
    return;
 }
@@ -140,14 +136,30 @@ bool SevenSegDispHw::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
 bool SevenSegDispHw::setDigitsOrder(uint8_t* newOrderPtr){
    bool result{true};
 
-   for(int i {0}; i < _dspDigitsQty; i++){
-      if (*(newOrderPtr + i) >= _dspDigitsQty){
+   for(int i {0}; i < _dspDigitsQty; i++){ // First test: all values in *newOrderPtr are in valid range
+      if (*(newOrderPtr + i) >= _dspDigitsQtyMax){
          result = false;
          break;
       }   
    }
-   if (result)
+   if(result){ // Second test: verify the positions in the newOrderPtr are never repeated
+      uint8_t* posUseChkArry = new uint8_t [_dspDigitsQtyMax];
+      memset(posUseChkArry, 0X00, _dspDigitsQtyMax);
+      for(int i {0}; i < _dspDigitsQty; i++){
+         if (*(posUseChkArry + *(newOrderPtr + i)) == 0x00){
+            *(posUseChkArry + *(newOrderPtr + i)) = 0x01;   // Mark position as used
+         }
+         else{ // The position was already set to be used, check failed, leave method
+            result = false;
+            break;
+         }            
+      }
+      delete [] posUseChkArry;
+   }
+   if(result)
       memcpy(_digitPosPtr, newOrderPtr, _dspDigitsQty);
+
+   //FFDR Add the re-construction of the _xcdDspBuffPtr array including all unused positions
 
    return result;
 }
@@ -198,7 +210,7 @@ void SevenSegDispHw::turnOn(const uint8_t &newBrghtnssLvl){
 
 SevenSegDynamic::SevenSegDynamic(){}
 
-SevenSegDynamic::SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
+SevenSegDynamic::SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspDigitsQtyMax)
 :SevenSegDispHw(ioPins, dspDigits, commAnode)
 {
    String dspSerialNumStr {"000" + String(_dspHwInstNbr)};
@@ -223,16 +235,6 @@ void SevenSegDynamic::_refresh(){
     return;
 }
 
-void SevenSegDynamic::_send(uint8_t content){ // Implementation is hardware dependant (subclasses) protocol!!
-
-   return;
-}
-
-void SevenSegDynamic::_send(const uint8_t &segments, const uint8_t &port){
-
-   return;
-}
-
 void SevenSegDynamic::tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg){
 
    return;
@@ -241,14 +243,11 @@ void SevenSegDynamic::tmrCbRfrshDyn(TimerHandle_t rfrshTmrCbArg){
 //============================================================> Class methods separator
 
 SevenSegDynHC595::SevenSegDynHC595(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
-:SevenSegDynamic(ioPins, dspDigits, commAnode)
+:SevenSegDynamic(ioPins, dspDigits, commAnode, _dspDigitsQtyMax)
 {    
    _sclk = *(ioPins + _sclkIndx);
    _rclk = *(ioPins + _rclkIndx);
-   _dio = *(ioPins + _dioIndx);
-    
-   _drvrShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, 2, nullptr);
-   _drvrShftRegSndPtr = new uint8_t[2];
+   _dio = *(ioPins + _dioIndx);    
 }
 
 SevenSegDynHC595::~SevenSegDynHC595(){
@@ -269,11 +268,12 @@ bool SevenSegDynHC595::begin(uint32_t updtLps){
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
-   _firstRefreshed = 0;
-   //Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)
-   if (!_dynHC595DspRfrshTmrHndl){
-      //Initialize the Display refresh timer. Considering each digit to be refreshed at 30 Hz in turn, the freq might be (Qty of digits * 30Hz)
-      _dynHC595DspRfrshTmrHndl = xTimerCreate(
+   _drvrShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, 2, nullptr);
+   _drvrShftRegSndPtr = new uint8_t[2];
+
+   _firstRefreshed = 0;   
+   if (!_dynHC595DspRfrshTmrHndl){  //Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)      
+      _dynHC595DspRfrshTmrHndl = xTimerCreate(  //Initialize the Display refresh timer. Considering each digit to be refreshed at 30 Hz in turn, the freq might be (Qty of digits * 30Hz)
          _rfrshTmrName.c_str(),   // Timer human readable name
          pdMS_TO_TICKS((updtLps > 0)?updtLps:((int)(1000/(30 * _dspDigitsQty)))),
          pdTRUE,  // Autoreload
@@ -337,10 +337,7 @@ void SevenSegDynHC595::tmrCbRfrshDynHC595(TimerHandle_t rfrshTmrCbArg){
    return;
 }
 
-void SevenSegDynHC595::_unAbstract() {
-
-   return;
-}
+void SevenSegDynHC595::_unAbstract() {return;}
 
 //============================================================> Class methods separator
 
@@ -476,8 +473,8 @@ void SevenSegDynDummy::_unAbstract(){return;}
 
 SevenSegStatic::SevenSegStatic(){}
 
-SevenSegStatic::SevenSegStatic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
-:SevenSegDispHw(ioPins, dspDigits, commAnode)
+SevenSegStatic::SevenSegStatic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspDigitsQtyMax)
+:SevenSegDispHw(ioPins, dspDigits, commAnode, dspDigitsQtyMax)
 {   
 }
 
@@ -488,17 +485,22 @@ SevenSegStatic::~SevenSegStatic() {}
 SevenSegStatHC595::SevenSegStatHC595(){}
 
 SevenSegStatHC595::SevenSegStatHC595(uint8_t *ioPins, uint8_t dspDigits, bool commAnode)
-:SevenSegStatic(ioPins, dspDigits, commAnode)
+:SevenSegStatic(ioPins, dspDigits, commAnode, dspDigits)
 {
    _sclk = *(ioPins + _sclkIndx);
    _rclk = *(ioPins + _rclkIndx);
    _dio = *(ioPins + _dioIndx);
     
-    _dsplyHwShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, _dspDigitsQty, nullptr);
-    _lclDspBuffPtr = new uint8_t[_dspDigitsQty];
 }
 
 SevenSegStatHC595::~SevenSegStatHC595() {}
+
+bool SevenSegStatHC595::begin(uint32_t updtLps){
+   _dsplyHwShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, _dspDigitsQty, nullptr);
+   _lclDspBuffPtr = new uint8_t[_dspDigitsQty];
+
+   return true;
+}
 
 void SevenSegStatHC595::ntfyUpdDsply(){
    _updDsplyCntnt();
@@ -524,40 +526,29 @@ void SevenSegStatHC595::_updDsplyCntnt(){
 
 SevenSegTM163X::SevenSegTM163X(){}
 
-SevenSegTM163X::SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspContMaxDigits)
-:SevenSegStatic(ioPins, dspDigits, commAnode), _dspDigitsQtyMax{dspContMaxDigits}
+SevenSegTM163X::SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspDigitsQtyMax)
+:SevenSegStatic(ioPins, dspDigits, commAnode, dspDigitsQtyMax)
 {
    _brghtnssLvlMax = _hwBrghtnssLvlMax;
    _brghtnssLvlMin = _hwBrghtnssLvlMin;
    _brghtnssLvl = _brghtnssLvlMax;
 
-   if(_dspDigitsQty > _dspDigitsQtyMax)
-      _dspDigitsQty = _dspDigitsQtyMax;
-   _lclDspBuffPtr = new uint8_t[_dspDigitsQty]; //FFDR The display buffer shared with SevenSegDisplays need no manipulation, use mutex to avoid overwriting while operatin it from both sides and eliminate this uneeded buffer
-   _xcdDspDigitsQty = _dspDigitsQtyMax  - _dspDigitsQty;
-
-   if(_xcdDspDigitsQty > 0){
-      _xcdDspBuffPtr = new uint8_t[_xcdDspDigitsQty];
-      memset(_xcdDspBuffPtr, 0X00, _xcdDspDigitsQty);
-   }
+   _lclDspBuffPtr = new uint8_t[_dspDigitsQty]; //FFDR The display buffer shared with SevenSegDisplays need no manipulation, use mutex to avoid overwriting while operating it from both sides and eliminate this uneeded buffer
 
    _clk = *(ioPins + _clkIndx);
    _dio = *(ioPins + _dioIndx);
-
-   digitalWrite(_clk, LOW);
-   digitalWrite(_dio, LOW);
-   pinMode(_clk, OUTPUT);
-   pinMode(_dio, OUTPUT);
 }
 
 SevenSegTM163X::~SevenSegTM163X(){
    end();
    delete [] _lclDspBuffPtr;
-   if(_xcdDspBuffPtr != nullptr)
-      delete [] _xcdDspBuffPtr;
 }
 
 bool SevenSegTM163X::begin(uint32_t updtLps){
+   digitalWrite(_clk, LOW);
+   digitalWrite(_dio, LOW);
+   pinMode(_clk, OUTPUT);
+   pinMode(_dio, OUTPUT);
    turnOn();
 
 	return true;
@@ -575,7 +566,7 @@ uint8_t SevenSegTM163X::getBrghtnssLvl(){
 }
 
 void SevenSegTM163X::ntfyUpdDsply(){
-   _updDsplyCntnt();
+   _updLclBffrCntnt();
    _sendBffr();
 
    return;
@@ -746,7 +737,7 @@ void SevenSegTM163X::_txWrByte(uint8_t data){   // void I2CWrByte (unsigned char
 	return;
 }
 
-void SevenSegTM163X::_updDsplyCntnt(){
+void SevenSegTM163X::_updLclBffrCntnt(){
    uint8_t dspBuffPtrOffset{0};
    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
@@ -765,7 +756,7 @@ void SevenSegTM163X::_updDsplyCntnt(){
 SevenSegTM1636::SevenSegTM1636(){}
 
 SevenSegTM1636::SevenSegTM1636(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
-:SevenSegTM163X(ioPins, dspDigits, commAnode, 4)
+:SevenSegTM163X(ioPins, dspDigits, commAnode, _dspDigitsQtyMax)
 {
 }
 
@@ -781,7 +772,7 @@ void SevenSegTM1636::_unAbstract(){
 SevenSegTM1637::SevenSegTM1637(){};
 
 SevenSegTM1637::SevenSegTM1637(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
-:SevenSegTM163X(ioPins, dspDigits, commAnode, 6)
+:SevenSegTM163X(ioPins, dspDigits, commAnode, _dspDigitsQtyMax)
 {
 }
 
@@ -797,7 +788,7 @@ void SevenSegTM1637::_unAbstract(){
 SevenSegTM1639::SevenSegTM1639(){}
 
 SevenSegTM1639::SevenSegTM1639(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
-:SevenSegTM163X(ioPins, dspDigits, commAnode, 8)
+:SevenSegTM163X(ioPins, dspDigits, commAnode, _dspDigitsQtyMax)
 {
 }
 
@@ -813,39 +804,35 @@ void SevenSegTM1639::_unAbstract(){
 SevenSegMax7219::SevenSegMax7219(){}
 
 SevenSegMax7219::SevenSegMax7219(uint8_t* ioPins, uint8_t dspDigits)
-:SevenSegStatic(ioPins, dspDigits, false)
+:SevenSegStatic(ioPins, dspDigits, false, _dspDigitsQtyMax)
 {
    _brghtnssLvlMax = _hwBrghtnssLvlMax;
    _brghtnssLvlMin = _hwBrghtnssLvlMin;
    _brghtnssLvl = _brghtnssLvlMin;
 
-   if(_dspDigitsQty > _dspDigitsQtyMax)
-      _dspDigitsQty = _dspDigitsQtyMax;
    _lclDspBuffPtr = new uint8_t[_dspDigitsQty]; //FFDR this local buffer is needed as it keeps the shared buffer contents into MAX7219 format, protect the shared buffer with mutex to avoid changing while loading
    
    _clk = *(ioPins + _clkIndx);
    _din = *(ioPins + _dinIndx);
    _cs = *(ioPins + _csIndx);
+}
 
+SevenSegMax7219::~SevenSegMax7219(){
+   end();
+   delete [] _lclDspBuffPtr;
+}
+
+bool SevenSegMax7219::begin(uint32_t updtLps){
    pinMode(_clk, OUTPUT);
    pinMode(_din, OUTPUT);
    pinMode(_cs, OUTPUT);
    digitalWrite(_clk, LOW);
    digitalWrite(_din, LOW);
    digitalWrite(_cs, HIGH);
-}
 
-SevenSegMax7219::~SevenSegMax7219()
-{
-   delete [] _lclDspBuffPtr;
-}
-
-bool SevenSegMax7219::begin(uint32_t updtLps)
-{
-   
-   send(_DspTestAddr, _NormalOp);   // Set Not in test mode!
-   send(_ScanLimitAddr, (_dspDigitsQty - 1), true);   //!< Set Scan Limit: Register data 0x00 to 0x07: quantity of digits to keep updated
-   send(_DecodeModeAddr, _NoDecode);   // Set No Decode format
+   _sendAddrData(_DspTestAddr, _NormalOp, true);   // Set Not in test mode!
+   _sendAddrData(_ScanLimitAddr, (_dspDigitsQty - 1), true);   //!< Set Scan Limit: Register data 0x00 to 0x07: quantity of digits to keep updated
+   _sendAddrData(_DecodeModeAddr, _NoDecode, true);   // Set No Decode format
    setBrghtnssLvl(_brghtnssLvlMax);
    turnOn();
 
@@ -896,22 +883,19 @@ void SevenSegMax7219::_sendByte(const uint8_t &val, const  bool &MSbFrst) {
    return;
 }
 
-void SevenSegMax7219::send(const uint8_t &address, const uint8_t &data, const  bool &MSbFrst){
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
-
-   taskENTER_CRITICAL(&mux);
+void SevenSegMax7219::_sendAddrData(const uint8_t &address, const uint8_t &data, const  bool &MSbFrst){
    digitalWrite(_cs, LOW);
    _sendByte(address, MSbFrst);
    _sendByte(data, MSbFrst);
    digitalWrite(_cs, HIGH);
-   taskEXIT_CRITICAL(&mux);
 
    return;
 }
 
 void SevenSegMax7219::_sendBffr(){
-   for(uint8_t dspPrt{0}; dspPrt < _dspDigitsQty; dspPrt++)
-      send((_DspPortsBaseAddr + dspPrt), *(_lclDspBuffPtr + dspPrt));
+   for(uint8_t dspPrt{0}; dspPrt < _dspDigitsQty; dspPrt++){
+      _sendAddrData((_DspPortsBaseAddr + dspPrt), *(_lclDspBuffPtr + dspPrt), true);
+   }
 
    return;
 }
@@ -921,7 +905,7 @@ bool SevenSegMax7219::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
 
    if((newBrghtnssLvl >= _brghtnssLvlMin) && (newBrghtnssLvl <= _brghtnssLvlMax)){
       if(newBrghtnssLvl != _brghtnssLvl){
-         send(_BrghtnsSettAddr, newBrghtnssLvl, true);   
+         _sendAddrData(_BrghtnsSettAddr, newBrghtnssLvl, true);   
          _brghtnssLvl = newBrghtnssLvl;
       }
       result = true;
@@ -932,7 +916,7 @@ bool SevenSegMax7219::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
 
 void SevenSegMax7219::turnOff(){
    if(_isOn){
-      send(_ShutDownAddr, _TurnOff, true);   
+      _sendAddrData(_ShutDownAddr, _TurnOff, true);   
       _isOn = false;
    }
 
@@ -941,7 +925,7 @@ void SevenSegMax7219::turnOff(){
 
 void SevenSegMax7219::turnOn(){
    if(!_isOn){
-      send(_ShutDownAddr, _TurnOn, true);   
+      _sendAddrData(_ShutDownAddr, _TurnOn, true);   
       _isOn = true;
    }
 
@@ -956,14 +940,12 @@ void SevenSegMax7219::turnOn(const uint8_t &newBrghtnssLvl){
 }
 
 void SevenSegMax7219::_updLclBffrCntnt(){
-   for(uint8_t dspPrt{0}; dspPrt < _dspDigitsQty; dspPrt++)
-      *(_lclDspBuffPtr + dspPrt) = _cnvrtStdDgtTo72xxDgt(*(_dspBuffPtr + dspPrt));
-   
+   for(uint8_t i{0}; i < _dspDigitsQty; i++)
+      *(_lclDspBuffPtr + i) = _cnvrtStdDgtTo72xxDgt(*(_dspBuffPtr + *(_digitPosPtr + i)));
+
 	return;
 }
 
-void SevenSegMax7219::_unAbstract(){
-   return;
-}
+void SevenSegMax7219::_unAbstract(){return;}
 
 //============================================================> Class methods separator

@@ -1,0 +1,5 @@
+<map id="SevenSegDisplays::getCurBrghtnssLvl" name="SevenSegDisplays::getCurBrghtnssLvl">
+<area shape="rect" id="Node000001" title="Returns the current brightness level of the display." alt="" coords="5,5,185,48"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_disp_hw.html#a0c5d2d46808b3194bd248d133d3117bf" title="Returns the current display brightness level setting for the display." alt="" coords="233,13,456,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,24,217,24,217,29,185,29"/>
+</map>

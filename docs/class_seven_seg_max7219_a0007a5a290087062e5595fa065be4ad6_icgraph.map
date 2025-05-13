@@ -1,5 +1,7 @@
 <map id="SevenSegMax7219::turnOff" name="SevenSegMax7219::turnOff">
-<area shape="rect" id="Node000001" title="Turns the display module off." alt="" coords="217,5,398,32"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_max7219.html#a5870af7127dcf97df29cfb8d07bb4a7f" title="Ends the active mode of the display by shutting it off." alt="" coords="5,5,169,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="201,21,169,21,169,16,201,16"/>
+<area shape="rect" id="Node000001" title="Turns the display module off." alt="" coords="475,13,656,40"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_max7219.html#a5870af7127dcf97df29cfb8d07bb4a7f" title="Ends the active mode of the display by shutting it off." alt="" coords="264,13,427,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="459,29,428,29,428,24,459,24"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_max7219.html#abc856b37e1f80e486521b70bd85e09df" title="Class destructor." alt="" coords="5,5,216,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="248,29,216,29,216,24,248,24"/>
 </map>

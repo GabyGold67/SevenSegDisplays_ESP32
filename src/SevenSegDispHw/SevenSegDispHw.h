@@ -7,15 +7,16 @@
  * 
  * Framework: Arduino  
  * Platform: ESP32  
+ * Check https://github.com/GabyGold67 for other Frameworks and Platforms versions of this library availability.  
  * 
  * @author Gabriel D. Goldman  
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.1.0
+ * @version 3.2.0
  * 
  * @date First release: 20/12/2023  
- *       Last update:   27/04/2025 20:10 (GMT+0200) DST  
+ *       Last update:   08/05/2025 10:40 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -42,7 +43,6 @@
 
 #include "Arduino.h"
 #include <stdint.h>
-#include <Wire.h>
 #include <ShiftRegGPIOXpander_ESP32.h>
 
 //============================================================> Class declarations separator
@@ -68,6 +68,7 @@ protected:
    uint8_t* _digitPosPtr{nullptr};
    uint8_t _dspDigitsQty{}; // Display size in digits    
    bool _commAnode {true}; // SevenSegDisplays objects need this info to build the right segments to represent each character
+	const uint8_t _dspDigitsQtyMax{0};
 
    uint8_t _allLedsOff{};  //!< Value to set in the display port to set all leds off (a "space"), dependent of _commAnode
    uint8_t _brghtnssLvl{0};  //!< Current display brightness level
@@ -79,12 +80,8 @@ protected:
    SevenSegDispHw* _dspHwInstance{nullptr};
    uint8_t _dspHwInstNbr{0};
    bool _isOn{false};   //!< Current display status: On/Off
-
-   virtual void _send(uint8_t* digitsBuffer);
-   virtual void _send(const uint8_t &segments, const uint8_t &port);
-   
-   virtual void _sendDataUnit(void* dataUnit);  //FFDR unify send methods using void*
-   virtual void _sendMssg(void* dataMssg);   //FFDR unify send methods using void*
+   uint8_t* _xcdDspBuffPtr{nullptr};    //!< A pointer to a buffer the size of the exceeding digits used to control display specific amenities.
+   uint8_t _xcdDspDigitsQty{};  //!<  Number of unused available display ports, its the difference  (_dspDigitsQtyMax  - _dspDigitsQty), being the size of the array pointed by _xcdDspBuffPtr
 
 public:
    /**
@@ -97,12 +94,15 @@ public:
      * @param ioPins A pointer to an array holding the identifiers for the MCU GPIO pins required to send the data to be displayed to the **Display controller**. The correlation between the array positions and the pin function is given as in-class defined constants for each instantiable subclass.  
      * @param dspDigits Quantity of digits/ports of the display. This value is directly related to the **display module component** quantity of ports and characteristics.  
      * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).  
+     * @param dspDigitsQtyMax Maximum quantity of digits/ports the display controller is able to manage. Sometimes **display module components** are attached to **display controller component** able to manage more than the display digits/ports.  
+     * 
+     * @note  In the case the there are remaining display controller unused positions, they might be reasigned for special uses or artifacts, see the complete documentation for access to those positions.  
      *      
      * @attention The dspDigits parameter, indicating the quantity of digits of the display module, is a **basic fundamental** parameter passed at instantiation time. This information provides the value to be used to create the data buffer of the right size, the digits order table, auxiliary buffers and the required information to calculate the range of values displayable and to generate a valid left or right aligned display. Obviously the quantity is bigger than 0, and must be less than or equal to the hardware maximum display digits capability.  
      * 
      * @warning The dspDigits parameter value must not be confused with the maximum display digits a display controller component can handle. Many displays are designed using part of the controller's digits management for real seven segment displays digits while using non connected to ports pins to manage some other display elements, like individual leds, icons, special backlighting elements, etc. The class instantiated object needs the right amount of display digits available as such, the exceeding digits/ports is currently out of the libray management scope.  
      */
-   SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
+   SevenSegDispHw(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true, uint8_t dspDigitsQtyMax = 0);
    /**
      * @brief Class destructor
      */
@@ -115,7 +115,7 @@ public:
     * - Setup tasks and unblocking procedures to get new contents from the SevenSegDisplays object.  
     * - Setup communications parameters and establish communications with the display hardware.  
     * - Other specific services configuration and setups.  
-    * - Turn On the display.  
+    * - **Turn On the display**.  
     * 
     * @param updtLps Time lapse between updating activities required, specially by dynamic subclasses. The parameter will be used according to each subclass needs, which will be described in each class begin() method.  
     * 
@@ -162,7 +162,7 @@ public:
     * @return The display brightness level minimum value setting, as long as the display has the capacity of changing brightness levels.  
     */
    virtual uint8_t getBrghtnssMinLvl();
-    /**
+   /**
      * @brief Returns a value indicating if the **display module component** of the display hardware uses a common anode or a common cathode led wiring.  
      * 
      * The SevenSegDisplays instantiated objects will compose the values corresponding to each character it displays according to the SevenSegDispHw _commAnode attribute. Each SevenSegDispHw instantiable subclass will have that constant attribute set by the subclass developer to correspond to the technical specifications of the display module component, unless the display module has the capacity to work with both technologies, in wich case the subclass constructor will include a _commAnode boolean parameter to set that attribute.  
@@ -170,8 +170,8 @@ public:
      * @retval true The display is built with a Common Anode display module component.  
      * @retval false The display is built with a Common Cathode  display module component.  
      */
-    bool getCommAnode();
-    /**
+   bool getCommAnode();
+   /**
      * @brief Returns a pointer to the display buffer.  
      * 
      * The display buffer is the memory area set by the SevenSegDisplays class object instantiated to hold the data to be displayed, and so it's shared by that object and it's SevenSegDispHw subclass object component. When the SevenSegDisplays object is constructed it sets the SevenSegDispHw subclass object buffer pointer to the memory area it set for that purpose. This method retrieves that memory pointer.  
@@ -180,8 +180,8 @@ public:
      * 
      * @warning If getDspBuffPtr() returns a nullptr it means the setDspBuffPtr(uint8_t*) invoked by the SevenSegDisplays constructor failed and the SevenSegDispHw object has no source for the data to be displayed.  
      */
-    uint8_t* getDspBuffPtr();
-    /**
+   uint8_t* getDspBuffPtr();
+   /**
      * @brief Returns the quantity of digits of the display module.  
      * 
      * The value returned correspond to the dspDigits parameter passed at instantiation time.  
@@ -190,8 +190,8 @@ public:
      * 
      * @warning The dspDigits parameter value return by this method must not be confused with the maximum display digits a display controller component can handle. For more information see SevenSegDispHw(uint8_t*, uint8_t, bool commAnode)
      */
-    uint8_t getHwDspDigitsQty();
-    /**
+   uint8_t getHwDspDigitsQty();
+   /**
      * @brief Returns the state of the display.  
      * 
      * Returns a boolean value indicating if the display is turned On or Off
@@ -199,8 +199,14 @@ public:
      * @retval true The display is turned On
      * @retval false The display is turned Off 
      */
-    virtual bool getIsOn();
-    /**
+   virtual bool getIsOn();
+   /**
+    * @brief Returns a pointer to an array holding the contents for the digits/ports available from the display controller but not used for plain digits display.  
+    * 
+    * @return uint8_t* The pointer to the array holding the contents for the exceeding display controller ports.  
+    */
+   uint8_t* getxcdDspBuffPtr();
+   /**
      * @brief Notifies the SevenSegDispHw component object of a change of content available in the display buffer, so that the object proceeds to update the display.  
      * 
      * While the dynamic displays must periodically refresh the data displayed, and so they get the most updated content from the display buffer without the need to receive any notification, the data displayed by the static displays internal buffer to hold the displayed data. The internal buffer contents remain constant until it's data buffer or registers are loaded with new data. This method notifies the display that the data buffer content has changed and it must load the new contents of it's internal registers or buffers to display the new information.  
@@ -238,7 +244,7 @@ public:
    * @endcode
    * 
 */
-    bool setDigitsOrder(uint8_t* newOrderPtr);
+   virtual bool setDigitsOrder(uint8_t* newOrderPtr);
     /**
      * @brief Sets the pointer to the Display Buffer memory area.  
      * 
@@ -300,12 +306,10 @@ protected:
    String _rfrshTmrName{""};
 
    void _refresh();
-   virtual void _send(uint8_t content);
-   virtual void _send(const uint8_t &segments, const uint8_t &port);
 
 public:
    SevenSegDynamic();
-   SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode);
+   SevenSegDynamic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspDigitsQtyMax = 0);
    virtual ~SevenSegDynamic();
    /**
     * @brief Sets up the hardware display to work.  
@@ -355,11 +359,10 @@ private:
    virtual void _unAbstract();
 
 protected:
+   const uint8_t _dspDigitsQtyMax{8};
    TimerHandle_t _dynHC595DspRfrshTmrHndl{NULL};  
 
    void _refresh();
-   virtual void send(uint8_t content){};
-   virtual void send(const uint8_t &segments, const uint8_t &port){};
 
 public:
     /**
@@ -500,12 +503,10 @@ class SevenSegStatic: public SevenSegDispHw{
 private:
    virtual void _unAbstract() = 0; // Makes this an Abstract class.  
 
-protected:
-     
 public:
-    SevenSegStatic();
-    SevenSegStatic(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
-    virtual ~SevenSegStatic();
+   SevenSegStatic();
+   SevenSegStatic(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true, uint8_t dspDigitsQtyMax = 0);
+   virtual ~SevenSegStatic();
 };
 
 //============================================================> Class declarations separator
@@ -551,6 +552,8 @@ private:
      * @brief Class destructor
      */
     virtual ~SevenSegStatHC595();
+
+    virtual bool begin(uint32_t updtLps = 0);
     /**
      * @brief See SevenSegDispHw::ntfyUpdDsply() for description
      */
@@ -586,28 +589,25 @@ class SevenSegTM163X: public SevenSegStatic{
 private:
    const uint8_t _clkIndx {0};
    const uint8_t _dioIndx {1};
-   const uint8_t _dspDigitsQtyMax{}; //!< Maximum display digits supported by the controller: 4 for TM1636, 6 for TM1637, 8 for TM1639
    const uint8_t _hwBrghtnssLvlMax{0x07};
    const uint8_t _hwBrghtnssLvlMin{0x00};
    uint32_t _txClkTckTm{2};
    uint8_t _clk {};
    uint8_t _dio {}; 
 
-   virtual void _unAbstract() = 0; // Makes this an Abstract class. For the subclasses to be instantiable they'll have to implement the _unAbstract() method.  
-   void _updDsplyCntnt();
+   virtual void _unAbstract() = 0; // Makes this an Abstract class explicitly for documentation generation.   
+   void _updLclBffrCntnt();
 
 protected:
    uint8_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to or less than **display module component** digits ports, will be equal to or less than **display controller component** maximum digits/ports. The need for a divided display buffer comes from the fact that some **Seven Segment display hardware** use controllers with larger digits management capabilities than the display module digits, and the exceeding digits are used for proprietary amenities, as colons, icons, etc.
-   uint8_t* _xcdDspBuffPtr{nullptr};    //!< A pointer to a buffer the size of the exceeding digits used to control display specific amenities.
-   uint8_t _xcdDspDigitsQty{};  //!<  Number of unused available display ports, its the difference  (_dspDigitsQtyMax  - _dspDigitsQty), being the size of the array pointed by _xcdDspBuffPtr
+   uint8_t _dspDigitsQtyMax{}; // Maximum display size in digits
 
    void _txStart();
    void _txAsk();
    void _txStop();
    void _txWrByte(uint8_t data);
    virtual void _sendBffr();
-   virtual bool _sendByte(uint8_t data);
-   
+   virtual bool _sendByte(uint8_t data);   
    
  public:
    /**
@@ -622,7 +622,7 @@ protected:
     * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).
     * @param dspContMaxDigits Maximum quantity of digits/ports the **display controller component** can handle, is a value that in this case depends on the TM163X family module member selected.
  */
-   SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspContMaxDigits);
+   SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspDigitsQtyMax = 0);
    /**
     * @brief Class destructor
     */
@@ -700,9 +700,11 @@ protected:
  */
 class SevenSegTM1636: public SevenSegTM163X{
 private:
-   const uint8_t _dspDigitsQtyMax{4}; // Maximum display size in digits
    virtual void _unAbstract();
-    
+
+protected:
+   const uint8_t _dspDigitsQtyMax{4}; // Maximum display controller managing digits capabilities
+
 public:
    /**
     * @brief Default constructor
@@ -866,7 +868,7 @@ protected:
 	uint8_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to _dspDigitsQty, the local buffer differs from the shared _dspBuffPtr because it holds the data of the _dspBuffPtr formatted and ready to be sent to the display controller    
     
 	virtual void _sendByte(const uint8_t &val, const bool &MSbFrst = true);
-	virtual void send(const uint8_t &address, const uint8_t &data, const bool &MSbFrst = true);
+	virtual void _sendAddrData(const uint8_t &address, const uint8_t &data, const bool &MSbFrst = true);
 	virtual void _sendBffr();
     
 public:

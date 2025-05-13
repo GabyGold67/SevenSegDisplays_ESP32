@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Seven Segments Displays Agnostic Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.1.0</span>
+   <div id="projectname">Seven Segments Displays Agnostic Library for ESP32 (Arduino)<span id="projectnumber">&#160;v3.2.0</span>
    </div>
    <div id="projectbrief">A library that provides a class that models a Seven Segment Display and provides an unified API through it&#39;s members independently of the display technology.</div>
   </td>
@@ -108,7 +108,7 @@ $(function(){initNavTree('class_seven_seg_stat_h_c595.html',''); initResizable(t
   
  <a href="#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="seven_seg_disp_hw_8h_source.html">sevenSegDispHw.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="_seven_seg_disp_hw_8h_source.html">SevenSegDispHw.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for SevenSegStatHC595:</div>
 <div class="dyncontent">
@@ -150,6 +150,10 @@ Public Member Functions</h2></td></tr>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegStatHC595</b> ()</td></tr>
 <tr class="memdesc:ae4bd0e06d2c5a8c572e6bb607df30a57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class destructor. <br /></td></tr>
 <tr class="separator:ae4bd0e06d2c5a8c572e6bb607df30a57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37e0d5d4639a66d2042df68fd2fd9813" id="r_a37e0d5d4639a66d2042df68fd2fd9813"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a37e0d5d4639a66d2042df68fd2fd9813">begin</a> (uint32_t updtLps=0)</td></tr>
+<tr class="memdesc:a37e0d5d4639a66d2042df68fd2fd9813"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the hardware display to work, and starts the display activities. <br  />
+  <br /></td></tr>
+<tr class="separator:a37e0d5d4639a66d2042df68fd2fd9813"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af430da3b0859f74693dd0ee71c28d071" id="r_af430da3b0859f74693dd0ee71c28d071"><td class="memItemLeft" align="right" valign="top"><a id="af430da3b0859f74693dd0ee71c28d071" name="af430da3b0859f74693dd0ee71c28d071"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>ntfyUpdDsply</b> ()</td></tr>
 <tr class="memdesc:af430da3b0859f74693dd0ee71c28d071"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,...">SevenSegDispHw::ntfyUpdDsply()</a> for description. <br /></td></tr>
@@ -160,17 +164,13 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>ntfyUpdDsply<
 &#160;</td><td class="memItemRight" valign="bottom"><b>SevenSegDispHw</b> ()</td></tr>
 <tr class="memdesc:a31e3b1f101170f21c7d247f72536ff8c inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default class constructor. <br /></td></tr>
 <tr class="separator:a31e3b1f101170f21c7d247f72536ff8c inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8dd283533f1deddffdd679c7e12c7c7d inherit pub_methods_class_seven_seg_disp_hw" id="r_a8dd283533f1deddffdd679c7e12c7c7d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a8dd283533f1deddffdd679c7e12c7c7d">SevenSegDispHw</a> (uint8_t *ioPins, uint8_t dspDigits=4, bool commAnode=true)</td></tr>
-<tr class="memdesc:a8dd283533f1deddffdd679c7e12c7c7d inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor.  <br /></td></tr>
-<tr class="separator:a8dd283533f1deddffdd679c7e12c7c7d inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85dfe5b62f3135f472f79c99103761ca inherit pub_methods_class_seven_seg_disp_hw" id="r_a85dfe5b62f3135f472f79c99103761ca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a85dfe5b62f3135f472f79c99103761ca">SevenSegDispHw</a> (uint8_t *ioPins, uint8_t dspDigits=4, bool commAnode=true, uint8_t dspDigitsQtyMax=0)</td></tr>
+<tr class="memdesc:a85dfe5b62f3135f472f79c99103761ca inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor.  <br /></td></tr>
+<tr class="separator:a85dfe5b62f3135f472f79c99103761ca inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a148b7eb20201e4dd6b7841857de93145 inherit pub_methods_class_seven_seg_disp_hw" id="r_a148b7eb20201e4dd6b7841857de93145"><td class="memItemLeft" align="right" valign="top">
 virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b> ()</td></tr>
 <tr class="memdesc:a148b7eb20201e4dd6b7841857de93145 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class destructor. <br /></td></tr>
 <tr class="separator:a148b7eb20201e4dd6b7841857de93145 inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f3a59bcc54ddd20445e049359753ab6 inherit pub_methods_class_seven_seg_disp_hw" id="r_a5f3a59bcc54ddd20445e049359753ab6"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a5f3a59bcc54ddd20445e049359753ab6">begin</a> (uint32_t updtLps=0)</td></tr>
-<tr class="memdesc:a5f3a59bcc54ddd20445e049359753ab6 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the hardware display to work, and starts the display activities. <br  />
-  <br /></td></tr>
-<tr class="separator:a5f3a59bcc54ddd20445e049359753ab6 inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10ef7e4db6af3dbbcdeb48331d94f2e2 inherit pub_methods_class_seven_seg_disp_hw" id="r_a10ef7e4db6af3dbbcdeb48331d94f2e2"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a10ef7e4db6af3dbbcdeb48331d94f2e2">end</a> ()</td></tr>
 <tr class="memdesc:a10ef7e4db6af3dbbcdeb48331d94f2e2 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverts the <a class="el" href="class_seven_seg_disp_hw.html#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities.">begin(uint32_t)</a> actions, stopping the display activities, turning the display off and freeing the resources used by the Seven Segment display hardware object. <br  />
   <br /></td></tr>
@@ -203,11 +203,15 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 <tr class="memdesc:aa23f15cca7bb2db9821982965d969773 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the state of the display. <br  />
   <br /></td></tr>
 <tr class="separator:aa23f15cca7bb2db9821982965d969773 inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c6f61ddd69a41abb055aefe2958385f inherit pub_methods_class_seven_seg_disp_hw" id="r_a9c6f61ddd69a41abb055aefe2958385f"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a9c6f61ddd69a41abb055aefe2958385f">getxcdDspBuffPtr</a> ()</td></tr>
+<tr class="memdesc:a9c6f61ddd69a41abb055aefe2958385f inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to an array holding the contents for the digits/ports available from the display controller but not used for plain digits display. <br  />
+  <br /></td></tr>
+<tr class="separator:a9c6f61ddd69a41abb055aefe2958385f inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25007a1b33093e4c055446010e254d63 inherit pub_methods_class_seven_seg_disp_hw" id="r_a25007a1b33093e4c055446010e254d63"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a25007a1b33093e4c055446010e254d63">setBrghtnssLvl</a> (const uint8_t &amp;newBrghtnssLvl)</td></tr>
 <tr class="memdesc:a25007a1b33093e4c055446010e254d63 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the brightness level for the display. <br  />
   <br /></td></tr>
 <tr class="separator:a25007a1b33093e4c055446010e254d63 inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw" id="r_aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#aee6d67c3bdd719b05ac6e7d8d250d43f">setDigitsOrder</a> (uint8_t *newOrderPtr)</td></tr>
+<tr class="memitem:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw" id="r_aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#aee6d67c3bdd719b05ac6e7d8d250d43f">setDigitsOrder</a> (uint8_t *newOrderPtr)</td></tr>
 <tr class="memdesc:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mapping to relate the display buffer positions to the display port assigned to exhibit it's contents. <br  />
   <br /></td></tr>
 <tr class="separator:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -230,7 +234,6 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDispHw</b
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pro_methods_class_seven_seg_disp_hw"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_class_seven_seg_disp_hw')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a></td></tr>
 <tr class="inherit_header pro_attribs_class_seven_seg_disp_hw"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_seven_seg_disp_hw')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a></td></tr>
 <tr class="memitem:a9d1b19191790068b303f28d5c7efe17d inherit pro_attribs_class_seven_seg_disp_hw" id="r_a9d1b19191790068b303f28d5c7efe17d"><td class="memItemLeft" align="right" valign="top">
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_allLedsOff</b> {}</td></tr>
@@ -264,6 +267,14 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_dspBuffPtrBkp</
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td></tr>
 <tr class="memdesc:a3766aca6533be7b0b416229ebfe4cf49 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current display status: On/Off. <br /></td></tr>
 <tr class="separator:a3766aca6533be7b0b416229ebfe4cf49 inherit pro_attribs_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6bacaac69559e6788101ee45d3cff0e inherit pro_attribs_class_seven_seg_disp_hw" id="r_af6bacaac69559e6788101ee45d3cff0e"><td class="memItemLeft" align="right" valign="top">
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_xcdDspBuffPtr</b> {nullptr}</td></tr>
+<tr class="memdesc:af6bacaac69559e6788101ee45d3cff0e inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to a buffer the size of the exceeding digits used to control display specific amenities. <br /></td></tr>
+<tr class="separator:af6bacaac69559e6788101ee45d3cff0e inherit pro_attribs_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87f090d25ccf0c245990c59041658629 inherit pro_attribs_class_seven_seg_disp_hw" id="r_a87f090d25ccf0c245990c59041658629"><td class="memItemLeft" align="right" valign="top">
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_xcdDspDigitsQty</b> {}</td></tr>
+<tr class="memdesc:a87f090d25ccf0c245990c59041658629 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of unused available display ports, its the difference (_dspDigitsQtyMax - _dspDigitsQty), being the size of the array pointed by _xcdDspBuffPtr. <br /></td></tr>
+<tr class="separator:a87f090d25ccf0c245990c59041658629 inherit pro_attribs_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Models displays driven by 74HC595 or similar shift registers, one shift register per display port, wired so that the eight output pins of each shift register is connected to the 8 segment pins of the corresponding display module. <br  />
@@ -309,6 +320,66 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_isOn</b> {false}</td
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a37e0d5d4639a66d2042df68fd2fd9813" name="a37e0d5d4639a66d2042df68fd2fd9813"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37e0d5d4639a66d2042df68fd2fd9813">&#9670;&#160;</a></span>begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegStatHC595::begin </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>updtLps</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets up the hardware display to work, and starts the display activities. <br  />
+ </p>
+<p>Depending on the display technology and the resources it needs to work with, this method takes care of those preparations. That means that each specific subclass of display will provide it's own version of <code><a class="el" href="#a37e0d5d4639a66d2042df68fd2fd9813" title="Sets up the hardware display to work, and starts the display activities.">begin()</a></code> that will take care of: <br  />
+</p><ul>
+<li>Configuring timers or interrupts required. <br  />
+</li>
+<li>Setup tasks and unblocking procedures to get new contents from the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object. <br  />
+</li>
+<li>Setup communications parameters and establish communications with the display hardware. <br  />
+</li>
+<li>Other specific services configuration and setups. <br  />
+</li>
+<li><b>Turn On the display</b>. <br  />
+</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">updtLps</td><td>Time lapse between updating activities required, specially by dynamic subclasses. The parameter will be used according to each subclass needs, which will be described in each class <a class="el" href="#a37e0d5d4639a66d2042df68fd2fd9813" title="Sets up the hardware display to work, and starts the display activities.">begin()</a> method. <br  />
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The specific configurations and startups could be successfully completed. <br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>false One or more of the specific configurations or startups failed. <br  />
+ </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_seven_seg_disp_hw.html#a5f3a59bcc54ddd20445e049359753ab6">SevenSegDispHw</a>.</p>
 
 </div>
 </div>
