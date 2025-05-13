@@ -210,13 +210,23 @@ public:
     * @attention Note that two or more lines instantiations will be needed when specific display hardware configuration is required before the hardware use: semicolon setting, starting brightness levels, etc. Making use of the one, two, three or more lines instantiation is not a sign of smartness or elegance, but options to be taken by the development need.  
     */
    SevenSegDisplays(SevenSegDispHw* dspUndrlHwPtr);
-    /**
+   /**
      * @brief Class destructor
      */
-    ~SevenSegDisplays();
-   
+   ~SevenSegDisplays();
+   /**
+    * @brief Sets up the hardware display to work, and starts the display activities.  
+    * 
+    * Depending on the display controller characteristics the setup procedure may include different defined steps, each class will execute the needed steps for each display controller.  
+    * 
+    * @attention The **begin()** method is different from the **turnOn()** method. The first one ensures the display controller unit is ready to receive data to be displayed, including communications and internal memory management, while the second enables the display to turn on the corresponding leds to exhibit the data received. The fact that some display technologies needs no configuration and/or not explicit turning on the display is hidden for the user benefit: all displays must invoke the begin() method, all displays have acces to a end(), turnOn() and turnOff(). Executing a begin() method will invoke automatically the turnOn() method. Invoking a turnOff() in a begun display will let the display to keep receiving data, but it will not be visible untila a new turnOn() is invoked.
+    * 
+    * @param updtLps Optional parameter, sets the rate needed by the dynamic type displays, will be ignored by othe types of displays. Is no value is passed to the dynamic displays they will used a preset stantard parameter. 
+    * 
+    * @retval true The display was initialized without errors. 
+    * @retval false The display couldn't be initialized due to an error. 
+    */
    virtual bool begin(uint32_t updtLps = 0);
-
     /**
     * @brief Makes the display blink the contents it is showing.
     * 
@@ -313,9 +323,14 @@ public:
     * @endcode
     */
    bool doubleGauge(const int &levelLeft, const int &levelRight, char labelLeft = ' ', char labelRight = ' ');
-
+   /**
+    * @brief Ends the activity of the display.  
+    * 
+    * After the end() is invoked, the display will stop accepting new data, stop it's refreshing and all activities involved in keeping it's contents updated. To keep the expected level of accuracy and security the display will be cleaned before stopping it's activity. 
+    * 
+    * @return True
+    */
    bool end();
-
    /**
     * @brief Displays a basic graphical representation of the level of fulfillment or completeness of a segmented value or task.
     * 
@@ -393,9 +408,12 @@ public:
     * @endcode
     */
    bool gauge(const double &level, char label = ' ');
-
+   /**
+    * @brief Returns the current brightness level of the display
+    * 
+    * @return uint8_t Brightness level
+    */
    uint8_t getCurBrghtnssLvl();   
-
    /**
     * @brief Return the number of digits of the display hardware.  
     * 
@@ -417,9 +435,13 @@ public:
     * @return The quantity of instantiated displays.  
     */
    uint8_t getDspCount();
-
+   /**
+    * @brief Returns the logic value indicating if the display is dimmable.  
+    * 
+    * @retval true The display is dimmable (variable brightness configuration)  
+    * @retval false The display is not dimmable (only constant brightness)
+    */
    bool getDspIsDmmbl();
-
    /**
     * @brief Returns a pointer to the underlying hardware display object
     * 
@@ -462,9 +484,13 @@ public:
     * @endcode
     */
    int32_t getDspValMin();
-
+   /**
+    * @brief Returns a logic value indicating if the display is in On state.
+    * 
+    * @retval true The display is on
+    * @retval false The display is off
+    */
    bool getIsOn();
-
    /**
     * @brief Returns the maximum rate the display can be configured to blink at. 
     * 
@@ -483,9 +509,14 @@ public:
     * @endcode
     */
    uint32_t getMaxBlinkRate();
-
+   /**
+    * @brief Returns the maximum brightness value setting for the display.  
+    * 
+    * @return uint8_t Maximum brightness value setting.  
+    * 
+    * @note If the display has no brightness configuration control then getMaxBrghtnssLvl() = getMinBrghtnssLvl() = getCurBrghtnssLvl() = 0, and getDspIsDmmbl() returns false  
+    */
    uint8_t getMaxBrghtnssLvl();
-
    /**
     * @brief Returns the minimum rate the display can be configured to blink at. 
     * 
@@ -504,9 +535,14 @@ public:
     * @endcode
     */
    uint32_t getMinBlinkRate();
-
+   /**
+    * @brief Returns the minimum brightness value setting for the display.  
+    * 
+    * @return uint8_t Minimum brightness value setting.  
+    * 
+    * @note If the display has no brightness configuration control then getMaxBrghtnssLvl() = getMinBrghtnssLvl() = getCurBrghtnssLvl() = 0, and getDspIsDmmbl() returns false  
+    */
    uint8_t getMinBrghtnssLvl();
-
    /**
     * @brief Returns a unique numeric identification of the object
     * 
@@ -731,9 +767,18 @@ public:
     * @endcode
     */
    bool setBlinkRate(const uint32_t &newOnRate, const uint32_t &newOffRate = 0);
-
-   bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl); 
-   
+   /**
+    * @brief Set the brightness level for the display
+    * 
+    * For the brightness level settin to succeed two conditions must be met:  
+    * 1) The display must be dimmable (see setBrghtnssLvl() )
+    * 2) The new brightness level must be in the valid range for the display: getMinBrghtnssLvl() <= newBrghtnssLvl <= getMaxBrghtnssLvl()
+    * 
+    * @param newBrghtnssLvl The new value setting for the brightness level
+    * @return true The display is dimmable, and the newBrghtnssLvl is in the valid range, the change is made
+    * @return false The display is not dimmable, or the newBrghtnssLvl is outside the valid range, no change is made
+    */
+   bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl);    
    /**
     * @brief Sets the "Waiting" character.  
     * 
@@ -769,13 +814,26 @@ public:
     * @endcode
     */
    bool setWaitRate(const uint32_t &newWaitRate);
-   
+   /**
+    * @brief Turns the display module off.  
+    * 
+    * The display module will be cleared and will keep that status until a turnOn(), or turnOn(const uint8_t &) is invoked. 
+    */ 
    void turnOff();
-
+   /**
+    * @brief Turns the display module on.  
+    * 
+    * The display module will be turned on and it's content displayed, and will keep that status until a turnOff() is invoked.  
+    */
    void turnOn();
-
+   /**
+    * @brief Turns the display module on.  
+    * 
+    * The display module will be turned on, it's brightness level set to the requested level, it's content displayed, and will keep that status until a turnOff() is invoked. 
+    * 
+    * @param newBrghtnssLvl The new brightness level for the display. See setBrghtnssLvl(const uint8_t &) for details
+    */
    void turnOn(const uint8_t &newBrghtnssLvl);
-
    /**
     * @brief Makes the display enter the "Waiting mode"  
     * 

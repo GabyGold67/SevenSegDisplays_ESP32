@@ -115,7 +115,7 @@ public:
     * - Setup tasks and unblocking procedures to get new contents from the SevenSegDisplays object.  
     * - Setup communications parameters and establish communications with the display hardware.  
     * - Other specific services configuration and setups.  
-    * - Turn On the display.  
+    * - **Turn On the display**.  
     * 
     * @param updtLps Time lapse between updating activities required, specially by dynamic subclasses. The parameter will be used according to each subclass needs, which will be described in each class begin() method.  
     * 
@@ -505,7 +505,7 @@ private:
 
 public:
    SevenSegStatic();
-   SevenSegStatic(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
+   SevenSegStatic(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true, uint8_t dspDigitsQtyMax = 0);
    virtual ~SevenSegStatic();
 };
 
@@ -552,6 +552,8 @@ private:
      * @brief Class destructor
      */
     virtual ~SevenSegStatHC595();
+
+    virtual bool begin(uint32_t updtLps = 0);
     /**
      * @brief See SevenSegDispHw::ntfyUpdDsply() for description
      */
@@ -620,7 +622,7 @@ protected:
     * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).
     * @param dspContMaxDigits Maximum quantity of digits/ports the **display controller component** can handle, is a value that in this case depends on the TM163X family module member selected.
  */
-   SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspContMaxDigits);
+   SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspDigitsQtyMax = 0);
    /**
     * @brief Class destructor
     */

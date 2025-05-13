@@ -1,0 +1,5 @@
+<map id="SevenSegDisplays::getMinBrghtnssLvl" name="SevenSegDisplays::getMinBrghtnssLvl">
+<area shape="rect" id="Node000001" title="Returns the minimum brightness value setting for the display." alt="" coords="5,5,185,48"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_disp_hw.html#aa098a72fb84ffbec783e0c38f130f2c3" title="Returns the minimum display brightness level setting for the display." alt="" coords="233,5,439,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,24,217,24,217,29,185,29"/>
+</map>

@@ -1,13 +1,15 @@
 <map id="SevenSegDispHw::end" name="SevenSegDispHw::end">
-<area shape="rect" id="Node000001" title="Reverts the begin(uint32_t) actions, stopping the display activities, turning the display off and fre..." alt="" coords="465,72,622,99"/>
+<area shape="rect" id="Node000001" title="Reverts the begin(uint32_t) actions, stopping the display activities, turning the display off and fre..." alt="" coords="465,97,622,124"/>
 <area shape="rect" id="Node000002" href="$class_seven_seg_disp_hw.html#a148b7eb20201e4dd6b7841857de93145" title="Class destructor." alt="" coords="213,5,417,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="473,70,400,51,401,46,475,65"/>
-<area shape="rect" id="Node000003" href="$class_seven_seg_dyn_dummy.html#a2ca50c8a0dd4ff2d52caa0332119ce05" title="Stops the active display updating." alt="" coords="225,72,405,99"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="450,88,405,88,405,83,450,83"/>
-<area shape="rect" id="Node000005" href="$class_seven_seg_dyn_h_c595.html#add611b927a735ea74809379a0ecb8533" title="Stops the active display updating." alt="" coords="227,127,402,153"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="470,105,374,129,373,123,469,100"/>
-<area shape="rect" id="Node000004" href="$class_seven_seg_dyn_dummy.html#a2d54447341e43fa346a42ee50121c078" title="Class destructor" alt="" coords="5,60,165,103"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="209,86,165,85,165,80,209,81"/>
-<area shape="rect" id="Node000006" href="$class_seven_seg_dyn_h_c595.html#a7cba0a6a5ecb438a8b633167c119e4bc" title="Class destructor." alt="" coords="8,127,162,169"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="212,146,163,148,162,143,212,141"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="495,93,416,62,384,51,386,46,418,58,497,89"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#aa712f19de96a9503c804bf4492040781" title="Ends the activity of the display." alt="" coords="234,72,396,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="449,103,396,97,396,92,450,98"/>
+<area shape="rect" id="Node000004" href="$class_seven_seg_dyn_dummy.html#a2ca50c8a0dd4ff2d52caa0332119ce05" title="Stops the active display updating." alt="" coords="225,123,405,149"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="450,124,406,129,405,123,449,118"/>
+<area shape="rect" id="Node000006" href="$class_seven_seg_dyn_h_c595.html#add611b927a735ea74809379a0ecb8533" title="Stops the active display updating." alt="" coords="227,177,402,204"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="498,133,418,164,369,179,367,174,416,159,496,128"/>
+<area shape="rect" id="Node000005" href="$class_seven_seg_dyn_dummy.html#a2d54447341e43fa346a42ee50121c078" title="Class destructor" alt="" coords="5,111,165,153"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="209,137,165,136,165,131,209,131"/>
+<area shape="rect" id="Node000007" href="$class_seven_seg_dyn_h_c595.html#a7cba0a6a5ecb438a8b633167c119e4bc" title="Class destructor." alt="" coords="8,177,162,220"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="212,197,163,199,162,193,212,192"/>
 </map>

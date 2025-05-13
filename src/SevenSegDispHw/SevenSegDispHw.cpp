@@ -159,6 +159,8 @@ bool SevenSegDispHw::setDigitsOrder(uint8_t* newOrderPtr){
    if(result)
       memcpy(_digitPosPtr, newOrderPtr, _dspDigitsQty);
 
+   //FFDR Add the re-construction of the _xcdDspBuffPtr array including all unused positions
+
    return result;
 }
 
@@ -245,10 +247,7 @@ SevenSegDynHC595::SevenSegDynHC595(uint8_t* ioPins, uint8_t dspDigits, bool comm
 {    
    _sclk = *(ioPins + _sclkIndx);
    _rclk = *(ioPins + _rclkIndx);
-   _dio = *(ioPins + _dioIndx);
-    
-   _drvrShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, 2, nullptr);
-   _drvrShftRegSndPtr = new uint8_t[2];
+   _dio = *(ioPins + _dioIndx);    
 }
 
 SevenSegDynHC595::~SevenSegDynHC595(){
@@ -268,6 +267,9 @@ SevenSegDynHC595::~SevenSegDynHC595(){
 bool SevenSegDynHC595::begin(uint32_t updtLps){
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
+
+   _drvrShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, 2, nullptr);
+   _drvrShftRegSndPtr = new uint8_t[2];
 
    _firstRefreshed = 0;   
    if (!_dynHC595DspRfrshTmrHndl){  //Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)      
@@ -335,10 +337,7 @@ void SevenSegDynHC595::tmrCbRfrshDynHC595(TimerHandle_t rfrshTmrCbArg){
    return;
 }
 
-void SevenSegDynHC595::_unAbstract() {
-
-   return;
-}
+void SevenSegDynHC595::_unAbstract() {return;}
 
 //============================================================> Class methods separator
 
@@ -474,8 +473,8 @@ void SevenSegDynDummy::_unAbstract(){return;}
 
 SevenSegStatic::SevenSegStatic(){}
 
-SevenSegStatic::SevenSegStatic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
-:SevenSegDispHw(ioPins, dspDigits, commAnode)
+SevenSegStatic::SevenSegStatic(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspDigitsQtyMax)
+:SevenSegDispHw(ioPins, dspDigits, commAnode, dspDigitsQtyMax)
 {   
 }
 
@@ -486,17 +485,22 @@ SevenSegStatic::~SevenSegStatic() {}
 SevenSegStatHC595::SevenSegStatHC595(){}
 
 SevenSegStatHC595::SevenSegStatHC595(uint8_t *ioPins, uint8_t dspDigits, bool commAnode)
-:SevenSegStatic(ioPins, dspDigits, commAnode)
+:SevenSegStatic(ioPins, dspDigits, commAnode, dspDigits)
 {
    _sclk = *(ioPins + _sclkIndx);
    _rclk = *(ioPins + _rclkIndx);
    _dio = *(ioPins + _dioIndx);
     
-   _dsplyHwShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, _dspDigitsQty, nullptr);
-   _lclDspBuffPtr = new uint8_t[_dspDigitsQty];
 }
 
 SevenSegStatHC595::~SevenSegStatHC595() {}
+
+bool SevenSegStatHC595::begin(uint32_t updtLps){
+   _dsplyHwShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, _dspDigitsQty, nullptr);
+   _lclDspBuffPtr = new uint8_t[_dspDigitsQty];
+
+   return true;
+}
 
 void SevenSegStatHC595::ntfyUpdDsply(){
    _updDsplyCntnt();
@@ -519,11 +523,11 @@ void SevenSegStatHC595::_updDsplyCntnt(){
 }
 
 //============================================================> Class methods separator
-//FFDR Continue checking here on
+
 SevenSegTM163X::SevenSegTM163X(){}
 
-SevenSegTM163X::SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspContMaxDigits)
-:SevenSegStatic(ioPins, dspDigits, commAnode), _dspDigitsQtyMax{dspContMaxDigits}
+SevenSegTM163X::SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnode, uint8_t dspDigitsQtyMax)
+:SevenSegStatic(ioPins, dspDigits, commAnode, dspDigitsQtyMax)
 {
    _brghtnssLvlMax = _hwBrghtnssLvlMax;
    _brghtnssLvlMin = _hwBrghtnssLvlMin;
@@ -533,11 +537,6 @@ SevenSegTM163X::SevenSegTM163X(uint8_t* ioPins, uint8_t dspDigits, bool commAnod
 
    _clk = *(ioPins + _clkIndx);
    _dio = *(ioPins + _dioIndx);
-
-   digitalWrite(_clk, LOW);
-   digitalWrite(_dio, LOW);
-   pinMode(_clk, OUTPUT);
-   pinMode(_dio, OUTPUT);
 }
 
 SevenSegTM163X::~SevenSegTM163X(){
@@ -546,6 +545,10 @@ SevenSegTM163X::~SevenSegTM163X(){
 }
 
 bool SevenSegTM163X::begin(uint32_t updtLps){
+   digitalWrite(_clk, LOW);
+   digitalWrite(_dio, LOW);
+   pinMode(_clk, OUTPUT);
+   pinMode(_dio, OUTPUT);
    turnOn();
 
 	return true;
@@ -753,7 +756,7 @@ void SevenSegTM163X::_updLclBffrCntnt(){
 SevenSegTM1636::SevenSegTM1636(){}
 
 SevenSegTM1636::SevenSegTM1636(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
-:SevenSegTM163X(ioPins, dspDigits, commAnode, 4)
+:SevenSegTM163X(ioPins, dspDigits, commAnode, _dspDigitsQtyMax)
 {
 }
 
@@ -769,7 +772,7 @@ void SevenSegTM1636::_unAbstract(){
 SevenSegTM1637::SevenSegTM1637(){};
 
 SevenSegTM1637::SevenSegTM1637(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
-:SevenSegTM163X(ioPins, dspDigits, commAnode, 6)
+:SevenSegTM163X(ioPins, dspDigits, commAnode, _dspDigitsQtyMax)
 {
 }
 
@@ -785,7 +788,7 @@ void SevenSegTM1637::_unAbstract(){
 SevenSegTM1639::SevenSegTM1639(){}
 
 SevenSegTM1639::SevenSegTM1639(uint8_t* ioPins, uint8_t dspDigits, bool commAnode)
-:SevenSegTM163X(ioPins, dspDigits, commAnode, 8)
+:SevenSegTM163X(ioPins, dspDigits, commAnode, _dspDigitsQtyMax)
 {
 }
 
@@ -801,36 +804,32 @@ void SevenSegTM1639::_unAbstract(){
 SevenSegMax7219::SevenSegMax7219(){}
 
 SevenSegMax7219::SevenSegMax7219(uint8_t* ioPins, uint8_t dspDigits)
-:SevenSegStatic(ioPins, dspDigits, false)
+:SevenSegStatic(ioPins, dspDigits, false, _dspDigitsQtyMax)
 {
    _brghtnssLvlMax = _hwBrghtnssLvlMax;
    _brghtnssLvlMin = _hwBrghtnssLvlMin;
    _brghtnssLvl = _brghtnssLvlMin;
 
-   if(_dspDigitsQty > _dspDigitsQtyMax)
-      _dspDigitsQty = _dspDigitsQtyMax;   //FFDR Move the checking to the base class constructor and allocate the correct amount of memory there!!
    _lclDspBuffPtr = new uint8_t[_dspDigitsQty]; //FFDR this local buffer is needed as it keeps the shared buffer contents into MAX7219 format, protect the shared buffer with mutex to avoid changing while loading
    
    _clk = *(ioPins + _clkIndx);
    _din = *(ioPins + _dinIndx);
    _cs = *(ioPins + _csIndx);
+}
 
+SevenSegMax7219::~SevenSegMax7219(){
+   end();
+   delete [] _lclDspBuffPtr;
+}
+
+bool SevenSegMax7219::begin(uint32_t updtLps){
    pinMode(_clk, OUTPUT);
    pinMode(_din, OUTPUT);
    pinMode(_cs, OUTPUT);
    digitalWrite(_clk, LOW);
    digitalWrite(_din, LOW);
    digitalWrite(_cs, HIGH);
-}
 
-SevenSegMax7219::~SevenSegMax7219()
-{
-   delete [] _lclDspBuffPtr;
-}
-
-bool SevenSegMax7219::begin(uint32_t updtLps)
-{
-   
    _sendAddrData(_DspTestAddr, _NormalOp, true);   // Set Not in test mode!
    _sendAddrData(_ScanLimitAddr, (_dspDigitsQty - 1), true);   //!< Set Scan Limit: Register data 0x00 to 0x07: quantity of digits to keep updated
    _sendAddrData(_DecodeModeAddr, _NoDecode, true);   // Set No Decode format
@@ -885,21 +884,18 @@ void SevenSegMax7219::_sendByte(const uint8_t &val, const  bool &MSbFrst) {
 }
 
 void SevenSegMax7219::_sendAddrData(const uint8_t &address, const uint8_t &data, const  bool &MSbFrst){
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
-
-   taskENTER_CRITICAL(&mux);
    digitalWrite(_cs, LOW);
    _sendByte(address, MSbFrst);
    _sendByte(data, MSbFrst);
    digitalWrite(_cs, HIGH);
-   taskEXIT_CRITICAL(&mux);
 
    return;
 }
 
 void SevenSegMax7219::_sendBffr(){
-   for(uint8_t dspPrt{0}; dspPrt < _dspDigitsQty; dspPrt++)
-   _sendAddrData((_DspPortsBaseAddr + dspPrt), *(_lclDspBuffPtr + dspPrt), true);
+   for(uint8_t dspPrt{0}; dspPrt < _dspDigitsQty; dspPrt++){
+      _sendAddrData((_DspPortsBaseAddr + dspPrt), *(_lclDspBuffPtr + dspPrt), true);
+   }
 
    return;
 }
@@ -944,15 +940,12 @@ void SevenSegMax7219::turnOn(const uint8_t &newBrghtnssLvl){
 }
 
 void SevenSegMax7219::_updLclBffrCntnt(){
-   for(uint8_t dspPrt{0}; dspPrt < _dspDigitsQty; dspPrt++)
-      *(_lclDspBuffPtr + dspPrt) = _cnvrtStdDgtTo72xxDgt(*(_dspBuffPtr + dspPrt));  //FFDR Add the buffPos indirection element, as this statement supports the idea of no digits reordering
-   
+   for(uint8_t i{0}; i < _dspDigitsQty; i++)
+      *(_lclDspBuffPtr + i) = _cnvrtStdDgtTo72xxDgt(*(_dspBuffPtr + *(_digitPosPtr + i)));
+
 	return;
 }
 
-void SevenSegMax7219::_unAbstract(){
-
-   return;
-}
+void SevenSegMax7219::_unAbstract(){return;}
 
 //============================================================> Class methods separator

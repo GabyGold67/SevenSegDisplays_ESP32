@@ -1,5 +1,7 @@
 <map id="SevenSegDispHw::setBrghtnssLvl" name="SevenSegDispHw::setBrghtnssLvl">
-<area shape="rect" id="Node000001" title="Sets the brightness level for the display." alt="" coords="229,5,452,32"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_disp_hw.html#a5b8a85569987f67008d5323fcea52d0c" title="Turns the display module on set at the provided brightness level." alt="" coords="5,5,181,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="213,21,181,21,181,16,213,16"/>
+<area shape="rect" id="Node000001" title="Sets the brightness level for the display." alt="" coords="281,31,504,57"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#a2574a617f1d317b3abe3806c4608fd5b" title="Set the brightness level for the display." alt="" coords="5,5,233,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="265,35,233,32,233,27,265,30"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_disp_hw.html#a5b8a85569987f67008d5323fcea52d0c" title="Turns the display module on set at the provided brightness level." alt="" coords="31,56,207,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="265,58,207,64,207,59,265,53"/>
 </map>

@@ -1,7 +1,7 @@
 var class_seven_seg_t_m163_x =
 [
     [ "SevenSegTM163X", "class_seven_seg_t_m163_x.html#a6f511a29dcacfa8be9d2a8778dc2d05d", null ],
-    [ "SevenSegTM163X", "class_seven_seg_t_m163_x.html#a6812a6d00def57aaace41ad2a15da7f8", null ],
+    [ "SevenSegTM163X", "class_seven_seg_t_m163_x.html#af4bc9ef8decc6ff39f275150f738bd35", null ],
     [ "~SevenSegTM163X", "class_seven_seg_t_m163_x.html#a15cd5793c8ad4dd0c5207874d4fc2de4", null ],
     [ "begin", "class_seven_seg_t_m163_x.html#a08b6551f172597a88fa78215cde05c7e", null ],
     [ "end", "class_seven_seg_t_m163_x.html#aa698084ab67b3d6c6b324fa00d1f5e35", null ],

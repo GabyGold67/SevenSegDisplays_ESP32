@@ -16,7 +16,7 @@
  * Github <https://github.com/GabyGold67>
  *
  * @date First release: 15/05/2023  
- *       Last update:   11/05/2025 13:30 GMT+0200 DST  
+ *       Last update:   12/05/2025 10:30 GMT+0200 DST  
  ******************************************************************************
   * @warning **Use of this library is under your own responsibility**
   * 
@@ -98,33 +98,6 @@ void mainCtrlTsk(void *pvParameters){
    
    static uint8_t myDispIOPins[2] {clk, dio}; // Pins set as an array as required by hw constructor
 
-
-/* Instantiation examples, different possibilities for use according to developer preferences*/
-/* A three lines step by step code example:  
-SevenSegDynHC595 myLedDispHw(myDispIOPins, 4, true);
-SevenSegDispHw* myLedDispHwPtr = &myLedDispHw;
-SevenSegDisplays myLedDisp(myLedDispHwPtr);
-*/
-
-/* A two lines example using the & operand to pass the pointer
-SevenSegDynHC595 myLedDispHw(myDispIOPins, 4, true);
-SevenSegDisplays myLedDisp(&myLedDispHw);
-*/
-
-/* A two lines example using a sub-class pointer to a dynamic instantiated object
-SevenSegDynHC595* myLedDispPtr {new SevenSegDynHC595 (myDispIOPins, 4, true)};
-SevenSegDisplays myLedDisp(myLedDispPtr);
-*/
-
-/* A two lines example using a base class pointer to a dynamic instantiated object
-SevenSegDispHw* myLedDispPtr {new SevenSegDynHC595 (myDispIOPins, 4, true)};
-SevenSegDisplays myLedDisp(myLedDispPtr);
-*/
-
-/* A one liner example using as argument the pointer returned from dynamic instantiated object
-SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
-*/
-
    uint8_t theNewOrder [4] {3, 2, 1, 0};
 
    SevenSegDispHw* myLedDispPtr {new SevenSegTM1637(myDispIOPins, 4, false)};
@@ -153,11 +126,12 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
       {
          //print() with a string argument, four characters long, all characters included in the representable characters list
          Serial.println("Display turned Off");
-         myLedDisp.getDspUndrlHwPtr()->turnOff();  // Demonstrates the display control keeps receiving data altough it's set turned Off
+         myLedDisp.turnOff();  // Demonstrates the display control keeps receiving data altough it's set turned Off
          Serial.println("Text 'Strt'sent to the display while turned Off");
          testResult = myLedDisp.print("Strt");
-         myLedDisp.getDspUndrlHwPtr()->turnOn();
-         Serial.println("Display turned On, showing the data was received");
+         vTaskDelay(testTime);
+         myLedDisp.turnOn();
+         Serial.println("Display turned On, showing the data was received while being Off");
          vTaskDelay(testTime);
       }
 
@@ -452,9 +426,9 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
       }
       
       {         
-         int8_t minBrgthnss {(int8_t)myLedDisp.getDspUndrlHwPtr()->getBrghtnssMinLvl()};
-         int8_t maxBrgthnss {(int8_t)myLedDisp.getDspUndrlHwPtr()->getBrghtnssMaxLvl()};
-         int8_t curBrgthnss {(int8_t)myLedDisp.getDspUndrlHwPtr()->getBrghtnssLvl()};
+         int8_t minBrgthnss {(int8_t)myLedDisp.getMinBrghtnssLvl()};
+         int8_t maxBrgthnss {(int8_t)myLedDisp.getMaxBrghtnssLvl()};
+         int8_t curBrgthnss {(int8_t)myLedDisp.getCurBrghtnssLvl()};
 
          Serial.print("Minimum brightness level: ");
          Serial.println(minBrgthnss);
@@ -464,13 +438,13 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
          Serial.println(curBrgthnss);
 
          for(int8_t curBrgthnss{maxBrgthnss}; curBrgthnss >= minBrgthnss; --curBrgthnss){
-            myLedDisp.getDspUndrlHwPtr()->setBrghtnssLvl(curBrgthnss);
+            myLedDisp.setBrghtnssLvl(curBrgthnss);
             Serial.print("Brightness Level = ");
             Serial.println(curBrgthnss);
             vTaskDelay(350);   
          }
          for(int8_t curBrgthnss{minBrgthnss}; curBrgthnss <= maxBrgthnss; ++curBrgthnss){
-            myLedDisp.getDspUndrlHwPtr()->setBrghtnssLvl(curBrgthnss);
+            myLedDisp.setBrghtnssLvl(curBrgthnss);
             Serial.print("Brightness Level = ");
             Serial.println(curBrgthnss);
             vTaskDelay(350);   
@@ -483,14 +457,14 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
       }
 
       {
-         myLedDisp.getDspUndrlHwPtr()->turnOff();
+         myLedDisp.turnOff();
          Serial.println("Display turned Off");
          vTaskDelay(testTime);
       }
 
       {
          myLedDisp.print("On");
-         myLedDisp.getDspUndrlHwPtr()->turnOn();
+         myLedDisp.turnOn();
          Serial.println("Display turned On");
          vTaskDelay(testTime);
       }
@@ -505,7 +479,7 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
       }
 
       {
-         myLedDisp.getDspUndrlHwPtr()->end();
+         myLedDisp.end();
          Serial.println("Service stopped");
          vTaskDelay(testTime);
       }

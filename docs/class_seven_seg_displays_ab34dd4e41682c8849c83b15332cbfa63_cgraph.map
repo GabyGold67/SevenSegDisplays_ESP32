@@ -1,0 +1,5 @@
+<map id="SevenSegDisplays::getMaxBrghtnssLvl" name="SevenSegDisplays::getMaxBrghtnssLvl">
+<area shape="rect" id="Node000001" title="Returns the maximum brightness value setting for the display." alt="" coords="5,5,189,48"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_disp_hw.html#a75b0eb720bddb4e467814e41dd958575" title="Returns the maximum display brightness level setting allowed for the display." alt="" coords="237,5,443,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="189,24,221,24,221,29,189,29"/>
+</map>

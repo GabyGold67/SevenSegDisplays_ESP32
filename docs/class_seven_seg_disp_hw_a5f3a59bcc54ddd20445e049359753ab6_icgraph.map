@@ -1,0 +1,5 @@
+<map id="SevenSegDispHw::begin" name="SevenSegDispHw::begin">
+<area shape="rect" id="Node000001" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="225,5,392,32"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#abc7b0307578cbbd8ae7ab89d873f9033" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="5,5,177,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,21,177,21,177,16,209,16"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="SevenSegDisplays::turnOn" name="SevenSegDisplays::turnOn">
+<area shape="rect" id="Node000001" title="Turns the display module on." alt="" coords="5,5,185,32"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_disp_hw.html#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on." alt="" coords="233,5,408,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,16,217,16,217,21,185,21"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,..." alt="" coords="456,5,672,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="408,16,440,16,440,21,408,21"/>
+</map>

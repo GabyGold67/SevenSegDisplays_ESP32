@@ -1,0 +1,5 @@
+<map id="SevenSegDispHw::getIsOn" name="SevenSegDispHw::getIsOn">
+<area shape="rect" id="Node000001" title="Returns the state of the display." alt="" coords="240,5,422,32"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#a6ca453dced5405b6335b6af1484fe1a4" title="Returns a logic value indicating if the display is in On state." alt="" coords="5,5,192,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="224,21,192,21,192,16,224,16"/>
+</map>

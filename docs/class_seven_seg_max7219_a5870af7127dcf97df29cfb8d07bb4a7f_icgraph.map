@@ -1,0 +1,5 @@
+<map id="SevenSegMax7219::end" name="SevenSegMax7219::end">
+<area shape="rect" id="Node000001" title="Ends the active mode of the display by shutting it off." alt="" coords="264,13,427,40"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_max7219.html#abc856b37e1f80e486521b70bd85e09df" title="Class destructor." alt="" coords="5,5,216,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="248,29,216,29,216,24,248,24"/>
+</map>

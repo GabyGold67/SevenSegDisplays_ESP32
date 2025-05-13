@@ -130,6 +130,10 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDisplays</b> ()</td></tr>
 <tr class="memdesc:aad6eac4fa55968318f6d0c1e4e80cb8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class destructor. <br /></td></tr>
 <tr class="separator:aad6eac4fa55968318f6d0c1e4e80cb8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc7b0307578cbbd8ae7ab89d873f9033" id="r_abc7b0307578cbbd8ae7ab89d873f9033"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abc7b0307578cbbd8ae7ab89d873f9033">begin</a> (uint32_t updtLps=0)</td></tr>
+<tr class="memdesc:abc7b0307578cbbd8ae7ab89d873f9033"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the hardware display to work, and starts the display activities. <br  />
+  <br /></td></tr>
+<tr class="separator:abc7b0307578cbbd8ae7ab89d873f9033"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a576676d89b46d8d3752fc8d36fbcac2c" id="r_a576676d89b46d8d3752fc8d36fbcac2c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c">blink</a> ()</td></tr>
 <tr class="memdesc:a576676d89b46d8d3752fc8d36fbcac2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the display blink the contents it is showing.  <br /></td></tr>
 <tr class="separator:a576676d89b46d8d3752fc8d36fbcac2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -142,12 +146,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa74bbf6a2436ea01c170459ef1da5fbe" id="r_aa74bbf6a2436ea01c170459ef1da5fbe"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa74bbf6a2436ea01c170459ef1da5fbe">doubleGauge</a> (const int &amp;levelLeft, const int &amp;levelRight, char labelLeft=' ', char labelRight=' ')</td></tr>
 <tr class="memdesc:aa74bbf6a2436ea01c170459ef1da5fbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays a basic graphical representation of the level of fulfillment or completeness of two segmented values or tasks.  <br /></td></tr>
 <tr class="separator:aa74bbf6a2436ea01c170459ef1da5fbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa712f19de96a9503c804bf4492040781" id="r_aa712f19de96a9503c804bf4492040781"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa712f19de96a9503c804bf4492040781">end</a> ()</td></tr>
+<tr class="memdesc:aa712f19de96a9503c804bf4492040781"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ends the activity of the display. <br  />
+  <br /></td></tr>
+<tr class="separator:aa712f19de96a9503c804bf4492040781"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa00c8c2fbca4a0068590ef62de28f198" id="r_aa00c8c2fbca4a0068590ef62de28f198"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa00c8c2fbca4a0068590ef62de28f198">gauge</a> (const int &amp;level, char label=' ')</td></tr>
 <tr class="memdesc:aa00c8c2fbca4a0068590ef62de28f198"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays a basic graphical representation of the level of fulfillment or completeness of a segmented value or task.  <br /></td></tr>
 <tr class="separator:aa00c8c2fbca4a0068590ef62de28f198"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6fea06785902000457c1105c78d85093" id="r_a6fea06785902000457c1105c78d85093"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6fea06785902000457c1105c78d85093">gauge</a> (const double &amp;level, char label=' ')</td></tr>
 <tr class="memdesc:a6fea06785902000457c1105c78d85093"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays a basic graphical representation of the level of fulfillment or completeness of a segmented value or task.  <br /></td></tr>
 <tr class="separator:a6fea06785902000457c1105c78d85093"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2d61338436a3171236109e5798f3e87" id="r_aa2d61338436a3171236109e5798f3e87"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa2d61338436a3171236109e5798f3e87">getCurBrghtnssLvl</a> ()</td></tr>
+<tr class="memdesc:aa2d61338436a3171236109e5798f3e87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current brightness level of the display.  <br /></td></tr>
+<tr class="separator:aa2d61338436a3171236109e5798f3e87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05ddffe49e505638382affaa0426b272" id="r_a05ddffe49e505638382affaa0426b272"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05ddffe49e505638382affaa0426b272">getDigitsQty</a> ()</td></tr>
 <tr class="memdesc:a05ddffe49e505638382affaa0426b272"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the number of digits of the display hardware. <br  />
   <br /></td></tr>
@@ -156,6 +167,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a7d828fd8327053a334f25836d8c49b08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the quantity of instantiated <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> class objects at invocation moment. <br  />
   <br /></td></tr>
 <tr class="separator:a7d828fd8327053a334f25836d8c49b08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5168f4d1cbdb8faab2b87b1689c182b2" id="r_a5168f4d1cbdb8faab2b87b1689c182b2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5168f4d1cbdb8faab2b87b1689c182b2">getDspIsDmmbl</a> ()</td></tr>
+<tr class="memdesc:a5168f4d1cbdb8faab2b87b1689c182b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the logic value indicating if the display is dimmable. <br  />
+  <br /></td></tr>
+<tr class="separator:a5168f4d1cbdb8faab2b87b1689c182b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeebf7611c82002d5a206a6b7ff3946ac" id="r_aeebf7611c82002d5a206a6b7ff3946ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeebf7611c82002d5a206a6b7ff3946ac">getDspUndrlHwPtr</a> ()</td></tr>
 <tr class="memdesc:aeebf7611c82002d5a206a6b7ff3946ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to the underlying hardware display object.  <br /></td></tr>
 <tr class="separator:aeebf7611c82002d5a206a6b7ff3946ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,12 +181,23 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a09b7157b7be5f4c4b0562f862d6aaf5c" id="r_a09b7157b7be5f4c4b0562f862d6aaf5c"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a09b7157b7be5f4c4b0562f862d6aaf5c">getDspValMin</a> ()</td></tr>
 <tr class="memdesc:a09b7157b7be5f4c4b0562f862d6aaf5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a value equivalent to the smallest displayable number for the display.  <br /></td></tr>
 <tr class="separator:a09b7157b7be5f4c4b0562f862d6aaf5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ca453dced5405b6335b6af1484fe1a4" id="r_a6ca453dced5405b6335b6af1484fe1a4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ca453dced5405b6335b6af1484fe1a4">getIsOn</a> ()</td></tr>
+<tr class="memdesc:a6ca453dced5405b6335b6af1484fe1a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a logic value indicating if the display is in On state.  <br /></td></tr>
+<tr class="separator:a6ca453dced5405b6335b6af1484fe1a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acacba9047c40769b42a11268df302f9c" id="r_acacba9047c40769b42a11268df302f9c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acacba9047c40769b42a11268df302f9c">getMaxBlinkRate</a> ()</td></tr>
 <tr class="memdesc:acacba9047c40769b42a11268df302f9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the maximum rate the display can be configured to blink at.  <br /></td></tr>
 <tr class="separator:acacba9047c40769b42a11268df302f9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab34dd4e41682c8849c83b15332cbfa63" id="r_ab34dd4e41682c8849c83b15332cbfa63"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab34dd4e41682c8849c83b15332cbfa63">getMaxBrghtnssLvl</a> ()</td></tr>
+<tr class="memdesc:ab34dd4e41682c8849c83b15332cbfa63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the maximum brightness value setting for the display. <br  />
+  <br /></td></tr>
+<tr class="separator:ab34dd4e41682c8849c83b15332cbfa63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c32e61a26a22821230c012f8a3f6583" id="r_a0c32e61a26a22821230c012f8a3f6583"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c32e61a26a22821230c012f8a3f6583">getMinBlinkRate</a> ()</td></tr>
 <tr class="memdesc:a0c32e61a26a22821230c012f8a3f6583"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the minimum rate the display can be configured to blink at.  <br /></td></tr>
 <tr class="separator:a0c32e61a26a22821230c012f8a3f6583"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b5758c3070e82138ac66bb0901cf5d3" id="r_a0b5758c3070e82138ac66bb0901cf5d3"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b5758c3070e82138ac66bb0901cf5d3">getMinBrghtnssLvl</a> ()</td></tr>
+<tr class="memdesc:a0b5758c3070e82138ac66bb0901cf5d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the minimum brightness value setting for the display. <br  />
+  <br /></td></tr>
+<tr class="separator:a0b5758c3070e82138ac66bb0901cf5d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a017863a7a0d36b18f47cd0f0ae4128b6" id="r_a017863a7a0d36b18f47cd0f0ae4128b6"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a017863a7a0d36b18f47cd0f0ae4128b6">getSerialNbr</a> ()</td></tr>
 <tr class="memdesc:a017863a7a0d36b18f47cd0f0ae4128b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a unique numeric identification of the object.  <br /></td></tr>
 <tr class="separator:a017863a7a0d36b18f47cd0f0ae4128b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -213,6 +239,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aa96b5cde05602ba58624b103c852ad71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the time parameters to use for the display blinking of the contents it shows. <br  />
   <br /></td></tr>
 <tr class="separator:aa96b5cde05602ba58624b103c852ad71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2574a617f1d317b3abe3806c4608fd5b" id="r_a2574a617f1d317b3abe3806c4608fd5b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2574a617f1d317b3abe3806c4608fd5b">setBrghtnssLvl</a> (const uint8_t &amp;newBrghtnssLvl)</td></tr>
+<tr class="memdesc:a2574a617f1d317b3abe3806c4608fd5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the brightness level for the display.  <br /></td></tr>
+<tr class="separator:a2574a617f1d317b3abe3806c4608fd5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a806a5ed32988ec7d82b65157b56b538e" id="r_a806a5ed32988ec7d82b65157b56b538e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a806a5ed32988ec7d82b65157b56b538e">setWaitChar</a> (const char &amp;newChar)</td></tr>
 <tr class="memdesc:a806a5ed32988ec7d82b65157b56b538e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the "Waiting" character. <br  />
   <br /></td></tr>
@@ -221,6 +250,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a38948554f7ff5967e9cc563874754f57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the timing parameter used to show the "progress ongoing bar advancement" speed. <br  />
   <br /></td></tr>
 <tr class="separator:a38948554f7ff5967e9cc563874754f57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1749aad8e3f3d97271d32629602875c0" id="r_a1749aad8e3f3d97271d32629602875c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1749aad8e3f3d97271d32629602875c0">turnOff</a> ()</td></tr>
+<tr class="memdesc:a1749aad8e3f3d97271d32629602875c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module off. <br  />
+  <br /></td></tr>
+<tr class="separator:a1749aad8e3f3d97271d32629602875c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9282f49d9d276277ef2c14f2589501b" id="r_aa9282f49d9d276277ef2c14f2589501b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa9282f49d9d276277ef2c14f2589501b">turnOn</a> ()</td></tr>
+<tr class="memdesc:aa9282f49d9d276277ef2c14f2589501b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module on. <br  />
+  <br /></td></tr>
+<tr class="separator:aa9282f49d9d276277ef2c14f2589501b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea69f9227705bc60a9fb319780851306" id="r_aea69f9227705bc60a9fb319780851306"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aea69f9227705bc60a9fb319780851306">turnOn</a> (const uint8_t &amp;newBrghtnssLvl)</td></tr>
+<tr class="memdesc:aea69f9227705bc60a9fb319780851306"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the display module on. <br  />
+  <br /></td></tr>
+<tr class="separator:aea69f9227705bc60a9fb319780851306"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae00a0275a3fa0c1858e475d3e2f1272d" id="r_ae00a0275a3fa0c1858e475d3e2f1272d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d">wait</a> ()</td></tr>
 <tr class="memdesc:ae00a0275a3fa0c1858e475d3e2f1272d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the display enter the "Waiting mode" <br  />
   <br /></td></tr>
@@ -297,6 +338,64 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="abc7b0307578cbbd8ae7ab89d873f9033" name="abc7b0307578cbbd8ae7ab89d873f9033"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc7b0307578cbbd8ae7ab89d873f9033">&#9670;&#160;</a></span>begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDisplays::begin </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>updtLps</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets up the hardware display to work, and starts the display activities. <br  />
+ </p>
+<p>Depending on the display controller characteristics the setup procedure may include different defined steps, each class will execute the needed steps for each display controller. <br  />
+</p>
+<dl class="section attention"><dt>Attention</dt><dd>The <b><a class="el" href="#abc7b0307578cbbd8ae7ab89d873f9033" title="Sets up the hardware display to work, and starts the display activities.">begin()</a></b> method is different from the <b><a class="el" href="#aa9282f49d9d276277ef2c14f2589501b" title="Turns the display module on.">turnOn()</a></b> method. The first one ensures the display controller unit is ready to receive data to be displayed, including communications and internal memory management, while the second enables the display to turn on the corresponding leds to exhibit the data received. The fact that some display technologies needs no configuration and/or not explicit turning on the display is hidden for the user benefit: all displays must invoke the <a class="el" href="#abc7b0307578cbbd8ae7ab89d873f9033" title="Sets up the hardware display to work, and starts the display activities.">begin()</a> method, all displays have acces to a <a class="el" href="#aa712f19de96a9503c804bf4492040781" title="Ends the activity of the display.">end()</a>, <a class="el" href="#aa9282f49d9d276277ef2c14f2589501b" title="Turns the display module on.">turnOn()</a> and <a class="el" href="#a1749aad8e3f3d97271d32629602875c0" title="Turns the display module off.">turnOff()</a>. Executing a <a class="el" href="#abc7b0307578cbbd8ae7ab89d873f9033" title="Sets up the hardware display to work, and starts the display activities.">begin()</a> method will invoke automatically the <a class="el" href="#aa9282f49d9d276277ef2c14f2589501b" title="Turns the display module on.">turnOn()</a> method. Invoking a <a class="el" href="#a1749aad8e3f3d97271d32629602875c0" title="Turns the display module off.">turnOff()</a> in a begun display will let the display to keep receiving data, but it will not be visible untila a new <a class="el" href="#aa9282f49d9d276277ef2c14f2589501b" title="Turns the display module on.">turnOn()</a> is invoked.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">updtLps</td><td>Optional parameter, sets the rate needed by the dynamic type displays, will be ignored by othe types of displays. Is no value is passed to the dynamic displays they will used a preset stantard parameter.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The display was initialized without errors. </td></tr>
+    <tr><td class="paramname">false</td><td>The display couldn't be initialized due to an error. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_displays_abc7b0307578cbbd8ae7ab89d873f9033_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_abc7b0307578cbbd8ae7ab89d873f9033_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_displays_abc7b0307578cbbd8ae7ab89d873f9033_cgraph" id="aclass_seven_seg_displays_abc7b0307578cbbd8ae7ab89d873f9033_cgraph">
+<area shape="rect" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="5,5,177,32"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a5f3a59bcc54ddd20445e049359753ab6" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="225,5,392,32"/>
+<area shape="poly" title=" " alt="" coords="177,16,209,16,209,21,177,21"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on." alt="" coords="440,5,615,32"/>
+<area shape="poly" title=" " alt="" coords="392,16,424,16,424,21,392,21"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,..." alt="" coords="663,5,880,32"/>
+<area shape="poly" title=" " alt="" coords="616,16,648,16,648,21,616,21"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a576676d89b46d8d3752fc8d36fbcac2c" name="a576676d89b46d8d3752fc8d36fbcac2c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a576676d89b46d8d3752fc8d36fbcac2c">&#9670;&#160;</a></span>blink() <span class="overload">[1/2]</span></h2>
 
@@ -557,6 +656,40 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="aa712f19de96a9503c804bf4492040781" name="aa712f19de96a9503c804bf4492040781"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa712f19de96a9503c804bf4492040781">&#9670;&#160;</a></span>end()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDisplays::end </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Ends the activity of the display. <br  />
+ </p>
+<p>After the <a class="el" href="#aa712f19de96a9503c804bf4492040781" title="Ends the activity of the display.">end()</a> is invoked, the display will stop accepting new data, stop it's refreshing and all activities involved in keeping it's contents updated. To keep the expected level of accuracy and security the display will be cleaned before stopping it's activity.</p>
+<dl class="section return"><dt>Returns</dt><dd>True </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_displays_aa712f19de96a9503c804bf4492040781_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_aa712f19de96a9503c804bf4492040781_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_displays_aa712f19de96a9503c804bf4492040781_cgraph" id="aclass_seven_seg_displays_aa712f19de96a9503c804bf4492040781_cgraph">
+<area shape="rect" title="Ends the activity of the display." alt="" coords="5,5,167,32"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a10ef7e4db6af3dbbcdeb48331d94f2e2" title="Reverts the begin(uint32_t) actions, stopping the display activities, turning the display off and fre..." alt="" coords="215,5,372,32"/>
+<area shape="poly" title=" " alt="" coords="167,16,199,16,199,21,167,21"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,..." alt="" coords="420,5,636,32"/>
+<area shape="poly" title=" " alt="" coords="373,16,404,16,404,21,373,21"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a6fea06785902000457c1105c78d85093" name="a6fea06785902000457c1105c78d85093"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6fea06785902000457c1105c78d85093">&#9670;&#160;</a></span>gauge() <span class="overload">[1/2]</span></h2>
 
@@ -702,6 +835,36 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="aa2d61338436a3171236109e5798f3e87" name="aa2d61338436a3171236109e5798f3e87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2d61338436a3171236109e5798f3e87">&#9670;&#160;</a></span>getCurBrghtnssLvl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t SevenSegDisplays::getCurBrghtnssLvl </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the current brightness level of the display. </p>
+<dl class="section return"><dt>Returns</dt><dd>uint8_t Brightness level </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_displays_aa2d61338436a3171236109e5798f3e87_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_aa2d61338436a3171236109e5798f3e87_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_displays_aa2d61338436a3171236109e5798f3e87_cgraph" id="aclass_seven_seg_displays_aa2d61338436a3171236109e5798f3e87_cgraph">
+<area shape="rect" title="Returns the current brightness level of the display." alt="" coords="5,5,185,48"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a0c5d2d46808b3194bd248d133d3117bf" title="Returns the current display brightness level setting for the display." alt="" coords="233,13,456,40"/>
+<area shape="poly" title=" " alt="" coords="185,24,217,24,217,29,185,29"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a05ddffe49e505638382affaa0426b272" name="a05ddffe49e505638382affaa0426b272"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a05ddffe49e505638382affaa0426b272">&#9670;&#160;</a></span>getDigitsQty()</h2>
 
@@ -747,6 +910,60 @@ Here is the caller graph for this function:</div>
  </p>
 <dl class="section return"><dt>Returns</dt><dd>The quantity of instantiated displays. <br  />
  </dd></dl>
+
+</div>
+</div>
+<a id="a5168f4d1cbdb8faab2b87b1689c182b2" name="a5168f4d1cbdb8faab2b87b1689c182b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5168f4d1cbdb8faab2b87b1689c182b2">&#9670;&#160;</a></span>getDspIsDmmbl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDisplays::getDspIsDmmbl </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the logic value indicating if the display is dimmable. <br  />
+ </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The display is dimmable (variable brightness configuration) <br  />
+ </td></tr>
+    <tr><td class="paramname">false</td><td>The display is not dimmable (only constant brightness) </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_displays_a5168f4d1cbdb8faab2b87b1689c182b2_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_a5168f4d1cbdb8faab2b87b1689c182b2_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_displays_a5168f4d1cbdb8faab2b87b1689c182b2_cgraph" id="aclass_seven_seg_displays_a5168f4d1cbdb8faab2b87b1689c182b2_cgraph">
+<area shape="rect" title="Returns the logic value indicating if the display is dimmable." alt="" coords="5,39,188,81"/>
+<area shape="rect" href="class_seven_seg_displays.html#ab34dd4e41682c8849c83b15332cbfa63" title="Returns the maximum brightness value setting for the display." alt="" coords="236,5,419,48"/>
+<area shape="poly" title=" " alt="" coords="188,44,220,39,221,45,188,49"/>
+<area shape="rect" href="class_seven_seg_displays.html#a0b5758c3070e82138ac66bb0901cf5d3" title="Returns the minimum brightness value setting for the display." alt="" coords="238,72,417,115"/>
+<area shape="poly" title=" " alt="" coords="188,71,223,76,222,81,188,76"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a75b0eb720bddb4e467814e41dd958575" title="Returns the maximum display brightness level setting allowed for the display." alt="" coords="467,5,673,48"/>
+<area shape="poly" title=" " alt="" coords="419,24,451,24,451,29,419,29"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#aa098a72fb84ffbec783e0c38f130f2c3" title="Returns the minimum display brightness level setting for the display." alt="" coords="467,72,673,115"/>
+<area shape="poly" title=" " alt="" coords="417,91,452,91,452,96,417,96"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_displays_a5168f4d1cbdb8faab2b87b1689c182b2_icgraph.png" border="0" usemap="#aclass_seven_seg_displays_a5168f4d1cbdb8faab2b87b1689c182b2_icgraph" alt=""/></div>
+<map name="aclass_seven_seg_displays_a5168f4d1cbdb8faab2b87b1689c182b2_icgraph" id="aclass_seven_seg_displays_a5168f4d1cbdb8faab2b87b1689c182b2_icgraph">
+<area shape="rect" title="Returns the logic value indicating if the display is dimmable." alt="" coords="281,5,463,48"/>
+<area shape="rect" href="class_seven_seg_displays.html#a2574a617f1d317b3abe3806c4608fd5b" title="Set the brightness level for the display." alt="" coords="5,13,233,40"/>
+<area shape="poly" title=" " alt="" coords="265,29,233,29,233,24,265,24"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -830,6 +1047,42 @@ Here is the caller graph for this function:</div>
 </div><!-- fragment --> 
 </div>
 </div>
+<a id="a6ca453dced5405b6335b6af1484fe1a4" name="a6ca453dced5405b6335b6af1484fe1a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ca453dced5405b6335b6af1484fe1a4">&#9670;&#160;</a></span>getIsOn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDisplays::getIsOn </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a logic value indicating if the display is in On state. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The display is on </td></tr>
+    <tr><td class="paramname">false</td><td>The display is off </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_displays_a6ca453dced5405b6335b6af1484fe1a4_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_a6ca453dced5405b6335b6af1484fe1a4_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_displays_a6ca453dced5405b6335b6af1484fe1a4_cgraph" id="aclass_seven_seg_displays_a6ca453dced5405b6335b6af1484fe1a4_cgraph">
+<area shape="rect" title="Returns a logic value indicating if the display is in On state." alt="" coords="5,5,192,32"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#aa23f15cca7bb2db9821982965d969773" title="Returns the state of the display." alt="" coords="240,5,422,32"/>
+<area shape="poly" title=" " alt="" coords="192,16,224,16,224,21,192,21"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="acacba9047c40769b42a11268df302f9c" name="acacba9047c40769b42a11268df302f9c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acacba9047c40769b42a11268df302f9c">&#9670;&#160;</a></span>getMaxBlinkRate()</h2>
 
@@ -862,6 +1115,52 @@ Here is the caller graph for this function:</div>
 </div><!-- fragment --> 
 </div>
 </div>
+<a id="ab34dd4e41682c8849c83b15332cbfa63" name="ab34dd4e41682c8849c83b15332cbfa63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab34dd4e41682c8849c83b15332cbfa63">&#9670;&#160;</a></span>getMaxBrghtnssLvl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t SevenSegDisplays::getMaxBrghtnssLvl </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the maximum brightness value setting for the display. <br  />
+ </p>
+<dl class="section return"><dt>Returns</dt><dd>uint8_t Maximum brightness value setting. <br  />
+</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If the display has no brightness configuration control then <a class="el" href="#ab34dd4e41682c8849c83b15332cbfa63" title="Returns the maximum brightness value setting for the display.">getMaxBrghtnssLvl()</a> = <a class="el" href="#a0b5758c3070e82138ac66bb0901cf5d3" title="Returns the minimum brightness value setting for the display.">getMinBrghtnssLvl()</a> = <a class="el" href="#aa2d61338436a3171236109e5798f3e87" title="Returns the current brightness level of the display.">getCurBrghtnssLvl()</a> = 0, and <a class="el" href="#a5168f4d1cbdb8faab2b87b1689c182b2" title="Returns the logic value indicating if the display is dimmable.">getDspIsDmmbl()</a> returns false <br  />
+ </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_displays_ab34dd4e41682c8849c83b15332cbfa63_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_ab34dd4e41682c8849c83b15332cbfa63_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_displays_ab34dd4e41682c8849c83b15332cbfa63_cgraph" id="aclass_seven_seg_displays_ab34dd4e41682c8849c83b15332cbfa63_cgraph">
+<area shape="rect" title="Returns the maximum brightness value setting for the display." alt="" coords="5,5,189,48"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a75b0eb720bddb4e467814e41dd958575" title="Returns the maximum display brightness level setting allowed for the display." alt="" coords="237,5,443,48"/>
+<area shape="poly" title=" " alt="" coords="189,24,221,24,221,29,189,29"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_displays_ab34dd4e41682c8849c83b15332cbfa63_icgraph.png" border="0" usemap="#aclass_seven_seg_displays_ab34dd4e41682c8849c83b15332cbfa63_icgraph" alt=""/></div>
+<map name="aclass_seven_seg_displays_ab34dd4e41682c8849c83b15332cbfa63_icgraph" id="aclass_seven_seg_displays_ab34dd4e41682c8849c83b15332cbfa63_icgraph">
+<area shape="rect" title="Returns the maximum brightness value setting for the display." alt="" coords="511,5,694,48"/>
+<area shape="rect" href="class_seven_seg_displays.html#a5168f4d1cbdb8faab2b87b1689c182b2" title="Returns the logic value indicating if the display is dimmable." alt="" coords="281,5,463,48"/>
+<area shape="poly" title=" " alt="" coords="495,29,463,29,463,24,495,24"/>
+<area shape="rect" href="class_seven_seg_displays.html#a2574a617f1d317b3abe3806c4608fd5b" title="Set the brightness level for the display." alt="" coords="5,13,233,40"/>
+<area shape="poly" title=" " alt="" coords="265,29,233,29,233,24,265,24"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a0c32e61a26a22821230c012f8a3f6583" name="a0c32e61a26a22821230c012f8a3f6583"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0c32e61a26a22821230c012f8a3f6583">&#9670;&#160;</a></span>getMinBlinkRate()</h2>
 
@@ -892,6 +1191,52 @@ Here is the caller graph for this function:</div>
 </p>
 <div class="fragment"><div class="line"><span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> myDispMinBlnkRt = myLedDisp.getMinBlinkRate();</div>
 </div><!-- fragment --> 
+</div>
+</div>
+<a id="a0b5758c3070e82138ac66bb0901cf5d3" name="a0b5758c3070e82138ac66bb0901cf5d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b5758c3070e82138ac66bb0901cf5d3">&#9670;&#160;</a></span>getMinBrghtnssLvl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t SevenSegDisplays::getMinBrghtnssLvl </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the minimum brightness value setting for the display. <br  />
+ </p>
+<dl class="section return"><dt>Returns</dt><dd>uint8_t Minimum brightness value setting. <br  />
+</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If the display has no brightness configuration control then <a class="el" href="#ab34dd4e41682c8849c83b15332cbfa63" title="Returns the maximum brightness value setting for the display.">getMaxBrghtnssLvl()</a> = <a class="el" href="#a0b5758c3070e82138ac66bb0901cf5d3" title="Returns the minimum brightness value setting for the display.">getMinBrghtnssLvl()</a> = <a class="el" href="#aa2d61338436a3171236109e5798f3e87" title="Returns the current brightness level of the display.">getCurBrghtnssLvl()</a> = 0, and <a class="el" href="#a5168f4d1cbdb8faab2b87b1689c182b2" title="Returns the logic value indicating if the display is dimmable.">getDspIsDmmbl()</a> returns false <br  />
+ </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_displays_a0b5758c3070e82138ac66bb0901cf5d3_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_a0b5758c3070e82138ac66bb0901cf5d3_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_displays_a0b5758c3070e82138ac66bb0901cf5d3_cgraph" id="aclass_seven_seg_displays_a0b5758c3070e82138ac66bb0901cf5d3_cgraph">
+<area shape="rect" title="Returns the minimum brightness value setting for the display." alt="" coords="5,5,185,48"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#aa098a72fb84ffbec783e0c38f130f2c3" title="Returns the minimum display brightness level setting for the display." alt="" coords="233,5,439,48"/>
+<area shape="poly" title=" " alt="" coords="185,24,217,24,217,29,185,29"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_displays_a0b5758c3070e82138ac66bb0901cf5d3_icgraph.png" border="0" usemap="#aclass_seven_seg_displays_a0b5758c3070e82138ac66bb0901cf5d3_icgraph" alt=""/></div>
+<map name="aclass_seven_seg_displays_a0b5758c3070e82138ac66bb0901cf5d3_icgraph" id="aclass_seven_seg_displays_a0b5758c3070e82138ac66bb0901cf5d3_icgraph">
+<area shape="rect" title="Returns the minimum brightness value setting for the display." alt="" coords="511,5,690,48"/>
+<area shape="rect" href="class_seven_seg_displays.html#a5168f4d1cbdb8faab2b87b1689c182b2" title="Returns the logic value indicating if the display is dimmable." alt="" coords="281,5,463,48"/>
+<area shape="poly" title=" " alt="" coords="496,29,464,29,464,24,496,24"/>
+<area shape="rect" href="class_seven_seg_displays.html#a2574a617f1d317b3abe3806c4608fd5b" title="Set the brightness level for the display." alt="" coords="5,13,233,40"/>
+<area shape="poly" title=" " alt="" coords="265,29,233,29,233,24,265,24"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="a017863a7a0d36b18f47cd0f0ae4128b6" name="a017863a7a0d36b18f47cd0f0ae4128b6"></a>
@@ -1497,6 +1842,56 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="a2574a617f1d317b3abe3806c4608fd5b" name="a2574a617f1d317b3abe3806c4608fd5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2574a617f1d317b3abe3806c4608fd5b">&#9670;&#160;</a></span>setBrghtnssLvl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDisplays::setBrghtnssLvl </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>newBrghtnssLvl</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the brightness level for the display. </p>
+<p>For the brightness level settin to succeed two conditions must be met: <br  />
+ 1) The display must be dimmable (see <a class="el" href="#a2574a617f1d317b3abe3806c4608fd5b" title="Set the brightness level for the display.">setBrghtnssLvl()</a> ) 2) The new brightness level must be in the valid range for the display: <a class="el" href="#a0b5758c3070e82138ac66bb0901cf5d3" title="Returns the minimum brightness value setting for the display.">getMinBrghtnssLvl()</a> &lt;= newBrghtnssLvl &lt;= <a class="el" href="#ab34dd4e41682c8849c83b15332cbfa63" title="Returns the maximum brightness value setting for the display.">getMaxBrghtnssLvl()</a></p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newBrghtnssLvl</td><td>The new value setting for the brightness level </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true The display is dimmable, and the newBrghtnssLvl is in the valid range, the change is made </dd>
+<dd>
+false The display is not dimmable, or the newBrghtnssLvl is outside the valid range, no change is made </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_displays_a2574a617f1d317b3abe3806c4608fd5b_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_a2574a617f1d317b3abe3806c4608fd5b_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_displays_a2574a617f1d317b3abe3806c4608fd5b_cgraph" id="aclass_seven_seg_displays_a2574a617f1d317b3abe3806c4608fd5b_cgraph">
+<area shape="rect" title="Set the brightness level for the display." alt="" coords="5,76,233,103"/>
+<area shape="rect" href="class_seven_seg_displays.html#a5168f4d1cbdb8faab2b87b1689c182b2" title="Returns the logic value indicating if the display is dimmable." alt="" coords="301,39,484,81"/>
+<area shape="poly" title=" " alt="" coords="233,74,285,69,286,74,233,80"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a25007a1b33093e4c055446010e254d63" title="Sets the brightness level for the display." alt="" coords="281,105,504,132"/>
+<area shape="poly" title=" " alt="" coords="233,99,265,102,265,108,233,104"/>
+<area shape="rect" href="class_seven_seg_displays.html#ab34dd4e41682c8849c83b15332cbfa63" title="Returns the maximum brightness value setting for the display." alt="" coords="552,5,735,48"/>
+<area shape="poly" title=" " alt="" coords="484,45,536,38,537,44,484,51"/>
+<area shape="rect" href="class_seven_seg_displays.html#a0b5758c3070e82138ac66bb0901cf5d3" title="Returns the minimum brightness value setting for the display." alt="" coords="554,72,733,115"/>
+<area shape="poly" title=" " alt="" coords="484,69,539,77,538,82,484,75"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a75b0eb720bddb4e467814e41dd958575" title="Returns the maximum display brightness level setting allowed for the display." alt="" coords="783,5,990,48"/>
+<area shape="poly" title=" " alt="" coords="736,24,768,24,768,29,736,29"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#aa098a72fb84ffbec783e0c38f130f2c3" title="Returns the minimum display brightness level setting for the display." alt="" coords="783,72,990,115"/>
+<area shape="poly" title=" " alt="" coords="734,91,768,91,768,96,734,96"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a806a5ed32988ec7d82b65157b56b538e" name="a806a5ed32988ec7d82b65157b56b538e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a806a5ed32988ec7d82b65157b56b538e">&#9670;&#160;</a></span>setWaitChar()</h2>
 
@@ -1574,6 +1969,112 @@ false The parameter passed was invalid, i.e. it was a non displayable character,
 <div class="fragment"><div class="line">myLedDisp.setWaitRate(400);   <span class="comment">//Returns true and sets the advancement rate to 400 millisecs.  </span></div>
 <div class="line">myLedDisp.setWaitRate(myLedDisp.getMinBlinkRate() - 10); <span class="comment">//Returns false and the display wait rate stays without change.  </span></div>
 </div><!-- fragment --> 
+</div>
+</div>
+<a id="a1749aad8e3f3d97271d32629602875c0" name="a1749aad8e3f3d97271d32629602875c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1749aad8e3f3d97271d32629602875c0">&#9670;&#160;</a></span>turnOff()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SevenSegDisplays::turnOff </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Turns the display module off. <br  />
+ </p>
+<p>The display module will be cleared and will keep that status until a <a class="el" href="#aa9282f49d9d276277ef2c14f2589501b" title="Turns the display module on.">turnOn()</a>, or <a class="el" href="#aea69f9227705bc60a9fb319780851306" title="Turns the display module on.">turnOn(const uint8_t &amp;)</a> is invoked. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_displays_a1749aad8e3f3d97271d32629602875c0_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_a1749aad8e3f3d97271d32629602875c0_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_displays_a1749aad8e3f3d97271d32629602875c0_cgraph" id="aclass_seven_seg_displays_a1749aad8e3f3d97271d32629602875c0_cgraph">
+<area shape="rect" title="Turns the display module off." alt="" coords="5,5,185,32"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a086ccd4d4966fa28a51d6b8f250b6c20" title="Turns the display module off." alt="" coords="233,5,408,32"/>
+<area shape="poly" title=" " alt="" coords="185,16,217,16,217,21,185,21"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,..." alt="" coords="456,5,672,32"/>
+<area shape="poly" title=" " alt="" coords="408,16,440,16,440,21,408,21"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aa9282f49d9d276277ef2c14f2589501b" name="aa9282f49d9d276277ef2c14f2589501b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9282f49d9d276277ef2c14f2589501b">&#9670;&#160;</a></span>turnOn() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SevenSegDisplays::turnOn </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Turns the display module on. <br  />
+ </p>
+<p>The display module will be turned on and it's content displayed, and will keep that status until a <a class="el" href="#a1749aad8e3f3d97271d32629602875c0" title="Turns the display module off.">turnOff()</a> is invoked. <br  />
+ </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_displays_aa9282f49d9d276277ef2c14f2589501b_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_aa9282f49d9d276277ef2c14f2589501b_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_displays_aa9282f49d9d276277ef2c14f2589501b_cgraph" id="aclass_seven_seg_displays_aa9282f49d9d276277ef2c14f2589501b_cgraph">
+<area shape="rect" title="Turns the display module on." alt="" coords="5,5,185,32"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on." alt="" coords="233,5,408,32"/>
+<area shape="poly" title=" " alt="" coords="185,16,217,16,217,21,185,21"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,..." alt="" coords="456,5,672,32"/>
+<area shape="poly" title=" " alt="" coords="408,16,440,16,440,21,408,21"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aea69f9227705bc60a9fb319780851306" name="aea69f9227705bc60a9fb319780851306"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea69f9227705bc60a9fb319780851306">&#9670;&#160;</a></span>turnOn() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SevenSegDisplays::turnOn </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>newBrghtnssLvl</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Turns the display module on. <br  />
+ </p>
+<p>The display module will be turned on, it's brightness level set to the requested level, it's content displayed, and will keep that status until a <a class="el" href="#a1749aad8e3f3d97271d32629602875c0" title="Turns the display module off.">turnOff()</a> is invoked.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newBrghtnssLvl</td><td>The new brightness level for the display. See <a class="el" href="#a2574a617f1d317b3abe3806c4608fd5b" title="Set the brightness level for the display.">setBrghtnssLvl(const uint8_t &amp;)</a> for details </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_displays_aea69f9227705bc60a9fb319780851306_cgraph.png" border="0" usemap="#aclass_seven_seg_displays_aea69f9227705bc60a9fb319780851306_cgraph" alt=""/></div>
+<map name="aclass_seven_seg_displays_aea69f9227705bc60a9fb319780851306_cgraph" id="aclass_seven_seg_displays_aea69f9227705bc60a9fb319780851306_cgraph">
+<area shape="rect" title="Turns the display module on." alt="" coords="5,5,185,32"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on." alt="" coords="233,5,408,32"/>
+<area shape="poly" title=" " alt="" coords="185,16,217,16,217,21,185,21"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,..." alt="" coords="456,5,672,32"/>
+<area shape="poly" title=" " alt="" coords="408,16,440,16,440,21,408,21"/>
+</map>
+</div>
+
 </div>
 </div>
 <a id="ae00a0275a3fa0c1858e475d3e2f1272d" name="ae00a0275a3fa0c1858e475d3e2f1272d"></a>
