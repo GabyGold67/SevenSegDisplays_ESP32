@@ -1,5 +1,5 @@
 <map id="SevenSegDynDummy::end" name="SevenSegDynDummy::end">
 <area shape="rect" id="Node000001" title="Stops the active display updating." alt="" coords="213,13,393,40"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_dyn_dummy.html#a2d54447341e43fa346a42ee50121c078" title="Class destructor" alt="" coords="5,5,165,48"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_dyn_dummy.html#a2d54447341e43fa346a42ee50121c078" title="Class destructor." alt="" coords="5,5,165,48"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="197,29,165,29,165,24,197,24"/>
 </map>

@@ -266,7 +266,6 @@ public:
     * 
     * @note Turning the display Off is not the same as clearing the display -see clear() method- as clearing the display implies changing the display data buffer content to fill it with spaces, while turning it off implies keeping the display data buffer updated, while showing the display leds turned off. Some of the display modules managed by display controllers have the hability to turn off the leds display while keeping it's buffer contents unmodified. So turning On/Off those displays will have the effect of holding the data displayed and even receiving and filling their buffer with updated data while keeping their display with no leds turned on.  
     * 
-    * @todo For the seven segment displays without controller components to implement On and Off commands, the class will provide a propietary solution to achieve similar features. While there are not implemented the turnOff(), turnOn() and turnOn(const uint8_t &) will be ignored and will produce no effect in the object behavior. 
     */
     virtual void turnOff();
    /**

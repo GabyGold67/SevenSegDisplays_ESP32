@@ -1,11 +1,9 @@
 <map id="SevenSegDynDummy::begin" name="SevenSegDynDummy::begin">
-<area shape="rect" id="Node000001" title="Sets up the required resources for the &quot;dummy hardware display&quot; to work." alt="" coords="5,31,196,57"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_dynamic.html#a1184cb8662e12921f635c13b19a9df7b" title="Sets up the hardware display to work." alt="" coords="257,5,429,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,31,241,27,241,32,196,37"/>
-<area shape="rect" id="Node000003" href="$class_seven_seg_dyn_dummy.html#ae53f55e39f5181cea72b63c87f0b6182" title="Turns the display module on." alt="" coords="244,56,442,83"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="196,51,228,55,228,60,196,57"/>
-<area shape="rect" id="Node000004" href="$class_seven_seg_disp_hw.html#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on." alt="" coords="490,56,665,83"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="443,67,474,67,474,72,443,72"/>
-<area shape="rect" id="Node000005" href="$class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,..." alt="" coords="713,56,930,83"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="666,67,698,67,698,72,666,72"/>
+<area shape="rect" id="Node000001" title="Sets up the required resources for the &quot;dummy hardware display&quot; to work." alt="" coords="5,5,196,32"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_dyn_dummy.html#ae53f55e39f5181cea72b63c87f0b6182" title="Turns the display module on." alt="" coords="244,5,442,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,16,228,16,228,21,196,21"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_disp_hw.html#a8c72695666e9611e0c3dc2583df382af" title="Turns the display module on." alt="" coords="490,5,665,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="443,16,474,16,474,21,443,21"/>
+<area shape="rect" id="Node000004" href="$class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,..." alt="" coords="713,5,930,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="666,16,698,16,698,21,666,21"/>
 </map>

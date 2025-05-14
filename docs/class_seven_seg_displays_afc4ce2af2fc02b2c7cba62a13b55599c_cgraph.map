@@ -1,6 +1,6 @@
 <map id="SevenSegDisplays::wait" name="SevenSegDisplays::wait">
 <area shape="rect" id="Node000001" title="Makes the display enter the &quot;Waiting mode&quot; with a specific wait rate." alt="" coords="5,5,170,32"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;" alt="" coords="218,5,382,32"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;." alt="" coords="218,5,382,32"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,16,202,16,202,21,170,21"/>
 <area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on." alt="" coords="430,5,613,32"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="382,16,414,16,414,21,382,21"/>

@@ -1,7 +1,5 @@
 <map id="SevenSegTM1637::SevenSegTM1637" name="SevenSegTM1637::SevenSegTM1637">
 <area shape="rect" id="Node000001" title="Class constructor." alt="" coords="5,5,202,48"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_t_m163_x.html#ad7ac775f2dce63087d3e4548a36e874c" title="Turns On the display to be ready to receive data." alt="" coords="250,13,419,40"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_t_m163_x.html#a6f511a29dcacfa8be9d2a8778dc2d05d" title="Default class constructor." alt="" coords="250,5,448,48"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="202,24,234,24,234,29,202,29"/>
-<area shape="rect" id="Node000003" href="$class_seven_seg_t_m163_x.html#a0469f1b57c14141db8a290e8ce7bb35a" title="Turns the display module on." alt="" coords="467,13,644,40"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="420,24,452,24,452,29,420,29"/>
 </map>
