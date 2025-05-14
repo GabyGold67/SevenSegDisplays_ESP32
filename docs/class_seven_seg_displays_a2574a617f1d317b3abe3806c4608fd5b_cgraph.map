@@ -1,15 +1,11 @@
 <map id="SevenSegDisplays::setBrghtnssLvl" name="SevenSegDisplays::setBrghtnssLvl">
-<area shape="rect" id="Node000001" title="Set the brightness level for the display." alt="" coords="5,76,233,103"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#a5168f4d1cbdb8faab2b87b1689c182b2" title="Returns the logic value indicating if the display is dimmable." alt="" coords="301,39,484,81"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="233,74,285,69,286,74,233,80"/>
-<area shape="rect" id="Node000007" href="$class_seven_seg_disp_hw.html#a25007a1b33093e4c055446010e254d63" title="Sets the brightness level for the display." alt="" coords="281,105,504,132"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="233,99,265,102,265,108,233,104"/>
-<area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#ab34dd4e41682c8849c83b15332cbfa63" title="Returns the maximum brightness value setting for the display." alt="" coords="552,5,735,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="484,45,536,38,537,44,484,51"/>
-<area shape="rect" id="Node000005" href="$class_seven_seg_displays.html#a0b5758c3070e82138ac66bb0901cf5d3" title="Returns the minimum brightness value setting for the display." alt="" coords="554,72,733,115"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="484,69,539,77,538,82,484,75"/>
-<area shape="rect" id="Node000004" href="$class_seven_seg_disp_hw.html#a75b0eb720bddb4e467814e41dd958575" title="Returns the maximum display brightness level setting allowed for the display." alt="" coords="783,5,990,48"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="736,24,768,24,768,29,736,29"/>
-<area shape="rect" id="Node000006" href="$class_seven_seg_disp_hw.html#aa098a72fb84ffbec783e0c38f130f2c3" title="Returns the minimum display brightness level setting for the display." alt="" coords="783,72,990,115"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="734,91,768,91,768,96,734,96"/>
+<area shape="rect" id="Node000001" title="Set the brightness level for the display." alt="" coords="5,47,233,73"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_displays.html#a5168f4d1cbdb8faab2b87b1689c182b2" title="Returns the logic value indicating if the display is dimmable." alt="" coords="281,39,463,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="233,57,265,57,265,63,233,63"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#ab34dd4e41682c8849c83b15332cbfa63" title="Returns the maximum brightness value setting for the display." alt="" coords="511,5,694,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="463,44,495,39,496,45,464,49"/>
+<area shape="rect" id="Node000005" href="$class_seven_seg_displays.html#a0b5758c3070e82138ac66bb0901cf5d3" title="Returns the minimum brightness value setting for the display." alt="" coords="513,72,692,115"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="464,71,498,76,497,81,463,76"/>
+<area shape="rect" id="Node000004" href="$class_seven_seg_disp_hw.html#a75b0eb720bddb4e467814e41dd958575" title="Returns the maximum display brightness level setting allowed for the display." alt="" coords="742,5,949,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="695,24,727,24,727,29,695,29"/>
 </map>

@@ -4,7 +4,7 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="724,193,622,138,596,127,599,122,625,134,727,188"/>
 <area shape="rect" id="Node000003" href="$class_seven_seg_displays.html#ad9d15e373d8a27061ca32e5112379730" title="Displays a text string." alt="" coords="456,148,622,175"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="685,197,601,178,602,173,686,192"/>
-<area shape="rect" id="Node000009" href="$class_seven_seg_displays.html#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;" alt="" coords="457,224,621,251"/>
+<area shape="rect" id="Node000009" href="$class_seven_seg_displays.html#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display enter the &quot;Waiting mode&quot;." alt="" coords="457,224,621,251"/>
 <area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="656,227,622,231,621,225,656,221"/>
 <area shape="rect" id="Node000011" href="$class_seven_seg_displays.html#ab1c77aee430974cc460d259e600668ba" title="Prints one character to the display, at a designated position (digit or port), without affecting the ..." alt="" coords="455,275,623,301"/>
 <area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="712,234,624,265,588,277,587,272,622,260,710,229"/>
