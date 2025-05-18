@@ -23,7 +23,7 @@
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
  */
-#include "sevenSegDisplays.h"
+#include <SevenSegDisplays.h>
 
 uint8_t SevenSegDisplays::_displaysCount = 0;
 uint16_t SevenSegDisplays::_dspLastSerialNum = 0;

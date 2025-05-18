@@ -268,7 +268,7 @@ bool SevenSegDynHC595::begin(uint32_t updtLps){
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
-   _drvrShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, 2, nullptr);
+   _drvrShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, 2);
    _drvrShftRegSndPtr = new uint8_t[2];
 
    _firstRefreshed = 0;   
@@ -496,7 +496,7 @@ SevenSegStatHC595::SevenSegStatHC595(uint8_t *ioPins, uint8_t dspDigits, bool co
 SevenSegStatHC595::~SevenSegStatHC595() {}
 
 bool SevenSegStatHC595::begin(uint32_t updtLps){
-   _dsplyHwShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, _dspDigitsQty, nullptr);
+   _dsplyHwShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, _dspDigitsQty);
    _lclDspBuffPtr = new uint8_t[_dspDigitsQty];
 
    return true;
