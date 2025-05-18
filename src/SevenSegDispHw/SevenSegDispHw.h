@@ -38,10 +38,10 @@
   * If I promised you the moon and the stars, would you believe it?  
  *******************************************************************************
  */
-#ifndef sevenSegDispHw_ESP32_H
-#define sevenSegDispHw_ESP32_H
+#ifndef _SEVENSEGDISPHW_H_
+#define _SEVENSEGDISPHW_H_
 
-#include "Arduino.h"
+#include <Arduino.h>
 #include <stdint.h>
 #include <ShiftRegGPIOXpander_ESP32.h>
 

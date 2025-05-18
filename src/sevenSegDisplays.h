@@ -48,8 +48,8 @@
 //FFDR For Future Development Reminder!!
 //FTPO For Testing Purposes Only code!!
 
-#ifndef _SevenSegDisplays_ESP32_H_
-#define _SevenSegDisplays_ESP32_H_
+#ifndef _SEVENSEGDISPLAYS_H_
+#define _SEVENSEGDISPLAYS_H_
 
 #include <Arduino.h>
 #include <stdint.h>
