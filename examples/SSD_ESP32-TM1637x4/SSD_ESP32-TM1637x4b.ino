@@ -16,7 +16,7 @@
  * Github <https://github.com/GabyGold67>
  *
  * @date First release: 15/05/2023  
- *       Last update:   13/04/2025 16:50 GMT+0200 DST  
+ *       Last update:   04/06/2025 08:20 GMT+0200 DST  
  ******************************************************************************
   * @warning **Use of this library is under your own responsibility**
   * 
@@ -99,10 +99,6 @@ void mainCtrlTsk(void *pvParameters){
    SevenSegDispHw* myLedDispPtr {new SevenSegTM1637(myDispIOPins, 4, false)};
    myLedDispPtr -> setDigitsOrder(theNewOrder);
    SevenSegDisplays myLedDisp(myLedDispPtr);
-
-   uint8_t dspMaxDig = myLedDisp.getDspUndrlHwPtr()->getctrllrMaxDgts();
-   Serial.print("Max. digits qty.: ");
-   Serial.println(dspMaxDig);
 
    myLedDisp.begin();
    Serial.println("Service Started");
@@ -425,12 +421,8 @@ void mainCtrlTsk(void *pvParameters){
       }
       
       {         
-         // int8_t minBrgthnss {(int8_t)myLedDisp.getDspUndrlHwPtr()->getBrghtnssMinLvl()};
-         // int8_t maxBrgthnss {(int8_t)myLedDisp.getDspUndrlHwPtr()->getBrghtnssMaxLvl()};
-         // int8_t curBrgthnss {(int8_t)myLedDisp.getDspUndrlHwPtr()->getBrghtnssLvl()};
-
          int8_t minBrgthnss {(int8_t)myLedDisp.getMinBrghtnssLvl()};
-         int8_t maxBrgthnss {(int8_t)myLedDisp.getMinBrghtnssLvl()};
+         int8_t maxBrgthnss {(int8_t)myLedDisp.getMaxBrghtnssLvl()};
          int8_t curBrgthnss {(int8_t)myLedDisp.getCurBrghtnssLvl()};
 
          Serial.print("Minimum brightness level: ");

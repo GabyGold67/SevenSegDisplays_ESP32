@@ -739,14 +739,14 @@ void SevenSegTM163X::_txWrByte(uint8_t data){   // void I2CWrByte (unsigned char
 
 void SevenSegTM163X::_updLclBffrCntnt(){
    uint8_t dspBuffPtrOffset{0};
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+   // portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
-   taskENTER_CRITICAL(&mux);
+   // taskENTER_CRITICAL(&mux);
    for (int i {0}; i < _dspDigitsQty; i++){
       dspBuffPtrOffset = *(_digitPosPtr + i);
       *(_lclDspBuffPtr + i) = *(_dspBuffPtr + dspBuffPtrOffset);
    }
-   taskEXIT_CRITICAL(&mux);
+   // taskEXIT_CRITICAL(&mux);
 
    return;
 }

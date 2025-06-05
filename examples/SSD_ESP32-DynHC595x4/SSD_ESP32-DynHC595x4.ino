@@ -129,10 +129,6 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
 
    SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
 
-   uint8_t dspMaxDig = myLedDisp.getDspUndrlHwPtr()->getctrllrMaxDgts();
-   Serial.print("Max. digits qty.: ");
-   Serial.println(dspMaxDig);
-
    for(;;){
       {
          myLedDisp.getDspUndrlHwPtr()->begin();

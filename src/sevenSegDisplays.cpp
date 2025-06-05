@@ -91,8 +91,14 @@ bool SevenSegDisplays::begin(uint32_t updtLps){
 
    if(!_begun){
       result = _dspUndrlHwPtr->begin(updtLps);
-      if(result)
+      if(result){
          _begun = true;   
+         _SSDAuxBffMutex = xSemaphoreCreateMutex();
+         _SSDBffrMutex = xSemaphoreCreateMutex();
+         _SSDBlnkSttngMutex = xSemaphoreCreateMutex();
+         _SSDObjLstMutex = xSemaphoreCreateMutex();
+         _SSDWaitSttngMutex = xSemaphoreCreateMutex();
+      }       
    }
    else
       result = true;
@@ -100,15 +106,14 @@ bool SevenSegDisplays::begin(uint32_t updtLps){
    return result;
 }
 
-bool SevenSegDisplays::blink(){
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+bool SevenSegDisplays::_blink(){
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
    if(_isWaiting)   // If the display is waiting stop, as the waiting and the blinking options are mutually exclusive, as both simultaneous states has no logical use!
-      noWait();
+      noWait();   //FFDR develop and modify to _noWait()
    if (!_isBlinking){
-      taskENTER_CRITICAL(&mux);         
+
       if (!_blinkTmrHndl){
          String blnkTmrName{""}; // Create a valid unique Name for identifying the timer created
          String dspSerialNumStr {"000" + String(_dspSerialNbr)};
@@ -125,7 +130,6 @@ bool SevenSegDisplays::blink(){
       }
       if(_blinkTmrHndl){
          if(!xTimerIsTimerActive(_blinkTmrHndl)){ // The timer was created, but it wasn't running. Start the timer  
-            Serial.println("The blink() method is starting the blink timer!!");
             tmrModResult = xTimerStart(_blinkTmrHndl, portMAX_DELAY);
             if (tmrModResult == pdPASS){
                result = true;
@@ -149,7 +153,65 @@ bool SevenSegDisplays::blink(){
             result = false;
          }
       }
-      taskEXIT_CRITICAL(&mux);
+   }
+
+   return result;
+}
+
+
+bool SevenSegDisplays::blink(){
+   bool result {false};
+   BaseType_t tmrModResult {pdFAIL};
+
+   if(_isWaiting)   // If the display is waiting stop, as the waiting and the blinking options are mutually exclusive, as both simultaneous states has no logical use!
+      noWait();
+   if (!_isBlinking){
+      if(xSemaphoreTake(_SSDAuxBffMutex, portMAX_DELAY) == pdTRUE){
+         if(xSemaphoreTake(_SSDBlnkSttngMutex, portMAX_DELAY) == pdTRUE){
+
+            if (!_blinkTmrHndl){
+               String blnkTmrName{""}; // Create a valid unique Name for identifying the timer created
+               String dspSerialNumStr {"000" + String(_dspSerialNbr)};
+               dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length());
+               blnkTmrName = "Disp" + dspSerialNumStr + "blnk_tmr";
+               
+               _blinkTmrHndl = xTimerCreate(
+                  blnkTmrName.c_str(),  // Timer name
+                  pdMS_TO_TICKS(_blinkRatesGCD),
+                  pdTRUE,  // Autoreload
+                  _dspInstance,   // TimerID, data to be passed to the callback function: a pointer to this display  
+                  tmrCbBlink  // Callback function
+               );
+            }
+            if(_blinkTmrHndl){
+               if(!xTimerIsTimerActive(_blinkTmrHndl)){ // The timer was created, but it wasn't running. Start the timer  
+                  tmrModResult = xTimerStart(_blinkTmrHndl, portMAX_DELAY);
+                  if (tmrModResult == pdPASS){
+                     result = true;
+                  }
+               }
+               else{
+                  result = true;
+               }
+            }
+
+            if(result){
+               if(_dspAuxBuffPtr == nullptr){
+                  _dspAuxBuffPtr = new uint8_t[_dspDigitsQty];
+               }
+               if(_dspAuxBuffPtr){
+                  _blinkShowOn = false;
+                  _isBlinking = true;
+                  _blinkTimer = 0;  //Start the blinking pace timer...      
+               }
+               else{
+                  result = false;
+               }
+            }
+            xSemaphoreGive(_SSDAuxBffMutex);
+            xSemaphoreGive(_SSDBlnkSttngMutex);
+         }
+      }
    }
 
    return result;
@@ -199,27 +261,30 @@ uint32_t SevenSegDisplays::_blinkTmrGCD(uint32_t blnkOnTm, uint32_t blnkOffTm){
 }
 
 void SevenSegDisplays::clear(){
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool mainBuffChng{false};
 
    if(!_isWaiting){ // If in waiting condition clear() is not executed
-      taskENTER_CRITICAL(&mux);
-      if(_isBlinking){         
-         memset(_dspAuxBuffPtr,_space, _dspDigitsQty);   // Fast single command memory filling with byte
-      }
-      for (int i{0}; i < _dspDigitsQty; i++){   // This mechanism provided to avoid signaling buffer change if it was already blank. blank() method not used to avoid the call time and resources
-         if(*(_dspBuffPtr + i) != _space){
-            memset(_dspBuffPtr,_space, _dspDigitsQty);
-            mainBuffChng = true;
-            break;
+      if(xSemaphoreTake(_SSDAuxBffMutex, portMAX_DELAY) == pdTRUE){
+         if(xSemaphoreTake(_SSDBffrMutex, portMAX_DELAY) == pdTRUE){
+            if(_isBlinking){         
+               memset(_dspAuxBuffPtr,_space, _dspDigitsQty);   // Fast single command memory filling with byte
+            }
+            xSemaphoreGive(_SSDAuxBffMutex);
+            for (int i{0}; i < _dspDigitsQty; i++){   // This mechanism provided to avoid signaling buffer change if it was already blank. blank() method not used to avoid the call time and resources
+               if(*(_dspBuffPtr + i) != _space){
+                  memset(_dspBuffPtr,_space, _dspDigitsQty);
+                  mainBuffChng = true;
+                  break;
+               }
+            }
+         
+            if(mainBuffChng)
+               _setDspBuffChng(); // Signal for the hardware display update mechanism
+            xSemaphoreGive(_SSDBffrMutex);
          }
       }
-   
-      if(mainBuffChng)
-         _setDspBuffChng(); // Signal for the hardware display update mechanism
-      taskEXIT_CRITICAL(&mux);
    }
-   
+
    return;
 }
 
@@ -359,7 +424,7 @@ uint8_t SevenSegDisplays::getDspCount(){
 
 bool SevenSegDisplays::getDspIsDmmbl(){
 
-   return !(getMinBrghtnssLvl()==getMaxBrghtnssLvl());
+   return !(getMinBrghtnssLvl() == getMaxBrghtnssLvl());
 }
 
 bool SevenSegDisplays::getIsOn(){
@@ -430,13 +495,11 @@ bool SevenSegDisplays::isWaiting(){
    return _isWaiting;
 }
 
-bool SevenSegDisplays::noBlink(){
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
-   bool result {false};
+bool SevenSegDisplays::_noBlink(){
    BaseType_t tmrModResult {pdFAIL};
+   bool result {false};
 
    if(_isBlinking){
-      taskENTER_CRITICAL(&mux);
       _isBlinking = false;
 
       // tmrModResult = xTimerStop(_blinkTmrHndl, portMAX_DELAY); //FFDR The method fails when stopping the timer as it retrieves the buffer not correctly modified for a write while blinkin. Check for the auxiliary buffer being modified if a write is executed while blinking!!!
@@ -448,20 +511,46 @@ bool SevenSegDisplays::noBlink(){
       _blinkTimer = 0;
       _blinkShowOn = true;
       result = true;
-      taskEXIT_CRITICAL(&mux);
-      }
-   
+   }
 
    return result;
 }
 
-bool SevenSegDisplays::noWait(){
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+bool SevenSegDisplays::noBlink(){
+   BaseType_t tmrModResult {pdFAIL};
+   bool result {false};
+
+   if(xSemaphoreTake(_SSDAuxBffMutex, portMAX_DELAY) == pdTRUE){
+      if(xSemaphoreTake(_SSDBffrMutex, portMAX_DELAY) == pdTRUE){
+         if(xSemaphoreTake(_SSDBlnkSttngMutex, portMAX_DELAY) == pdTRUE){
+            if(_isBlinking){
+               _isBlinking = false;
+
+               // tmrModResult = xTimerStop(_blinkTmrHndl, portMAX_DELAY); //FFDR The method fails when stopping the timer as it retrieves the buffer not correctly modified for a write while blinkin. Check for the auxiliary buffer being modified if a write is executed while blinking!!!
+               // if (tmrModResult == pdPASS){
+               //    result = true;
+               // }
+
+               _restoreDspBuff();   // This method calls _setDspBuffChng() if it suits
+               xSemaphoreGive(_SSDAuxBffMutex);
+               xSemaphoreGive(_SSDBffrMutex);
+               _blinkTimer = 0;
+               _blinkShowOn = true;
+               result = true;
+            }
+            xSemaphoreGive(_SSDBlnkSttngMutex);
+         }
+      }
+   }   
+
+   return result;
+}
+
+bool SevenSegDisplays::_noWait(){
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
    if (_isWaiting){
-      taskENTER_CRITICAL(&mux);
       if(_waitTmrHndl){   //if the timer still exists and is running, stop and delete
          tmrModResult = xTimerStop(_waitTmrHndl, portMAX_DELAY);
       }
@@ -471,7 +560,36 @@ bool SevenSegDisplays::noWait(){
          _isWaiting = false;
          result = true;
       }
-      taskEXIT_CRITICAL(&mux);
+   }
+   else
+      result = true;
+
+   return result;
+}
+
+bool SevenSegDisplays::noWait(){
+   bool result {false};
+   BaseType_t tmrModResult {pdFAIL};
+
+   if (_isWaiting){
+      if(xSemaphoreTake(_SSDAuxBffMutex, portMAX_DELAY) == pdTRUE){
+         if(xSemaphoreTake(_SSDBffrMutex, portMAX_DELAY) == pdTRUE){
+            if(xSemaphoreTake(_SSDWaitSttngMutex, portMAX_DELAY) == pdTRUE){
+               if(_waitTmrHndl){   //if the timer still exists and is running, stop and delete
+                  tmrModResult = xTimerStop(_waitTmrHndl, portMAX_DELAY);
+               }
+               if(tmrModResult == pdPASS){
+                  _restoreDspBuff();   // This method calls _setDspBuffChng() if it suits
+                  _waitTimer = 0;
+                  _isWaiting = false;
+                  result = true;
+               }
+               xSemaphoreGive(_SSDAuxBffMutex);
+               xSemaphoreGive(_SSDBffrMutex);
+               xSemaphoreGive(_SSDWaitSttngMutex);
+            }
+         }
+      }
    }
    else
       result = true;
@@ -488,7 +606,6 @@ void SevenSegDisplays::_ntfyToHwBuffChng(){
 void SevenSegDisplays::_popSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDisplays* ssdToPop){
 	int arrSize{0};
 	int auxPtr{0};
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 	bool ssdFnd{false};
 	SevenSegDisplays** tmpArrPtr{nullptr};
 
@@ -499,29 +616,30 @@ void SevenSegDisplays::_popSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDisp
 		++arrSize;
 	}
 	if(ssdFnd){
-      taskENTER_CRITICAL(&mux);
-		if(arrSize > 1){
-			tmpArrPtr = new SevenSegDisplays* [arrSize];
-			arrSize = 0;
-			while(*(ssdInstncObjLst + arrSize) != nullptr){
-				if(*(ssdInstncObjLst + arrSize) == ssdToPop){
-					++arrSize;
-					if(*(ssdInstncObjLst + arrSize) == nullptr)
-						break;
-				}
-				*(tmpArrPtr + auxPtr) = *(ssdInstncObjLst + arrSize);
-				++arrSize;
-				++auxPtr;
-			}
-			*(tmpArrPtr + auxPtr) = nullptr;
-			delete [] ssdInstncObjLst;
-			ssdInstncObjLst = tmpArrPtr;
-		}
-		else{
-			delete [] ssdInstncObjLst;
-			ssdInstncObjLst = nullptr;
-		}
-      taskEXIT_CRITICAL(&mux);
+      if(xSemaphoreTake(_SSDObjLstMutex, portMAX_DELAY) == pdTRUE){
+         if(arrSize > 1){
+            tmpArrPtr = new SevenSegDisplays* [arrSize];
+            arrSize = 0;
+            while(*(ssdInstncObjLst + arrSize) != nullptr){
+               if(*(ssdInstncObjLst + arrSize) == ssdToPop){
+                  ++arrSize;
+                  if(*(ssdInstncObjLst + arrSize) == nullptr)
+                     break;
+               }
+               *(tmpArrPtr + auxPtr) = *(ssdInstncObjLst + arrSize);
+               ++arrSize;
+               ++auxPtr;
+            }
+            *(tmpArrPtr + auxPtr) = nullptr;
+            delete [] ssdInstncObjLst;
+            ssdInstncObjLst = tmpArrPtr;
+         }
+         else{
+            delete [] ssdInstncObjLst;
+            ssdInstncObjLst = nullptr;
+         }
+         xSemaphoreGive(_SSDObjLstMutex);
+      }
 	}
 
    return;
@@ -529,36 +647,36 @@ void SevenSegDisplays::_popSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDisp
 
 void SevenSegDisplays::_pushSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDisplays* ssdToPush){
 	int arrSize{0};
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 	bool ssdFnd{false};
 	SevenSegDisplays** tmpArrPtr{nullptr};
 
-   taskENTER_CRITICAL(&mux);
-   if(ssdInstncObjLst == nullptr){	// There are no "Seven Segment displays instances list", so create it			
-		ssdInstncObjLst = new SevenSegDisplays* [1];
-		*ssdInstncObjLst = nullptr;
-	}
+   if(xSemaphoreTake(_SSDObjLstMutex, portMAX_DELAY) == pdTRUE){
+      if(ssdInstncObjLst == nullptr){	// There are no "Seven Segment displays instances list", so create it			
+         ssdInstncObjLst = new SevenSegDisplays* [1];
+         *ssdInstncObjLst = nullptr;
+      }
 
-	while(*(ssdInstncObjLst + arrSize) != nullptr){
-		if(*(ssdInstncObjLst + arrSize) == ssdToPush){
-			ssdFnd = true;
-			break;
-		}
-		else{
-			++arrSize;
-		}
-	}
-	if(!ssdFnd){
-		tmpArrPtr = new SevenSegDisplays* [arrSize + 2];
-		for (int i{0}; i < arrSize; ++i){
-			*(tmpArrPtr + i) = *(ssdInstncObjLst + i);
-		}
-		*(tmpArrPtr + (arrSize + 0)) = ssdToPush;
-		*(tmpArrPtr + (arrSize + 1)) = nullptr;
-		delete [] ssdInstncObjLst;
-		ssdInstncObjLst = tmpArrPtr;
-	}
-   taskEXIT_CRITICAL(&mux);
+      while(*(ssdInstncObjLst + arrSize) != nullptr){
+         if(*(ssdInstncObjLst + arrSize) == ssdToPush){
+            ssdFnd = true;
+            break;
+         }
+         else{
+            ++arrSize;
+         }
+      }
+      if(!ssdFnd){
+         tmpArrPtr = new SevenSegDisplays* [arrSize + 2];
+         for (int i{0}; i < arrSize; ++i){
+            *(tmpArrPtr + i) = *(ssdInstncObjLst + i);
+         }
+         *(tmpArrPtr + (arrSize + 0)) = ssdToPush;
+         *(tmpArrPtr + (arrSize + 1)) = nullptr;
+         delete [] ssdInstncObjLst;
+         ssdInstncObjLst = tmpArrPtr;
+      }
+      xSemaphoreGive(_SSDObjLstMutex);
+   }
 
    return;
 }
@@ -606,30 +724,42 @@ bool SevenSegDisplays::print(String text){
       displayable = false;
    }
    if (displayable) {
-      taskENTER_CRITICAL(&mux);
-      if(_isWaiting)
-         noWait();
-      if(printOnBlink)
-         noBlink();
-      for (uint8_t i{0}; i < _dspDigitsQty; ++i){
-         if(_dspUndrlHwCommAnode){
-            if(*(_dspBuffPtr + i) != temp7SegData[i] & tempDpData[i]){
-               *(_dspBuffPtr + i) = temp7SegData[i] & tempDpData[i];
-               dspCntnChng = true;   
-            }             
+      if(xSemaphoreTake(_SSDAuxBffMutex, portMAX_DELAY) == pdTRUE){
+         if(xSemaphoreTake(_SSDBffrMutex, portMAX_DELAY) == pdTRUE){
+            if(xSemaphoreTake(_SSDBlnkSttngMutex, portMAX_DELAY) == pdTRUE){
+               if(xSemaphoreTake(_SSDWaitSttngMutex, portMAX_DELAY) == pdTRUE){
+
+                  if(_isWaiting)
+                     _noWait();
+                  if(printOnBlink)
+                     _noBlink();
+                  for (uint8_t i{0}; i < _dspDigitsQty; ++i){
+                     if(_dspUndrlHwCommAnode){
+                        if(*(_dspBuffPtr + i) != temp7SegData[i] & tempDpData[i]){
+                           *(_dspBuffPtr + i) = temp7SegData[i] & tempDpData[i];
+                           dspCntnChng = true;   
+                        }             
+                     }
+                     else{
+                        if(*(_dspBuffPtr + i) != temp7SegData[i] | tempDpData[i]){
+                           *(_dspBuffPtr + i) = temp7SegData[i] | tempDpData[i];
+                           dspCntnChng = true;   
+                        }             
+                     }
+                  }
+                  if(printOnBlink)
+                     _blink();
+                  if(dspCntnChng)
+                     _setDspBuffChng();
+
+                  xSemaphoreGive(_SSDWaitSttngMutex);
+               }
+               xSemaphoreGive(_SSDBlnkSttngMutex);
+            }
+            xSemaphoreGive(_SSDBffrMutex);
          }
-         else{
-            if(*(_dspBuffPtr + i) != temp7SegData[i] | tempDpData[i]){
-               *(_dspBuffPtr + i) = temp7SegData[i] | tempDpData[i];
-               dspCntnChng = true;   
-            }             
-         }
+         xSemaphoreGive(_SSDAuxBffMutex);
       }
-      if(printOnBlink)
-         blink();
-      if(dspCntnChng)
-         _setDspBuffChng();
-      taskEXIT_CRITICAL(&mux);
    }
 
    return displayable;
@@ -708,35 +838,26 @@ bool SevenSegDisplays::print(const double &value, const unsigned int &decPlaces,
 }
 
 void SevenSegDisplays::resetBlinkMask(){
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
-   taskENTER_CRITICAL(&mux);
-   for (uint8_t i{0}; i < _dspDigitsQty; i++)
-      *(_blinkMaskPtr + i) = true;
-      taskEXIT_CRITICAL(&mux);
+   if(xSemaphoreTake(_SSDBlnkMskMutex,portMAX_DELAY) == pdTRUE)
+      for (uint8_t i{0}; i < _dspDigitsQty; i++)
+         *(_blinkMaskPtr + i) = true;
+   xSemaphoreGive(_SSDBlnkMskMutex);
 
    return;
 }
 
-void SevenSegDisplays::_restoreDspBuff(){
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
-
-   taskENTER_CRITICAL(&mux);
+void SevenSegDisplays::_restoreDspBuff(){ //!< Must ALWAYS be invoked from a _SSDAuxBffMutex and _SSDBffrMutex protected caller
    if(memcmp(_dspBuffPtr, _dspAuxBuffPtr, _dspDigitsQty) != 0){
       memcpy(_dspBuffPtr, _dspAuxBuffPtr, _dspDigitsQty);   // destPtr, srcPtr, size
       _setDspBuffChng();
    }
-   taskEXIT_CRITICAL(&mux);
 
    return;
 }
 
-void SevenSegDisplays::_saveDspBuff(){
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
-
-   taskENTER_CRITICAL(&mux);
+void SevenSegDisplays::_saveDspBuff(){ //!< Must ALWAYS be invoked from a _SSDAuxBffMutex and _SSDBffrMutex protected caller
    memcpy(_dspAuxBuffPtr, _dspBuffPtr, _dspDigitsQty);
-   taskEXIT_CRITICAL(&mux);
 
    return;
 }
@@ -774,17 +895,13 @@ void SevenSegDisplays::_setAttrbts(){
 }
 
 void SevenSegDisplays::setBlinkMask(const bool* newBlnkMsk){
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
-
-   taskENTER_CRITICAL(&mux);
-   memcpy(_blinkMaskPtr, newBlnkMsk, _dspDigitsQty);   // destPtr, srcPtr, size
-   taskEXIT_CRITICAL(&mux);
+   if(xSemaphoreTake(_SSDBlnkMskMutex,portMAX_DELAY) == pdTRUE)
+      memcpy(_blinkMaskPtr, newBlnkMsk, _dspDigitsQty);   // destPtr, srcPtr, size
    
    return;
 }
 
 bool SevenSegDisplays::setBlinkRate(const uint32_t &newOnRate, const uint32_t &newOffRate){
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool result {false};
    long unsigned tmpOffRate{newOffRate};
    BaseType_t tmrModResult {pdFAIL};
@@ -792,30 +909,31 @@ bool SevenSegDisplays::setBlinkRate(const uint32_t &newOnRate, const uint32_t &n
    if (tmpOffRate == 0)
       tmpOffRate = newOnRate;
    if ((newOnRate != _blinkOnRate) || (tmpOffRate != _blinkOffRate)) {
-      taskENTER_CRITICAL(&mux);
-      if ((newOnRate >= _minBlinkRate) && (newOnRate <= _maxBlinkRate)) { //The new ON rate is in the valid range
-         if ((tmpOffRate >= _minBlinkRate) && (tmpOffRate <= _maxBlinkRate)) {    //The new OFF rate is in the valid range or is equal to 0 to set a symmetric blink
-            if(_blinkOnRate != newOnRate)
-               _blinkOnRate = newOnRate;
-            if(_blinkOffRate != tmpOffRate)
-               _blinkOffRate = tmpOffRate;
-            if(_blinkOnRate == _blinkOffRate)
-               _blinkRatesGCD = _blinkOnRate;
-            else
-               _blinkRatesGCD = _blinkTmrGCD(_blinkOnRate, _blinkOffRate);
-            result =  true;
+      if(xSemaphoreTake(_SSDBlnkSttngMutex, portMAX_DELAY) == pdTRUE){
+         if ((newOnRate >= _minBlinkRate) && (newOnRate <= _maxBlinkRate)) { //The new ON rate is in the valid range
+            if ((tmpOffRate >= _minBlinkRate) && (tmpOffRate <= _maxBlinkRate)) {    //The new OFF rate is in the valid range or is equal to 0 to set a symmetric blink
+               if(_blinkOnRate != newOnRate)
+                  _blinkOnRate = newOnRate;
+               if(_blinkOffRate != tmpOffRate)
+                  _blinkOffRate = tmpOffRate;
+               if(_blinkOnRate == _blinkOffRate)
+                  _blinkRatesGCD = _blinkOnRate;
+               else
+                  _blinkRatesGCD = _blinkTmrGCD(_blinkOnRate, _blinkOffRate);
+               result =  true;
 
-            if(_isBlinking){ // If it's active and running modify the timer taking care of the blinking               
-               tmrModResult = xTimerChangePeriod(_blinkTmrHndl, 
-                              pdMS_TO_TICKS(_blinkRatesGCD),
-                              portMAX_DELAY
-                              );
-               if(tmrModResult == pdFAIL)
-                  result = false;
+               if(_isBlinking){ // If it's active and running modify the timer taking care of the blinking               
+                  tmrModResult = xTimerChangePeriod(_blinkTmrHndl, 
+                                 pdMS_TO_TICKS(_blinkRatesGCD),
+                                 portMAX_DELAY
+                                 );
+                  if(tmrModResult == pdFAIL)
+                     result = false;
+               }
             }
          }
+         xSemaphoreGive(_SSDBlnkSttngMutex);
       }
-      taskEXIT_CRITICAL(&mux);
    }
    else{
       result = true; //There's no need to change the current values, but as those were valid, they are still valid
@@ -858,25 +976,25 @@ bool SevenSegDisplays::setWaitChar (const char &newChar){
 }
 
 bool SevenSegDisplays::setWaitRate(const uint32_t &newWaitRate){
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
    if(_waitRate != newWaitRate){
       if ((newWaitRate >= _minBlinkRate) && newWaitRate <= _maxBlinkRate) {//if the new waitRate is within the accepted range, set it
-         taskENTER_CRITICAL(&mux);
-         _waitRate = newWaitRate;
-         result =  true;
+         if(xSemaphoreTake(_SSDWaitSttngMutex, portMAX_DELAY) == pdTRUE){
+            _waitRate = newWaitRate;
+            result =  true;
 
-         if(_isWaiting){  // If it's active and running modify the timer taking care of the blinking            
-            tmrModResult = xTimerChangePeriod(_waitTmrHndl, 
-                           pdMS_TO_TICKS(_waitRate),
-                           portMAX_DELAY
-                           );
-            if(tmrModResult == pdFAIL)
-               result =  false;
+            if(_isWaiting){  // If it's active and running modify the timer taking care of the blinking            
+               tmrModResult = xTimerChangePeriod(_waitTmrHndl, 
+                              pdMS_TO_TICKS(_waitRate),
+                              portMAX_DELAY
+                              );
+               if(tmrModResult == pdFAIL)
+                  result =  false;
+            }
+            xSemaphoreGive(_SSDWaitSttngMutex);
          }
-         taskEXIT_CRITICAL(&mux);
       }
    }
    return result;
@@ -982,60 +1100,65 @@ void SevenSegDisplays::_updWaitState(){
 }
 
 bool SevenSegDisplays::wait(){
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
    if (_isBlinking)
       noBlink();
    if(!_isWaiting){   //If the display is waiting the blinking option is blocked out as they are mutually exclusive, as both simultaneous has no logical use!
-      taskENTER_CRITICAL(&mux);
-      if (!_waitTmrHndl){         
-         String waitTmrName{""}; //Create a valid unique Name for identifying the Wait timer created
-         String dspSerialNumStr {"000" + String(_dspSerialNbr)};
-         dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length());
-         waitTmrName = "Disp" + dspSerialNumStr + "wait_tmr";
+      if(xSemaphoreTake(_SSDAuxBffMutex, portMAX_DELAY) == pdTRUE){
+         if(xSemaphoreTake(_SSDBffrMutex, portMAX_DELAY) == pdTRUE){
+            if(xSemaphoreTake(_SSDWaitSttngMutex, portMAX_DELAY) == pdTRUE){
+               if (!_waitTmrHndl){         
+                  String waitTmrName{""}; //Create a valid unique Name for identifying the Wait timer created
+                  String dspSerialNumStr {"000" + String(_dspSerialNbr)};
+                  dspSerialNumStr = dspSerialNumStr.substring(dspSerialNumStr.length() - 3, dspSerialNumStr.length());
+                  waitTmrName = "Disp" + dspSerialNumStr + "wait_tmr";
 
-         _waitTmrHndl = xTimerCreate(
-            waitTmrName.c_str(),  // Timer name
-            pdMS_TO_TICKS(_waitRate),
-            pdTRUE,  // Autoreload
-            _dspInstance,   // TimerID, data to be passed to the callback function
-            tmrCbWait  // Callback function
-         );
-      }
-      if(_waitTmrHndl){   // The timer was created,check it wasn't started. Start the timer            
-         if((!xTimerIsTimerActive(_waitTmrHndl))){  // The timer was created, but it wasn't running. Start the timer  
-            tmrModResult = xTimerStart(_waitTmrHndl, portMAX_DELAY);
-            if (tmrModResult == pdPASS){
-               result = true;
+                  _waitTmrHndl = xTimerCreate(
+                     waitTmrName.c_str(),  // Timer name
+                     pdMS_TO_TICKS(_waitRate),
+                     pdTRUE,  // Autoreload
+                     _dspInstance,   // TimerID, data to be passed to the callback function
+                     tmrCbWait  // Callback function
+                  );
+               }
+               if(_waitTmrHndl){   // The timer was created,check it wasn't started. Start the timer            
+                  if((!xTimerIsTimerActive(_waitTmrHndl))){  // The timer was created, but it wasn't running. Start the timer  
+                     tmrModResult = xTimerStart(_waitTmrHndl, portMAX_DELAY);
+                     if (tmrModResult == pdPASS){
+                        result = true;
+                     }
+                  }
+                  else{
+                     result = true;
+                  }
+               }
+               if(result){
+                  if(_dspAuxBuffPtr == nullptr){
+                     _dspAuxBuffPtr = new uint8_t[_dspDigitsQty];
+                  }
+                  if(_dspAuxBuffPtr){
+                     _saveDspBuff();
+                     _waitCount = 0;
+                     _waitTimer = 0;  //Start the waiting pace timer...
+                     _isWaiting = true;
+                  }
+                  else{
+                     result = false;
+                  }
+               }
+               xSemaphoreGive(_SSDWaitSttngMutex);
             }
+            xSemaphoreGive(_SSDBffrMutex);
          }
-         else{
-            result = true;
-         }
+         xSemaphoreGive(_SSDAuxBffMutex);
       }
-
-      if(result){
-         if(_dspAuxBuffPtr == nullptr){
-            _dspAuxBuffPtr = new uint8_t[_dspDigitsQty];
-         }
-         if(_dspAuxBuffPtr){
-            // _saveDspBuff();
-            _waitCount = 0;
-            _waitTimer = 0;  //Start the waiting pace timer...
-            _isWaiting = true;
-         }
-         else{
-            result = false;
-         }
+      else{
+         result = true;
       }
-      taskEXIT_CRITICAL(&mux);
    }
-   else{
-      result = true;
-   }
-
+   
    return result;
 }
 
@@ -1065,25 +1188,31 @@ bool SevenSegDisplays::write(const uint8_t &segments, const uint8_t &port){
    bool writeOnBlink{false};
     
    if (port < _dspDigitsQty){
-      taskENTER_CRITICAL(&mux);
-      writeOnBlink = _isBlinking;
-      if(writeOnBlink)
-         noBlink();
-      if(*(_dspBuffPtr + port) != segments){
-         *(_dspBuffPtr + port) = segments;
-         _setDspBuffChng(); // Notify underlying display the change of buffer data
+      if(xSemaphoreTake(_SSDAuxBffMutex, portMAX_DELAY) == pdTRUE){
+         if(xSemaphoreTake(_SSDBffrMutex, portMAX_DELAY) == pdTRUE){
+            if(xSemaphoreTake(_SSDBlnkSttngMutex, portMAX_DELAY) == pdTRUE){
+               writeOnBlink = _isBlinking;
+               if(writeOnBlink)
+                  _noBlink();               
+               if(*(_dspBuffPtr + port) != segments){
+                  *(_dspBuffPtr + port) = segments;
+                  _setDspBuffChng(); // Notify underlying display the change of buffer data
+               }
+               if(writeOnBlink)
+                  _blink();               
+               xSemaphoreGive(_SSDAuxBffMutex);
+               xSemaphoreGive(_SSDBffrMutex);
+               xSemaphoreGive(_SSDBlnkSttngMutex);               
+            }
+         }
       }
-      if(writeOnBlink)
-         blink();
       result = true;
-      taskEXIT_CRITICAL(&mux);
-   }
-    
+   }   
+       
    return result;
 }
 
 bool SevenSegDisplays::write(const String &character, const uint8_t &port){
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    int position {-1};
    bool result {false};
     

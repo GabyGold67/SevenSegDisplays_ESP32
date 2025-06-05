@@ -53,6 +53,9 @@
 
 #include <Arduino.h>
 #include <stdint.h>
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
+#include <freertos/semphr.h>
 #include <./SevenSegDispHw/SevenSegDispHw.h>
 
 class SevenSegDisplays {
@@ -149,7 +152,17 @@ protected:
    String _zeroPadding{""};
    String _spacePadding{""};
 
+   SemaphoreHandle_t _SSDAuxBffMutex; // Mutex to protect the Auxiliary Buffer from concurrent access
+   SemaphoreHandle_t _SSDBlnkMskMutex; // Mutex to protect the blink mask from concurrent access
+   SemaphoreHandle_t _SSDBlnkSttngMutex; // Mutex to protect Blink setting from concurrent access
+   SemaphoreHandle_t _SSDBffrMutex; // Mutex to protect the Main Buffer from concurrent access
+   SemaphoreHandle_t _SSDObjLstMutex; // Mutex to protect the SSD Objects List
+   SemaphoreHandle_t _SSDWaitSttngMutex; // Mutex to protect Blink setting from concurrent access
+
+   bool _blink();
    uint32_t _blinkTmrGCD(uint32_t blnkOnTm, uint32_t blnkOffTm);
+   bool _noBlink();
+   bool _noWait();
    void _ntfyToHwBuffChng();
    void _popSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDisplays* ssdToPop);
    void _pushSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDisplays* ssdToPush);
