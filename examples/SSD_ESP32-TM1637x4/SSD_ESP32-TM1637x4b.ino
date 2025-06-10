@@ -120,9 +120,10 @@ void mainCtrlTsk(void *pvParameters){
       }
       
       {
-         //print() with a string argument, four characters long, all characters included in the representable characters list
+         
          Serial.println("Display turned Off");
          myLedDisp.turnOff();  // Demonstrates the display control keeps receiving data altough it's set turned Off
+         vTaskDelay(testTime);
          Serial.println("Text 'Strt'sent to the display while turned Off");
          testResult = myLedDisp.print("Strt");
          myLedDisp.turnOn();
@@ -131,26 +132,31 @@ void mainCtrlTsk(void *pvParameters){
       }
 
       {
+         Serial.println("Testing if the colon lights when there are no DPs printed");
          testResult = myLedDisp.print("0000");
          vTaskDelay(testTime);
       }
 
       {
+         Serial.println("Testing if the colon lights when there's a DPs in the 1st digit from the left");
          testResult = myLedDisp.print("1.111");
          vTaskDelay(testTime);
       }
 
       {
+         Serial.println("Testing if the colon lights when there's a DPs in the 2nd digit from the left");
          testResult = myLedDisp.print("22.22");
          vTaskDelay(testTime);
       }
 
       {
+         Serial.println("Testing if the colon lights when there's a DPs in the 3rd digit from the left");
          testResult = myLedDisp.print("333.3");
          vTaskDelay(testTime);
       }
 
       {
+         Serial.println("Testing if the colon lights when there's a DPs in the 4th digit from the left");
          testResult = myLedDisp.print("4444.");
          vTaskDelay(testTime);
       }
@@ -300,10 +306,11 @@ void mainCtrlTsk(void *pvParameters){
          myBlinkMask[3] = false;
          myLedDisp.setBlinkMask(myBlinkMask);
          myLedDisp.blink(200);
-         vTaskDelay(testTime*2);
+         vTaskDelay(testTime);
       }
 
       {         
+         Serial.println("Write over blinking in 0th position");
          myLedDisp.write("7", 0);
          vTaskDelay(testTime);
       }

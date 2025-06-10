@@ -6,6 +6,11 @@
  * 
  * @details The library provides a common API and tools to generate and manage contents formatting for seven segments displays.
  * 
+ * 
+ * 
+ * 
+ * 
+ * 
  * Repository: https://github.com/GabyGold67/SevenSegDisplays_ESP32  
  * 
  * Framework: Arduino  
@@ -39,6 +44,13 @@ SevenSegDisplays::SevenSegDisplays()
 SevenSegDisplays::SevenSegDisplays(SevenSegDispHw* dspUndrlHwPtr)
 :_dspUndrlHwPtr{dspUndrlHwPtr}
 {
+   _SSDAuxBffMutex = xSemaphoreCreateMutex();
+   _SSDBffrMutex = xSemaphoreCreateMutex();
+   _SSDBlnkMskMutex = xSemaphoreCreateMutex();
+   _SSDBlnkSttngMutex = xSemaphoreCreateMutex();
+   _SSDObjLstMutex = xSemaphoreCreateMutex();
+   _SSDWaitSttngMutex = xSemaphoreCreateMutex();
+
    _dspDigitsQty = _dspUndrlHwPtr->getHwDspDigitsQty(); // With the display size in digits, the needed arrays for data can be built
    _dspBuffPtr  = new uint8_t[_dspDigitsQty];
    _blinkMaskPtr = new bool[_dspDigitsQty];
@@ -84,20 +96,28 @@ SevenSegDisplays::~SevenSegDisplays(){
    delete [] _dspBuffPtr;  // Free the resources of the display digits buffer
    _popSsd(_ssdInstancesLstPtr, _dspInstance);
    --_displaysCount;
+   vSemaphoreDelete(_SSDAuxBffMutex); //FFDR destruct all the mutexes created at the constructor
+   vSemaphoreDelete(_SSDBffrMutex); //FFDR destruct all the mutexes created at the constructor
+   vSemaphoreDelete(_SSDBlnkSttngMutex); //FFDR destruct all the mutexes created at the constructor
+   vSemaphoreDelete(_SSDObjLstMutex); //FFDR destruct all the mutexes created at the constructor
+   vSemaphoreDelete(_SSDWaitSttngMutex); //FFDR destruct all the mutexes created at the constructor
 }
 
 bool SevenSegDisplays::begin(uint32_t updtLps){
    bool result{false};
 
+   Serial.println("Entered SevenSegDisplays::begin()");
    if(!_begun){
+      Serial.println("Underlying Hardware needs Begining");
+      
       result = _dspUndrlHwPtr->begin(updtLps);
+      
+      Serial.print("Underlying Hardware Passed Begining, result = ");
+      Serial.println(result);
+
       if(result){
+         Serial.println("_begun attribute flag SET");
          _begun = true;   
-         _SSDAuxBffMutex = xSemaphoreCreateMutex();
-         _SSDBffrMutex = xSemaphoreCreateMutex();
-         _SSDBlnkSttngMutex = xSemaphoreCreateMutex();
-         _SSDObjLstMutex = xSemaphoreCreateMutex();
-         _SSDWaitSttngMutex = xSemaphoreCreateMutex();
       }       
    }
    else
@@ -157,7 +177,6 @@ bool SevenSegDisplays::_blink(){
 
    return result;
 }
-
 
 bool SevenSegDisplays::blink(){
    bool result {false};
@@ -684,7 +703,7 @@ void SevenSegDisplays::_pushSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDis
 bool SevenSegDisplays::print(String text){
    bool displayable{true};
    bool dspCntnChng{false};
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+   // portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool printOnBlink{_isBlinking};
    int position{-1};
    uint8_t temp7SegData[_dspDigitsQty];
@@ -839,10 +858,11 @@ bool SevenSegDisplays::print(const double &value, const unsigned int &decPlaces,
 
 void SevenSegDisplays::resetBlinkMask(){
 
-   if(xSemaphoreTake(_SSDBlnkMskMutex,portMAX_DELAY) == pdTRUE)
+   if(xSemaphoreTake(_SSDBlnkMskMutex,portMAX_DELAY) == pdTRUE){
       for (uint8_t i{0}; i < _dspDigitsQty; i++)
          *(_blinkMaskPtr + i) = true;
    xSemaphoreGive(_SSDBlnkMskMutex);
+   }
 
    return;
 }
@@ -895,9 +915,10 @@ void SevenSegDisplays::_setAttrbts(){
 }
 
 void SevenSegDisplays::setBlinkMask(const bool* newBlnkMsk){
-   if(xSemaphoreTake(_SSDBlnkMskMutex,portMAX_DELAY) == pdTRUE)
+   if(xSemaphoreTake(_SSDBlnkMskMutex, portMAX_DELAY) == pdTRUE){
       memcpy(_blinkMaskPtr, newBlnkMsk, _dspDigitsQty);   // destPtr, srcPtr, size
-   
+      xSemaphoreGive(_SSDBlnkMskMutex);
+   }
    return;
 }
 
