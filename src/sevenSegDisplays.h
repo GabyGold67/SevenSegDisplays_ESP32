@@ -20,10 +20,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.2.0
+ * @version 3.2.3
  * 
  * @date First release: 20/12/2023  
- *       Last update:   27/04/2025 17:10 (GMT+0200) DST  
+ *       Last update:   18/06/2025 23:20 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license  
  *******************************************************************************
@@ -622,7 +622,7 @@ public:
     * 
     * Stoping the blinking process includes retrieving the original contents from the _dspAuxPtr pointed memory (the Auxiliary Buffer), freeing the Auxiliary Buffer memory, stoping the timer attached to the process and cleaning the blinking state related flags  
     * 
-    * @retval true The display was set to not blinking, either becauseIf display was set to blink and was stopped, either the display was not set to blink.  
+    * @retval true The display was set to not blinking, either because the display was set to blink and was stopped, either the display was not set to blink.  
     * @retval false The display was set to blink, and the blink stopping failed.  
     * 
     * Code example:  

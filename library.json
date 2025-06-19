@@ -1,6 +1,6 @@
 {
     "name": "SevenSegDisplays_ESP32",
-    "version": "3.2.2",
+    "version": "3.2.3",
     
     "description": "A Seven Segments Displays controller hardware agnostic API library providing several amenities and services. Provides a common API to display data on 'Seven segments displays modules' with 'Seven segments display controllers' combinations, including different display digits quantities, common anode or common cathode leds wiring, dynamic or static refreshing needed, different 'Seven segment controller modules'. ",
     "keywords": "7 Segment, 74HC595, TM1636, TM1637, TM1639, MAX7219, LED, display, print, blink, gauge, floating point, negative, shift register",

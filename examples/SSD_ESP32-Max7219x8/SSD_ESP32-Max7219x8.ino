@@ -16,7 +16,7 @@
  * Github <https://github.com/GabyGold67>
  *
  * @date First release: 15/05/2023  
- *       Last update:   12/05/2025 18:30 GMT+0200 DST  
+ *       Last update:   19/06/2025 12:40 GMT+0200 DST  
  ******************************************************************************
   * @warning **Use of this library is under your own responsibility**
   * 
@@ -98,95 +98,95 @@ void mainCtrlTsk(void *pvParameters){
    // SevenSegDispHw* myLedDispPtr {new SevenSegMax7219(myDispIOPins, 8)};
    // SevenSegDisplays myLedDisp(myLedDispPtr);
    SevenSegDisplays myLedDisp(new SevenSegMax7219(myDispIOPins, 8));
+   
+   Serial.println("Test Started");
 
-   myLedDisp.begin();
-   Serial.println("Service Started");
+   for(;;){
 
-for(;;){
-
-   {
-      Serial.println("New Cycle");
-      Serial.println("=========");
-      if(!myLedDisp.getIsOn()){
-         myLedDisp.turnOn();
-         Serial.println("Display turned on");
+      {
+         myLedDisp.begin();
+         Serial.println("New Cycle");
+         Serial.println("=========");
+         if(!myLedDisp.getIsOn()){
+            myLedDisp.turnOn();
+            Serial.println("Display turned on");
+         }
+         else
+            Serial.println("Display WAS ALREADY turned ON");   
       }
-      else
-         Serial.println("Display WAS ALREADY turned ON");   
-   }
 
-   {
-      //print() with a string argument, two characters long, all characters included in the representable characters list
-      myLedDisp.clear();
-      Serial.println("Display cleared");
-      testResult = myLedDisp.print("On");
-      vTaskDelay(testTime);
-   }
+      {
+         //print() with a string argument, two characters long, all characters included in the representable characters list
+         myLedDisp.clear();
+         Serial.println("Display cleared");
+         testResult = myLedDisp.print("On");
+         vTaskDelay(testTime);
+      }
 
-   {
-      //print() with a string argument, two characters long, all characters included in the representable characters list
-      Serial.println("Display 0");
-      testResult = myLedDisp.print("0");
-      vTaskDelay(testTime);
-   }
+      {
+         //print() with a string argument, two characters long, all characters included in the representable characters list
+         Serial.println("Display 0");
+         testResult = myLedDisp.print("0");
+         vTaskDelay(testTime);
+      }
 
-   {
-      //print() with a string argument, two characters long, all characters included in the representable characters list
-      Serial.println("Display 0.1");
-      testResult = myLedDisp.print("0.1");
-      vTaskDelay(testTime);
-   }
-      
-   {
-      //print() with a string argument, two characters long, all characters included in the representable characters list
-      Serial.println("Display 0.1.2");
-      testResult = myLedDisp.print("0.1.2");
-      vTaskDelay(testTime);
-   }
+      {
+         //print() with a string argument, two characters long, all characters included in the representable characters list
+         Serial.println("Display 0.1");
+         testResult = myLedDisp.print("0.1");
+         vTaskDelay(testTime);
+      }
+         
+      {
+         //print() with a string argument, two characters long, all characters included in the representable characters list
+         Serial.println("Display 0.1.2");
+         testResult = myLedDisp.print("0.1.2");
+         vTaskDelay(testTime);
+      }
 
-   {
-      //print() with a string argument, two characters long, all characters included in the representable characters list
-      Serial.println("Display 0.1.2.3");
-      testResult = myLedDisp.print("0.1.2.3");
-      vTaskDelay(testTime);
-   }
+      {
+         //print() with a string argument, two characters long, all characters included in the representable characters list
+         Serial.println("Display 0.1.2.3");
+         testResult = myLedDisp.print("0.1.2.3");
+         vTaskDelay(testTime);
+      }
 
-   {
-      //print() with a string argument, two characters long, all characters included in the representable characters list
-      Serial.println("Display 0.1.2.3.4");
-      testResult = myLedDisp.print("0.1.2.3.4");
-      vTaskDelay(testTime);
-   }
+      {
+         //print() with a string argument, two characters long, all characters included in the representable characters list
+         Serial.println("Display 0.1.2.3.4");
+         testResult = myLedDisp.print("0.1.2.3.4");
+         vTaskDelay(testTime);
+      }
 
-   {
-      //print() with a string argument, two characters long, all characters included in the representable characters list
-      Serial.println("Display 0.1.2.3.4.5");
-      testResult = myLedDisp.print("0.1.2.3.4.5");
-      vTaskDelay(testTime);
-   }
+      {
+         //print() with a string argument, two characters long, all characters included in the representable characters list
+         Serial.println("Display 0.1.2.3.4.5");
+         testResult = myLedDisp.print("0.1.2.3.4.5");
+         vTaskDelay(testTime);
+      }
 
-   {
-      //print() with a string argument, two characters long, all characters included in the representable characters list
-      Serial.println("Display 0.1.2.3.4.5.6");
-      testResult = myLedDisp.print("0.1.2.3.4.5.6");
-      vTaskDelay(testTime);
-   }
+      {
+         //print() with a string argument, two characters long, all characters included in the representable characters list
+         Serial.println("Display 0.1.2.3.4.5.6");
+         testResult = myLedDisp.print("0.1.2.3.4.5.6");
+         vTaskDelay(testTime);
+      }
 
-   {
-      //print() with a string argument, two characters long, all characters included in the representable characters list
-      Serial.println("Display 0.1.2.3.4.5.6.7");
-      testResult = myLedDisp.print("0.1.2.3.4.5.6.7");
-      vTaskDelay(testTime);
-   }
+      {
+         //print() with a string argument, two characters long, all characters included in the representable characters list
+         Serial.println("Display 0.1.2.3.4.5.6.7");
+         testResult = myLedDisp.print("0.1.2.3.4.5.6.7");
+         vTaskDelay(testTime);
+      }
 
-   {
-      //print() with a string argument, two characters long, all characters included in the representable characters list
-      Serial.println("Display 0.1.2.3.4.5.6.7.");
-      testResult = myLedDisp.print("0.1.2.3.4.5.6.7.");
-      vTaskDelay(testTime);
-   }
+      {
+         //print() with a string argument, two characters long, all characters included in the representable characters list
+         Serial.println("Display 0.1.2.3.4.5.6.7.");
+         testResult = myLedDisp.print("0.1.2.3.4.5.6.7.");
+         vTaskDelay(testTime);
+      }
 
-   {
+      {
          //print() with a string argument, four characters long, all characters included in the representable characters list
          Serial.println("Display turned Off");
          myLedDisp.turnOff();  // Demonstrates the display control keeps receiving data altough it's set turned Off
@@ -337,10 +337,10 @@ for(;;){
       }
 
       {         
-         myBlinkMask[0] = true;
-         myBlinkMask[1] = false;
-         myBlinkMask[2] = false;
-         myBlinkMask[3] = false;
+         myBlinkMask[4] = true;
+         myBlinkMask[5] = false;
+         myBlinkMask[6] = false;
+         myBlinkMask[7] = false;
          myLedDisp.setBlinkMask(myBlinkMask);
          myLedDisp.blink(200);
          vTaskDelay(testTime*2);
@@ -352,10 +352,10 @@ for(;;){
       }
 
       {
-         myBlinkMask[0] = false;
-         myBlinkMask[1] = true;
-         myBlinkMask[2] = false;
-         myBlinkMask[3] = false;
+         myBlinkMask[4] = false;
+         myBlinkMask[5] = true;
+         myBlinkMask[6] = false;
+         myBlinkMask[7] = false;
          myLedDisp.setBlinkMask(myBlinkMask);
          vTaskDelay(testTime);
       }
@@ -371,10 +371,10 @@ for(;;){
       }
 
       {
-         myBlinkMask[0] = false;
-         myBlinkMask[1] = false;
-         myBlinkMask[2] = true;
-         myBlinkMask[3] = false;
+         myBlinkMask[4] = false;
+         myBlinkMask[5] = false;
+         myBlinkMask[6] = true;
+         myBlinkMask[7] = false;
          myLedDisp.setBlinkMask(myBlinkMask);
          vTaskDelay(testTime);
       }
@@ -395,10 +395,10 @@ for(;;){
       }
 
       {
-         myBlinkMask[0] = false;
-         myBlinkMask[1] = false;
-         myBlinkMask[2] = false;
-         myBlinkMask[3] = true;
+         myBlinkMask[4] = false;
+         myBlinkMask[5] = false;
+         myBlinkMask[6] = false;
+         myBlinkMask[7] = true;
          myLedDisp.setBlinkMask(myBlinkMask);
          vTaskDelay(testTime);
       }
@@ -506,6 +506,7 @@ for(;;){
          Serial.println("Display turned On");
          vTaskDelay(testTime);
       }
+
       {
          myLedDisp.print("End");
          vTaskDelay(testTime);

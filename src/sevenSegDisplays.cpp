@@ -20,10 +20,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.2.0
+ * @version 3.2.3
  * 
  * @date First release: 20/12/2023  
- *       Last update:   27/04/2025 17:10 (GMT+0200) DST  
+ *       Last update:   18/06/2025 23:20 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -96,11 +96,12 @@ SevenSegDisplays::~SevenSegDisplays(){
    delete [] _dspBuffPtr;  // Free the resources of the display digits buffer
    _popSsd(_ssdInstancesLstPtr, _dspInstance);
    --_displaysCount;
-   vSemaphoreDelete(_SSDAuxBffMutex); //FFDR destruct all the mutexes created at the constructor
-   vSemaphoreDelete(_SSDBffrMutex); //FFDR destruct all the mutexes created at the constructor
-   vSemaphoreDelete(_SSDBlnkSttngMutex); //FFDR destruct all the mutexes created at the constructor
-   vSemaphoreDelete(_SSDObjLstMutex); //FFDR destruct all the mutexes created at the constructor
-   vSemaphoreDelete(_SSDWaitSttngMutex); //FFDR destruct all the mutexes created at the constructor
+   vSemaphoreDelete(_SSDAuxBffMutex);
+   vSemaphoreDelete(_SSDBffrMutex); 
+   vSemaphoreDelete(_SSDBlnkMskMutex);
+   vSemaphoreDelete(_SSDBlnkSttngMutex);
+   vSemaphoreDelete(_SSDObjLstMutex);
+   vSemaphoreDelete(_SSDWaitSttngMutex);
 }
 
 bool SevenSegDisplays::begin(uint32_t updtLps){

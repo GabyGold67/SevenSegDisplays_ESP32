@@ -15,10 +15,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.2.0  
+ * @version 3.2.3  
  * 
  * @date First release: 20/12/2023  
- *       Last update:   08/05/2025 10:40 (GMT+0200) DSP
+ *       Last update:   18/06/2025 23:20 (GMT+0200) DSP
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -270,6 +270,7 @@ bool SevenSegDynHC595::begin(uint32_t updtLps){
 
    _drvrShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, 2);
    _drvrShftRegSndPtr = new uint8_t[2];
+   _drvrShftRegPtr->begin();
 
    _firstRefreshed = 0;   
    if (!_dynHC595DspRfrshTmrHndl){  //Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)      
@@ -498,6 +499,7 @@ SevenSegStatHC595::~SevenSegStatHC595() {}
 bool SevenSegStatHC595::begin(uint32_t updtLps){
    _dsplyHwShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, _dspDigitsQty);
    _lclDspBuffPtr = new uint8_t[_dspDigitsQty];
+   _dsplyHwShftRegPtr->begin();
 
    return true;
 }
