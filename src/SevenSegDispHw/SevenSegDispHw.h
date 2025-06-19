@@ -42,6 +42,7 @@
 #define _SEVENSEGDISPHW_H_
 
 #include <Arduino.h>
+#include <Wire.h>
 #include <stdint.h>
 #include <ShiftRegGPIOXpander_ESP32.h>
 
@@ -948,6 +949,129 @@ public:
     */
    virtual void turnOn(const uint8_t &newBrghtnssLvl);
 };
+
+//============================================================> Class declarations separator
+
+class SevenSegHT16K33: public SevenSegStatic{
+   // Command/Address Map Constants
+	const uint8_t _DspPortsBaseAddr{0x00}; //!< Last address depends on digitsQty, maximum is 0x0F   
+   const uint8_t _StndByCmnd = (uint8_t)0x20;   //!< System setup register
+      const uint8_t _EnterStndBy = _StndByCmnd|0x00;  //!< System setup - Standby mode, oscilator stopped
+	   const uint8_t _ExitStndBy = _StndByCmnd|0x01;   //!< System setup register - Normal mode, oscilator running
+   const uint8_t _DspSetupCmnd = (uint8_t)0x80;   //!< Display setup register
+      const uint8_t _TurnOffDsp = _DspSetupCmnd|0x00;   //!< Display setup register - Display Off
+   	const uint8_t _TurnOnDsp = _DspSetupCmnd|0x01; //!< Display setup register - Display On
+         const uint8_t _TurnOnBlnkNo = _TurnOnDsp|0x00;   //!< Turn on and blink NOT
+         const uint8_t _TurnOnBlnk2 = _TurnOnDsp|0x02; //!< Turn on and blink 2Hz
+         const uint8_t _TurnOnBlnk1 = _TurnOnDsp|0x04; //!< Turn on and blink 1Hz
+         const uint8_t _TurnOnBlnk0 = _TurnOnDsp|0x06; //!< Turn on and blink 0.5Hz
+	const uint8_t _KbdRowIntSetCmnd = (uint8_t)0xA0;   //!< Keys scan ROW/INT mode register
+      const uint8_t _SetRowOtpt = _KbdRowIntSetCmnd|0x00;   //!< Keys by Row driver output   
+   const uint8_t _SetBrghtnssCmd = (uint8_t)0xE0;  //!< Display Dimming level register (_SetBrghtnssCmd|0x00) -> (off) ~ (_SetBrghtnssCmd|0x0F) -> (brightest)
+
+private:
+   const uint8_t _sclIndx {0};
+   const uint8_t _sdaIndx {1};
+
+   const uint8_t _dspDigitsQtyMax{8};
+   const uint8_t _hwBrghtnssLvlMax{0x0F};
+   const uint8_t _hwBrghtnssLvlMin{0x00};
+
+   uint8_t _scl {};	//! Serial clock pin
+	uint8_t _sda {};	// Data I/O pin, for a value to get into the chip reg, must be set before the scl rising edge to be accepted.
+	uint8_t _i2cAddress {};
+   uint32_t _i2cRate{400000}; //!< max. rate will depend on the board's hardware capabilities, standards are 100KHz and 400KHz. Data is shifted into the chip on **clk rising edge**
+
+	uint8_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to _dspDigitsQty, the local buffer differs from the shared _dspBuffPtr because it holds the data of the _dspBuffPtr formatted and ready to be sent to the display controller    
+
+   virtual bool _sendCmmnd(uint8_t cmmnd);
+   virtual bool _sendMssg(uint8_t* data, uint8_t mssgLngth);
+   bool _sendPrtData(uint8_t prt, uint8_t data);
+   virtual void _unAbstract();
+
+   void _lclClear();
+   void _updLclBffrCntnt();
+
+public:
+   /**
+    * @brief Default class constructor
+    */
+   SevenSegHT16K33();
+   /**
+    * @brief 
+    * 
+    * @param ioPins A pointer to an array holding the identifiers for the 2 GPIO pins required for the I2C communications with the display controller. The correlation between the array positions and the pin function is given as in-class defined constants: 0->scl, 1->sda. A **nullptr** parameter will make the constructor use the default pins asignement by the Arduino environment for the first I2C port.  
+    * @param dspDigits Quantity of digits/ports of the display. This parameter for this subclass must be in the range 1 <= dspDigits <= 16.
+    * @param i2cAddress I2C slave identification address. By hardware design the HT16K33 module has 0x70 as default address, and it might be modified if desired in the 0x70 ~0x77 range. In case of doubt check the hardware or use a I2C bus standard scanner routine 
+    */
+   SevenSegHT16K33(uint8_t* ioPins, uint8_t dspDigits, uint8_t i2cAddress = 0x70);
+   /**
+    * @brief Class destructor
+    */
+   virtual ~SevenSegHT16K33();
+	/**
+	 * @brief Sets up the hardware display to work, and starts the display activities.  
+	 * 
+	 * For the SevenSegHT16K33 display controllers this setup includes:
+    * - Setting up the I2C communication
+    *    - Create the comm object. 
+    *    - begin() the comm object operation
+    *    - Set the comm speed with setclock()
+	 * - Turning on the Display controller's oscilator (shutdown register setting).  
+	 * - Setting the display in "Display Row/Int output pin = Row mode"
+	 * - Setting the display brightness level (in our case to maximum level).  
+	 * 
+	 * @return true Always
+	*/
+   bool begin(uint32_t updtLps = 0);   //FFDR This begin() doesn't need any parameter, replace and check 
+   /**
+    * @brief Ends the active mode of the display by shutting it off.  
+    * 
+    * While the control module will keep receiving and updating it's registers, while the display controller is in shutdown mode the display module will be turned off and no activity will be executed in the corresponding led powering lines.  
+    * 
+    * @return true Always
+    */
+   bool end();
+   /**
+    * @brief Returns a value indicating if the display controller is in working/On or shutdown/Off mode
+    * 
+    * @retval true The display controller is in working/On mode.  
+    * @retval false The display controller is in shutdown/Off mode.  
+    */
+   // virtual bool getIsOn();
+   /**
+    * @brief See SevenSegDispHw::ntfyUpdDsply() for description
+    */
+   virtual void ntfyUpdDsply();
+   /**
+    * @brief Sets the brightness level for the display module
+    * 
+    * See SevenSegTM163X::setBrghtnssLvl(const uint8_t &) for details.  
+    */
+   virtual bool setBrghtnssLvl(const uint8_t &newBrghtnssLvl); 
+   /**
+    * @brief Turns the display module off.  
+    * 
+    * The display module will be cleared and will keep that status until a turnOn(), or turnOn(const uint8_t &) is invoked. 
+    * 
+    * @note While the display is Off, it will keep receiving display data and commands, but will keep the leds turned off. When it receives a turnOn command the display will show the data it received while turned off, or the same it was showing at turnOff if no change to the contents was done.  
+    */
+   virtual void turnOff();
+   /**
+    * @brief Turns the display module on.  
+    * 
+    * The display module will be turned on and it's content displayed, and will keep that status until a turnOff() is invoked.  
+    */
+   virtual void turnOn();
+   /**
+    * @brief Turns the display module on.  
+    * 
+    * The display module will be turned on, it's brightness level set to the requested level, it's content displayed, and will keep that status until a turnOff() is invoked. 
+    * 
+    * @param newBrghtnssLvl The new brightness level for the display. The value must be in the range **getBrghtnssMinLvl() <= newBrghtnssLvl <= getBrghtnssMaxLvl()**
+    */
+   virtual void turnOn(const uint8_t &newBrghtnssLvl);
+};    
 
 //============================================================> Class declarations separator
 
