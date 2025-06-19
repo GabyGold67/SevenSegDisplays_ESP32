@@ -741,14 +741,12 @@ void SevenSegTM163X::_txWrByte(uint8_t data){   // void I2CWrByte (unsigned char
 
 void SevenSegTM163X::_updLclBffrCntnt(){
    uint8_t dspBuffPtrOffset{0};
-   // portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
-   // taskENTER_CRITICAL(&mux);
+   //FFDR Possibly use a mutex to protect the _dspBuffPtr from being changed while this method is running
    for (int i {0}; i < _dspDigitsQty; i++){
       dspBuffPtrOffset = *(_digitPosPtr + i);
       *(_lclDspBuffPtr + i) = *(_dspBuffPtr + dspBuffPtrOffset);
    }
-   // taskEXIT_CRITICAL(&mux);
 
    return;
 }
