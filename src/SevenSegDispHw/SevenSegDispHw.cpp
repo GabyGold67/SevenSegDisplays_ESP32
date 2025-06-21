@@ -15,10 +15,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.2.3  
+ * @version 3.3.0  
  * 
  * @date First release: 20/12/2023  
- *       Last update:   18/06/2025 23:20 (GMT+0200) DSP
+ *       Last update:   21/06/2025 18:20 (GMT+0200) DSP
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -953,13 +953,13 @@ void SevenSegMax7219::_unAbstract(){return;}
 SevenSegHT16K33::SevenSegHT16K33(){};
 
 SevenSegHT16K33::SevenSegHT16K33(uint8_t* ioPins, uint8_t dspDigits, uint8_t i2cAddress)
-:SevenSegStatic(ioPins, dspDigits, false), _i2cAddress{i2cAddress}
+:SevenSegStatic(ioPins, dspDigits, false, _dspDigitsQtyMax), _i2cAddress{i2cAddress}
 {
    _brghtnssLvlMax = _hwBrghtnssLvlMax;
    _brghtnssLvlMin = _hwBrghtnssLvlMin;
    _brghtnssLvl = _brghtnssLvlMin;
 
-   _lclDspBuffPtr = new uint8_t[_dspDigitsQty]; //FFDR this local buffer is needed as it keeps the shared buffer contents intoHT16K33 format, protect the shared buffer with mutex to avoid changing while loading
+   _lclDspBuffPtr = new uint8_t[16]; //FFDR this local buffer is needed as it keeps the shared buffer contents mapped into real HT16K33 wired format, protect the shared buffer with mutex to avoid changing while loading
 
    if(ioPins == nullptr){
       _sda = SDA;
@@ -1008,11 +1008,6 @@ bool SevenSegHT16K33::end(){
    return true;
 }
 
-// bool SevenSegHT16K33::getIsOn(){
-
-//    return _isOn;
-// }
-
 void SevenSegHT16K33::_lclClear(){
    int result{0};
 
@@ -1027,9 +1022,22 @@ void SevenSegHT16K33::_lclClear(){
 
 void SevenSegHT16K33::ntfyUpdDsply(){
    _updLclBffrCntnt();
-   _sendMssg(_lclDspBuffPtr, _dspDigitsQty);
+   _sendBffr();
 
    return;
+}
+
+void SevenSegHT16K33::_sendBffr(){
+   int result{0};
+
+   Wire.beginTransmission(_i2cAddress); 
+   Wire.write(_DspPortsBaseAddr); 
+   for(uint8_t mssgPtrOffset{0}; mssgPtrOffset < 16; mssgPtrOffset++){
+      Wire.write(*(_lclDspBuffPtr + mssgPtrOffset));   // Single data byte to send
+   }
+   result = Wire.endTransmission(true);
+   
+   return ;
 }
 
 bool SevenSegHT16K33::_sendCmmnd(uint8_t cmmnd){
@@ -1037,34 +1045,18 @@ bool SevenSegHT16K33::_sendCmmnd(uint8_t cmmnd){
 
    Wire.beginTransmission(_i2cAddress);  
    Wire.write(cmmnd);   // Single data byte to send
-   // result = Wire.endTransmission(true);
-   result = Wire.endTransmission();
-
-   return (result == 0);
-}
-
-bool SevenSegHT16K33::_sendMssg(uint8_t* data, uint8_t mssgLngth){
-   int result{0};
-
-   Wire.beginTransmission(_i2cAddress); 
-   Wire.write(_DspPortsBaseAddr); 
-   for(uint8_t mssgPtrOffset{0}; mssgPtrOffset < (mssgLngth); mssgPtrOffset++){
-      Wire.write(*(data + mssgPtrOffset));   // Single data byte to send
-      Wire.write(0x00);   // Send empty data to MSB of the 16-bits display data register
-   }
    result = Wire.endTransmission(true);
-   
+   // result = Wire.endTransmission();
+
    return (result == 0);
 }
 
-//FFDR check following mehtod code 
  bool SevenSegHT16K33::_sendPrtData(uint8_t prt, uint8_t data){
    int result{0};
 
    Wire.beginTransmission(_i2cAddress); 
-   Wire.write(_DspPortsBaseAddr + (prt * 2)); 
+   Wire.write(_DspPortsBaseAddr + prt); 
    Wire.write(data);   // Single data byte to send
-   Wire.write(0x00);   // Send empty data to MSB of the 16-bits display data register
    result = Wire.endTransmission(true);
    
    return (result == 0);
@@ -1116,12 +1108,12 @@ void SevenSegHT16K33::turnOn(const uint8_t &newBrghtnssLvl){
 void SevenSegHT16K33::_unAbstract(){return;}
 
 void SevenSegHT16K33::_updLclBffrCntnt(){
-   uint8_t dspBuffPtrOffset{0};
+   uint8_t lclDspBuffPtrOffset{0};
 
+   memset(_lclDspBuffPtr, 0x00, 16); // Clear the local buffer
    for (int i {0}; i < _dspDigitsQty; i++){
-      // dspBuffPtrOffset = *(_digitPosPtr + i);
-      // *(_lclDspBuffPtr + i) = *(_dspBuffPtr + dspBuffPtrOffset);
-      *(_lclDspBuffPtr + i) = *(_dspBuffPtr + i);
+      lclDspBuffPtrOffset = (*(_digitPosPtr + i)*2);
+      *(_lclDspBuffPtr + lclDspBuffPtrOffset) = *(_dspBuffPtr + i);
    }
 
    return;

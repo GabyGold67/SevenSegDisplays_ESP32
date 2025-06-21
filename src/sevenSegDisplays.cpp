@@ -20,10 +20,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.2.3
+ * @version 3.3.0
  * 
  * @date First release: 20/12/2023  
- *       Last update:   18/06/2025 23:20 (GMT+0200) DST  
+ *       Last update:   21/06/2025 18:20 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -704,7 +704,6 @@ void SevenSegDisplays::_pushSsd(SevenSegDisplays** &ssdInstncObjLst, SevenSegDis
 bool SevenSegDisplays::print(String text){
    bool displayable{true};
    bool dspCntnChng{false};
-   // portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool printOnBlink{_isBlinking};
    int position{-1};
    uint8_t temp7SegData[_dspDigitsQty];
@@ -1205,7 +1204,6 @@ bool SevenSegDisplays::wait(const uint32_t &newWaitRate){
 }
 
 bool SevenSegDisplays::write(const uint8_t &segments, const uint8_t &port){
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
    bool result {false};
    bool writeOnBlink{false};
     

@@ -1,0 +1,5 @@
+<map id="SevenSegHT16K33::end" name="SevenSegHT16K33::end">
+<area shape="rect" id="Node000001" title="Ends the active mode of the display by shutting it off." alt="" coords="266,13,431,40"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_h_t16_k33.html#a5c59269a69015cc890818ccb338dc2e6" title="Class destructor." alt="" coords="5,5,218,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="250,29,218,29,218,24,250,24"/>
+</map>

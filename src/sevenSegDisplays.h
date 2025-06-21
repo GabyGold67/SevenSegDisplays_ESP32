@@ -20,10 +20,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.2.3
+ * @version 3.3.0
  * 
  * @date First release: 20/12/2023  
- *       Last update:   18/06/2025 23:20 (GMT+0200) DST  
+ *       Last update:   21/06/2025 18:20 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license  
  *******************************************************************************

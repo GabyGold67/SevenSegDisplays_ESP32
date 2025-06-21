@@ -13,10 +13,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.2.3
+ * @version 3.3.0
  * 
  * @date First release: 20/12/2023  
- *       Last update:   18/06/2025 23:20 (GMT+0200) DST  
+ *       Last update:   21/06/2025 18:20 (GMT+0200) DST  
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -952,6 +952,16 @@ public:
 
 //============================================================> Class declarations separator
 
+/**
+ * @class SevenSegHT16K33
+ * 
+ * @brief Models a **Seven Segment display hardware** using a HT16K33 **display controller component**
+ * 
+ * The HT16K33 is a 16 segment 8 digits (maximum) display controller that communicates with the MCU through I2C protocol. The library implements the required methods to comply with all the features implemented in the SevenSegDisplays library, so the HT16K33 can be used as a Seven Segment display controller in the same way as the other display controllers implemented in this library.  
+ * 
+ * @attention As with the other dedicated display controllers modeled by this library, the use of prebuilt modules that include the HT16K33 chip and a Seven Segment display module, the wiring of the display module to the HT16K33 chip might not be standard, so documentation for the prebuilt module must be consulted to determine the correct digits/ports colons and special icons wiring, or tests must be conducted to determine the wiring of the display module and use the setDigitsOrder(uint8_t*) with the correct order of the digits/ports to be displayed. 
+ */
+
 class SevenSegHT16K33: public SevenSegStatic{
    // Command/Address Map Constants
 	const uint8_t _DspPortsBaseAddr{0x00}; //!< Last address depends on digitsQty, maximum is 0x0F   
@@ -984,9 +994,10 @@ private:
 
 	uint8_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to _dspDigitsQty, the local buffer differs from the shared _dspBuffPtr because it holds the data of the _dspBuffPtr formatted and ready to be sent to the display controller    
 
-   virtual bool _sendCmmnd(uint8_t cmmnd);
-   virtual bool _sendMssg(uint8_t* data, uint8_t mssgLngth);
-   bool _sendPrtData(uint8_t prt, uint8_t data);
+   virtual bool _sendCmmnd(uint8_t cmmnd);   //!< Sends a single byte command to the display
+   bool _sendPrtData(uint8_t prt, uint8_t data); //!< Sends the content of a single display port. Not all device's display memory will be connected to real display ports
+
+   virtual void _sendBffr();
    virtual void _unAbstract();
 
    void _lclClear();
@@ -998,11 +1009,11 @@ public:
     */
    SevenSegHT16K33();
    /**
-    * @brief 
+    * @brief Class constructor
     * 
     * @param ioPins A pointer to an array holding the identifiers for the 2 GPIO pins required for the I2C communications with the display controller. The correlation between the array positions and the pin function is given as in-class defined constants: 0->scl, 1->sda. A **nullptr** parameter will make the constructor use the default pins asignement by the Arduino environment for the first I2C port.  
-    * @param dspDigits Quantity of digits/ports of the display. This parameter for this subclass must be in the range 1 <= dspDigits <= 16.
-    * @param i2cAddress I2C slave identification address. By hardware design the HT16K33 module has 0x70 as default address, and it might be modified if desired in the 0x70 ~0x77 range. In case of doubt check the hardware or use a I2C bus standard scanner routine 
+    * @param dspDigits Quantity of digits/ports of the display. This parameter for this subclass must be in the range 1 <= dspDigits <= 8.
+    * @param i2cAddress I2C slave identification address. By hardware design the HT16K33 module has 0x70 as default address, and it might be modified if desired in the 0x70 <= i2cAddress <= 0x77 range. In case of doubt check the hardware or use a I2C bus standard scanner routine 
     */
    SevenSegHT16K33(uint8_t* ioPins, uint8_t dspDigits, uint8_t i2cAddress = 0x70);
    /**
@@ -1032,13 +1043,6 @@ public:
     * @return true Always
     */
    bool end();
-   /**
-    * @brief Returns a value indicating if the display controller is in working/On or shutdown/Off mode
-    * 
-    * @retval true The display controller is in working/On mode.  
-    * @retval false The display controller is in shutdown/Off mode.  
-    */
-   // virtual bool getIsOn();
    /**
     * @brief See SevenSegDispHw::ntfyUpdDsply() for description
     */

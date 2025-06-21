@@ -1,0 +1,7 @@
+<map id="SevenSegHT16K33::turnOn" name="SevenSegHT16K33::turnOn">
+<area shape="rect" id="Node000001" title="Turns the display module on." alt="" coords="237,31,420,57"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_h_t16_k33.html#a96ebec2a6c00e24bc42f7fdca7cc453d" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="9,5,185,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="221,35,185,31,185,26,222,30"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_h_t16_k33.html#a18302953b5f33463f17ee38b76ebecdb" title="Turns the display module on." alt="" coords="5,56,189,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="222,58,189,62,189,57,221,53"/>
+</map>

@@ -1,7 +1,7 @@
 <map id="SevenSegDisplays" name="SevenSegDisplays">
-<area shape="rect" id="Node000001" title="Default constructor." alt="" coords="5,96,138,123"/>
-<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="154,101,164,109,156,117,138,120,138,115,154,112,159,109,151,105"/>
+<area shape="rect" id="Node000001" title="Default constructor." alt="" coords="5,104,138,131"/>
+<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="154,109,164,117,156,126,138,129,137,124,154,121,159,117,151,113"/>
 <area shape="rect" id="Node000002" href="$class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware." alt="" coords="7,5,136,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="74,48,74,95,69,95,69,48"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="152,10,162,19,154,27,137,30,136,24,152,22,157,19,149,15"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="74,48,74,104,69,104,69,48"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="153,10,162,19,154,27,137,30,136,25,152,22,157,19,149,14"/>
 </map>

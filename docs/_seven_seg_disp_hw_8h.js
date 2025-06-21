@@ -10,5 +10,6 @@ var _seven_seg_disp_hw_8h =
     [ "SevenSegTM1636", "class_seven_seg_t_m1636.html", "class_seven_seg_t_m1636" ],
     [ "SevenSegTM1637", "class_seven_seg_t_m1637.html", "class_seven_seg_t_m1637" ],
     [ "SevenSegTM1639", "class_seven_seg_t_m1639.html", "class_seven_seg_t_m1639" ],
-    [ "SevenSegMax7219", "class_seven_seg_max7219.html", "class_seven_seg_max7219" ]
+    [ "SevenSegMax7219", "class_seven_seg_max7219.html", "class_seven_seg_max7219" ],
+    [ "SevenSegHT16K33", "class_seven_seg_h_t16_k33.html", "class_seven_seg_h_t16_k33" ]
 ];

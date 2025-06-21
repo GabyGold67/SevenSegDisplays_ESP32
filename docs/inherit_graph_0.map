@@ -2,22 +2,24 @@
 <area shape="rect" id="Node000000" href="$class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware." alt="" coords="5,107,134,133"/>
 <area shape="rect" id="Node000001" href="$class_seven_seg_dynamic.html" title="Abstract class models a generic dynamically updated Seven Segment display hardware" alt="" coords="182,56,315,83"/>
 <area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="133,99,198,81,199,86,135,104"/>
-<area shape="rect" id="Node000004" href="$class_seven_seg_static.html" title="Abstract class that models displays that don&#39;t need permanent MCU data updating to keep the data corr..." alt="" coords="191,132,306,159"/>
-<area shape="poly" id="edge4_Node000000_Node000004" title=" " alt="" coords="149,129,191,135,190,140,148,134"/>
+<area shape="rect" id="Node000004" href="$class_seven_seg_static.html" title="Abstract class that models displays that don&#39;t need permanent MCU data updating to keep the data corr..." alt="" coords="191,157,306,184"/>
+<area shape="poly" id="edge4_Node000000_Node000004" title=" " alt="" coords="135,136,199,154,198,159,133,141"/>
 <area shape="rect" id="Node000002" href="$class_seven_seg_dyn_dummy.html" title="Models a dynamic display with no screen, for tests or remote display of the data." alt="" coords="363,5,514,32"/>
 <area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="315,49,385,30,386,35,317,54"/>
 <area shape="rect" id="Node000003" href="$class_seven_seg_dyn_h_c595.html" title="Models seven segment displays driven by two 74HC595 shift registers." alt="" coords="366,56,512,83"/>
 <area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="330,67,365,67,365,72,330,72"/>
-<area shape="rect" id="Node000005" href="$class_seven_seg_max7219.html" title="Models a Seven Segment display hardware using a Max7219 display controller component" alt="" coords="372,107,506,133"/>
-<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="321,133,371,126,372,132,322,138"/>
-<area shape="rect" id="Node000006" href="$class_seven_seg_stat_h_c595.html" title="Models displays driven by 74HC595 or similar shift registers, one shift register per display port,..." alt="" coords="366,157,512,184"/>
-<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="322,152,365,158,365,164,321,158"/>
-<area shape="rect" id="Node000007" href="$class_seven_seg_t_m163_x.html" title="Abstract class that models Seven Segments LEDs static displays hardware using Titan Micro TM163X seri..." alt="" coords="374,208,504,235"/>
-<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="293,163,364,194,395,205,393,210,362,198,291,168"/>
-<area shape="rect" id="Node000008" href="$class_seven_seg_t_m1636.html" title="Models a Seven Segment display hardware controlled by a TM1636 display controller component." alt="" coords="562,157,691,184"/>
-<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="505,201,574,182,575,187,506,206"/>
-<area shape="rect" id="Node000009" href="$class_seven_seg_t_m1637.html" title="Models a Seven Segment display hardware controlled by a TM1637 display controller component." alt="" coords="562,208,691,235"/>
-<area shape="poly" id="edge9_Node000007_Node000009" title=" " alt="" coords="520,219,562,219,562,224,520,224"/>
-<area shape="rect" id="Node000010" href="$class_seven_seg_t_m1639.html" title="Models a Seven Segment display hardware controlled by a TM1639 display controller component." alt="" coords="562,259,691,285"/>
-<area shape="poly" id="edge10_Node000007_Node000010" title=" " alt="" coords="506,237,575,255,574,261,505,242"/>
+<area shape="rect" id="Node000005" href="$class_seven_seg_h_t16_k33.html" title="Models a Seven Segment display hardware using a HT16K33 display controller component" alt="" coords="370,107,507,133"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="315,150,385,131,386,137,317,155"/>
+<area shape="rect" id="Node000006" href="$class_seven_seg_max7219.html" title="Models a Seven Segment display hardware using a Max7219 display controller component" alt="" coords="372,157,506,184"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="322,168,371,168,371,173,322,173"/>
+<area shape="rect" id="Node000007" href="$class_seven_seg_stat_h_c595.html" title="Models displays driven by 74HC595 or similar shift registers, one shift register per display port,..." alt="" coords="366,208,512,235"/>
+<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="317,186,386,205,385,210,315,191"/>
+<area shape="rect" id="Node000008" href="$class_seven_seg_t_m163_x.html" title="Abstract class that models Seven Segments LEDs static displays hardware using Titan Micro TM163X seri..." alt="" coords="374,259,504,285"/>
+<area shape="poly" id="edge8_Node000004_Node000008" title=" " alt="" coords="281,191,319,218,364,244,391,256,389,260,362,249,317,223,278,196"/>
+<area shape="rect" id="Node000009" href="$class_seven_seg_t_m1636.html" title="Models a Seven Segment display hardware controlled by a TM1636 display controller component." alt="" coords="562,208,691,235"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="505,252,574,233,575,238,506,257"/>
+<area shape="rect" id="Node000010" href="$class_seven_seg_t_m1637.html" title="Models a Seven Segment display hardware controlled by a TM1637 display controller component." alt="" coords="562,259,691,285"/>
+<area shape="poly" id="edge10_Node000008_Node000010" title=" " alt="" coords="520,269,562,269,562,275,520,275"/>
+<area shape="rect" id="Node000011" href="$class_seven_seg_t_m1639.html" title="Models a Seven Segment display hardware controlled by a TM1639 display controller component." alt="" coords="562,309,691,336"/>
+<area shape="poly" id="edge11_Node000008_Node000011" title=" " alt="" coords="506,287,575,306,574,311,505,292"/>
 </map>
