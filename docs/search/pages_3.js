@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['library_20strong_0',['&lt;strong&gt;SevenSegDisplays_ESP32: A Seven Segments displays easy to use library&lt;/strong&gt;',['../index.html',1,'']]],
-  ['list_1',['Todo List',['../todo.html',1,'']]]
+  ['checking_3a_0',['Trustworthy representation basic checking:',['../C:/Users/DevPadawan/Documents/My Projects/Training Projects/LibsDev_ESP32/lib/SevenSegDisplays_ESP32/README.md#trustworthy-representation-basic-checking',1,'']]],
+  ['class_1',['&lt;b&gt;Included Methods for SevenSegDisplays class&lt;/b&gt;',['../C:/Users/DevPadawan/Documents/My Projects/Training Projects/LibsDev_ESP32/lib/SevenSegDisplays_ESP32/README.md#included-methods-for-sevensegdisplays-class',1,'']]],
+  ['complete_20sevensegdisplays_5fesp32_20library_20documentation_20here_2',['Complete SevenSegDisplays_ESP32 library documentation HERE',['../C:/Users/DevPadawan/Documents/My Projects/Training Projects/LibsDev_ESP32/lib/SevenSegDisplays_ESP32/README.md#complete-sevensegdisplays_esp32-library-documentation-herehttpsgabygold67githubiosevensegdisplays_esp32',1,'<a href="https://gabygold67.github.io/SevenSegDisplays_ESP32/">Complete SevenSegDisplays_ESP32 library documentation HERE!</a>'],['../C:/Users/DevPadawan/Documents/My Projects/Training Projects/LibsDev_ESP32/lib/SevenSegDisplays_ESP32/README.md#complete-sevensegdisplays_esp32-library-documentation-herehttpsgabygold67githubiosevensegdisplays_esp32-1',1,'<a href="https://gabygold67.github.io/SevenSegDisplays_ESP32/">Complete SevenSegDisplays_ESP32 library documentation HERE!</a>']]]
 ];

@@ -15,10 +15,10 @@
  * mail <gdgoldman67@hotmail.com>  
  * Github <https://github.com/GabyGold67>  
  * 
- * @version 3.2.0  
+ * @version 3.3.0  
  * 
  * @date First release: 20/12/2023  
- *       Last update:   08/05/2025 10:40 (GMT+0200) DSP
+ *       Last update:   21/06/2025 18:20 (GMT+0200) DSP
  * 
  * @copyright Copyright (c) 2025  GPL-3.0 license
  *******************************************************************************
@@ -270,6 +270,7 @@ bool SevenSegDynHC595::begin(uint32_t updtLps){
 
    _drvrShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, 2);
    _drvrShftRegSndPtr = new uint8_t[2];
+   _drvrShftRegPtr->begin();
 
    _firstRefreshed = 0;   
    if (!_dynHC595DspRfrshTmrHndl){  //Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)      
@@ -498,6 +499,7 @@ SevenSegStatHC595::~SevenSegStatHC595() {}
 bool SevenSegStatHC595::begin(uint32_t updtLps){
    _dsplyHwShftRegPtr = new ShiftRegGPIOXpander(_dio, _sclk, _rclk, _dspDigitsQty);
    _lclDspBuffPtr = new uint8_t[_dspDigitsQty];
+   _dsplyHwShftRegPtr->begin();
 
    return true;
 }
@@ -739,14 +741,12 @@ void SevenSegTM163X::_txWrByte(uint8_t data){   // void I2CWrByte (unsigned char
 
 void SevenSegTM163X::_updLclBffrCntnt(){
    uint8_t dspBuffPtrOffset{0};
-   portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 
-   taskENTER_CRITICAL(&mux);
+   //FFDR Possibly use a mutex to protect the _dspBuffPtr from being changed while this method is running
    for (int i {0}; i < _dspDigitsQty; i++){
       dspBuffPtrOffset = *(_digitPosPtr + i);
       *(_lclDspBuffPtr + i) = *(_dspBuffPtr + dspBuffPtrOffset);
    }
-   taskEXIT_CRITICAL(&mux);
 
    return;
 }
@@ -947,5 +947,176 @@ void SevenSegMax7219::_updLclBffrCntnt(){
 }
 
 void SevenSegMax7219::_unAbstract(){return;}
+
+//============================================================> Class methods separator
+
+SevenSegHT16K33::SevenSegHT16K33(){};
+
+SevenSegHT16K33::SevenSegHT16K33(uint8_t* ioPins, uint8_t dspDigits, uint8_t i2cAddress)
+:SevenSegStatic(ioPins, dspDigits, false, _dspDigitsQtyMax), _i2cAddress{i2cAddress}
+{
+   _brghtnssLvlMax = _hwBrghtnssLvlMax;
+   _brghtnssLvlMin = _hwBrghtnssLvlMin;
+   _brghtnssLvl = _brghtnssLvlMin;
+
+   _lclDspBuffPtr = new uint8_t[16]; //FFDR this local buffer is needed as it keeps the shared buffer contents mapped into real HT16K33 wired format, protect the shared buffer with mutex to avoid changing while loading
+
+   if(ioPins == nullptr){
+      _sda = SDA;
+      _scl = SCL;
+   }
+   else{
+      _scl = *(ioPins + _sclIndx);
+      _sda = *(ioPins + _sdaIndx);
+   }
+}
+
+SevenSegHT16K33::~SevenSegHT16K33(){
+   end();
+   delete [] _lclDspBuffPtr;
+};
+
+bool SevenSegHT16K33::begin(uint32_t updtLps){
+   bool result {false};
+
+   // Wire.begin(static_cast<int>(_sda), static_cast<int>(_scl));
+   // Wire.setClock(_i2cRate);
+   Wire.begin(static_cast<int>(_sda), static_cast<int>(_scl), _i2cRate);
+   _sendCmmnd(_ExitStndBy);  // Activate display
+   _sendCmmnd(_SetRowOtpt);  // Display Row/Int output pin = Row
+   setBrghtnssLvl(_brghtnssLvlMax); // Set display brightness level to maximum
+   _lclClear();
+   turnOn();
+
+   result = true;
+
+   return result;
+}
+
+bool SevenSegHT16K33::end(){
+   Serial.println("Entering end()");
+   Serial.println("================");
+
+   _lclClear();
+   #ifdef WIRE_HAS_END
+      Wire.end();   // Set I2C port Inactive
+   #endif
+
+   Serial.println("Exiting end()");
+   Serial.println("=============");
+
+   return true;
+}
+
+void SevenSegHT16K33::_lclClear(){
+   int result{0};
+
+   Wire.beginTransmission(_i2cAddress); 
+   Wire.write(_DspPortsBaseAddr); 
+   for(uint8_t mssgPtrOffset{0}; mssgPtrOffset <= 0x0F; mssgPtrOffset++)
+      Wire.write(0x00);   // Single data byte to send
+   result = Wire.endTransmission(true);
+   
+   return;
+}
+
+void SevenSegHT16K33::ntfyUpdDsply(){
+   _updLclBffrCntnt();
+   _sendBffr();
+
+   return;
+}
+
+void SevenSegHT16K33::_sendBffr(){
+   int result{0};
+
+   Wire.beginTransmission(_i2cAddress); 
+   Wire.write(_DspPortsBaseAddr); 
+   for(uint8_t mssgPtrOffset{0}; mssgPtrOffset < 16; mssgPtrOffset++){
+      Wire.write(*(_lclDspBuffPtr + mssgPtrOffset));   // Single data byte to send
+   }
+   result = Wire.endTransmission(true);
+   
+   return ;
+}
+
+bool SevenSegHT16K33::_sendCmmnd(uint8_t cmmnd){
+   int result{0};
+
+   Wire.beginTransmission(_i2cAddress);  
+   Wire.write(cmmnd);   // Single data byte to send
+   result = Wire.endTransmission(true);
+   // result = Wire.endTransmission();
+
+   return (result == 0);
+}
+
+ bool SevenSegHT16K33::_sendPrtData(uint8_t prt, uint8_t data){
+   int result{0};
+
+   Wire.beginTransmission(_i2cAddress); 
+   Wire.write(_DspPortsBaseAddr + prt); 
+   Wire.write(data);   // Single data byte to send
+   result = Wire.endTransmission(true);
+   
+   return (result == 0);
+}
+
+bool SevenSegHT16K33::setBrghtnssLvl(const uint8_t &newBrghtnssLvl){
+   bool result{false};
+   uint8_t mssgData{0};
+
+   if((newBrghtnssLvl >= _brghtnssLvlMin) && (newBrghtnssLvl <= _brghtnssLvlMax)){
+      if(newBrghtnssLvl != _brghtnssLvl){
+         mssgData = _SetBrghtnssCmd | newBrghtnssLvl;
+         result = _sendCmmnd(mssgData);   
+         if(result)
+            _brghtnssLvl = newBrghtnssLvl;
+      }
+      else
+         result = true;
+   }
+
+   return result;
+}
+
+void SevenSegHT16K33::turnOff(){
+   if(_isOn){
+      if(_sendCmmnd(_TurnOffDsp))
+         _isOn = false;
+   }
+
+   return;
+}
+
+void SevenSegHT16K33::turnOn(){
+   if(!_isOn){
+      if(_sendCmmnd(_TurnOnBlnkNo))
+         _isOn = true;
+   }
+   
+   return;
+}
+
+void SevenSegHT16K33::turnOn(const uint8_t &newBrghtnssLvl){
+   setBrghtnssLvl(newBrghtnssLvl);
+   turnOn();
+
+   return;
+}
+
+void SevenSegHT16K33::_unAbstract(){return;}
+
+void SevenSegHT16K33::_updLclBffrCntnt(){
+   uint8_t lclDspBuffPtrOffset{0};
+
+   memset(_lclDspBuffPtr, 0x00, 16); // Clear the local buffer
+   for (int i {0}; i < _dspDigitsQty; i++){
+      lclDspBuffPtrOffset = (*(_digitPosPtr + i)*2);
+      *(_lclDspBuffPtr + lclDspBuffPtrOffset) = *(_dspBuffPtr + i);
+   }
+
+   return;
+}
 
 //============================================================> Class methods separator

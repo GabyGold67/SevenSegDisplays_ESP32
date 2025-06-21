@@ -5,6 +5,7 @@ var annotated_dup =
     [ "SevenSegDynamic", "class_seven_seg_dynamic.html", "class_seven_seg_dynamic" ],
     [ "SevenSegDynDummy", "class_seven_seg_dyn_dummy.html", "class_seven_seg_dyn_dummy" ],
     [ "SevenSegDynHC595", "class_seven_seg_dyn_h_c595.html", "class_seven_seg_dyn_h_c595" ],
+    [ "SevenSegHT16K33", "class_seven_seg_h_t16_k33.html", "class_seven_seg_h_t16_k33" ],
     [ "SevenSegMax7219", "class_seven_seg_max7219.html", "class_seven_seg_max7219" ],
     [ "SevenSegStatHC595", "class_seven_seg_stat_h_c595.html", "class_seven_seg_stat_h_c595" ],
     [ "SevenSegStatic", "class_seven_seg_static.html", null ],

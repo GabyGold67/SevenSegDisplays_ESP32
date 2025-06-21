@@ -1,0 +1,7 @@
+<map id="SevenSegHT16K33::setBrghtnssLvl" name="SevenSegHT16K33::setBrghtnssLvl">
+<area shape="rect" id="Node000001" title="Sets the brightness level for the display module." alt="" coords="237,31,468,57"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_h_t16_k33.html#a96ebec2a6c00e24bc42f7fdca7cc453d" title="Sets up the hardware display to work, and starts the display activities." alt="" coords="9,5,185,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="221,34,185,30,186,25,221,28"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_h_t16_k33.html#a18302953b5f33463f17ee38b76ebecdb" title="Turns the display module on." alt="" coords="5,56,189,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="221,60,189,63,189,58,221,54"/>
+</map>

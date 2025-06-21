@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['segments_20displays_20easy_20to_20use_20library_20strong_0',['&lt;strong&gt;SevenSegDisplays_ESP32: A Seven Segments displays easy to use library&lt;/strong&gt;',['../index.html',1,'']]],
-  ['seven_20segments_20displays_20easy_20to_20use_20library_20strong_1',['&lt;strong&gt;SevenSegDisplays_ESP32: A Seven Segments displays easy to use library&lt;/strong&gt;',['../index.html',1,'']]],
-  ['sevensegdisplays_5fesp32_3a_20a_20seven_20segments_20displays_20easy_20to_20use_20library_20strong_2',['&lt;strong&gt;SevenSegDisplays_ESP32: A Seven Segments displays easy to use library&lt;/strong&gt;',['../index.html',1,'']]],
-  ['strong_3',['&lt;strong&gt;SevenSegDisplays_ESP32: A Seven Segments displays easy to use library&lt;/strong&gt;',['../index.html',1,'']]],
-  ['strong_20sevensegdisplays_5fesp32_3a_20a_20seven_20segments_20displays_20easy_20to_20use_20library_20strong_4',['&lt;strong&gt;SevenSegDisplays_ESP32: A Seven Segments displays easy to use library&lt;/strong&gt;',['../index.html',1,'']]]
+  ['display_20update_20and_20refreshing_3a_0',['Unattended display update and refreshing:',['../C:/Users/DevPadawan/Documents/My Projects/Training Projects/LibsDev_ESP32/lib/SevenSegDisplays_ESP32/README.md#unattended-display-update-and-refreshing',1,'']]],
+  ['displays_20easy_20to_20use_20library_1',['**SevenSegDisplays_ESP32: A Seven Segments displays easy to use library**',['../C:/Users/DevPadawan/Documents/My Projects/Training Projects/LibsDev_ESP32/lib/SevenSegDisplays_ESP32/README.md#sevensegdisplays_esp32-a-seven-segments-displays-easy-to-use-library',1,'']]],
+  ['documentation_20here_2',['documentation HERE',['../C:/Users/DevPadawan/Documents/My Projects/Training Projects/LibsDev_ESP32/lib/SevenSegDisplays_ESP32/README.md#complete-sevensegdisplays_esp32-library-documentation-herehttpsgabygold67githubiosevensegdisplays_esp32',1,'<a href="https://gabygold67.github.io/SevenSegDisplays_ESP32/">Complete SevenSegDisplays_ESP32 library documentation HERE!</a>'],['../C:/Users/DevPadawan/Documents/My Projects/Training Projects/LibsDev_ESP32/lib/SevenSegDisplays_ESP32/README.md#complete-sevensegdisplays_esp32-library-documentation-herehttpsgabygold67githubiosevensegdisplays_esp32-1',1,'<a href="https://gabygold67.github.io/SevenSegDisplays_ESP32/">Complete SevenSegDisplays_ESP32 library documentation HERE!</a>']]]
 ];

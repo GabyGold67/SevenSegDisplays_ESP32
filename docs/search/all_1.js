@@ -1,5 +1,14 @@
 var searchData=
 [
-  ['begin_0',['begin',['../class_seven_seg_disp_hw.html#a5f3a59bcc54ddd20445e049359753ab6',1,'SevenSegDispHw::begin()'],['../class_seven_seg_dynamic.html#a1184cb8662e12921f635c13b19a9df7b',1,'SevenSegDynamic::begin()'],['../class_seven_seg_dyn_h_c595.html#acae65548bebc819a38ce07c07c140ef2',1,'SevenSegDynHC595::begin()'],['../class_seven_seg_dyn_dummy.html#ac0f6ac50ac26d402d96e2a689eb724d7',1,'SevenSegDynDummy::begin()'],['../class_seven_seg_stat_h_c595.html#a37e0d5d4639a66d2042df68fd2fd9813',1,'SevenSegStatHC595::begin()'],['../class_seven_seg_t_m163_x.html#a08b6551f172597a88fa78215cde05c7e',1,'SevenSegTM163X::begin()'],['../class_seven_seg_max7219.html#a7145d4d218c7b8469a13c6a1780d8ce7',1,'SevenSegMax7219::begin()'],['../class_seven_seg_displays.html#abc7b0307578cbbd8ae7ab89d873f9033',1,'SevenSegDisplays::begin(uint32_t updtLps=0)']]],
-  ['blink_1',['blink',['../class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c',1,'SevenSegDisplays::blink()'],['../class_seven_seg_displays.html#a13e2b854efd3d0c923e933c9fd875af1',1,'SevenSegDisplays::blink(const uint32_t &amp;onRate, const uint32_t &amp;offRate=0)']]]
+  ['_5fallledsoff_0',['_allLedsOff',['../class_seven_seg_disp_hw.html#a9d1b19191790068b303f28d5c7efe17d',1,'SevenSegDispHw']]],
+  ['_5fbrghtnsslvl_1',['_brghtnssLvl',['../class_seven_seg_disp_hw.html#a75a3304095307da5652f745b7472ed75',1,'SevenSegDispHw']]],
+  ['_5fbrghtnsslvlmax_2',['_brghtnssLvlMax',['../class_seven_seg_disp_hw.html#afd984a492fe643d97943e3354546fd17',1,'SevenSegDispHw']]],
+  ['_5fbrghtnsslvlmin_3',['_brghtnssLvlMin',['../class_seven_seg_disp_hw.html#ac3d66d15f4eed1c1881b4121de41c9af',1,'SevenSegDispHw']]],
+  ['_5fdspblankbuffptr_4',['_dspBlankBuffPtr',['../class_seven_seg_disp_hw.html#a3ccc9149931302708fc61446a6ff0c46',1,'SevenSegDispHw']]],
+  ['_5fdspbuffptr_5',['_dspBuffPtr',['../class_seven_seg_disp_hw.html#a95b6978ec791ce44c93e826c3bb1d870',1,'SevenSegDispHw']]],
+  ['_5fdspbuffptrbkp_6',['_dspBuffPtrBkp',['../class_seven_seg_disp_hw.html#a73f7ed1aa03a57762c51bfb6e29db011',1,'SevenSegDispHw']]],
+  ['_5fison_7',['_isOn',['../class_seven_seg_disp_hw.html#a3766aca6533be7b0b416229ebfe4cf49',1,'SevenSegDispHw']]],
+  ['_5flcldspbuffptr_8',['_lclDspBuffPtr',['../class_seven_seg_t_m163_x.html#ac15a9132e32747ba1cab6b13495b9eb2',1,'SevenSegTM163X::_lclDspBuffPtr'],['../class_seven_seg_max7219.html#a79583f354ea2df08f1a45fea1ec23a37',1,'SevenSegMax7219::_lclDspBuffPtr']]],
+  ['_5fxcddspbuffptr_9',['_xcdDspBuffPtr',['../class_seven_seg_disp_hw.html#af6bacaac69559e6788101ee45d3cff0e',1,'SevenSegDispHw']]],
+  ['_5fxcddspdigitsqty_10',['_xcdDspDigitsQty',['../class_seven_seg_disp_hw.html#a87f090d25ccf0c245990c59041658629',1,'SevenSegDispHw']]]
 ];

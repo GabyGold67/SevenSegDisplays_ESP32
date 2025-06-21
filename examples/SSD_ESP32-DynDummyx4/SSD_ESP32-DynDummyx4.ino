@@ -2,7 +2,7 @@
  ******************************************************************************
  * @file SSD_ESP32-DynDummyx4.ino
  * 
- * @brief Example file to demonstrate SevenSegDisplays_ESP32 class use with SevenSegDispHw::SevenSegDynHC595 class composition
+ * @brief Example file to demonstrate SevenSegDisplays_ESP32 class use with SevenSegDispHw::SevenSegDynDummy class composition
  *
  * @details 
  *
@@ -16,7 +16,7 @@
  * Github <https://github.com/GabyGold67>
  *
  * @date First release: 15/05/2023 
- *       Last update:   26/03/2025 14:50 GMT+0200
+ *       Last update:   19/06/2025 11:40 GMT+0200
  ******************************************************************************
   * @warning **Use of this library is under your own responsibility**
   * 
@@ -95,46 +95,19 @@ void mainCtrlTsk(void *pvParameters){
    
    static uint8_t myDispIOPins[3] {sclk, rclk, dio}; // Pins set as an array as required by hw constructor
 
-
-/* Instantiation examples, different possibilities for use according to developer preferences*/
-/* A three lines step by step code example:  
-SevenSegDynHC595 myLedDispHw(myDispIOPins, 4, true);
-SevenSegDispHw* myLedDispHwPtr = &myLedDispHw;
-SevenSegDisplays myLedDisp(myLedDispHwPtr);
-*/
-
-/* A two lines example using the & operand to pass the pointer
-SevenSegDynHC595 myLedDispHw(myDispIOPins, 4, true);
-SevenSegDisplays myLedDisp(&myLedDispHw);
-*/
-
-/* A two lines example using a sub-class pointer to a dynamic instantiated object
-SevenSegDynHC595* myLedDispPtr {new SevenSegDynHC595 (myDispIOPins, 4, true)};
-SevenSegDisplays myLedDisp(myLedDispPtr);
-*/
-
-/* A two lines example using a base class pointer to a dynamic instantiated object
-SevenSegDispHw* myLedDispPtr {new SevenSegDynHC595 (myDispIOPins, 4, true)};
-SevenSegDisplays myLedDisp(myLedDispPtr);
-*/
-
-/* A one liner example using as argument the pointer returned from dynamic instantiated object
-SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
-*/
-
-   // SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
    SevenSegDisplays myLedDisp(new SevenSegDynDummy(4, true));
+   myLedDisp.begin();
 
    for(;;){
       {
-         myLedDisp.getDspUndrlHwPtr()->begin();
+         myLedDisp.begin();
          vTaskDelay(250);
       }
 
       {
-      //print() with a string argument, two characters long, all characters included in the representable characters list
-      testResult = myLedDisp.print("On");
-      vTaskDelay(testTime);
+         //print() with a string argument, two characters long, all characters included in the representable characters list
+         testResult = myLedDisp.print("On");
+         vTaskDelay(testTime);
       }
 
       {
@@ -412,7 +385,7 @@ SevenSegDisplays myLedDisp(new SevenSegDynHC595 (myDispIOPins, 4, true));
       }
 
       {
-         myLedDisp.getDspUndrlHwPtr()->end();
+         myLedDisp.end();
          vTaskDelay(testTime);
       }
    
