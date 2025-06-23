@@ -30,7 +30,6 @@
 
 //-------------------------------------->> Static variables initialization BEGIN
 uint8_t SevenSegDispHw::_dspHwSerialNum = 0;
-
 //---------------------------------------->> Static variables initialization END
 
 //============================================================> Class methods separator
@@ -159,7 +158,7 @@ bool SevenSegDispHw::setDigitsOrder(uint8_t* newOrderPtr){
    if(result)
       memcpy(_digitPosPtr, newOrderPtr, _dspDigitsQty);
 
-   //FFDR Add the re-construction of the _xcdDspBuffPtr array including all unused positions
+   //FFDR Add the re-construction of the _xcdDspBuffPtr array including all unused positions, add mechanisms to assign specific functions to those positions: Colons, apostrophes, etc.
 
    return result;
 }

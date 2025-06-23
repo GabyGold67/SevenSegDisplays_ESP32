@@ -409,7 +409,7 @@ public:
     * @endcode
     * 
     */
-   bool end();
+   virtual bool end();
 };
 
 //============================================================> Class declarations separator
@@ -433,7 +433,6 @@ private:
    virtual void _unAbstract();
 
 protected:
-   // static TimerHandle_t _dynDummyDspRfrshTmrHndl;
    TimerHandle_t _dynDummyDspRfrshTmrHndl{NULL};
 
    void _refresh();
@@ -465,13 +464,13 @@ public:
      * @return true 
      * @return false 
      */
-    bool begin(uint32_t updtLps = 0);
+    virtual bool begin(uint32_t updtLps = 0);
     /**
      * @brief Stops the active display updating.  
      * 
      * See SevenSegDynHC595::end() for details.  
      */
-    bool end();
+    virtual bool end();
 
     virtual void turnOff();
 
@@ -536,28 +535,36 @@ private:
     void _updDsplyCntnt();
 
    public:
-    /**
-     * @brief Class default constructor.  
-     */
-    SevenSegStatHC595();
-    /**
-     * @brief Class constructor.  
-     * 
-     * @param ioPins A pointer to an array holding the identifiers for the 3 GPIO pins required to send the data to be displayed to the **display controller component**. The correlation between the array positions and the pin function is given as in-class defined constants: 0->sclk, 1->rclk, 2->dio
-     * @param dspDigits Quantity of digits/ports of the display. This class supports the wiring scheme allowing a maximum of 8 digits per shift register composing the **display controller component**, up to the 256 limit imposed by the parameter data type **uint8_t**.  
-     * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).  
-     */
-    SevenSegStatHC595(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
-    /**
-     * @brief Class destructor
-     */
-    virtual ~SevenSegStatHC595();
-
-    virtual bool begin(uint32_t updtLps = 0);
-    /**
-     * @brief See SevenSegDispHw::ntfyUpdDsply() for description
-     */
-    virtual void ntfyUpdDsply();
+   /**
+    * @brief Class default constructor.  
+    */
+   SevenSegStatHC595();
+   /**
+    * @brief Class constructor.  
+    * 
+    * @param ioPins A pointer to an array holding the identifiers for the 3 GPIO pins required to send the data to be displayed to the **display controller component**. The correlation between the array positions and the pin function is given as in-class defined constants: 0->sclk, 1->rclk, 2->dio
+    * @param dspDigits Quantity of digits/ports of the display. This class supports the wiring scheme allowing a maximum of 8 digits per shift register composing the **display controller component**, up to the 256 limit imposed by the parameter data type **uint8_t**.  
+    * @param commAnode Boolean indicating if the hardware uses a **display module component** wired as common anode (true) or common cathode (false).  
+    */
+   SevenSegStatHC595(uint8_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
+   /**
+    * @brief Class destructor
+    */
+   virtual ~SevenSegStatHC595();
+   /**
+    * @brief Sets up the required resources for the hardware display to work
+    * 
+    * Sets up the required resources for the hardware display to work, including a ShiftRegGPIOXpander object to manage the shift registers, and the display buffer pointer to the memory area used by the SevenSegDisplays object to hold the data to be displayed.
+    * 
+    * @param updtLps Unneeded parameter, as the display is static and does not require periodic updates. The parameter is included to comply with the SevenSegDispHw interface.
+    * 
+    * @return true Always.
+    */
+   virtual bool begin(uint32_t updtLps = 0);
+   /**
+    * @brief See SevenSegDispHw::ntfyUpdDsply() for description
+    */
+   virtual void ntfyUpdDsply();
 };
 
 //============================================================> Class declarations separator
@@ -633,16 +640,14 @@ protected:
     * Turning on a TM163X display implies sending a command to the display and saving in an object attribute the isOn state, as the display controller does not provide any means to read it's state. 
     * 
     * @return true Always  
-    * 
-    * @note The class constructor invokes the begin() method as it's last statement, the begin() method is kept for ease of modifications to developers interested in modifying the class.  
     */
-   bool begin(uint32_t updtLps = 0);
+   virtual bool begin(uint32_t updtLps = 0);
    /**
     * @brief Turns Off the display.  
     * 
     * @return true Always  
     */
-   bool end();
+   virtual bool end();
    /**
     * @brief Returns the current brightness level setting for the display module.  
     * 
@@ -900,7 +905,7 @@ public:
 	 * 
 	 * @return true Always
 	*/
-	bool begin(uint32_t updtLps = 0);
+	virtual bool begin(uint32_t updtLps = 0);
 	/**
 	 * @brief Ends the active mode of the display by shutting it off.  
 	 * 
@@ -908,7 +913,7 @@ public:
 	 * 
 	 * @return true Always
 	 */
-	bool end();
+	virtual bool end();
 	/**
 	 * @brief Returns a value indicating if the display controller is in working/On or shutdown/Off mode
 	 * 
@@ -994,13 +999,11 @@ private:
 
 	uint8_t* _lclDspBuffPtr{nullptr};    //!< Pointer to an array of size equal to _dspDigitsQty, the local buffer differs from the shared _dspBuffPtr because it holds the data of the _dspBuffPtr formatted and ready to be sent to the display controller    
 
+   void _lclClear();
+   virtual void _sendBffr();
    virtual bool _sendCmmnd(uint8_t cmmnd);   //!< Sends a single byte command to the display
    bool _sendPrtData(uint8_t prt, uint8_t data); //!< Sends the content of a single display port. Not all device's display memory will be connected to real display ports
-
-   virtual void _sendBffr();
    virtual void _unAbstract();
-
-   void _lclClear();
    void _updLclBffrCntnt();
 
 public:
@@ -1034,7 +1037,7 @@ public:
 	 * 
 	 * @return true Always
 	*/
-   bool begin(uint32_t updtLps = 0);   //FFDR This begin() doesn't need any parameter, replace and check 
+   virtual bool begin(uint32_t updtLps = 0);
    /**
     * @brief Ends the active mode of the display by shutting it off.  
     * 
@@ -1042,7 +1045,7 @@ public:
     * 
     * @return true Always
     */
-   bool end();
+   virtual bool end();
    /**
     * @brief See SevenSegDispHw::ntfyUpdDsply() for description
     */
