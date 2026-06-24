@@ -107,17 +107,9 @@ SevenSegDisplays::~SevenSegDisplays(){
 bool SevenSegDisplays::begin(uint32_t updtLps){
    bool result{false};
 
-   Serial.println("Entered SevenSegDisplays::begin()");
    if(!_begun){
-      Serial.println("Underlying Hardware needs Begining");
-      
       result = _dspUndrlHwPtr->begin(updtLps);
-      
-      Serial.print("Underlying Hardware Passed Begining, result = ");
-      Serial.println(result);
-
       if(result){
-         Serial.println("_begun attribute flag SET");
          _begun = true;   
       }       
    }

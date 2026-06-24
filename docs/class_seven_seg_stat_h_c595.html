@@ -134,7 +134,7 @@ Public Member Functions</h2></td></tr>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegStatHC595</b> ()</td></tr>
 <tr class="memdesc:ae4bd0e06d2c5a8c572e6bb607df30a57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class destructor. <br /></td></tr>
 <tr class="memitem:a37e0d5d4639a66d2042df68fd2fd9813" id="r_a37e0d5d4639a66d2042df68fd2fd9813"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a37e0d5d4639a66d2042df68fd2fd9813">begin</a> (uint32_t updtLps=0)</td></tr>
-<tr class="memdesc:a37e0d5d4639a66d2042df68fd2fd9813"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the hardware display to work, and starts the display activities.  <br /></td></tr>
+<tr class="memdesc:a37e0d5d4639a66d2042df68fd2fd9813"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the required resources for the hardware display to work.  <br /></td></tr>
 <tr class="memitem:af430da3b0859f74693dd0ee71c28d071" id="r_af430da3b0859f74693dd0ee71c28d071"><td class="memItemLeft" align="right" valign="top"><a id="af430da3b0859f74693dd0ee71c28d071" name="af430da3b0859f74693dd0ee71c28d071"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>ntfyUpdDsply</b> ()</td></tr>
 <tr class="memdesc:af430da3b0859f74693dd0ee71c28d071"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="class_seven_seg_disp_hw.html#a02d94944c1a9ade34a530c7e13503327" title="Notifies the SevenSegDispHw component object of a change of content available in the display buffer,...">SevenSegDispHw::ntfyUpdDsply()</a> for description. <br /></td></tr>
@@ -198,7 +198,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_dspBlankBuffPtr
 <tr class="memdesc:a3ccc9149931302708fc61446a6ff0c46 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to a display buffer filled with _allLedsOff ("spaces") to use as display buffer while in "Off State". <br /></td></tr>
 <tr class="memitem:a95b6978ec791ce44c93e826c3bb1d870 inherit pro_attribs_class_seven_seg_disp_hw" id="r_a95b6978ec791ce44c93e826c3bb1d870"><td class="memItemLeft" align="right" valign="top">
 uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_dspBuffPtr</b> {nullptr}</td></tr>
-<tr class="memdesc:a95b6978ec791ce44c93e826c3bb1d870 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the display buffer, will be provided by the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object when it's instantiated. <br /></td></tr>
+<tr class="memdesc:a95b6978ec791ce44c93e826c3bb1d870 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the display buffer, will be provided by the <a class="el" href="class_seven_seg_displays.html" title="Class that provides a common API and tools to generate and manage contents formatting for seven segme...">SevenSegDisplays</a> object when it's instantiated. <br /></td></tr>
 <tr class="memitem:a73f7ed1aa03a57762c51bfb6e29db011 inherit pro_attribs_class_seven_seg_disp_hw" id="r_a73f7ed1aa03a57762c51bfb6e29db011"><td class="memItemLeft" align="right" valign="top">
 uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_dspBuffPtrBkp</b> {nullptr}</td></tr>
 <tr class="memdesc:a73f7ed1aa03a57762c51bfb6e29db011 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the display buffer, copy of the original <b>_dspBuffPtr</b> to be used as backup. <br /></td></tr>
@@ -279,35 +279,15 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_xcdDspDigitsQty</
 </table>
 </div><div class="memdoc">
 
-<p>Sets up the hardware display to work, and starts the display activities. </p>
-<p>Depending on the display technology and the resources it needs to work with, this method takes care of those preparations. That means that each specific subclass of display will provide it's own version of <span class="tt"><a class="el" href="#a37e0d5d4639a66d2042df68fd2fd9813" title="Sets up the hardware display to work, and starts the display activities.">begin()</a></span> that will take care of: <br  />
-</p><ul>
-<li>Configuring timers or interrupts required. <br  />
-</li>
-<li>Setup tasks and unblocking procedures to get new contents from the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object. <br  />
-</li>
-<li>Setup communications parameters and establish communications with the display hardware. <br  />
-</li>
-<li>Other specific services configuration and setups. <br  />
-</li>
-<li><b>Turn On the display</b>. <br  />
-</li>
-</ul>
+<p>Sets up the required resources for the hardware display to work. </p>
+<p>Sets up the required resources for the hardware display to work, including a ShiftRegGPIOXpander object to manage the shift registers, and the display buffer pointer to the memory area used by the <a class="el" href="class_seven_seg_displays.html" title="Class that provides a common API and tools to generate and manage contents formatting for seven segme...">SevenSegDisplays</a> object to hold the data to be displayed.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">updtLps</td><td>Time lapse between updating activities required, specially by dynamic subclasses. The parameter will be used according to each subclass needs, which will be described in each class <a class="el" href="#a37e0d5d4639a66d2042df68fd2fd9813" title="Sets up the hardware display to work, and starts the display activities.">begin()</a> method. <br  />
-</td></tr>
+    <tr><td class="paramname">updtLps</td><td>Unneeded parameter, as the display is static and does not require periodic updates. The parameter is included to comply with the <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> interface.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>The specific configurations and startups could be successfully completed. <br  />
- </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>false One or more of the specific configurations or startups failed. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true Always. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="class_seven_seg_disp_hw.html#a5f3a59bcc54ddd20445e049359753ab6">SevenSegDispHw</a>.</p>
 

@@ -55,7 +55,11 @@
 #include <stdint.h>
 #include <./SevenSegDispHw/SevenSegDispHw.h>
 
-
+/**
+ * @brief Class that provides a common API and tools to generate and manage contents formatting for seven segments displays.
+ * 
+ * @class SevenSegDisplays
+ */
 class SevenSegDisplays {
    static uint8_t _displaysCount;
    static uint16_t _dspLastSerialNum;

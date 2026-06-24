@@ -93,7 +93,7 @@ $(function(){initNavTree('class_seven_seg_displays.html','','class_seven_seg_dis
 </div><!--header-->
 <div class="contents">
 
-<p>Default constructor.  
+<p>Class that provides a common API and tools to generate and manage contents formatting for seven segments displays.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_seven_seg_displays_8h_source.html">SevenSegDisplays.h</a>&gt;</code></p>
@@ -102,7 +102,7 @@ Collaboration diagram for SevenSegDisplays:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_displays__coll__graph.png" border="0" usemap="#a_seven_seg_displays_coll__map" loading="lazy" alt="Collaboration graph"/></div>
 <map name="a_seven_seg_displays_coll__map" id="a_seven_seg_displays_coll__map">
-<area shape="rect" title="Default constructor." alt="" coords="5,104,138,131"/>
+<area shape="rect" title="Class that provides a common API and tools to generate and manage contents formatting for seven segme..." alt="" coords="5,104,138,131"/>
 <area shape="poly" title=" " alt="" coords="154,109,164,117,156,126,138,129,137,124,154,121,159,117,151,113"/>
 <area shape="rect" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware." alt="" coords="7,5,136,32"/>
 <area shape="poly" title=" " alt="" coords="74,48,74,104,69,104,69,48"/>
@@ -138,7 +138,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a05ddffe49e505638382affaa0426b272" id="r_a05ddffe49e505638382affaa0426b272"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05ddffe49e505638382affaa0426b272">getDigitsQty</a> ()</td></tr>
 <tr class="memdesc:a05ddffe49e505638382affaa0426b272"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the number of digits of the display hardware.  <br /></td></tr>
 <tr class="memitem:a7d828fd8327053a334f25836d8c49b08" id="r_a7d828fd8327053a334f25836d8c49b08"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7d828fd8327053a334f25836d8c49b08">getDspCount</a> ()</td></tr>
-<tr class="memdesc:a7d828fd8327053a334f25836d8c49b08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the quantity of instantiated <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> class objects at invocation moment.  <br /></td></tr>
+<tr class="memdesc:a7d828fd8327053a334f25836d8c49b08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the quantity of instantiated <a class="el" href="class_seven_seg_displays.html" title="Class that provides a common API and tools to generate and manage contents formatting for seven segme...">SevenSegDisplays</a> class objects at invocation moment.  <br /></td></tr>
 <tr class="memitem:a5168f4d1cbdb8faab2b87b1689c182b2" id="r_a5168f4d1cbdb8faab2b87b1689c182b2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5168f4d1cbdb8faab2b87b1689c182b2">getDspIsDmmbl</a> ()</td></tr>
 <tr class="memdesc:a5168f4d1cbdb8faab2b87b1689c182b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the logic value indicating if the display is dimmable.  <br /></td></tr>
 <tr class="memitem:aeebf7611c82002d5a206a6b7ff3946ac" id="r_aeebf7611c82002d5a206a6b7ff3946ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeebf7611c82002d5a206a6b7ff3946ac">getDspUndrlHwPtr</a> ()</td></tr>
@@ -203,7 +203,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ac1b3ec1b047588cf8743bef6bf6bd565"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints one character to the display, at a designated position (digit or port), without affecting the rest of the characters displayed.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Default constructor. </p>
+<div class="textblock"><p>Class that provides a common API and tools to generate and manage contents formatting for seven segments displays. </p>
+<p>Default constructor. </p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ada6d89fb083fd8a5a2ce603b3b1f5e43" name="ada6d89fb083fd8a5a2ce603b3b1f5e43"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ada6d89fb083fd8a5a2ce603b3b1f5e43">&#9670;&#160;</a></span>SevenSegDisplays()</h2>
@@ -221,10 +222,10 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Class constructor. </p>
-<p>Instantiates a <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> class object</p>
+<p>Instantiates a <a class="el" href="class_seven_seg_displays.html" title="Class that provides a common API and tools to generate and manage contents formatting for seven segme...">SevenSegDisplays</a> class object</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dspUndrlHw</td><td>A pointer to an instantiated <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> subclass object that models the hardware display that composes the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object</td></tr>
+    <tr><td class="paramname">dspUndrlHw</td><td>A pointer to an instantiated <a class="el" href="class_seven_seg_disp_hw.html" title="Base abstract class models a generic Seven Segment display hardware.">SevenSegDispHw</a> subclass object that models the hardware display that composes the <a class="el" href="class_seven_seg_displays.html" title="Class that provides a common API and tools to generate and manage contents formatting for seven segme...">SevenSegDisplays</a> object</td></tr>
   </table>
   </dd>
 </dl>
@@ -240,7 +241,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">SevenSegDisplays myLedDisp(&amp;myLedDispHw);             <span class="comment">// Instantiation of the SevenSegDisplays object using the &amp; operand over the hardware object created</span></div>
 </div><!-- fragment --><p>A two lines example using a sub-class pointer to a dynamic instantiated object </p><div class="fragment"><div class="line"><a class="code hl_class" href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a>* myLedDispPtr {<span class="keyword">new</span> <a class="code hl_class" href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a> (myDispIOPins, 4, <span class="keyword">true</span>)};   <span class="comment">// Dynamic instantiation of the underlying hardware object, pointed by a subclass pointer</span></div>
 <div class="line"><a class="code hl_class" href="class_seven_seg_displays.html">SevenSegDisplays</a> myLedDisp(myLedDispPtr);    <span class="comment">// Instantiation of the SevenSegDisplays object using the subclass pointer to the hardware object dynamically created</span></div>
-<div class="ttc" id="aclass_seven_seg_displays_html"><div class="ttname"><a href="class_seven_seg_displays.html">SevenSegDisplays</a></div><div class="ttdoc">Default constructor.</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.h:59</div></div>
+<div class="ttc" id="aclass_seven_seg_displays_html"><div class="ttname"><a href="class_seven_seg_displays.html">SevenSegDisplays</a></div><div class="ttdoc">Class that provides a common API and tools to generate and manage contents formatting for seven segme...</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.h:63</div></div>
 </div><!-- fragment --><p>A two lines example using a base class pointer to a dynamic instantiated object </p><div class="fragment"><div class="line"><a class="code hl_class" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a>* myLedDispPtr {<span class="keyword">new</span> <a class="code hl_class" href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a> (myDispIOPins, 4, <span class="keyword">true</span>)};  <span class="comment">// Dynamic instantiation of the underlying hardware object, pointed by a base class pointer</span></div>
 <div class="line"><a class="code hl_class" href="class_seven_seg_displays.html">SevenSegDisplays</a> myLedDisp(myLedDispPtr); <span class="comment">// Instantiation of the SevenSegDisplays object using the base class pointer to the hardware object dynamically created</span></div>
 </div><!-- fragment --><p>A one liner example using as argument the pointer returned from dynamic instantiated object </p><div class="fragment"><div class="line">SevenSegDisplays myLedDisp(<span class="keyword">new</span> <a class="code hl_class" href="class_seven_seg_dyn_h_c595.html">SevenSegDynHC595</a> (myDispIOPins, 4, <span class="keyword">true</span>));  <span class="comment">// Easy to understand reading from right to left, as usual!!</span></div>
@@ -664,7 +665,7 @@ false Otherwise, being that the <b>level</b> parameter was out of range and/or t
 </div><!-- fragment --><div class="fragment"><div class="line">`myLedDisp.gauge(3);`   <span class="comment">// Displays a gauge with a blank space as label and the next three positions with their respective levels indicators</span></div>
 </div><!-- fragment --><div class="fragment"><div class="line">`myLedDisp.gauge(1, <span class="charliteral">&#39;F&#39;</span>);` <span class="comment">// Displays a gauge with a **F** as label in it&#39;s leftmost position, and the next position holding the second level indicator</span></div>
 </div><!-- fragment --><div class="fragment"><div class="line">`myLedDisp.**<a class="code hl_function" href="#aa00c8c2fbca4a0068590ef62de28f198">gauge</a>(4, <span class="charliteral">&#39;d&#39;</span>);`  <span class="comment">// Error, the value 4 is outside valid range, the method will return **false** and the display will be cleared.  </span></div>
-<div class="ttc" id="aclass_seven_seg_displays_html_aa00c8c2fbca4a0068590ef62de28f198"><div class="ttname"><a href="#aa00c8c2fbca4a0068590ef62de28f198">SevenSegDisplays::gauge</a></div><div class="ttdeci">bool gauge(const int &amp;level, char label=&#39; &#39;)</div><div class="ttdoc">Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ...</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.cpp:382</div></div>
+<div class="ttc" id="aclass_seven_seg_displays_html_aa00c8c2fbca4a0068590ef62de28f198"><div class="ttname"><a href="#aa00c8c2fbca4a0068590ef62de28f198">SevenSegDisplays::gauge</a></div><div class="ttdeci">bool gauge(const int &amp;level, char label=&#39; &#39;)</div><div class="ttdoc">Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ...</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.cpp:374</div></div>
 </div><!-- fragment --><div class="fragment"><div class="line">`myLedDisp.gauge(3, <span class="charliteral">&#39;X&#39;</span>);` <span class="comment">// Error, **X** is not a displayable character, the method will return **false** and the display will be cleared</span></div>
 </div><!-- fragment --> <div class="dynheader">
 Here is the call graph for this function:</div>
@@ -751,7 +752,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Returns the quantity of instantiated <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> class objects at invocation moment. </p>
+<p>Returns the quantity of instantiated <a class="el" href="class_seven_seg_displays.html" title="Class that provides a common API and tools to generate and manage contents formatting for seven segme...">SevenSegDisplays</a> class objects at invocation moment. </p>
 <dl class="section return"><dt>Returns</dt><dd>The quantity of instantiated displays. </dd></dl>
 
 </div>
@@ -1072,7 +1073,7 @@ Here is the caller graph for this function:</div>
 <p>Returns a unique numeric identification of the object. </p>
 <p>The Returned unsigned integer value identifies the object. Each time the class is instantiated the created object receives a serial instantiation number that can be used in order to identify each object in case of need.</p>
 <dl class="section return"><dt>Returns</dt><dd>The unsigned number indicating the identification Instance Number.</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>As <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> objects might be constructed and destructed at need, the largest Instance number is not necessarily coincidental with the quantity of objects instantiated at any given moment, as the numeric identification of the object is an always increasing value incremented every time a new object is instantiated, but never decremented due to destructions. To know the quantity of instantiated displays at any given moment see uint8_t <a class="el" href="#a7d828fd8327053a334f25836d8c49b08" title="Returns the quantity of instantiated SevenSegDisplays class objects at invocation moment.">getDspCount()</a> <br  />
+<dl class="section note"><dt>Note</dt><dd>As <a class="el" href="class_seven_seg_displays.html" title="Class that provides a common API and tools to generate and manage contents formatting for seven segme...">SevenSegDisplays</a> objects might be constructed and destructed at need, the largest Instance number is not necessarily coincidental with the quantity of objects instantiated at any given moment, as the numeric identification of the object is an always increasing value incremented every time a new object is instantiated, but never decremented due to destructions. To know the quantity of instantiated displays at any given moment see uint8_t <a class="el" href="#a7d828fd8327053a334f25836d8c49b08" title="Returns the quantity of instantiated SevenSegDisplays class objects at invocation moment.">getDspCount()</a> <br  />
 </dd></dl>
 <dl class="section attention"><dt>Attention</dt><dd>Not to be confused with a pointer to the object or other internal unique identification mechanism results <br  />
 </dd></dl>
@@ -1808,7 +1809,7 @@ false The display was already set to wait, and/or the parameter passed was out o
 <div class="fragment"><div class="line">myLedDisp.wait(); <span class="comment">//Returns true and shows advancement animation to the already set value.  </span></div>
 <div class="line">myLedDisp.wait(800); <span class="comment">//Returns true and sets the advancement animation rate to 800 millisecs.  </span></div>
 <div class="line">myLedDisp.wait(<a class="code hl_function" href="#acacba9047c40769b42a11268df302f9c">getMaxBlinkRate</a>() + 10);   <span class="comment">//Returns false and the display stays without change.  </span></div>
-<div class="ttc" id="aclass_seven_seg_displays_html_acacba9047c40769b42a11268df302f9c"><div class="ttname"><a href="#acacba9047c40769b42a11268df302f9c">SevenSegDisplays::getMaxBlinkRate</a></div><div class="ttdeci">uint32_t getMaxBlinkRate()</div><div class="ttdoc">Returns the maximum rate the display can be configured to blink at.</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.cpp:485</div></div>
+<div class="ttc" id="aclass_seven_seg_displays_html_acacba9047c40769b42a11268df302f9c"><div class="ttname"><a href="#acacba9047c40769b42a11268df302f9c">SevenSegDisplays::getMaxBlinkRate</a></div><div class="ttdeci">uint32_t getMaxBlinkRate()</div><div class="ttdoc">Returns the maximum rate the display can be configured to blink at.</div><div class="ttdef"><b>Definition</b> SevenSegDisplays.cpp:477</div></div>
 </div><!-- fragment --> <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">

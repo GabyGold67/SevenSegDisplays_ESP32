@@ -139,9 +139,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a15cd5793c8ad4dd0c5207874d4fc2de4" id="r_a15cd5793c8ad4dd0c5207874d4fc2de4"><td class="memItemLeft" align="right" valign="top"><a id="a15cd5793c8ad4dd0c5207874d4fc2de4" name="a15cd5793c8ad4dd0c5207874d4fc2de4"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegTM163X</b> ()</td></tr>
 <tr class="memdesc:a15cd5793c8ad4dd0c5207874d4fc2de4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class destructor. <br /></td></tr>
-<tr class="memitem:a08b6551f172597a88fa78215cde05c7e" id="r_a08b6551f172597a88fa78215cde05c7e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a08b6551f172597a88fa78215cde05c7e">begin</a> (uint32_t updtLps=0)</td></tr>
+<tr class="memitem:a08b6551f172597a88fa78215cde05c7e" id="r_a08b6551f172597a88fa78215cde05c7e"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a08b6551f172597a88fa78215cde05c7e">begin</a> (uint32_t updtLps=0)</td></tr>
 <tr class="memdesc:a08b6551f172597a88fa78215cde05c7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns On the display to be ready to receive data.  <br /></td></tr>
-<tr class="memitem:aa698084ab67b3d6c6b324fa00d1f5e35" id="r_aa698084ab67b3d6c6b324fa00d1f5e35"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa698084ab67b3d6c6b324fa00d1f5e35">end</a> ()</td></tr>
+<tr class="memitem:aa698084ab67b3d6c6b324fa00d1f5e35" id="r_aa698084ab67b3d6c6b324fa00d1f5e35"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa698084ab67b3d6c6b324fa00d1f5e35">end</a> ()</td></tr>
 <tr class="memdesc:aa698084ab67b3d6c6b324fa00d1f5e35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns Off the display.  <br /></td></tr>
 <tr class="memitem:a484553b3cf9c8e60bc87e944d07fecde" id="r_a484553b3cf9c8e60bc87e944d07fecde"><td class="memItemLeft" align="right" valign="top">virtual uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a484553b3cf9c8e60bc87e944d07fecde">getBrghtnssLvl</a> ()</td></tr>
 <tr class="memdesc:a484553b3cf9c8e60bc87e944d07fecde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current brightness level setting for the display module.  <br /></td></tr>
@@ -207,7 +207,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_dspBlankBuffPtr
 <tr class="memdesc:a3ccc9149931302708fc61446a6ff0c46 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to a display buffer filled with _allLedsOff ("spaces") to use as display buffer while in "Off State". <br /></td></tr>
 <tr class="memitem:a95b6978ec791ce44c93e826c3bb1d870 inherit pro_attribs_class_seven_seg_disp_hw" id="r_a95b6978ec791ce44c93e826c3bb1d870"><td class="memItemLeft" align="right" valign="top">
 uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_dspBuffPtr</b> {nullptr}</td></tr>
-<tr class="memdesc:a95b6978ec791ce44c93e826c3bb1d870 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the display buffer, will be provided by the <a class="el" href="class_seven_seg_displays.html" title="Default constructor.">SevenSegDisplays</a> object when it's instantiated. <br /></td></tr>
+<tr class="memdesc:a95b6978ec791ce44c93e826c3bb1d870 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the display buffer, will be provided by the <a class="el" href="class_seven_seg_displays.html" title="Class that provides a common API and tools to generate and manage contents formatting for seven segme...">SevenSegDisplays</a> object when it's instantiated. <br /></td></tr>
 <tr class="memitem:a73f7ed1aa03a57762c51bfb6e29db011 inherit pro_attribs_class_seven_seg_disp_hw" id="r_a73f7ed1aa03a57762c51bfb6e29db011"><td class="memItemLeft" align="right" valign="top">
 uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>_dspBuffPtrBkp</b> {nullptr}</td></tr>
 <tr class="memdesc:a73f7ed1aa03a57762c51bfb6e29db011 inherit pro_attribs_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the display buffer, copy of the original <b>_dspBuffPtr</b> to be used as backup. <br /></td></tr>
@@ -309,9 +309,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_xcdDspDigitsQty</
 
 <p>Turns On the display to be ready to receive data. </p>
 <p>Turning on a TM163X display implies sending a command to the display and saving in an object attribute the isOn state, as the display controller does not provide any means to read it's state.</p>
-<dl class="section return"><dt>Returns</dt><dd>true Always <br  />
-</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>The class constructor invokes the <a class="el" href="#a08b6551f172597a88fa78215cde05c7e" title="Turns On the display to be ready to receive data.">begin()</a> method as it's last statement, the <a class="el" href="#a08b6551f172597a88fa78215cde05c7e" title="Turns On the display to be ready to receive data.">begin()</a> method is kept for ease of modifications to developers interested in modifying the class. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true Always </dd></dl>
 
 <p>Reimplemented from <a class="el" href="class_seven_seg_disp_hw.html#a5f3a59bcc54ddd20445e049359753ab6">SevenSegDispHw</a>.</p>
 <div class="dynheader">
